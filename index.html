@@ -205,9 +205,13 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .modal.open{display:flex}
 .modal.open .sheet{animation:sheetin .2s cubic-bezier(.2,.8,.2,1)}
 .sheet{background:var(--card);border-radius:16px;max-width:600px;width:100%;box-shadow:0 24px 60px rgba(31,37,48,.22);display:flex;gap:24px;padding:30px;position:relative;border:1px solid var(--line)}
-.sheet .mcov{width:165px;flex-shrink:0;aspect-ratio:2/3;border-radius:5px;overflow:hidden;box-shadow:var(--shadow);background:var(--paper2);position:relative}
+.sheet .mcov{width:170px;flex-shrink:0;align-self:flex-start;border-radius:8px;overflow:hidden;box-shadow:0 14px 30px rgba(31,37,48,.24);background:var(--paper2);position:relative;min-height:150px}
+.mcov img{width:100%;height:auto;display:block}
+.mcov .ph{position:relative;inset:auto;aspect-ratio:2/3;display:flex;flex-direction:column;justify-content:center;padding:18px 16px;text-align:center}
+.mcov .ph .t{font-size:1rem;line-height:1.25;-webkit-line-clamp:6;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+.mcov .ph .a{font-size:.78rem;margin-top:10px}
 .sheet .mcov img{width:100%;height:100%;object-fit:cover}
-.sheet h2{margin:0 0 5px;font-size:1.4rem;font-weight:700;line-height:1.15}
+.sheet h2{margin:0 0 6px;font-size:1.45rem;font-weight:800;line-height:1.18;font-family:"Archivo";word-break:break-word}
 .sheet .by{color:var(--muted);margin:0 0 16px;font-size:.98rem}
 .mthemes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
 .mtheme{font-size:.72rem;background:var(--paper2);color:var(--ink2);border-radius:14px;padding:4px 12px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px}
@@ -564,6 +568,7 @@ footer.ft .ft-li:hover{background:var(--blue);color:#fff;border-color:var(--blue
 
 footer.ft .ft-links{display:flex;gap:10px;flex-wrap:wrap}
 footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
+.coverage-note{font-size:.78rem;color:var(--faint);text-align:center;margin:6px 0 8px;font-style:italic}
 </style>
 </head>
 <body>
@@ -577,7 +582,7 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
 <rect x="17.5" y="11" width="8" height="21" rx="1.5" fill="#5b97d4"/>
 <rect x="25" y="8" width="8" height="24" rx="1.5" transform="rotate(7 29 20)" fill="#2f9e6b"/>
 </svg><span class="bt">Alex&rsquo;s Bookshelf</span></div>
-    <button class="tab active" data-view="browse">Browse</button>
+    <button class="tab" data-view="browse">Browse</button>
     <button class="tab" data-view="authors">Authors</button>
     <button class="tab" data-view="time">Over&nbsp;Time</button>
     <button class="tab" data-view="themes">Themes</button>
@@ -589,7 +594,7 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
 <div class="wrap">
 
   <!-- HOME -->
-  <section class="view" id="view-home">
+  <section class="view active" id="view-home">
     <div class="hero">
       <div class="kicker">Alex Drost &middot; books I&rsquo;ve read</div>
       <h1>A shelf of <em>307</em> books,<br>and what I made of them.</h1>
@@ -605,7 +610,7 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
   </section>
 
   <!-- BROWSE -->
-  <section class="view active" id="view-browse">
+  <section class="view" id="view-browse">
     <div class="section-head"><h2>Browse the library</h2><span class="sub" id="browseSub"></span></div>
     <div class="controls">
       <input id="q" type="search" placeholder="Search titles, authors, themes, ideas…" autocomplete="off">
@@ -789,6 +794,7 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
       <p class="cap">The edges of the shelf. <span class="hint">Click to open.</span></p>
       <div class="records" id="records"></div>
     </div>
+    <p class="coverage-note" id="coverage"></p>
   </section>
 
 </div>
@@ -834,15 +840,17 @@ async function resolveCoverContainer(container){
   if(container.dataset.resolved)return;
   container.dataset.resolved="pending";
   const b=BOOKS[+container.dataset.i];
+  // memoized: if we've already resolved this book's cover anywhere, reuse it (no re-probe / re-fetch)
+  if(coverCache.has(b.id)){applyCover(container,b,coverCache.get(b.id));return;}
+  let resolved=null;
   // 1) self-hosted cover in the repo (/covers/<id>.jpg) — single fast CDN GET, the default
   const repoUrl=`/covers/${b.id}.jpg`;
-  if(await probeImg(repoUrl,4000)){applyCover(container,b,repoUrl);return;}
+  if(await probeImg(repoUrl,4000)){resolved=repoUrl;}
   // 2) live fallback: Open Library ISBN image (3s budget) then the API chain
-  const olu=olISBN(b);
-  if(olu){ if(await probeImg(olu,3000)){applyCover(container,b,olu);return;} }
-  const url=await lookupCover(b);
-  // 3) placeholder handled inside applyCover when url is null
-  applyCover(container,b,url);
+  if(!resolved){const olu=olISBN(b);if(olu&&await probeImg(olu,3000))resolved=olu;}
+  if(!resolved){resolved=await lookupCover(b);}
+  coverCache.set(b.id,resolved);   // cache even null -> never re-probe a known miss
+  applyCover(container,b,resolved);
 }
 const coverObserver=("IntersectionObserver" in window)?new IntersectionObserver((ents,obs)=>{
   ents.forEach(e=>{if(e.isIntersecting){obs.unobserve(e.target);resolveCoverContainer(e.target);}});
@@ -895,7 +903,7 @@ function readState(){
 }
 window.addEventListener("hashchange",()=>{if(!_restoring)var _rr=document.getElementById("recentReshuffle");if(_rr)_rr.addEventListener("click",renderRecentShelf);
 var _ba=document.querySelector(".browse-all");if(_ba)_ba.addEventListener("click",()=>showView("browse"));
-if(!location.hash)showView("browse");else ensureView("browse");
+if(!location.hash)showView("home");else ensureView("browse");
 readState();});
 function copyLink(btn){
   navigator.clipboard&&navigator.clipboard.writeText(location.href);
@@ -980,6 +988,7 @@ function renderBrowse(){
   $("#browseSub").textContent=bits.length?bits.join(" \u00b7 "):"the full collection";
 }
 $("#q").addEventListener("input",()=>{yearFilter="";drill=null;renderBrowse();writeState();});
+let _qT;$("#q").addEventListener("input",()=>{clearTimeout(_qT);_qT=setTimeout(()=>{renderBrowse();writeState();},160);});
 $("#sortBtns").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;sortMode=b.dataset.s;$$("#sortBtns button").forEach(x=>x.classList.toggle("on",x===b));renderBrowse();writeState();});
 $("#browseReset").addEventListener("click",()=>{$("#q").value="";activeTheme="";yearFilter="";drill=null;sortMode="dateRead";$$("#sortBtns button").forEach(x=>x.classList.toggle("on",x.dataset.s==="dateRead"));renderChips();renderBrowse();writeState();});
 
@@ -1724,7 +1733,7 @@ if(!VIEW_RENDERED)VIEW_RENDERED={};
 renderHome(); VIEW_RENDERED.home=true;
 var _rr=document.getElementById("recentReshuffle");if(_rr)_rr.addEventListener("click",renderRecentShelf);
 var _ba=document.querySelector(".browse-all");if(_ba)_ba.addEventListener("click",()=>showView("browse"));
-if(!location.hash)showView("browse");else ensureView("browse");
+if(!location.hash)showView("home");else ensureView("browse");
 readState();
 </script>
 <footer class="ft"><div class="ft-in"><div class="ft-left"><span class="ft-name">Alex Drost’s Bookshelf</span><span class="ft-sub">A personal snapshot of my reading · last updated <span id="updFoot"></span></span></div><div class="ft-links"><a class="ft-li ft-gr" href="https://www.goodreads.com/alex-drost" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M11.43 23.94c-2.16-.1-4-1.05-4.92-2.74-.36-.66-.5-1.2-.5-1.9h2.2c.07.5.18.84.42 1.2.55.83 1.5 1.28 2.85 1.3 2.2.03 3.5-1.36 3.5-3.84v-2.2c-.78 1.3-2.1 2-3.86 2-3.1 0-5.2-2.46-5.2-6.13 0-3.74 2.12-6.3 5.27-6.3 1.76 0 3.06.74 3.8 2.04V5.1h2.13v13.06c0 3.7-2.16 5.86-5.7 5.78h.01zm.32-7.97c2.1 0 3.46-1.8 3.46-4.4 0-2.62-1.37-4.43-3.45-4.43-2.13 0-3.42 1.74-3.42 4.43 0 2.7 1.3 4.4 3.4 4.4z"/></svg><span>Follow on Goodreads</span></a><a class="ft-li" href="https://www.linkedin.com/in/adrost/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg><span>Connect on LinkedIn</span></a></div></div></footer>
