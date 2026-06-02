@@ -484,6 +484,22 @@ footer.ft .ft-li:hover{background:var(--blue);color:#fff;border-color:var(--blue
 .tg-cross{font-size:.72rem;color:var(--muted);margin-top:10px;font-style:italic}
 
 .tgc.tgph{display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+
+/* recently-read feature shelf */
+.bookshelf-unit{position:relative;background:linear-gradient(180deg,var(--card),var(--paper));border:1px solid var(--line);
+  border-radius:16px;padding:26px 26px 0;margin-bottom:34px;box-shadow:var(--shadow)}
+.bookshelf-unit::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0;background:linear-gradient(90deg,var(--blue),var(--blue-br),var(--green,#2f9e6b))}
+.shelf-feature{display:flex;gap:22px;align-items:flex-end;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px}
+.shelf-feature .book{flex:0 0 auto;width:128px;animation:none}
+.shelf-feature .book .cover{box-shadow:0 10px 22px rgba(31,37,48,.22)}
+.shelf-feature .book:first-child{position:relative}
+.shelf-feature .book:first-child .cover::after{content:"Latest";position:absolute;top:7px;left:7px;z-index:3;
+  background:var(--blue);color:#fff;font-family:"Archivo";font-weight:700;font-size:.6rem;letter-spacing:.05em;
+  text-transform:uppercase;padding:3px 7px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.shelf-board{height:14px;margin:0 -26px;border-radius:0 0 16px 16px;
+  background:linear-gradient(180deg,#c9c2b2,#a99f8a);box-shadow:inset 0 2px 3px rgba(255,255,255,.4),0 10px 18px rgba(31,37,48,.16)}
+@media(max-width:640px){.shelf-feature .book{width:104px}}
+
 </style>
 </head>
 <body>
@@ -517,8 +533,8 @@ footer.ft .ft-li:hover{background:var(--blue);color:#fff;border-color:var(--blue
       <div class="lead-stats" id="leadStats"></div>
       <div class="synced">Synced from Goodreads on <b id="syncDate"></b> · a static snapshot, refreshed when I re-pull my shelf.</div>
     </div>
-    <div class="section-head"><h2>Recently read</h2><span class="sub" id="recentSub"></span><button class="more" data-view="browse">Browse all &rarr;</button></div>
-    <div class="shelf spotlight" id="recentShelf"></div>
+    <div class="section-head"><h2>Recently read</h2><span class="sub" id="recentSub"></span><button class="more" id="recentReshuffle">Reshuffle &#8635;</button></div>
+    <div class="bookshelf-unit"><div class="shelf shelf-feature" id="recentShelf"></div><div class="shelf-board"></div></div>
     <div class="section-head"><h2>From the stacks</h2><span class="sub">A random handful &mdash; reshuffle to dig deeper</span><button class="more" id="reshuffle">Reshuffle &#8635;</button></div>
     <div class="shelf" id="randomShelf"></div>
   </section>
@@ -818,7 +834,8 @@ function readState(){
   if(bid){const b=BOOKS.find(x=>x.id===bid);if(b)setTimeout(()=>openModal(b),60);}
   _restoring=false;
 }
-window.addEventListener("hashchange",()=>{if(!_restoring)if(!location.hash)showView("browse");
+window.addEventListener("hashchange",()=>{if(!_restoring)var _rr=document.getElementById("recentReshuffle");if(_rr)_rr.addEventListener("click",renderRecentShelf);
+if(!location.hash)showView("browse");
 readState();});
 function copyLink(btn){
   navigator.clipboard&&navigator.clipboard.writeText(location.href);
@@ -827,11 +844,25 @@ function copyLink(btn){
 $$("[data-view]").forEach(el=>el.addEventListener("click",()=>showView(el.dataset.view)));
 
 /* HOME */
+function pickRecent(){
+  const dated=BOOKS.filter(b=>b.dateRead).sort(byDateDesc);
+  if(!dated.length)return [];
+  const pool=dated.slice(0,10);
+  const newest=pool[0];
+  const rest=pool.slice(1);
+  // shuffle rest, take 5, then prepend newest -> up to 6, newest always first
+  for(let i=rest.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[rest[i],rest[j]]=[rest[j],rest[i]];}
+  return [newest,...rest.slice(0,5)];
+}
+function renderRecentShelf(){
+  const picks=pickRecent();
+  $("#recentShelf").innerHTML=picks.map((b,i)=>bookCard(b,i*55)).join("");
+  observeCovers($("#recentShelf"));
+}
 function renderHome(){
   const dated=BOOKS.filter(b=>b.dateRead).sort(byDateDesc);
-  const recent=dated.slice(0,8);
-  $("#recentShelf").innerHTML=recent.map((b,i)=>bookCard(b,i*55)).join("");observeCovers($("#recentShelf"));
-  $("#recentSub").textContent=recent.length?`since ${recent[recent.length-1].dateRead}`:"";
+  renderRecentShelf();
+  $("#recentSub").textContent=dated.length?`Most recent complete \u00b7 ${fmtDate(dated[0].dateRead)}`:"";
   reshuffle();
   const yrs=BOOKS.map(b=>b.yearRead).filter(Boolean);
   const span=yrs.length?`${Math.min(...yrs)}\u2013${Math.max(...yrs)}`:"\u2014";
@@ -1599,6 +1630,7 @@ function initGraph(){
 
 function _stampSync(){var _sd=document.getElementById("syncDate");if(_sd)_sd.textContent=LAST_SYNCED;var _sf=document.getElementById("syncFoot");if(_sf)_sf.textContent=LAST_SYNCED;}_stampSync();window.addEventListener("load",_stampSync);
 renderHome();renderChips();renderBrowse();renderAuthors();renderTime();renderMonthTrend();renderThemes();renderAnalytics();
+var _rr=document.getElementById("recentReshuffle");if(_rr)_rr.addEventListener("click",renderRecentShelf);
 if(!location.hash)showView("browse");
 readState();
 </script>
