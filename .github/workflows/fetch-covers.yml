@@ -24,6 +24,9 @@ jobs:
       - name: Second pass — retry missing with search
         run: python3 fetch_missing_covers.py
 
+      - name: Third pass — hardcoded cover IDs
+        run: python3 fetch_hardcoded_covers.py
+
       - name: Commit covers to repo
         run: |
           git config user.name "github-actions[bot]"
