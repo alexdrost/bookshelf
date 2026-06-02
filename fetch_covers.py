@@ -1,0 +1,2027 @@
+#!/usr/bin/env python3
+"""
+fetch_covers.py — download book cover images for Alex's Bookshelf
+Run from your repo root (same folder as index.html):
+    python3 fetch_covers.py
+
+Creates:
+  covers/<BookId>.jpg  — one per book
+  missing.csv          — books where no cover was found
+"""
+
+import json, os, time, re, csv, sys
+import urllib.request, urllib.parse, urllib.error
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from threading import Lock
+
+# ── Book list (307 books) ─────────────────────────────────────────────────────
+BOOKS = [
+  {
+    "id": "54897158",
+    "title": "Donald Trump v. The United States: Inside the Struggle to Stop a President",
+    "author": "Michael S. Schmidt",
+    "isbn": "9781984854674"
+  },
+  {
+    "id": "58485511",
+    "title": "The Lords of Easy Money: How the Federal Reserve Broke the American Economy",
+    "author": "Christopher Leonard",
+    "isbn": "9781797135540"
+  },
+  {
+    "id": "241471051",
+    "title": "A World Appears: A Journey into Consciousness",
+    "author": "Michael Pollan",
+    "isbn": "9781984881991"
+  },
+  {
+    "id": "44034135",
+    "title": "Kochland: The Secret History of Koch Industries and Corporate Power in America",
+    "author": "Christopher Leonard",
+    "isbn": "9781508296874"
+  },
+  {
+    "id": "235629746",
+    "title": "End of Days: Ruby Ridge, the Apocalypse, and the Unmaking of America",
+    "author": "Chris Jennings",
+    "isbn": "9780316381949"
+  },
+  {
+    "id": "231198166",
+    "title": "Hated by All the Right People: Tucker Carlson and the Unraveling of the Conservative Mind",
+    "author": "Jason Zengerle",
+    "isbn": "9781638932949"
+  },
+  {
+    "id": "221226864",
+    "title": "Butler: The Untold Story of the Near Assassination of Donald Trump and the Fight for America's Heartland",
+    "author": "Salena Zito",
+    "isbn": "9781546009160"
+  },
+  {
+    "id": "37976541",
+    "title": "Bad Blood: Secrets and Lies in a Silicon Valley Startup",
+    "author": "John Carreyrou",
+    "isbn": ""
+  },
+  {
+    "id": "221754271",
+    "title": "Coming Up Short: A Memoir of My America",
+    "author": "Robert B. Reich",
+    "isbn": "9780593803288"
+  },
+  {
+    "id": "239511576",
+    "title": "Injustice: How Politics and Fear Vanquished America's Justice Department",
+    "author": "Carol Leonnig",
+    "isbn": "9780593831380"
+  },
+  {
+    "id": "203579090",
+    "title": "The Fall",
+    "author": "Michael  Wolff",
+    "isbn": "9781250879264"
+  },
+  {
+    "id": "222292401",
+    "title": "All or Nothing: How Trump Recaptured America",
+    "author": "Michael  Wolff",
+    "isbn": "9780593735381"
+  },
+  {
+    "id": "44425746",
+    "title": "Siege: Trump Under Fire",
+    "author": "Michael  Wolff",
+    "isbn": "9781250253828"
+  },
+  {
+    "id": "59808061",
+    "title": "Too Famous",
+    "author": "Michael  Wolff",
+    "isbn": "9781250848819"
+  },
+  {
+    "id": "53746013",
+    "title": "Perversion of Justice: The Jeffrey Epstein Story",
+    "author": "Julie K. Brown",
+    "isbn": "9780063000605"
+  },
+  {
+    "id": "223436601",
+    "title": "Careless People: A Cautionary Tale of Power, Greed, and Lost Idealism",
+    "author": "Sarah Wynn-Williams",
+    "isbn": "9781250391230"
+  },
+  {
+    "id": "45730424",
+    "title": "Dark Towers: Deutsche Bank, Donald Trump, and an Epic Trail of Destruction",
+    "author": "David Enrich",
+    "isbn": "9780062878823"
+  },
+  {
+    "id": "214325852",
+    "title": "Murder the Truth: Fear, the First Amendment, and a Secret Campaign to Protect the Powerful",
+    "author": "David Enrich",
+    "isbn": "9780063433038"
+  },
+  {
+    "id": "203040700",
+    "title": "When the Night Comes Falling: The Definitive True Crime Investigation into the Idaho Student Murders",
+    "author": "Howard Blum",
+    "isbn": "9780063349285"
+  },
+  {
+    "id": "27506",
+    "title": "State of Denial",
+    "author": "Bob Woodward",
+    "isbn": "9780743272230"
+  },
+  {
+    "id": "223854728",
+    "title": "The Project: How Project 2025 Is Reshaping America",
+    "author": "David A. Graham",
+    "isbn": "9798217153725"
+  },
+  {
+    "id": "233334472",
+    "title": "The Last American President: A Broken Man, a Corrupt Party, and a World on the Brink",
+    "author": "Thom Hartmann",
+    "isbn": "9798890571861"
+  },
+  {
+    "id": "7495395",
+    "title": "The Quants: How a New Breed of Math Whizzes Conquered Wall Street and Nearly Destroyed It",
+    "author": "Scott Patterson",
+    "isbn": "9780307453372"
+  },
+  {
+    "id": "223736214",
+    "title": "Breakneck: China's Quest to Engineer the Future",
+    "author": "Dan  Wang",
+    "isbn": "9781324106036"
+  },
+  {
+    "id": "224003226",
+    "title": "The Haves and Have-Yachts: Dispatches on the Ultrarich",
+    "author": "Evan Osnos",
+    "isbn": "9781668204481"
+  },
+  {
+    "id": "176444106",
+    "title": "Abundance",
+    "author": "Ezra Klein",
+    "isbn": "9781668023488"
+  },
+  {
+    "id": "27507",
+    "title": "Plan of Attack: The Definitive Account of the Decision to Invade Iraq",
+    "author": "Bob Woodward",
+    "isbn": "9780743255486"
+  },
+  {
+    "id": "96123",
+    "title": "All the President’s Men",
+    "author": "Carl Bernstein",
+    "isbn": "9781416522911"
+  },
+  {
+    "id": "86615",
+    "title": "Bush at War",
+    "author": "Bob Woodward",
+    "isbn": "9780743461078"
+  },
+  {
+    "id": "25786035",
+    "title": "The Last of the President's Men",
+    "author": "Bob Woodward",
+    "isbn": "9781501116445"
+  },
+  {
+    "id": "60321052",
+    "title": "Profiles in Ignorance: How America's Politicians Got Dumb and Dumber",
+    "author": "Andy Borowitz",
+    "isbn": "9781668003886"
+  },
+  {
+    "id": "35276688",
+    "title": "Devil's Bargain: Steve Bannon, Donald Trump, and the Storming of the Presidency",
+    "author": "Joshua  Green",
+    "isbn": "9780735225039"
+  },
+  {
+    "id": "221972207",
+    "title": "The Mission: The CIA in the 21st Century",
+    "author": "Tim Weiner",
+    "isbn": "9780063270183"
+  },
+  {
+    "id": "211003730",
+    "title": "Death Is Our Business: Russian Mercenaries and the New Era of Private Warfare",
+    "author": "John  Lechner",
+    "isbn": "9781639733361"
+  },
+  {
+    "id": "55749283",
+    "title": "After the Fall: Being American in the World We've Made",
+    "author": "Ben  Rhodes",
+    "isbn": "9781984856067"
+  },
+  {
+    "id": "216818514",
+    "title": "Mad House: How Donald Trump, MAGA Mean Girls, a Former Used Car Salesman, a Florida Nepo Baby, and a Man with Rats in His Walls Broke Congress",
+    "author": "Annie Karni",
+    "isbn": "9780593731260"
+  },
+  {
+    "id": "220458600",
+    "title": "The Fort Bragg Cartel: Drug Trafficking and Murder in the Special Forces",
+    "author": "Seth Harp",
+    "isbn": "9780593655085"
+  },
+  {
+    "id": "230169785",
+    "title": "Retribution: Donald Trump and the Campaign That Changed America",
+    "author": "Jonathan Karl",
+    "isbn": "9798217047000"
+  },
+  {
+    "id": "211399783",
+    "title": "The Thinking Machine: Jensen Huang, Nvidia, and the World's Most Coveted Microchip",
+    "author": "Stephen Witt",
+    "isbn": "9780593832691"
+  },
+  {
+    "id": "53952310",
+    "title": "Authoritarian Nightmare: Trump and His Followers",
+    "author": "John W. Dean",
+    "isbn": "9781612199061"
+  },
+  {
+    "id": "50696262",
+    "title": "The Room Where It Happened: A White House Memoir",
+    "author": "John       Bolton",
+    "isbn": "9781982148058"
+  },
+  {
+    "id": "218726721",
+    "title": "Losing Big: America's Reckless Bet on Sports Gambling",
+    "author": "Jonathan D. Cohen",
+    "isbn": "9798987053706"
+  },
+  {
+    "id": "211179569",
+    "title": "1929: Inside the Greatest Crash in History – and How It Shattered a Nation",
+    "author": "Andrew Ross Sorkin",
+    "isbn": "9780241479421"
+  },
+  {
+    "id": "232466984",
+    "title": "107 Days",
+    "author": "Kamala Harris",
+    "isbn": "9781668211656"
+  },
+  {
+    "id": "213034913",
+    "title": "Source Code: My Beginnings",
+    "author": "Bill  Gates",
+    "isbn": "9780593801581"
+  },
+  {
+    "id": "36177789",
+    "title": "The Despot's Apprentice: Donald Trump's Attack on Democracy",
+    "author": "Brian Klaas",
+    "isbn": "9781510735859"
+  },
+  {
+    "id": "222733476",
+    "title": "The Idaho Four: An American Tragedy (James Patterson True Crime, 3)",
+    "author": "James  Patterson",
+    "isbn": "9780316572859"
+  },
+  {
+    "id": "123276708",
+    "title": "Number Go Up: Inside Crypto's Wild Rise and Staggering Fall",
+    "author": "Zeke Faux",
+    "isbn": "9780593443811"
+  },
+  {
+    "id": "31125556",
+    "title": "Destined for War: Can America and China Escape Thucydides’s Trap?",
+    "author": "Graham Allison",
+    "isbn": "9780544935273"
+  },
+  {
+    "id": "205495275",
+    "title": "The Myth of American Idealism: How U.S. Foreign Policy Endangers the World",
+    "author": "Noam Chomsky",
+    "isbn": "9781405967150"
+  },
+  {
+    "id": "218671853",
+    "title": "Bad Company: Private Equity and the Death of the American Dream",
+    "author": "Megan Greenwell",
+    "isbn": "9780063299351"
+  },
+  {
+    "id": "157981712",
+    "title": "Why We Remember: Unlocking Memory's Power to Hold on to What Matters",
+    "author": "Charan Ranganath",
+    "isbn": "9780385548632"
+  },
+  {
+    "id": "25716725",
+    "title": "Playing to the Edge: American Intelligence in the Age of Terror",
+    "author": "Michael V. Hayden",
+    "isbn": "9781594206566"
+  },
+  {
+    "id": "59366216",
+    "title": "The Man Who Broke Capitalism: How Jack Welch Gutted the Heartland and Crushed the Soul of Corporate America―and How to Undo His Legacy",
+    "author": "David Gelles",
+    "isbn": "9781982176440"
+  },
+  {
+    "id": "199798602",
+    "title": "Code Name: Pale Horse: How I Went Undercover to Expose America's Nazis",
+    "author": "Scott   Payne",
+    "isbn": "9781668032909"
+  },
+  {
+    "id": "40367623",
+    "title": "Dawn of the Code War: America's Battle Against Russia, China, and the Rising Global Cyber Threat",
+    "author": "John P. Carlin",
+    "isbn": ""
+  },
+  {
+    "id": "210084984",
+    "title": "How Countries Go Broke: The Big Cycle (Principles)",
+    "author": "Ray Dalio",
+    "isbn": "9781501124068"
+  },
+  {
+    "id": "90590134",
+    "title": "The Coming Wave: Technology, Power, and the Twenty-first Century's Greatest Dilemma",
+    "author": "Mustafa Suleyman",
+    "isbn": "9780593593950"
+  },
+  {
+    "id": "220161058",
+    "title": "Apple in China: The Capture of the World's Greatest Company",
+    "author": "Patrick  McGee",
+    "isbn": "9781668053379"
+  },
+  {
+    "id": "216247552",
+    "title": "No More Tears: The Dark Secrets of Johnson & Johnson",
+    "author": "Gardiner Harris",
+    "isbn": "9780593229866"
+  },
+  {
+    "id": "210963085",
+    "title": "Imminent: Inside the Pentagon's Hunt for UFOs",
+    "author": "Luis Elizondo",
+    "isbn": "9780063235564"
+  },
+  {
+    "id": "223927267",
+    "title": "Original Sin: President Biden's Decline, Its Cover-Up, and His Disastrous Choice to Run Again",
+    "author": "Jake Tapper",
+    "isbn": "9798217060672"
+  },
+  {
+    "id": "27214080",
+    "title": "Five Presidents: My Extraordinary Journey with Eisenhower, Kennedy, Johnson, Nixon, and Ford",
+    "author": "Clint Hill",
+    "isbn": "9781476794136"
+  },
+  {
+    "id": "33874545",
+    "title": "Shattered: Inside Hillary Clinton's Doomed Campaign",
+    "author": "Jonathan   Allen",
+    "isbn": "9780553447095"
+  },
+  {
+    "id": "209366041",
+    "title": "Countdown 1960: The Behind-the-Scenes Story of the 312 Days that Changed America's Politics Forever",
+    "author": "Chris Wallace",
+    "isbn": "9780593852194"
+  },
+  {
+    "id": "202102082",
+    "title": "Keeping the Faith: God, Democracy, and the Trial That Riveted a Nation",
+    "author": "Brenda Wineapple",
+    "isbn": "9780593229927"
+  },
+  {
+    "id": "56620811",
+    "title": "The Age of AI and Our Human Future",
+    "author": "Henry Kissinger",
+    "isbn": "9780316273800"
+  },
+  {
+    "id": "207567968",
+    "title": "Play Nice: The Rise, Fall, and Future of Blizzard Entertainment",
+    "author": "Jason Schreier",
+    "isbn": "9781538725429"
+  },
+  {
+    "id": "27833494",
+    "title": "Dark Money: The Hidden History of the Billionaires Behind the Rise of the Radical Right",
+    "author": "Jane Mayer",
+    "isbn": ""
+  },
+  {
+    "id": "216864525",
+    "title": "Fight: Inside the Wildest Battle for the White House",
+    "author": "Jonathan   Allen",
+    "isbn": "9780063438644"
+  },
+  {
+    "id": "211003831",
+    "title": "Money, Lies, and God: Inside the Movement to Destroy American Democracy",
+    "author": "Katherine Stewart",
+    "isbn": "9781635578546"
+  },
+  {
+    "id": "44453035",
+    "title": "The Power Worshippers: Inside the Dangerous Rise of Religious Nationalism",
+    "author": "Katherine Stewart",
+    "isbn": "9781635573435"
+  },
+  {
+    "id": "27209433",
+    "title": "White Trash: The 400-Year Untold History of Class in America",
+    "author": "Nancy Isenberg",
+    "isbn": "9780670785971"
+  },
+  {
+    "id": "204236707",
+    "title": "On the Edge: The Art of Risking Everything",
+    "author": "Nate Silver",
+    "isbn": "9781594204128"
+  },
+  {
+    "id": "199797519",
+    "title": "Madoff: The Final Word",
+    "author": "Richard Behar",
+    "isbn": "9781476726892"
+  },
+  {
+    "id": "210454076",
+    "title": "The Devil at His Elbow: Alex Murdaugh and the Fall of a Southern Dynasty",
+    "author": "Valerie Bauerlein",
+    "isbn": "9780593500583"
+  },
+  {
+    "id": "50716468",
+    "title": "Becoming Kim Jong Un: A Former CIA Officer's Insights into North Korea's Enigmatic Young Dictator",
+    "author": "Jung H. Pak",
+    "isbn": "9781984819727"
+  },
+  {
+    "id": "41721428",
+    "title": "Can't Hurt Me: Master Your Mind and Defy the Odds",
+    "author": "David Goggins",
+    "isbn": "1544512260"
+  },
+  {
+    "id": "209999111",
+    "title": "Ministry of Truth: Democracy, Reality, and the Republicans' War on the Recent Past",
+    "author": "Steve Benen",
+    "isbn": "9780063393677"
+  },
+  {
+    "id": "60209478",
+    "title": "A Billion Years: My Escape From a Life in the Highest Ranks of Scientology",
+    "author": "Mike Rinder",
+    "isbn": "9781982185763"
+  },
+  {
+    "id": "23692271",
+    "title": "Sapiens: A Brief History of Humankind",
+    "author": "Yuval Noah Harari",
+    "isbn": ""
+  },
+  {
+    "id": "61423989",
+    "title": "A Fever in the Heartland: The Ku Klux Klan's Plot to Take Over America, and the Woman Who Stopped Them",
+    "author": "Timothy Egan",
+    "isbn": "9780735225268"
+  },
+  {
+    "id": "210999999",
+    "title": "Something Lost, Something Gained: Reflections on Life, Love, and Liberty",
+    "author": "Hillary Rodham Clinton",
+    "isbn": "9781668017234"
+  },
+  {
+    "id": "183932735",
+    "title": "Autocracy, Inc.",
+    "author": "Anne Applebaum",
+    "isbn": "9780241627891"
+  },
+  {
+    "id": "209786389",
+    "title": "Framed: Astonishing True Stories of Wrongful Convictions",
+    "author": "John Grisham",
+    "isbn": "9780385550444"
+  },
+  {
+    "id": "45046725",
+    "title": "Let the People Pick the President: The Case for Abolishing the Electoral College",
+    "author": "Jesse Wegman",
+    "isbn": "9781250221971"
+  },
+  {
+    "id": "216857785",
+    "title": "Revenge of the Tipping Point",
+    "author": "Malcolm Gladwell",
+    "isbn": "9780316575805"
+  },
+  {
+    "id": "54114950",
+    "title": "Too Much and Never Enough: How My Family Created the World's Most Dangerous Man",
+    "author": "Mary L. Trump",
+    "isbn": "9781982141486"
+  },
+  {
+    "id": "2612",
+    "title": "The Tipping Point: How Little Things Can Make a Big Difference",
+    "author": "Malcolm Gladwell",
+    "isbn": ""
+  },
+  {
+    "id": "207689829",
+    "title": "On Call: A Doctor's Journey in Public Service",
+    "author": "Anthony Fauci",
+    "isbn": "9780593657478"
+  },
+  {
+    "id": "16130157",
+    "title": "The Firm: The Story of McKinsey and Its Secret Influence on American Business",
+    "author": "Duff McDonald",
+    "isbn": "9781439190999"
+  },
+  {
+    "id": "63365317",
+    "title": "The Showman",
+    "author": "Simon Shuster",
+    "isbn": "9780063307421"
+  },
+  {
+    "id": "199461393",
+    "title": "The Death of Truth: How Social Media and the Internet Gave Snake Oil Salesmen and Demagogues the Weapons They Needed to Destroy Trust and Polarize the World – and What We Can Do About It",
+    "author": "Steven Brill",
+    "isbn": "9780525658313"
+  },
+  {
+    "id": "44643351",
+    "title": "Fentanyl, Inc.: How Rogue Chemists Are Creating the Deadliest Wave of the Opioid Epidemic",
+    "author": "Ben Westhoff",
+    "isbn": "9780802127433"
+  },
+  {
+    "id": "59720687",
+    "title": "A Sacred Oath: Memoirs of a Secretary of Defense During Extraordinary Times",
+    "author": "Mark T. Esper",
+    "isbn": "9780063144316"
+  },
+  {
+    "id": "171681821",
+    "title": "The Anxious Generation: How the Great Rewiring of Childhood Caused an Epidemic of Mental Illness",
+    "author": "Jonathan Haidt",
+    "isbn": "9780593655030"
+  },
+  {
+    "id": "55994102",
+    "title": "Flying Blind: The 737 MAX Tragedy and the Fall of Boeing",
+    "author": "Peter Robison",
+    "isbn": "9780385546492"
+  },
+  {
+    "id": "40588302",
+    "title": "Impeachment: An American History",
+    "author": "Jeffrey A. Engel",
+    "isbn": "9781984843500"
+  },
+  {
+    "id": "198493808",
+    "title": "The Situation Room: The Inside Story of Presidents in Crisis",
+    "author": "George  Stephanopoulos",
+    "isbn": "9781538740767"
+  },
+  {
+    "id": "40538681",
+    "title": "Midnight in Chernobyl: The Untold Story of the World's Greatest Nuclear Disaster",
+    "author": "Adam Higginbotham",
+    "isbn": "9781501134616"
+  },
+  {
+    "id": "199798785",
+    "title": "Challenger: A True Story of Heroism and Disaster on the Edge of Space",
+    "author": "Adam Higginbotham",
+    "isbn": "9781982176617"
+  },
+  {
+    "id": "201896702",
+    "title": "At War with Ourselves: My Tour of Duty in the Trump White House",
+    "author": "H.R. McMaster",
+    "isbn": "9780063386280"
+  },
+  {
+    "id": "63251778",
+    "title": "The Heat Will Kill You First: Life and Death on a Scorched Planet",
+    "author": "Jeff Goodell",
+    "isbn": "9780316497572"
+  },
+  {
+    "id": "204316955",
+    "title": "Undivided: The Quest for Racial Solidarity in an American Church",
+    "author": "Hahrie Han",
+    "isbn": "9780593318867"
+  },
+  {
+    "id": "209812423",
+    "title": "True Gretch: What I've Learned About Life, Leadership, and Everything in Between",
+    "author": "Gretchen Whitmer",
+    "isbn": "9781668072318"
+  },
+  {
+    "id": "54916250",
+    "title": "Disloyal: The True Story of the Former Personal Attorney to President Donald J. Trump",
+    "author": "Michael   Cohen",
+    "isbn": "9781510764705"
+  },
+  {
+    "id": "12158480",
+    "title": "Why Nations Fail: The Origins of Power, Prosperity, and Poverty",
+    "author": "Daron Acemoğlu",
+    "isbn": "9780307719218"
+  },
+  {
+    "id": "217217007",
+    "title": "War",
+    "author": "Bob Woodward",
+    "isbn": ""
+  },
+  {
+    "id": "50486810",
+    "title": "War for Eternity: Inside Bannon's Far-Right Circle of Global Powerbrokers",
+    "author": "Benjamin R. Teitelbaum",
+    "isbn": "9781094149752"
+  },
+  {
+    "id": "204927599",
+    "title": "Nexus: A Brief History of Information Networks from the Stone Age to AI",
+    "author": "Yuval Noah Harari",
+    "isbn": "9780593734223"
+  },
+  {
+    "id": "208930976",
+    "title": "Lucky Loser: How Donald Trump Squandered His Father's Fortune and Created the Illusion of Success",
+    "author": "Russ Buettner",
+    "isbn": "9780593298640"
+  },
+  {
+    "id": "60387898",
+    "title": "Confidence Man: The Making of Donald Trump and the Breaking of America",
+    "author": "Maggie Haberman",
+    "isbn": "9780593297346"
+  },
+  {
+    "id": "37506133",
+    "title": "The Plot to Destroy Democracy: How Putin and his Spies are Undermining America and Dismantling the West",
+    "author": "Malcolm W. Nance",
+    "isbn": "9780316484817"
+  },
+  {
+    "id": "199344862",
+    "title": "White Rural Rage: The Threat to American Democracy",
+    "author": "Thomas F. Schaller",
+    "isbn": "9780593729144"
+  },
+  {
+    "id": "56124858",
+    "title": "The Reckoning: Our Nation's Trauma and Finding a Way to Heal",
+    "author": "Mary L. Trump",
+    "isbn": "9781250278456"
+  },
+  {
+    "id": "35230469",
+    "title": "Fascism: A Warning",
+    "author": "Madeleine K. Albright",
+    "isbn": "9780062802231"
+  },
+  {
+    "id": "60584133",
+    "title": "The Big Lie: Election Chaos, Political Opportunism, and the State of American Politics After 2020",
+    "author": "Jonathan   Lemire",
+    "isbn": "9781250819635"
+  },
+  {
+    "id": "150065063",
+    "title": "Attack from Within: How Disinformation Is Sabotaging America",
+    "author": "Barbara McQuade",
+    "isbn": "9781644213636"
+  },
+  {
+    "id": "34114362",
+    "title": "What Happened",
+    "author": "Hillary Rodham Clinton",
+    "isbn": ""
+  },
+  {
+    "id": "40226205",
+    "title": "Unhinged: An Insider's Account of the Trump White House",
+    "author": "Omarosa Manigault Newman",
+    "isbn": "9781508269113"
+  },
+  {
+    "id": "35108805",
+    "title": "A Higher Loyalty: Truth, Lies, and Leadership",
+    "author": "James B. Comey",
+    "isbn": "9781250192455"
+  },
+  {
+    "id": "52717403",
+    "title": "American Oligarchs: The Kushners, the Trumps, and the Marriage of Money and Power",
+    "author": "Andrea Bernstein",
+    "isbn": "9781324001874"
+  },
+  {
+    "id": "52118381",
+    "title": "The System: Who Rigged It, How We Fix It",
+    "author": "Robert B. Reich",
+    "isbn": "9780525659044"
+  },
+  {
+    "id": "41939872",
+    "title": "The Threat: How the FBI Protects America in the Age of Terror and Trump",
+    "author": "Andrew G. McCabe",
+    "isbn": "9781250207593"
+  },
+  {
+    "id": "50487024",
+    "title": "How Did We Get Here?: From Theodore Roosevelt to Donald Trump",
+    "author": "Robert Dallek",
+    "isbn": "9781094158624"
+  },
+  {
+    "id": "59493278",
+    "title": "They Want to Kill Americans: The Militias, Terrorists, and Deranged Ideology of the Trump Insurgency",
+    "author": "Malcolm W. Nance",
+    "isbn": "9781250279002"
+  },
+  {
+    "id": "58436503",
+    "title": "Landslide: The Final Days of the Trump Presidency",
+    "author": "Michael  Wolff",
+    "isbn": "9781250830036"
+  },
+  {
+    "id": "36595101",
+    "title": "Fire and Fury: Inside the Trump White House",
+    "author": "Michael  Wolff",
+    "isbn": "9781250158062"
+  },
+  {
+    "id": "41436213",
+    "title": "Sandworm: A New Era of Cyberwar and the Hunt for the Kremlin's Most Dangerous Hackers",
+    "author": "Andy Greenberg",
+    "isbn": "9780385544412"
+  },
+  {
+    "id": "211143818",
+    "title": "The Art of Power: My Story as America's First Woman Speaker of the House",
+    "author": "Nancy Pelosi",
+    "isbn": "9781668048047"
+  },
+  {
+    "id": "55057586",
+    "title": "Zero Fail: The Rise and Fall of the Secret Service",
+    "author": "Carol Leonnig",
+    "isbn": "9780399589010"
+  },
+  {
+    "id": "58412441",
+    "title": "I Alone Can Fix It: Donald J. Trump's Catastrophic Final Year",
+    "author": "Carol Leonnig",
+    "isbn": ""
+  },
+  {
+    "id": "90590139",
+    "title": "Democracy Awakening: Notes on the State of America",
+    "author": "Heather Cox Richardson",
+    "isbn": "9780593652961"
+  },
+  {
+    "id": "52576769",
+    "title": "A Very Stable Genius: Donald J. Trump's Testing of America",
+    "author": "Philip Rucker",
+    "isbn": "9781984877505"
+  },
+  {
+    "id": "27161156",
+    "title": "Hillbilly Elegy: A Memoir of a Family and Culture in Crisis",
+    "author": "J.D. Vance",
+    "isbn": ""
+  },
+  {
+    "id": "195790601",
+    "title": "When the Clock Broke: Con Men, Conspiracists, and How America Cracked Up in the Early 1990s",
+    "author": "John Ganz",
+    "isbn": "9780374605445"
+  },
+  {
+    "id": "56863374",
+    "title": "Mindfulness: HBR Emotional Intelligence Series",
+    "author": "Harvard Business Review",
+    "isbn": ""
+  },
+  {
+    "id": "43868109",
+    "title": "Empire of Pain: The Secret History of the Sackler Dynasty",
+    "author": "Patrick Radden Keefe",
+    "isbn": "9780385545686"
+  },
+  {
+    "id": "58450272",
+    "title": "Trillion Dollar Triage: How Jay Powell and the Fed Battled a President and a Pandemic---and Prevented Economic Disaster",
+    "author": "Nick Timiraos",
+    "isbn": "9780316272810"
+  },
+  {
+    "id": "157095669",
+    "title": "Hidden Potential: The Science of Achieving Greater Things",
+    "author": "Adam M. Grant",
+    "isbn": "9780593653142"
+  },
+  {
+    "id": "59546340",
+    "title": "Sandy Hook",
+    "author": "Elizabeth  Williamson",
+    "isbn": "9781524746575"
+  },
+  {
+    "id": "195820877",
+    "title": "World on the Brink: How America Can Beat China in the Race for the Twenty-First Century",
+    "author": "Dmitri Alperovitch",
+    "isbn": "9781541704091"
+  },
+  {
+    "id": "55429560",
+    "title": "First Platoon: A Story of Modern War in the Age of Identity Dominance",
+    "author": "Annie Jacobsen",
+    "isbn": "9781524746681"
+  },
+  {
+    "id": "17333289",
+    "title": "Operation Paperclip: The Secret Intelligence Program that Brought Nazi Scientists to America",
+    "author": "Annie Jacobsen",
+    "isbn": "9780316221047"
+  },
+  {
+    "id": "11305364",
+    "title": "Area 51: An Uncensored History of America's Top Secret Military Base",
+    "author": "Annie Jacobsen",
+    "isbn": "9780316132947"
+  },
+  {
+    "id": "41716921",
+    "title": "Surprise, Kill, Vanish: The Secret History Of CIA Paramilitary Armies, Operators, And Assassins",
+    "author": "Annie Jacobsen",
+    "isbn": "9780316441438"
+  },
+  {
+    "id": "53642699",
+    "title": "The Mountain Is You: Transforming Self-Sabotage Into Self-Mastery",
+    "author": "Brianna Wiest",
+    "isbn": ""
+  },
+  {
+    "id": "30841980",
+    "title": "Phenomena: The Secret History of the U.S. Government's Investigations into Extrasensory Perception and Psychokinesis",
+    "author": "Annie Jacobsen",
+    "isbn": "9780316349369"
+  },
+  {
+    "id": "24396871",
+    "title": "The Pentagon's Brain: An Uncensored History of DARPA, America's Top-Secret Military Research Agency",
+    "author": "Annie Jacobsen",
+    "isbn": "9780316371766"
+  },
+  {
+    "id": "182733784",
+    "title": "Nuclear War: A Scenario",
+    "author": "Annie Jacobsen",
+    "isbn": "9780593476093"
+  },
+  {
+    "id": "197773418",
+    "title": "Slow Productivity: The Lost Art of Accomplishment Without Burnout",
+    "author": "Cal Newport",
+    "isbn": "9780593544853"
+  },
+  {
+    "id": "13586928",
+    "title": "Playing to Win: How Strategy Really Works",
+    "author": "A.G. Lafley",
+    "isbn": "9781422187395"
+  },
+  {
+    "id": "46223297",
+    "title": "Permanent Record",
+    "author": "Edward Snowden",
+    "isbn": "9781250237231"
+  },
+  {
+    "id": "25744928",
+    "title": "Deep Work: Rules for Focused Success in a Distracted World",
+    "author": "Cal Newport",
+    "isbn": "9781455586691"
+  },
+  {
+    "id": "62919402",
+    "title": "Homegrown: Timothy McVeigh and the Rise of Right-Wing Extremism",
+    "author": "Jeffrey Toobin",
+    "isbn": "9781668013571"
+  },
+  {
+    "id": "6691186",
+    "title": "How Markets Fail: The Logic of Economic Calamities",
+    "author": "John Cassidy",
+    "isbn": "9780374173203"
+  },
+  {
+    "id": "32622193",
+    "title": "A Little History of Economics",
+    "author": "Niall Kishtainy",
+    "isbn": "9780300206364"
+  },
+  {
+    "id": "55723020",
+    "title": "Dopamine Nation: Finding Balance in the Age of Indulgence",
+    "author": "Anna Lembke",
+    "isbn": "9781524746735"
+  },
+  {
+    "id": "58935131",
+    "title": "Unthinkable: Trauma, Truth, and the Trials of American Democracy",
+    "author": "Jamie Raskin",
+    "isbn": "9780063209787"
+  },
+  {
+    "id": "122769179",
+    "title": "Renegade: Defending Democracy and Liberty in Our Divided Country",
+    "author": "Adam Kinzinger",
+    "isbn": "9780593654170"
+  },
+  {
+    "id": "60704408",
+    "title": "The January 6th Report",
+    "author": "Select Committee to Investigate the January 6th Attack on the United States Capitol",
+    "isbn": ""
+  },
+  {
+    "id": "62926960",
+    "title": "End Times: Elites, Counter-Elites, and the Path of Political Disintegration",
+    "author": "Peter Turchin",
+    "isbn": "9780593490501"
+  },
+  {
+    "id": "25852784",
+    "title": "Evicted: Poverty and Profit in the American City",
+    "author": "Matthew Desmond",
+    "isbn": "9780553447439"
+  },
+  {
+    "id": "54233271",
+    "title": "The Making of Biblical Womanhood: How the Subjugation of Women Became Gospel Truth",
+    "author": "Beth Allison Barr",
+    "isbn": "9781587434709"
+  },
+  {
+    "id": "112975131",
+    "title": "The Kingdom, the Power, and the Glory: American Evangelicals in an Age of Extremism",
+    "author": "Tim Alberta",
+    "isbn": "9780063226883"
+  },
+  {
+    "id": "134115745",
+    "title": "Oath and Honor: A Memoir and a Warning",
+    "author": "Liz Cheney",
+    "isbn": "9780316572064"
+  },
+  {
+    "id": "123273891",
+    "title": "The Fabulist: The Lying, Hustling, Grifting, Stealing, and Very American Legend of George Santos",
+    "author": "Mark Chiusano",
+    "isbn": "9781668043677"
+  },
+  {
+    "id": "200342444",
+    "title": "Pipeline to Power: The 40-Year Plan to Capture the Supreme Court",
+    "author": "Vicky Ward",
+    "isbn": ""
+  },
+  {
+    "id": "58395041",
+    "title": "Betrayal: The Final Act of the Trump Show",
+    "author": "Jonathan Karl",
+    "isbn": "9780593186329"
+  },
+  {
+    "id": "49378800",
+    "title": "Front Row at the Trump Show",
+    "author": "Jonathan Karl",
+    "isbn": "9781524745646"
+  },
+  {
+    "id": "148365315",
+    "title": "Tired of Winning: Donald Trump and the End of the Grand Old Party",
+    "author": "Jonathan Karl",
+    "isbn": "9780593473993"
+  },
+  {
+    "id": "58433804",
+    "title": "The Future of Work: The Insights You Need from Harvard Business Review (HBR Insights)",
+    "author": "Harvard Business Review",
+    "isbn": "9781647822293"
+  },
+  {
+    "id": "168677579",
+    "title": "Prequel: An American Fight Against Fascism",
+    "author": "Rachel Maddow",
+    "isbn": "9780593444511"
+  },
+  {
+    "id": "34014215",
+    "title": "Happiness (HBR Emotional Intelligence Series)",
+    "author": "Harvard Business Review",
+    "isbn": "9781633693210"
+  },
+  {
+    "id": "101025305",
+    "title": "Romney: A Reckoning",
+    "author": "McKay Coppins",
+    "isbn": "9781982196233"
+  },
+  {
+    "id": "61796680",
+    "title": "Recoding America: Why Government Is Failing in the Digital Age and How We Can Do Better",
+    "author": "Jennifer Pahlka",
+    "isbn": "9781250266774"
+  },
+  {
+    "id": "78642417",
+    "title": "Testimony: Inside the Evangelical Movement That Failed a Generation",
+    "author": "Jon Ward",
+    "isbn": "9781587435775"
+  },
+  {
+    "id": "32895535",
+    "title": "Why Buddhism Is True: The Science and Philosophy of Meditation and Enlightenment",
+    "author": "Robert  Wright",
+    "isbn": "9781508235408"
+  },
+  {
+    "id": "113934",
+    "title": "The Goal: A Process of Ongoing Improvement",
+    "author": "Eliyahu M. Goldratt",
+    "isbn": "9780884271789"
+  },
+  {
+    "id": "122765395",
+    "title": "Elon Musk",
+    "author": "Walter Isaacson",
+    "isbn": "9781982181284"
+  },
+  {
+    "id": "188437148",
+    "title": "American Gun: The True Story of the AR-15",
+    "author": "Cameron McWhirter",
+    "isbn": "9780374103859"
+  },
+  {
+    "id": "167770288",
+    "title": "Counting the Cost",
+    "author": "Jill Duggar",
+    "isbn": ""
+  },
+  {
+    "id": "52764767",
+    "title": "White Too Long: The Legacy of White Supremacy in American Christianity",
+    "author": "Robert P. Jones",
+    "isbn": "9781982122867"
+  },
+  {
+    "id": "48557815",
+    "title": "A Warning",
+    "author": "Anonymous",
+    "isbn": ""
+  },
+  {
+    "id": "74892462",
+    "title": "Blowback A Warning to Save Democracy from the Next Trump",
+    "author": "Miles  Taylor",
+    "isbn": "9781668016008"
+  },
+  {
+    "id": "33917107",
+    "title": "On Tyranny: Twenty Lessons from the Twentieth Century",
+    "author": "Timothy Snyder",
+    "isbn": "9780804190114"
+  },
+  {
+    "id": "23258873",
+    "title": "The General and the Genius: Groves and Oppenheimer—The Unlikely Partnership that Built the Atom Bomb",
+    "author": "James W. Kunetka",
+    "isbn": "9781621573388"
+  },
+  {
+    "id": "41881472",
+    "title": "The Psychology of Money: Timeless Lessons on Wealth, Greed, and Happiness",
+    "author": "Morgan Housel",
+    "isbn": ""
+  },
+  {
+    "id": "58203328",
+    "title": "Midnight in Washington: How We Almost Lost Our Democracy and Still Could",
+    "author": "Adam Schiff",
+    "isbn": ""
+  },
+  {
+    "id": "29379464",
+    "title": "American Pain: How a Young Felon and His Ring of Doctors Unleashed America's Deadliest Drug Epidemic",
+    "author": "John Temple",
+    "isbn": "9781493026661"
+  },
+  {
+    "id": "39888196",
+    "title": "Trump / Russia: A Definitive History",
+    "author": "Seth Hettena",
+    "isbn": "9781612197401"
+  },
+  {
+    "id": "48806578",
+    "title": "It Was All a Lie: How the Republican Party Became Donald Trump",
+    "author": "Stuart Stevens",
+    "isbn": "9780525658450"
+  },
+  {
+    "id": "6617037",
+    "title": "Debt: The First 5,000 Years",
+    "author": "David Graeber",
+    "isbn": "9781933633862"
+  },
+  {
+    "id": "3754705",
+    "title": "Little Black Book of Entrepreneurship",
+    "author": "Fernando Trías de Bes",
+    "isbn": "9781580089326"
+  },
+  {
+    "id": "60462182",
+    "title": "Tracers in the Dark: The Global Hunt for the Crime Lords of Cryptocurrency",
+    "author": "Andy Greenberg",
+    "isbn": "9780385548106"
+  },
+  {
+    "id": "11324722",
+    "title": "The Righteous Mind: Why Good People Are Divided by Politics and Religion",
+    "author": "Jonathan Haidt",
+    "isbn": ""
+  },
+  {
+    "id": "22699774",
+    "title": "The Lords of Creation: The History of America's 1 Percent (Forbidden Bookshelf)",
+    "author": "Frederick Lewis Allen",
+    "isbn": "9781497622661"
+  },
+  {
+    "id": "58446721",
+    "title": "The Power of Regret: How Looking Backward Moves Us Forward",
+    "author": "Daniel H. Pink",
+    "isbn": "9780735210653"
+  },
+  {
+    "id": "60393585",
+    "title": "Christianity Made Me Talk Like an Idiot",
+    "author": "Seth Andrews",
+    "isbn": "9781977250780"
+  },
+  {
+    "id": "61336679",
+    "title": "The Declassification Engine: What History Reveals About America's Top Secrets",
+    "author": "Matthew Connelly",
+    "isbn": "9781101871577"
+  },
+  {
+    "id": "36613747",
+    "title": "How to Change Your Mind: The New Science of Psychedelics",
+    "author": "Michael Pollan",
+    "isbn": "9780241294222"
+  },
+  {
+    "id": "56898187",
+    "title": "Corruptible: Who Gets Power and How It Changes Us",
+    "author": "Brian Klaas",
+    "isbn": "9781982154097"
+  },
+  {
+    "id": "53345186",
+    "title": "Hoax: Donald Trump, Fox News, and the Dangerous Distortion of Truth",
+    "author": "Brian Stelter",
+    "isbn": "9781982142469"
+  },
+  {
+    "id": "60461917",
+    "title": "Servants of the Damned: Giant Law Firms, Donald Trump, and the Corruption of Justice",
+    "author": "David Enrich",
+    "isbn": "9780063142176"
+  },
+  {
+    "id": "32191706",
+    "title": "The Color of Law: A Forgotten History of How Our Government Segregated America",
+    "author": "Richard Rothstein",
+    "isbn": "9781631492853"
+  },
+  {
+    "id": "51660",
+    "title": "Food of the Gods: The Search for the Original Tree of Knowledge",
+    "author": "Terence McKenna",
+    "isbn": "9780553371307"
+  },
+  {
+    "id": "20556323",
+    "title": "Complex PTSD: From Surviving to Thriving",
+    "author": "Pete Walker",
+    "isbn": ""
+  },
+  {
+    "id": "60965426",
+    "title": "The Creative Act: A Way of Being",
+    "author": "Rick Rubin",
+    "isbn": "9780593652886"
+  },
+  {
+    "id": "59088361",
+    "title": "Do Hard Things: Why We Get Resilience Wrong and the Surprising Science of Real Toughness",
+    "author": "Steve Magness",
+    "isbn": "9780063098619"
+  },
+  {
+    "id": "13260065",
+    "title": "The Lost Bank: The Story of Washington Mutual-The Biggest Bank Failure in American History",
+    "author": "Kirsten Grind",
+    "isbn": "9781451617924"
+  },
+  {
+    "id": "12143200",
+    "title": "Drift",
+    "author": "Rachel Maddow",
+    "isbn": "9780307970381"
+  },
+  {
+    "id": "36373587",
+    "title": "Pure: Inside the Evangelical Movement That Shamed a Generation of Young Women and How I Broke Free",
+    "author": "Linda Kay Klein",
+    "isbn": "9781501124815"
+  },
+  {
+    "id": "57933306",
+    "title": "Stolen Focus: Why You Can't Pay Attention— and How to Think Deeply Again",
+    "author": "Johann Hari",
+    "isbn": "9780593138519"
+  },
+  {
+    "id": "29633355",
+    "title": "Men Without Work: America's Invisible Crisis (New Threats to Freedom Series)",
+    "author": "Nicholas Eberstadt",
+    "isbn": "9781599474694"
+  },
+  {
+    "id": "60321447",
+    "title": "Chip War: The Fight for the World's Most Critical Technology",
+    "author": "Chris   Miller",
+    "isbn": "9781982172008"
+  },
+  {
+    "id": "24040192",
+    "title": "The New Tsar: The Rise and Reign of Vladimir Putin",
+    "author": "Steven Lee Myers",
+    "isbn": "9780307961617"
+  },
+  {
+    "id": "35356384",
+    "title": "How Democracies Die: What History Reveals About Our Future",
+    "author": "Steven Levitsky",
+    "isbn": "9781524762933"
+  },
+  {
+    "id": "35863927",
+    "title": "How Clients Buy: A Practical Guide to Business Development for Consulting and Professional Services",
+    "author": "Tom McMakin",
+    "isbn": "9781119434726"
+  },
+  {
+    "id": "55180251",
+    "title": "How to Win Client Business When You Don't Know Where to Start: A Rainmaking Guide for Consulting and Professional Services",
+    "author": "Doug Fletcher",
+    "isbn": "9781119676904"
+  },
+  {
+    "id": "50997029",
+    "title": "How to Do the Work: Recognize Your Patterns, Heal from Your Past, and Create Your Self",
+    "author": "Nicole LePera",
+    "isbn": "9780063012103"
+  },
+  {
+    "id": "58783229",
+    "title": "The Flag and the Cross: White Christian Nationalism and the Threat to American Democracy",
+    "author": "Philip S. Gorski",
+    "isbn": "9780197618684"
+  },
+  {
+    "id": "53238858",
+    "title": "What Happened To You?: Conversations on Trauma, Resilience, and Healing",
+    "author": "Bruce D. Perry",
+    "isbn": "9781250223180"
+  },
+  {
+    "id": "44595007",
+    "title": "Indistractable: How to Control Your Attention and Choose Your Life",
+    "author": "Nir   Eyal",
+    "isbn": "9781948836531"
+  },
+  {
+    "id": "38606235",
+    "title": "Subscribed: Why the Subscription Model Will Be Your Company's Future - and What to Do About It",
+    "author": "Tien Tzuo",
+    "isbn": "9780525536475"
+  },
+  {
+    "id": "580305",
+    "title": "Chasing Daylight: How My Forthcoming Death Transformed My Life",
+    "author": "Eugene O'Kelly",
+    "isbn": "9780071471725"
+  },
+  {
+    "id": "10418591",
+    "title": "I Moved Your Cheese: For Those Who Refuse to Live as Mice in Someone Else's Maze (Bk Business)",
+    "author": "Deepak  Malhotra",
+    "isbn": "9781609940652"
+  },
+  {
+    "id": "38740751",
+    "title": "The Snowball System: How to Win More Business and Turn Clients into Raving Fans",
+    "author": "Mo Bunnell",
+    "isbn": "9781610399609"
+  },
+  {
+    "id": "60018575",
+    "title": "Discipline Is Destiny: The Power of Self-Control",
+    "author": "Ryan Holiday",
+    "isbn": "9780593191699"
+  },
+  {
+    "id": "61278539",
+    "title": "Ejaculate Responsibly: A Whole New Way to Think About Abortion",
+    "author": "Gabrielle Stanley Blair",
+    "isbn": "9781523523184"
+  },
+  {
+    "id": "31920777",
+    "title": "American Kingpin: The Epic Hunt for the Criminal Mastermind Behind the Silk Road",
+    "author": "Nick Bilton",
+    "isbn": "9781591848141"
+  },
+  {
+    "id": "25602451",
+    "title": "Losing the Signal: The Untold Story Behind the Extraordinary Rise and Spectacular Fall of BlackBerry",
+    "author": "Jacquie McNish",
+    "isbn": ""
+  },
+  {
+    "id": "45897523",
+    "title": "Blowout",
+    "author": "Rachel Maddow",
+    "isbn": "9780525575498"
+  },
+  {
+    "id": "60526486",
+    "title": "For a Dollar and a Dream: State Lotteries in Modern America",
+    "author": "Jonathan D. Cohen",
+    "isbn": "9780197604885"
+  },
+  {
+    "id": "53121662",
+    "title": "Jesus and John Wayne: How White Evangelicals Corrupted a Faith and Fractured a Nation",
+    "author": "Kristin Kobes Du Mez",
+    "isbn": "9781631495731"
+  },
+  {
+    "id": "50155421",
+    "title": "Twilight of Democracy: The Seductive Lure of Authoritarianism",
+    "author": "Anne Applebaum",
+    "isbn": "9780771005855"
+  },
+  {
+    "id": "59608800",
+    "title": "Not in It to Win It: Why Choosing Sides Sidelines The Church",
+    "author": "Andy Stanley",
+    "isbn": "9780310138921"
+  },
+  {
+    "id": "63029353",
+    "title": "The Trump Tapes: Bob Woodward's Twenty Interviews with President Donald Trump",
+    "author": "Bob Woodward",
+    "isbn": "9781797124735"
+  },
+  {
+    "id": "1633",
+    "title": "Getting Things Done: The Art of Stress-Free Productivity",
+    "author": "David    Allen",
+    "isbn": "9780142000281"
+  },
+  {
+    "id": "60399106",
+    "title": "The Divider: Trump in the White House, 2017 - 2021",
+    "author": "Peter Baker",
+    "isbn": "9780385546546"
+  },
+  {
+    "id": "59616977",
+    "title": "Building a Second Brain: A Proven Method to Organize Your Digital Life and Unlock Your Creative Potential",
+    "author": "Tiago Forte",
+    "isbn": "9781982167387"
+  },
+  {
+    "id": "177152",
+    "title": "A Theory of Everything: An Integral Vision for Business, Politics, Science & Spirituality",
+    "author": "Ken Wilber",
+    "isbn": "9781570628559"
+  },
+  {
+    "id": "44148905",
+    "title": "American Carnage: On the Front Lines of the Republican Civil War and the Rise of President Trump",
+    "author": "Tim Alberta",
+    "isbn": "9780062896445"
+  },
+  {
+    "id": "53562067",
+    "title": "Evil Geniuses: The Unmaking of America",
+    "author": "Kurt Andersen",
+    "isbn": "9781984801364"
+  },
+  {
+    "id": "35171984",
+    "title": "Fantasyland: How America Went Haywire: A 500-Year History",
+    "author": "Kurt Andersen",
+    "isbn": ""
+  },
+  {
+    "id": "38390751",
+    "title": "The Infinite Game",
+    "author": "Simon Sinek",
+    "isbn": "9780735213500"
+  },
+  {
+    "id": "58684275",
+    "title": "Torn Apart: How the Child Welfare System Destroys Black Families—and How Abolition Can Build a Safer World",
+    "author": "Dorothy Roberts",
+    "isbn": "9781549193170"
+  },
+  {
+    "id": "132917",
+    "title": "A Short History of Reconstruction, 1863-1877",
+    "author": "Eric Foner",
+    "isbn": "9780060964313"
+  },
+  {
+    "id": "18668059",
+    "title": "The Obstacle Is the Way: The Timeless Art of Turning Trials into Triumph",
+    "author": "Ryan Holiday",
+    "isbn": "9781591846352"
+  },
+  {
+    "id": "55361205",
+    "title": "A Promised Land",
+    "author": "Barack Obama",
+    "isbn": "9781524763183"
+  },
+  {
+    "id": "53317913",
+    "title": "Rage",
+    "author": "Bob Woodward",
+    "isbn": "9781982131739"
+  },
+  {
+    "id": "41012533",
+    "title": "Fear: Trump in the White House",
+    "author": "Bob Woodward",
+    "isbn": "9781501175510"
+  },
+  {
+    "id": "58546518",
+    "title": "Peril",
+    "author": "Bob Woodward",
+    "isbn": "9781982182939"
+  },
+  {
+    "id": "34758210",
+    "title": "The Color of Money: Black Banks and the Racial Wealth Gap",
+    "author": "Mehrsa Baradaran",
+    "isbn": "9780674970953"
+  },
+  {
+    "id": "13622997",
+    "title": "It's Even Worse Than It Looks: How the American Constitutional System Collided with the Politics of Extremism",
+    "author": "Thomas E. Mann",
+    "isbn": "9780465031337"
+  },
+  {
+    "id": "55776895",
+    "title": "The Tragedy of Rudy Giuliani",
+    "author": "Michael  Wolff",
+    "isbn": ""
+  },
+  {
+    "id": "18927310",
+    "title": "The Original Watergate Stories (Kindle Single) (The Washington Post Book 1)",
+    "author": "The Washington Post",
+    "isbn": "9781938120589"
+  },
+  {
+    "id": "12821470",
+    "title": "The Republican Brain: The Science of Why They Deny Science—and Reality",
+    "author": "Chris C. Mooney",
+    "isbn": "9781118094518"
+  },
+  {
+    "id": "10009377",
+    "title": "The 12 Week Year",
+    "author": "Brian P. Moran",
+    "isbn": ""
+  },
+  {
+    "id": "22571554",
+    "title": "Stand Out: How to Find Your Breakthrough Idea and Build a Following Around It",
+    "author": "Dorie Clark",
+    "isbn": "9781591847403"
+  },
+  {
+    "id": "22573915",
+    "title": "The Membership Economy",
+    "author": "Robbie Kellman Baxter",
+    "isbn": "9780071839327"
+  },
+  {
+    "id": "58330567",
+    "title": "Atlas of the Heart: Mapping Meaningful Connection and the Language of Human Experience",
+    "author": "Brené Brown",
+    "isbn": "9780399592553"
+  },
+  {
+    "id": "4271372",
+    "title": "The Revolutionary Trauma Release Process: Transcend Your Toughest Times",
+    "author": "David Berceli",
+    "isbn": "9781897238400"
+  },
+  {
+    "id": "40046060",
+    "title": "Republic of Lies: American Conspiracy Theorists and Their Surprising Rise to Power",
+    "author": "Anna Merlan",
+    "isbn": "9781250159052"
+  },
+  {
+    "id": "38820046",
+    "title": "21 Lessons for the 21st Century",
+    "author": "Yuval Noah Harari",
+    "isbn": "9780525512172"
+  },
+  {
+    "id": "29342515",
+    "title": "The Coaching Habit: Say Less, Ask More & Change the Way You Lead Forever",
+    "author": "Michael Bungay Stanier",
+    "isbn": ""
+  },
+  {
+    "id": "31850779",
+    "title": "The Vanishing Middle Class: Prejudice and Power in a Dual Economy",
+    "author": "Peter Temin",
+    "isbn": "9780262036160"
+  },
+  {
+    "id": "31138556",
+    "title": "Homo Deus: A History of Tomorrow",
+    "author": "Yuval Noah Harari",
+    "isbn": ""
+  },
+  {
+    "id": "139360",
+    "title": "Yoga and the Quest for the True Self",
+    "author": "Stephen Cope",
+    "isbn": "9780553378351"
+  },
+  {
+    "id": "18325440",
+    "title": "Ditch the Pitch: The Art of Improvised Persuasion",
+    "author": "Steve Yastrow",
+    "isbn": "9781590791264"
+  },
+  {
+    "id": "18693771",
+    "title": "The Body Keeps the Score: Brain, Mind, and Body in the Healing of Trauma",
+    "author": "Bessel van der Kolk",
+    "isbn": "9780670785933"
+  },
+  {
+    "id": "368593",
+    "title": "The 4-Hour Workweek",
+    "author": "Timothy Ferriss",
+    "isbn": "9780307353139"
+  },
+  {
+    "id": "30307982",
+    "title": "The Art Of Less Doing: One Entrepreneur's Formula for a Beautiful Life",
+    "author": "Ari R. Meisel",
+    "isbn": "9781619614437"
+  },
+  {
+    "id": "38714388",
+    "title": "The Dichotomy of Leadership: Balancing the Challenges of Extreme Ownership to Lead and Win",
+    "author": "Jocko Willink",
+    "isbn": "9781250195784"
+  },
+  {
+    "id": "56688463",
+    "title": "How to Train Your Mind: Exploring the Productivity Benefits of Meditation",
+    "author": "Chris   Bailey",
+    "isbn": ""
+  },
+  {
+    "id": "30197119",
+    "title": "Liminal Thinking",
+    "author": "Dave  Gray",
+    "isbn": ""
+  },
+  {
+    "id": "25489625",
+    "title": "Between the World and Me",
+    "author": "Ta-Nehisi Coates",
+    "isbn": ""
+  },
+  {
+    "id": "48589165",
+    "title": "The Black Friend: On Being a Better White Person",
+    "author": "Frederick Joseph",
+    "isbn": "9781536217018"
+  },
+  {
+    "id": "35099718",
+    "title": "So You Want to Talk About Race",
+    "author": "Ijeoma Oluo",
+    "isbn": "9781580056779"
+  },
+  {
+    "id": "34014218",
+    "title": "White Working Class: Overcoming Class Cluelessness in America",
+    "author": "Joan C. Williams",
+    "isbn": "9781633693784"
+  },
+  {
+    "id": "32714199",
+    "title": "The Craving Mind: From Cigarettes to Smartphones to Love – Why We Get Hooked and How We Can Break Bad Habits",
+    "author": "Judson Brewer",
+    "isbn": "9780300223248"
+  },
+  {
+    "id": "38644312",
+    "title": "Leveraged Learning: How the Disruption of Education Helps Lifelong Learners, and Experts with Something to Teach",
+    "author": "Danny Iny",
+    "isbn": "9781940858692"
+  },
+  {
+    "id": "18144590",
+    "title": "The Alchemist",
+    "author": "Paulo Coelho",
+    "isbn": "9780062315007"
+  },
+  {
+    "id": "41215667",
+    "title": "Building A Story Brand",
+    "author": "Donald Miller",
+    "isbn": ""
+  },
+  {
+    "id": "407999",
+    "title": "Competitive Strategy: Techniques for Analyzing Industries and Competitors",
+    "author": "Michael E. Porter",
+    "isbn": "9780684841489"
+  },
+  {
+    "id": "26222932",
+    "title": "Content Inc.: How Entrepreneurs Use Content to Build Massive Audiences and Create Radically Successful Businesses",
+    "author": "Joe Pulizzi",
+    "isbn": "9781259589669"
+  },
+  {
+    "id": "40265832",
+    "title": "How to Be an Antiracist",
+    "author": "Ibram X. Kendi",
+    "isbn": "9780525509288"
+  },
+  {
+    "id": "43708708",
+    "title": "White Fragility: Why It's So Hard for White People to Talk About Racism",
+    "author": "Robin DiAngelo",
+    "isbn": "9780807071168"
+  },
+  {
+    "id": "132913",
+    "title": "Reconstruction: America's Unfinished Revolution 1863-1877",
+    "author": "Eric Foner",
+    "isbn": "9780060937164"
+  },
+  {
+    "id": "39901314",
+    "title": "Outer Order, Inner Calm: Declutter & Organize to Make More Room for Happiness",
+    "author": "Gretchen Rubin",
+    "isbn": "9781984822802"
+  },
+  {
+    "id": "51942513",
+    "title": "Think Like a Monk: Train Your Mind for Peace and Purpose Every Day",
+    "author": "Jay Shetty",
+    "isbn": "9781982134488"
+  },
+  {
+    "id": "23723799",
+    "title": "Bulletproof: The Cookbook: Lose Up to a Pound a Day, Increase Your Energy, and End Food Cravings for Good",
+    "author": "Dave Asprey",
+    "isbn": "9781623366032"
+  },
+  {
+    "id": "22299976",
+    "title": "The Bulletproof Diet: Lose up to a Pound a Day, Reclaim Energy and Focus, Upgrade Your Life",
+    "author": "Dave Asprey",
+    "isbn": "9781623365189"
+  },
+  {
+    "id": "30653985",
+    "title": "Head Strong: The Bulletproof Plan to Activate Untapped Brain Energy to Work Smarter and Think Faster-in Just Two Weeks",
+    "author": "Dave Asprey",
+    "isbn": "9780062652416"
+  },
+  {
+    "id": "40109367",
+    "title": "Dare to Lead",
+    "author": "Brené Brown",
+    "isbn": "9781473562523"
+  },
+  {
+    "id": "23500254",
+    "title": "The Power of Vulnerability: Teachings of Authenticity, Connections and Courage",
+    "author": "Brené Brown",
+    "isbn": ""
+  },
+  {
+    "id": "34565022",
+    "title": "Braving the Wilderness",
+    "author": "Brené Brown",
+    "isbn": "9780812995848"
+  },
+  {
+    "id": "8753495",
+    "title": "The Fiery Trial: Abraham Lincoln and American Slavery",
+    "author": "Eric Foner",
+    "isbn": "9780393066180"
+  },
+  {
+    "id": "69571",
+    "title": "Rich Dad Poor Dad: What the Rich Teach Their Kids About Money—That the Poor and Middle Class Do Not!",
+    "author": "Robert T. Kiyosaki",
+    "isbn": "9780751532715"
+  },
+  {
+    "id": "23878688",
+    "title": "The 5 Love Languages: The Secret to Love That Lasts",
+    "author": "Gary Chapman",
+    "isbn": "9780802492401"
+  },
+  {
+    "id": "13588356",
+    "title": "Daring Greatly: How the Courage to Be Vulnerable Transforms the Way We Live, Love, Parent, and Lead",
+    "author": "Brené Brown",
+    "isbn": "9781592407330"
+  },
+  {
+    "id": "37570546",
+    "title": "Maybe You Should Talk to Someone: A Therapist, Her Therapist, and Our Lives Revealed",
+    "author": "Lori Gottlieb",
+    "isbn": "9781328662057"
+  },
+  {
+    "id": "6596",
+    "title": "The Four Agreements: A Practical Guide to Personal Freedom",
+    "author": "Miguel Ruiz",
+    "isbn": "9781878424501"
+  },
+  {
+    "id": "40121378",
+    "title": "Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones",
+    "author": "James Clear",
+    "isbn": ""
+  },
+  {
+    "id": "12609433",
+    "title": "The Power of Habit: Why We Do What We Do in Life and Business",
+    "author": "Charles Duhigg",
+    "isbn": "9781400069286"
+  },
+  {
+    "id": "36072",
+    "title": "The 7 Habits of Highly Effective People: Powerful Lessons in Personal Change",
+    "author": "Stephen R. Covey",
+    "isbn": "9780743269513"
+  },
+  {
+    "id": "4865",
+    "title": "How to Win Friends & Influence People",
+    "author": "Dale Carnegie",
+    "isbn": ""
+  },
+  {
+    "id": "3228917",
+    "title": "Outliers: The Story of Success",
+    "author": "Malcolm Gladwell",
+    "isbn": "9780316017923"
+  }
+]
+
+# ── Config ────────────────────────────────────────────────────────────────────
+COVERS_DIR  = os.path.join(os.path.dirname(os.path.abspath(__file__)), "covers")
+MISSING_CSV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "missing.csv")
+WORKERS     = 8      # parallel download threads
+MIN_BYTES   = 2000   # images smaller than this are treated as placeholders
+
+
+def _fetch(url, timeout=12):
+    """GET url → (bytes, content-type) or (None, None)."""
+    try:
+        req = urllib.request.Request(
+            url, headers={"User-Agent": "AlexBookshelf-CoverFetcher/1.0"}
+        )
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.read(), r.headers.get("Content-Type", "")
+    except Exception:
+        return None, None
+
+
+def _is_image(data, ct=""):
+    if not data or len(data) < MIN_BYTES:
+        return False
+    if ct and "image" in ct:
+        return True
+    return data[:3] == b"\xff\xd8\xff" or data[:8] == b"\x89PNG\r\n\x1a\n"
+
+
+def _google_thumb(items):
+    if not items:
+        return None
+    il = items[0].get("volumeInfo", {}).get("imageLinks", {})
+    url = il.get("thumbnail") or il.get("smallThumbnail")
+    if not url:
+        return None
+    url = url.replace("http://", "https://")
+    url = re.sub(r"&edge=curl", "", url)
+    url = re.sub(r"zoom=1", "zoom=2", url)
+    return url
+
+
+def _openlibrary(isbn):
+    data, ct = _fetch(
+        f"https://covers.openlibrary.org/b/isbn/{isbn}-L.jpg?default=false"
+    )
+    return data if _is_image(data, ct) else None
+
+
+def _google_isbn(isbn):
+    data, _ = _fetch(f"https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn}")
+    if not data:
+        return None
+    try:
+        url = _google_thumb(json.loads(data).get("items"))
+        if url:
+            img, ct = _fetch(url)
+            return img if _is_image(img, ct) else None
+    except Exception:
+        pass
+    return None
+
+
+def _google_title_author(title, author):
+    q = urllib.parse.urlencode(
+        {"q": f"intitle:{title} inauthor:{author}", "maxResults": "1"}
+    )
+    data, _ = _fetch(f"https://www.googleapis.com/books/v1/volumes?{q}")
+    if not data:
+        return None
+    try:
+        url = _google_thumb(json.loads(data).get("items"))
+        if url:
+            img, ct = _fetch(url)
+            return img if _is_image(img, ct) else None
+    except Exception:
+        pass
+    return None
+
+
+# ── Per-book worker ───────────────────────────────────────────────────────────
+_print_lock = Lock()
+
+def fetch_one(book, idx, total):
+    bid, title, author, isbn = (
+        book["id"], book["title"], book["author"], book.get("isbn", "")
+    )
+    dest = os.path.join(COVERS_DIR, f"{bid}.jpg")
+
+    if os.path.exists(dest) and os.path.getsize(dest) > MIN_BYTES:
+        return "skip", book
+
+    img, method = None, None
+
+    if isbn:
+        img = _openlibrary(isbn)
+        if img:
+            method = "openlibrary"
+        else:
+            img = _google_isbn(isbn)
+            if img:
+                method = "google-isbn"
+
+    if not img:
+        img = _google_title_author(title, author)
+        if img:
+            method = "google-title"
+
+    if img:
+        with open(dest, "wb") as f:
+            f.write(img)
+        with _print_lock:
+            print(f"[{idx}/{total}] ✓ {bid}  {method:<15}  {title[:55]}")
+        return "ok", book
+    else:
+        with _print_lock:
+            print(f"[{idx}/{total}] ✗ {bid}  {'':15}  {title[:55]}")
+        return "miss", book
+
+
+# ── Main ──────────────────────────────────────────────────────────────────────
+def main():
+    os.makedirs(COVERS_DIR, exist_ok=True)
+    total   = len(BOOKS)
+    results = {"ok": [], "miss": [], "skip": []}
+
+    print(f"Fetching covers for {total} books  ({WORKERS} workers)…\n")
+
+    with ThreadPoolExecutor(max_workers=WORKERS) as pool:
+        futures = {
+            pool.submit(fetch_one, book, i + 1, total): book
+            for i, book in enumerate(BOOKS)
+        }
+        for fut in as_completed(futures):
+            status, book = fut.result()
+            results[status].append(book)
+
+    # Write missing.csv
+    with open(MISSING_CSV, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=["Book Id", "Title", "Author", "ISBN", "Save as"])
+        w.writeheader()
+        for b in results["miss"]:
+            w.writerow({
+                "Book Id": b["id"],
+                "Title":   b["title"],
+                "Author":  b["author"],
+                "ISBN":    b.get("isbn", ""),
+                "Save as": "covers/" + b["id"] + ".jpg",
+            })
+
+    ok_n   = len(results["ok"])
+    skip_n = len(results["skip"])
+    miss_n = len(results["miss"])
+    print(f"""
+=== Summary ===
+  Downloaded : {ok_n}
+  Skipped    : {skip_n} (already existed)
+  Missing    : {miss_n}
+  Total      : {total}
+
+Missing list → {MISSING_CSV}
+Covers dir  → {COVERS_DIR}
+""")
+
+
+if __name__ == "__main__":
+    main()
