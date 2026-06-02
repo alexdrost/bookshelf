@@ -644,6 +644,11 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
   .hc-mlab{font-size:.55rem;height:11px;line-height:11px}
 }
 
+
+.mtagchips{display:flex;flex-wrap:wrap;gap:6px}
+.tagchip{font-size:.78rem;font-family:"Archivo";font-weight:600;color:var(--ink2);background:var(--paper2);border:1px solid var(--line);border-radius:14px;padding:5px 12px;cursor:pointer;transition:.15s;line-height:1.2}
+.tagchip:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+@media(max-width:640px){.tagchip{min-height:34px;display:inline-flex;align-items:center}}
 </style>
 </head>
 <body>
@@ -1069,6 +1074,7 @@ $("#browseReset").addEventListener("click",()=>{$("#q").value="";activeTheme="";
 
 $("#themeChips").addEventListener("click",e=>{const c=e.target.closest(".chip");if(!c)return;activeTheme=c.dataset.t;yearFilter="";drill=null;renderChips();renderBrowse();writeState();});
 function gotoTheme(t){activeTheme=t;yearFilter="";drill=null;$("#q").value="";renderChips();renderBrowse();showView("browse");}
+function gotoTag(t){if(typeof closeModal==="function")closeModal();activeTheme="";yearFilter="";drill=null;sortMode="dateRead";$("#q").value=t;$$("#sortBtns button").forEach(x=>x.classList.toggle("on",x.dataset.s==="dateRead"));ensureView("browse");renderChips();renderBrowse();showView("browse");writeState();}
 function gotoYear(y){activeTheme="";yearFilter=y;drill=null;scope="all";$("#q").value="";$$("#scope button").forEach(x=>x.classList.toggle("on",x.dataset.s==="all"));renderChips();renderBrowse();showView("browse");}
 
 /* AUTHORS */
@@ -1681,7 +1687,7 @@ function openModal(b){
       ${b.yearPub?`<div class="rrow"><span class="k">Published</span><span>${esc(b.yearPub)}</span></div>`:""}
       ${num(b)?`<div class="rrow"><span class="k">Pages</span><span>${num(b)}</span></div>`:""}
       ${b.dateRead?`<div class="rrow"><span class="k">Date completed</span><span>${fmtDate(b.dateRead)}</span></div>`:`<div class="rrow"><span class="k">Date read</span><span style="color:var(--faint)">not recorded</span></div>`}
-      ${b.tags?`<div class="mtags"><strong style="font-family:Archivo;font-weight:700;color:var(--ink)">Tags</strong> &middot; ${esc(b.tags)}</div>`:""}
+      ${b.tags?`<div class="msec-h">Tags</div><div class="mtagchips">${b.tags.split(",").map(t=>t.trim()).filter(Boolean).map(t=>`<span class="tagchip" onclick="gotoTag(&quot;${t.replace(/"/g,"").replace(/&/g,"")}&quot;)">${esc(t)}</span>`).join("")}</div>`:""}
       ${(b.conn&&b.conn.length)?`<div class="msec-h">Related titles (${b.conn.length})</div><div class="mconn">${b.conn.slice(0,12).map(cid=>{const cb=BOOKS[ID2I[cid]];return cb?`<span class="cb" data-bi="${ID2I[cb.id]}" onclick="openModal(BOOKS[${ID2I[cb.id]}])" onmouseenter="showBookPop(event,${ID2I[cb.id]})" onmousemove="moveBookPop(event)" onmouseleave="hideBookPop()">${esc(cb.title.split(":")[0])}</span>`:"";}).join("")}</div>`:""}
       ${b.id?`<a class="glink" href="https://www.goodreads.com/book/show/${esc(b.id)}" target="_blank" rel="noopener">View on Goodreads &rarr;</a>`:""}
     </div>`;
