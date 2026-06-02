@@ -1061,7 +1061,7 @@ function renderTailBatch(){
 $("#tailHead").addEventListener("click",()=>{$("#tailWrap").classList.toggle("open");$("#tailHead").classList.toggle("open");});
 $("#aq").addEventListener("input",renderAuthors);
 $("#ascope").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;asort=b.dataset.s;$$("#ascope button").forEach(x=>x.classList.toggle("on",x===b));renderAuthors();});
-function gotoAuthor(a){scope="author";activeTheme="";yearFilter="";drill=null;$("#q").value=a;$$("#scope button").forEach(x=>x.classList.toggle("on",x.dataset.s==="author"));renderChips();renderBrowse();showView("browse");}
+function gotoAuthor(a){activeTheme="";yearFilter="";drill=null;sortMode="dateRead";$("#q").value=a;$$("#sortBtns button").forEach(x=>x.classList.toggle("on",x.dataset.s==="dateRead"));showView("browse");renderChips();renderBrowse();writeState();}
 const YEAR_ORDER=["Pre-2023","2023","2024","2025","2026"];
 function ybucket(yr){return (yr&&yr>="2023")?yr:"Pre-2023";}
 function gotoBucket(bk){if(bk==="Pre-2023"){gotoDrill(b=>b.yearRead&&b.yearRead<"2023","read before 2023");}else{gotoYear(bk);}}
@@ -1533,14 +1533,14 @@ $("#paceToggle").addEventListener("click",e=>{const b=e.target.closest("button")
 
 /* MODAL */
 function openModal(b){
-  const themes=b.themes.map(t=>`<span class="mtheme" onclick="gotoTheme('${t.replace(/'/g,"\\'")}');$('closeModal()"><span style="width:8px;height:8px;border-radius:50%;background:${THEME_COLORS[t]||'#8a8f98'};display:inline-block"></span>${esc(t)}</span>`).join("");
+  const themes=b.themes.map(t=>`<span class="mtheme" onclick="gotoTheme('${t.replace(/'/g,"\\'")}');closeModal()"><span style="width:8px;height:8px;border-radius:50%;background:${THEME_COLORS[t]||'#8a8f98'};display:inline-block"></span>${esc(t)}</span>`).join("");
   $("#sheet").innerHTML=`
-    <button class="x" onclick="$('closeModal()">&times;</button>
+    <button class="x" onclick="closeModal()">&times;</button>
     <div class="mhead">
       <div class="mcov" data-i="${ID2I[b.id]}" data-ph="${esc(phHTML(b))}"></div>
       <div class="mintro">
         <h2>${esc(b.title)}</h2>
-        <p class="by">by <span class="alink" onclick="gotoAuthor('${(b.author||'').replace(/'/g,"\\'")}');$('closeModal()">${esc(b.author)}</span></p>
+        <p class="by">by <span class="alink" onclick="gotoAuthor('${(b.author||'').replace(/'/g,"\\'")}');closeModal()">${esc(b.author)}</span></p>
         <div class="mthemes">${themes}</div>
         ${b.summary?`<p class="msum">${esc(b.summary)}</p>`:""}
       </div>
