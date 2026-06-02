@@ -531,11 +531,12 @@ footer.ft .ft-li:hover{background:var(--blue);color:#fff;border-color:var(--blue
 
 
 /* homepage feature */
+.ft-cover .cover .ph{padding-top:34px}
 .feature{display:grid;grid-template-columns:200px 1fr;gap:30px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;margin-bottom:36px;box-shadow:var(--shadow)}
 .ft-cover{position:relative;cursor:pointer;width:200px;max-width:100%}
 .ft-cover .cover{width:100%;aspect-ratio:2/3;border-radius:6px;box-shadow:0 14px 30px rgba(31,37,48,.26);transition:transform .2s}
 .ft-cover:hover .cover{transform:translateY(-4px)}
-.ft-tag{position:absolute;top:9px;left:9px;background:var(--blue);color:#fff;font-family:"Archivo";font-weight:700;font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:7px;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.ft-tag{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:4;background:var(--blue);color:#fff;font-family:"Archivo";font-weight:700;font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;padding:4px 12px;border-radius:20px;box-shadow:0 3px 10px rgba(0,0,0,.3);white-space:nowrap}
 .ft-themes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:9px}
 .ft-th{font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:11px}
 .ft-title{font-family:"Archivo";font-weight:800;font-size:1.5rem;line-height:1.12;margin:0 0 4px;cursor:pointer}
@@ -551,6 +552,15 @@ footer.ft .ft-li:hover{background:var(--blue);color:#fff;border-color:var(--blue
 .browse-all{background:var(--blue);color:#fff;border:none;border-radius:26px;padding:13px 30px;font-family:"Archivo";font-weight:700;font-size:.95rem;cursor:pointer;box-shadow:0 8px 20px rgba(58,110,165,.25);transition:.18s}
 .browse-all:hover{background:var(--blue-d);transform:translateY(-2px)}
 @media(max-width:600px){.feature{grid-template-columns:110px 1fr;gap:16px;padding:18px}.ft-cover{width:110px}.ft-title{font-size:1.15rem}}
+
+
+.ctl-btn{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:0 16px;height:42px;font-family:"Archivo";font-weight:600;font-size:.86rem;color:var(--ink2);cursor:pointer;transition:.15s}
+.ctl-btn:hover{border-color:var(--blue);color:var(--blue)}
+.sortrow{display:flex;align-items:center;gap:12px;margin:2px 0 16px;flex-wrap:wrap}
+.sortrow .sortlab{font-family:"Archivo";font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.book .covwrap{position:relative}
+.latest-cue{position:absolute;top:7px;left:7px;z-index:3;background:var(--blue);color:#fff;font-family:"Archivo";font-weight:700;font-size:.58rem;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.28)}
+@media(max-width:640px){.ctl-btn{height:38px}}
 
 </style>
 </head>
@@ -597,12 +607,14 @@ footer.ft .ft-li:hover{background:var(--blue);color:#fff;border-color:var(--blue
     <div class="section-head"><h2>Browse the library</h2><span class="sub" id="browseSub"></span></div>
     <div class="controls">
       <input id="q" type="search" placeholder="Search titles, authors, themes, ideas…" autocomplete="off">
-      <select id="sort">
-        <option value="dateRead">Recently read</option><option value="title">Title A&ndash;Z</option>
-        <option value="author">Author A&ndash;Z</option><option value="yearPub">Publication year</option>
-        <option value="pages">Page count</option>
-      </select>
+      <button class="ctl-btn" id="browseReset" title="Clear search & filters">Reset</button>
       <span class="count" id="count"></span>
+    </div>
+    <div class="sortrow">
+      <span class="sortlab">Sort</span>
+      <div class="seg-toggle" id="sortBtns">
+        <button class="on" data-s="dateRead">Recently read</button><button data-s="title">Title</button><button data-s="author">Author</button><button data-s="yearPub">Pub year</button><button data-s="pages">Pages</button><button data-s="random">Shuffle &#8635;</button>
+      </div>
     </div>
     <div class="chips" id="themeChips"></div>
     <div class="grid" id="grid"></div>
@@ -836,7 +848,7 @@ function observeCovers(scope){
   const els=(scope||document).querySelectorAll(".cover[data-i]:not([data-resolved]), .mcov[data-i]:not([data-resolved])");
   els.forEach(el=>{if(coverObserver)coverObserver.observe(el);else resolveCoverContainer(el);});
 }
-function bookCard(b,delay){return `<div class="book" data-i="${ID2I[b.id]}" style="animation-delay:${delay||0}ms"><div class="cover" data-i="${ID2I[b.id]}" data-ph="${esc(phHTML(b))}"></div><div class="meta"><div class="t">${esc(b.title)}</div><div class="a">${esc(b.author)}</div></div></div>`;}
+function bookCard(b,delay,isLatest){return `<div class="book${isLatest?' is-latest':''}" data-i="${ID2I[b.id]}" style="animation-delay:${delay||0}ms"><div class="covwrap">${isLatest?'<span class="latest-cue">Latest</span>':''}<div class="cover" data-i="${ID2I[b.id]}" data-ph="${esc(phHTML(b))}"></div></div><div class="meta"><div class="t">${esc(b.title)}</div><div class="a">${esc(b.author)}</div></div></div>`;}
 function byDateDesc(a,b){return (b.dateRead||"").localeCompare(a.dateRead||"");}
 
 function showView(v){ensureView(v);$$(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view===v));$$(".view").forEach(s=>s.classList.toggle("active",s.id==="view-"+v));window.scrollTo({top:0,behavior:"smooth"});if(v==="connections")setTimeout(initGraph,30);writeState();}
@@ -914,14 +926,14 @@ function renderRecentShelf(){
   const newest=dated[0];
   let pool=thisYearPool().filter(b=>!newest||b.id!==newest.id);
   for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
-  $("#randomShelf").innerHTML=pool.slice(0,6).map((b,i)=>bookCard(b,i*45)).join("");
+  $("#randomShelf").innerHTML=pool.slice(0,8).map((b,i)=>bookCard(b,i*45)).join("");
   observeCovers($("#randomShelf"));
 }
 function renderHome(){
   const dated=BOOKS.filter(b=>b.dateRead).sort(byDateDesc);
   if(dated.length){$("#featureBook").innerHTML=featureCard(dated[0]);observeCovers($("#featureBook"));$("#recentSub").textContent=`Completed ${fmtDate(dated[0].dateRead)}`;}
   const y=new Date().getFullYear();const yc=BOOKS.filter(b=>b.yearRead===String(y)).length;
-  $("#moreSub").textContent=yc>=6?`A shuffled six from my ${yc} reads in ${y}`:`A shuffled six from my recent reads`;
+  $("#moreSub").textContent=yc>=6?`A shuffled eight from my ${yc} reads in ${y}`:`A shuffled eight from my recent reads`;
   renderRecentShelf();
   const yrs=BOOKS.map(b=>b.yearRead).filter(Boolean);
   const span=yrs.length?`${Math.min(...yrs)}\u2013${Math.max(...yrs)}`:"\u2014";
@@ -939,8 +951,10 @@ function renderChips(){
   const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
   $("#themeChips").innerHTML=`<span class="chip ${activeTheme===''?'on':''}" data-t="">All themes</span>`+sorted.map(([t,c])=>`<span class="chip ${activeTheme===t?'on':''}" data-t="${esc(t)}" style="--dot:${THEME_COLORS[t]||'#8a8f98'}">${esc(t)}<span class="c">${c}</span></span>`).join("");
 }
+function latestReadId(){const d=BOOKS.filter(b=>b.dateRead).sort(byDateDesc);return d.length?d[0].id:null;}
 function renderBrowse(){
-  const q=$("#q").value.toLowerCase().trim(), sort=$("#sort").value;
+  const q=$("#q").value.toLowerCase().trim();
+  const latest=latestReadId();
   let list=BOOKS.filter(b=>{
     if(yearFilter && b.yearRead!==yearFilter) return false;
     if(drill && !drill.fn(b)) return false;
@@ -948,21 +962,23 @@ function renderBrowse(){
     if(!q) return true;
     return (b.title+" "+b.author+" "+(b.tags||"")+" "+b.themes.join(" ")+" "+(b.summary||"")).toLowerCase().includes(q);
   });
-  list.sort((a,b)=>{
-    if(sort==="title")return a.title.localeCompare(b.title);
-    if(sort==="author")return a.author.localeCompare(b.author);
-    if(sort==="yearPub")return (parseInt(b.yearPub)||0)-(parseInt(a.yearPub)||0);
-    if(sort==="pages")return num(b)-num(a);
+  if(sortMode==="random"){for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]];}}
+  else list.sort((a,b)=>{
+    if(sortMode==="title")return a.title.localeCompare(b.title);
+    if(sortMode==="author")return a.author.localeCompare(b.author);
+    if(sortMode==="yearPub")return (parseInt(b.yearPub)||0)-(parseInt(a.yearPub)||0);
+    if(sortMode==="pages")return num(b)-num(a);
     return byDateDesc(a,b);
   });
-  $("#grid").innerHTML=list.map((b,i)=>bookCard(b,Math.min(i*18,360))).join("");observeCovers($("#grid"));
+  $("#grid").innerHTML=list.map((b,i)=>bookCard(b,Math.min(i*18,360),b.id===latest)).join("");observeCovers($("#grid"));
   $("#empty").style.display=list.length?"none":"block";
   $("#count").textContent=`${list.length} of ${BOOKS.length}`;
   const bits=[]; if(yearFilter)bits.push(`read in ${yearFilter}`); if(drill)bits.push(drill.label); if(activeTheme)bits.push(activeTheme);
   $("#browseSub").textContent=bits.length?bits.join(" \u00b7 "):"the full collection";
 }
 $("#q").addEventListener("input",()=>{yearFilter="";drill=null;renderBrowse();writeState();});
-$("#sort").addEventListener("change",renderBrowse);
+$("#sortBtns").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;sortMode=b.dataset.s;$$("#sortBtns button").forEach(x=>x.classList.toggle("on",x===b));renderBrowse();writeState();});
+$("#browseReset").addEventListener("click",()=>{$("#q").value="";activeTheme="";yearFilter="";drill=null;sortMode="dateRead";$$("#sortBtns button").forEach(x=>x.classList.toggle("on",x.dataset.s==="dateRead"));renderChips();renderBrowse();writeState();});
 
 $("#themeChips").addEventListener("click",e=>{const c=e.target.closest(".chip");if(!c)return;activeTheme=c.dataset.t;yearFilter="";drill=null;renderChips();renderBrowse();writeState();});
 function gotoTheme(t){activeTheme=t;yearFilter="";drill=null;$("#q").value="";renderChips();renderBrowse();showView("browse");}
@@ -1689,7 +1705,7 @@ function initGraph(){
 
 function _stampSync(){var _sd=document.getElementById("syncDate");if(_sd)_sd.textContent=LAST_SYNCED;var _sf=document.getElementById("syncFoot");if(_sf)_sf.textContent=LAST_SYNCED;}_stampSync();window.addEventListener("load",_stampSync);
 var VIEW_RENDERED;
-var scope="all", activeTheme="", yearFilter="", drill=null, asort="count";
+var scope="all", activeTheme="", yearFilter="", drill=null, asort="count", sortMode="dateRead";
 function ensureView(v){
   if(!VIEW_RENDERED)VIEW_RENDERED={};
   if(VIEW_RENDERED[v])return; VIEW_RENDERED[v]=true;
