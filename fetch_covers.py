@@ -62,7 +62,7 @@ BOOKS = [
     "id": "37976541",
     "title": "Bad Blood: Secrets and Lies in a Silicon Valley Startup",
     "author": "John Carreyrou",
-    "isbn": ""
+    "isbn": "9781524731656"
   },
   {
     "id": "221754271",
@@ -350,7 +350,7 @@ BOOKS = [
     "id": "40367623",
     "title": "Dawn of the Code War: America's Battle Against Russia, China, and the Rising Global Cyber Threat",
     "author": "John P. Carlin",
-    "isbn": ""
+    "isbn": "9781541773837"
   },
   {
     "id": "210084984",
@@ -428,7 +428,7 @@ BOOKS = [
     "id": "27833494",
     "title": "Dark Money: The Hidden History of the Billionaires Behind the Rise of the Radical Right",
     "author": "Jane Mayer",
-    "isbn": ""
+    "isbn": "9780307947901"
   },
   {
     "id": "216864525",
@@ -500,7 +500,7 @@ BOOKS = [
     "id": "23692271",
     "title": "Sapiens: A Brief History of Humankind",
     "author": "Yuval Noah Harari",
-    "isbn": ""
+    "isbn": "9780062316097"
   },
   {
     "id": "61423989",
@@ -548,7 +548,7 @@ BOOKS = [
     "id": "2612",
     "title": "The Tipping Point: How Little Things Can Make a Big Difference",
     "author": "Malcolm Gladwell",
-    "isbn": ""
+    "isbn": "9780316346627"
   },
   {
     "id": "207689829",
@@ -662,7 +662,7 @@ BOOKS = [
     "id": "217217007",
     "title": "War",
     "author": "Bob Woodward",
-    "isbn": ""
+    "isbn": "9781668052273"
   },
   {
     "id": "50486810",
@@ -728,7 +728,7 @@ BOOKS = [
     "id": "34114362",
     "title": "What Happened",
     "author": "Hillary Rodham Clinton",
-    "isbn": ""
+    "isbn": "9781501175565"
   },
   {
     "id": "40226205",
@@ -806,7 +806,7 @@ BOOKS = [
     "id": "58412441",
     "title": "I Alone Can Fix It: Donald J. Trump's Catastrophic Final Year",
     "author": "Carol Leonnig",
-    "isbn": ""
+    "isbn": "9780593298947"
   },
   {
     "id": "90590139",
@@ -824,7 +824,7 @@ BOOKS = [
     "id": "27161156",
     "title": "Hillbilly Elegy: A Memoir of a Family and Culture in Crisis",
     "author": "J.D. Vance",
-    "isbn": ""
+    "isbn": "9780062300546"
   },
   {
     "id": "195790601",
@@ -836,7 +836,7 @@ BOOKS = [
     "id": "56863374",
     "title": "Mindfulness: HBR Emotional Intelligence Series",
     "author": "Harvard Business Review",
-    "isbn": ""
+    "isbn": "9781633693197"
   },
   {
     "id": "43868109",
@@ -896,7 +896,7 @@ BOOKS = [
     "id": "53642699",
     "title": "The Mountain Is You: Transforming Self-Sabotage Into Self-Mastery",
     "author": "Brianna Wiest",
-    "isbn": ""
+    "isbn": "9781949759228"
   },
   {
     "id": "30841980",
@@ -1106,7 +1106,7 @@ BOOKS = [
     "id": "167770288",
     "title": "Counting the Cost",
     "author": "Jill Duggar",
-    "isbn": ""
+    "isbn": "9781668024447"
   },
   {
     "id": "52764767",
@@ -1118,7 +1118,7 @@ BOOKS = [
     "id": "48557815",
     "title": "A Warning",
     "author": "Anonymous",
-    "isbn": ""
+    "isbn": "9781538718469"
   },
   {
     "id": "74892462",
@@ -1142,13 +1142,13 @@ BOOKS = [
     "id": "41881472",
     "title": "The Psychology of Money: Timeless Lessons on Wealth, Greed, and Happiness",
     "author": "Morgan Housel",
-    "isbn": ""
+    "isbn": "9780857197689"
   },
   {
     "id": "58203328",
     "title": "Midnight in Washington: How We Almost Lost Our Democracy and Still Could",
     "author": "Adam Schiff",
-    "isbn": ""
+    "isbn": "9781400069699"
   },
   {
     "id": "29379464",
@@ -1190,7 +1190,7 @@ BOOKS = [
     "id": "11324722",
     "title": "The Righteous Mind: Why Good People Are Divided by Politics and Religion",
     "author": "Jonathan Haidt",
-    "isbn": ""
+    "isbn": "9780307455772"
   },
   {
     "id": "22699774",
@@ -1256,7 +1256,7 @@ BOOKS = [
     "id": "20556323",
     "title": "Complex PTSD: From Surviving to Thriving",
     "author": "Pete Walker",
-    "isbn": ""
+    "isbn": "9781492871842"
   },
   {
     "id": "60965426",
@@ -1400,7 +1400,7 @@ BOOKS = [
     "id": "25602451",
     "title": "Losing the Signal: The Untold Story Behind the Extraordinary Rise and Spectacular Fall of BlackBerry",
     "author": "Jacquie McNish",
-    "isbn": ""
+    "isbn": "9781250096067"
   },
   {
     "id": "45897523",
@@ -1478,7 +1478,7 @@ BOOKS = [
     "id": "35171984",
     "title": "Fantasyland: How America Went Haywire: A 500-Year History",
     "author": "Kurt Andersen",
-    "isbn": ""
+    "isbn": "9781400067213"
   },
   {
     "id": "38390751",
@@ -1562,7 +1562,7 @@ BOOKS = [
     "id": "10009377",
     "title": "The 12 Week Year",
     "author": "Brian P. Moran",
-    "isbn": ""
+    "isbn": "9781118509234"
   },
   {
     "id": "22571554",
@@ -1604,7 +1604,7 @@ BOOKS = [
     "id": "29342515",
     "title": "The Coaching Habit: Say Less, Ask More & Change the Way You Lead Forever",
     "author": "Michael Bungay Stanier",
-    "isbn": ""
+    "isbn": "9780978440749"
   },
   {
     "id": "31850779",
@@ -1616,7 +1616,7 @@ BOOKS = [
     "id": "31138556",
     "title": "Homo Deus: A History of Tomorrow",
     "author": "Yuval Noah Harari",
-    "isbn": ""
+    "isbn": "9780062464316"
   },
   {
     "id": "139360",
@@ -1664,13 +1664,13 @@ BOOKS = [
     "id": "30197119",
     "title": "Liminal Thinking",
     "author": "Dave  Gray",
-    "isbn": ""
+    "isbn": "9781933820460"
   },
   {
     "id": "25489625",
     "title": "Between the World and Me",
     "author": "Ta-Nehisi Coates",
-    "isbn": ""
+    "isbn": "9780812993547"
   },
   {
     "id": "48589165",
@@ -1712,7 +1712,7 @@ BOOKS = [
     "id": "41215667",
     "title": "Building A Story Brand",
     "author": "Donald Miller",
-    "isbn": ""
+    "isbn": "9780718033323"
   },
   {
     "id": "407999",
@@ -1784,7 +1784,7 @@ BOOKS = [
     "id": "23500254",
     "title": "The Power of Vulnerability: Teachings of Authenticity, Connections and Courage",
     "author": "Brené Brown",
-    "isbn": ""
+    "isbn": "9781604078589"
   },
   {
     "id": "34565022",
@@ -1832,7 +1832,7 @@ BOOKS = [
     "id": "40121378",
     "title": "Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones",
     "author": "James Clear",
-    "isbn": ""
+    "isbn": "9780735211292"
   },
   {
     "id": "12609433",
@@ -1850,7 +1850,7 @@ BOOKS = [
     "id": "4865",
     "title": "How to Win Friends & Influence People",
     "author": "Dale Carnegie",
-    "isbn": ""
+    "isbn": "9780671027032"
   },
   {
     "id": "3228917",
