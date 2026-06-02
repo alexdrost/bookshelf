@@ -204,7 +204,7 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .modal{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;background:rgba(28,32,38,.5);padding:24px;backdrop-filter:blur(2px)}
 .modal.open{display:flex}
 .modal.open .sheet{animation:sheetin .2s cubic-bezier(.2,.8,.2,1)}
-.sheet{background:var(--card);border-radius:16px;max-width:600px;width:100%;box-shadow:0 24px 60px rgba(31,37,48,.22);display:flex;gap:24px;padding:30px;position:relative;border:1px solid var(--line)}
+.sheet{background:var(--card);border-radius:16px;max-width:620px;width:100%;box-shadow:0 24px 60px rgba(31,37,48,.22);display:flex;flex-direction:column;padding:30px;position:relative;border:1px solid var(--line);max-height:88vh;overflow:auto}
 .sheet .mcov{width:170px;flex-shrink:0;align-self:flex-start;border-radius:8px;overflow:hidden;box-shadow:0 14px 30px rgba(31,37,48,.24);background:var(--paper2);position:relative;min-height:150px}
 .mcov img{width:100%;height:auto;display:block}
 .mcov .ph{position:relative;inset:auto;aspect-ratio:2/3;display:flex;flex-direction:column;justify-content:center;padding:18px 16px;text-align:center}
@@ -272,11 +272,13 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .mcore{margin:0 0 14px;padding:0;list-style:none}
 .mcore li{position:relative;padding-left:16px;font-size:.86rem;line-height:1.45;margin-bottom:7px;color:var(--ink2)}
 .mcore li::before{content:"";position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%;background:var(--blue-br)}
-.msec-h{font-family:"Archivo";font-weight:700;font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:14px 0 7px}
+.msec-h{font-family:"Archivo";font-weight:700;font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:18px 0 8px}
 .mconn{display:flex;flex-wrap:wrap;gap:6px}
 .mconn .cb{font-size:.76rem;background:var(--paper2);border:1px solid var(--line);border-radius:8px;padding:4px 10px;cursor:pointer;transition:.15s;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mconn .cb:hover{border-color:var(--blue);color:var(--blue)}
-.sheet .mright{overflow:auto;max-height:78vh}
+.sheet .mhead{display:flex;gap:24px;align-items:flex-start;margin-bottom:6px}
+.mintro{flex:1;min-width:0}
+.mbody{margin-top:8px}
 
 
 /* connections graph */
@@ -555,6 +557,7 @@ footer.ft .ft-li:hover{background:var(--blue);color:#fff;border-color:var(--blue
 .home-cta{text-align:center;margin:6px 0 50px}
 .browse-all{background:var(--blue);color:#fff;border:none;border-radius:26px;padding:13px 30px;font-family:"Archivo";font-weight:700;font-size:.95rem;cursor:pointer;box-shadow:0 8px 20px rgba(58,110,165,.25);transition:.18s}
 .browse-all:hover{background:var(--blue-d);transform:translateY(-2px)}
+@media(max-width:560px){.mhead{flex-direction:column}.mcov{width:130px}}
 @media(max-width:600px){.feature{grid-template-columns:110px 1fr;gap:16px;padding:18px}.ft-cover{width:110px}.ft-title{font-size:1.15rem}}
 
 
@@ -1533,12 +1536,16 @@ function openModal(b){
   const themes=b.themes.map(t=>`<span class="mtheme" onclick="gotoTheme('${t.replace(/'/g,"\\'")}');$('closeModal()"><span style="width:8px;height:8px;border-radius:50%;background:${THEME_COLORS[t]||'#8a8f98'};display:inline-block"></span>${esc(t)}</span>`).join("");
   $("#sheet").innerHTML=`
     <button class="x" onclick="$('closeModal()">&times;</button>
-    <div class="mcov" data-i="${ID2I[b.id]}" data-ph="${esc(phHTML(b))}"></div>
-    <div class="mright">
-      <h2>${esc(b.title)}</h2>
-      <p class="by">by <span class="alink" onclick="gotoAuthor('${(b.author||'').replace(/'/g,"\\'")}');$('closeModal()">${esc(b.author)}</span></p>
-      <div class="mthemes">${themes}</div>
-      ${b.summary?`<p class="msum">${esc(b.summary)}</p>`:""}
+    <div class="mhead">
+      <div class="mcov" data-i="${ID2I[b.id]}" data-ph="${esc(phHTML(b))}"></div>
+      <div class="mintro">
+        <h2>${esc(b.title)}</h2>
+        <p class="by">by <span class="alink" onclick="gotoAuthor('${(b.author||'').replace(/'/g,"\\'")}');$('closeModal()">${esc(b.author)}</span></p>
+        <div class="mthemes">${themes}</div>
+        ${b.summary?`<p class="msum">${esc(b.summary)}</p>`:""}
+      </div>
+    </div>
+    <div class="mbody">
       ${(b.core&&b.core.length)?`<div class="msec-h">Core ideas</div><ul class="mcore">${b.core.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>`:""}
       ${b.yearPub?`<div class="rrow"><span class="k">Published</span><span>${esc(b.yearPub)}</span></div>`:""}
       ${num(b)?`<div class="rrow"><span class="k">Pages</span><span>${num(b)}</span></div>`:""}
