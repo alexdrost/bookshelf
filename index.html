@@ -719,11 +719,14 @@ async function resolveCoverContainer(container){
   if(container.dataset.resolved)return;
   container.dataset.resolved="pending";
   const b=BOOKS[+container.dataset.i];
-  // fast path: OpenLibrary ISBN cover, but only wait 3s before falling through
+  // 1) self-hosted cover in the repo (/covers/<id>.jpg) — single fast CDN GET, the default
+  const repoUrl=`/covers/${b.id}.jpg`;
+  if(await probeImg(repoUrl,4000)){applyCover(container,b,repoUrl);return;}
+  // 2) live fallback: Open Library ISBN image (3s budget) then the API chain
   const olu=olISBN(b);
   if(olu){ if(await probeImg(olu,3000)){applyCover(container,b,olu);return;} }
-  // API fallbacks (timeout-guarded, never hang)
   const url=await lookupCover(b);
+  // 3) placeholder handled inside applyCover when url is null
   applyCover(container,b,url);
 }
 const coverObserver=("IntersectionObserver" in window)?new IntersectionObserver((ents,obs)=>{
