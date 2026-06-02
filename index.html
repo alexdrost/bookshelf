@@ -572,6 +572,56 @@ footer.ft .ft-li:hover{background:var(--blue);color:#fff;border-color:var(--blue
 footer.ft .ft-links{display:flex;gap:10px;flex-wrap:wrap}
 footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
 .coverage-note{font-size:.78rem;color:var(--faint);text-align:center;margin:6px 0 8px;font-style:italic}
+
+/* github-style reading calendar */
+#heatGrid{overflow-x:auto;padding-bottom:6px;display:flex;flex-direction:column}
+.hc-months{display:flex;align-items:flex-end;margin-bottom:2px}
+.hc-corner{width:35px;flex:none}
+.hc-mtrack{display:grid;grid-auto-flow:column;grid-auto-columns:14px;gap:3px}
+.hc-mlab{font-size:.62rem;color:var(--muted);font-family:"Archivo";font-weight:600;white-space:nowrap;height:14px;line-height:14px}
+.hc-main{display:flex;gap:5px}
+.hc-dowcol{display:grid;grid-template-rows:repeat(7,14px);gap:3px}
+.hc-dow{font-size:.6rem;color:var(--muted);font-family:"Archivo";font-weight:600;height:14px;line-height:14px;width:30px;text-align:right}
+.hc-cells{display:grid;grid-template-rows:repeat(7,14px);grid-auto-flow:column;grid-auto-columns:14px;gap:3px}
+.hc-cell{width:14px;height:14px;border-radius:3px;background:var(--paper2)}
+.hc-cell.hc-empty{background:transparent}
+.hc-cell[data-key]:hover{outline:2px solid var(--blue);outline-offset:1px;cursor:pointer}
+
+
+/* ===== mobile performance & UX pass ===== */
+@media(max-width:640px){
+  /* iOS: inputs/selects must be >=16px to prevent zoom-on-focus */
+  #q, select, .lensbar select, input[type="search"]{font-size:16px !important}
+  /* nav tabs: comfortable tap height */
+  .tab{min-height:40px;display:inline-flex;align-items:center}
+  /* sort buttons: let them scroll horizontally instead of overflowing */
+  #sortBtns{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+  #sortBtns button{flex:0 0 auto;min-height:38px}
+  .sortrow{flex-wrap:nowrap;overflow:hidden}
+  /* month-trend strip: scroll horizontally rather than force 560px */
+  #monthTrend, .mt-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  #mtBars, #mtAxis{min-width:560px}
+  /* feature open/footer links: bigger tap area */
+  .ft-open{min-height:38px;display:inline-flex;align-items:center}
+  .ft-li{min-height:40px}
+  /* reading calendar: clearly a horizontal-scroll panel on mobile */
+  #heatGrid{-webkit-overflow-scrolling:touch}
+  /* don't let the graph canvas fight vertical page scroll until touched */
+  #graphCanvas{touch-action:pan-y}
+  /* modal: use more of the screen, comfortable close target */
+  .sheet{max-height:92vh;padding:22px 18px}
+  .sheet .x{width:40px;height:40px;font-size:1.5rem}
+  /* chips & related-title pills: easier to tap */
+  .chip{min-height:36px}
+  .cb{min-height:34px;display:inline-flex;align-items:center}
+  .mtheme{min-height:32px}
+}
+@media(max-width:380px){
+  .lead-stats{grid-template-columns:1fr 1fr}
+  .feature{grid-template-columns:96px 1fr;gap:14px}
+  .ft-cover{width:96px}
+}
+
 </style>
 </head>
 <body>
@@ -759,8 +809,8 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
     </div>
 
     <div class="panel">
-      <h3>Monthly heat map</h3>
-      <p class="cap">Books finished each month since 2023 &mdash; darker means more. <span class="hint">Hover a cell to see the titles; click to browse that month.</span></p>
+      <h3>Reading calendar</h3>
+      <p class="cap">Each square is a day; darker means more books finished. <span class="hint">Hover a day for the titles; click to browse it.</span></p>
       <div class="heatgrid" id="heatGrid"></div>
       <div class="heatscale" id="heatScale"></div>
     </div>
@@ -1454,33 +1504,70 @@ function renderRecords(L){
 }
 
 function renderHeatmap(L){
-  const MNs=["J","F","M","A","M","J","J","A","S","O","N","D"];
-  const cells={}; // 'YYYY/MM' -> books[]
-  L.forEach(b=>{const m=/^(\d{4})\/(\d{2})/.exec(b.dateRead);if(m&&m[1]>="2023"){const k=m[1]+"/"+m[2];(cells[k]=cells[k]||[]).push(b);}});
-  const years=[];for(let y=2023;y<=2026;y++)if(L.some(b=>(b.yearRead||"")===String(y)))years.push(y);
-  if(!years.length){$("#heatGrid").innerHTML='<div class="sd-empty" style="grid-column:1/-1">No dated books in this lens.</div>';$("#heatScale").innerHTML="";return;}
-  const counts=Object.values(cells).map(a=>a.length);const cmax=Math.max(...counts,1);
-  function col(n){if(!n)return "var(--paper2)";const t=0.18+0.82*(n/cmax);return `rgba(58,110,165,${t.toFixed(2)})`;}
-  let html='<div class="hh"></div>'+MNs.map(m=>`<div class="hh">${m}</div>`).join("");
+  window._hcLastMo=-1;
+  // GitHub-style calendar: columns = weeks, rows = weekdays (Sun..Sat). One cell per day.
+  const byday={}; // 'YYYY-MM-DD' -> books[]
+  let minD=null,maxD=null;
+  L.forEach(b=>{const m=/^(\d{4})\/(\d{2})\/(\d{2})/.exec(b.dateRead||"");if(!m)return;
+    const dt=new Date(+m[1],+m[2]-1,+m[3]); if(isNaN(dt))return;
+    const key=m[1]+"-"+m[2]+"-"+m[3];(byday[key]=byday[key]||[]).push(b);
+    if(!minD||dt<minD)minD=dt; if(!maxD||dt>maxD)maxD=dt;
+  });
+  if(!minD){$("#heatGrid").innerHTML='<div class="sd-empty">No dated books in this lens.</div>';$("#heatScale").innerHTML="";return;}
+  // snap start to the Sunday on/before minD, end to Saturday on/after maxD
+  const start=new Date(minD); start.setDate(start.getDate()-start.getDay());
+  const end=new Date(maxD); end.setDate(end.getDate()+(6-end.getDay()));
+  const counts=Object.values(byday).map(a=>a.length); const cmax=Math.max(...counts,1);
+  function col(n){if(!n)return "var(--paper2)";const t=0.16+0.84*(n/cmax);return `rgba(58,110,165,${t.toFixed(2)})`;}
+  const pad=x=>String(x).padStart(2,"0");
+  const MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
   const MNF=["January","February","March","April","May","June","July","August","September","October","November","December"];
-  years.forEach(y=>{
-    html+=`<div class="hy">${y}</div>`;
-    for(let mo=1;mo<=12;mo++){
-      const k=y+"/"+String(mo).padStart(2,"0");const list=cells[k]||[];const n=list.length;
-      const future=(y===2026&&mo>5);
-      const tcolor=n&&(n/cmax>0.55)?"#fff":"var(--muted)";
-      html+=`<div class="heatcell" data-k="${k}" data-mo="${mo}" data-y="${y}" style="background:${future?'transparent':col(n)};color:${tcolor};${future?'opacity:.25':''}">${n||""}</div>`;
+  const DOW=["","Mon","","Wed","","Fri",""];
+  // build columns (weeks)
+  const weeks=[]; let cur=new Date(start);
+  while(cur<=end){const wk=[];for(let d=0;d<7;d++){wk.push(new Date(cur));cur.setDate(cur.getDate()+1);}weeks.push(wk);}
+  // month labels row: label a week-column when its first day is in a new month
+  let monthRow='<div class="hc-corner"></div>'; let lastMo=-1;
+  weeks.forEach(wk=>{const first=wk[0];const mo=first.getMonth();
+    let lab=""; // show month label at the week where the month changes (using the day in this week that is the 1st-7th)
+    const monthStartInWeek=wk.find(d=>d.getDate()<=7);
+    if(monthStartInWeek && monthStartInWeek.getMonth()!==lastMo){lab=MN[monthStartInWeek.getMonth()];lastMo=monthStartInWeek.getMonth();}
+    monthRow+=`<div class="hc-mlab">${lab}</div>`;
+  });
+  // weekday label column (separate from the cells grid so it stays aligned)
+  const dowCol=DOW.map(d=>`<div class="hc-dow">${d}</div>`).join("");
+  // cells: 7 rows x N week-columns, filled column-by-column (grid-auto-flow:column)
+  const today=new Date(); today.setHours(0,0,0,0);
+  let cellsHtml="";
+  weeks.forEach(wk=>{
+    for(let dow=0;dow<7;dow++){
+      const dt=wk[dow];
+      const future=dt>today;
+      if(future){cellsHtml+=`<div class="hc-cell hc-empty"></div>`;continue;}
+      const key=dt.getFullYear()+"-"+pad(dt.getMonth()+1)+"-"+pad(dt.getDate());
+      const list=byday[key]||[]; const n=list.length;
+      cellsHtml+=`<div class="hc-cell" data-key="${key}" style="background:${col(n)}"></div>`;
     }
   });
-  $("#heatGrid").innerHTML=html;
-  $("#heatGrid").style.gridTemplateColumns="42px repeat(12,1fr)";
-  $$("#heatGrid .heatcell").forEach(el=>{
-    const k=el.dataset.k;const list=(cells[k]||[]).sort((a,b)=>(a.dateRead||"").localeCompare(b.dateRead||""));
-    const mo=+el.dataset.mo,y=el.dataset.y;
-    bindList(el,MNF[mo-1]+" "+y,list.length+" book"+(list.length===1?"":"s")+" finished",list);
-    el.onclick=()=>{if(list.length)gotoDrill(b=>{const m=/^(\d{4})\/(\d{2})/.exec(b.dateRead);return m&&(m[1]+"/"+m[2])===k;},MNF[mo-1]+" "+y);};
+  $("#heatGrid").innerHTML=
+    `<div class="hc-months"><div class="hc-corner"></div><div class="hc-mtrack">${weeks.map((wk,wi)=>{
+        const monthStartInWeek=wk.find(d=>d.getDate()<=7);
+        let lab=""; if(monthStartInWeek){const mo=monthStartInWeek.getMonth(); if(mo!==window._hcLastMo){lab=MN[mo];window._hcLastMo=mo;}}
+        return `<div class="hc-mlab">${lab}</div>`;
+      }).join("")}</div></div>`+
+    `<div class="hc-main"><div class="hc-dowcol">${dowCol}</div><div class="hc-cells">${cellsHtml}</div></div>`;
+  window._hcLastMo=-1;
+  $("#heatGrid").style.gridTemplateColumns="";
+  // bind popovers/clicks
+  $$("#heatGrid .hc-cell[data-key]").forEach(el=>{
+    const key=el.dataset.key; const list=byday[key]||[]; if(!list.length)return;
+    const [yy,mm,dd]=key.split("-");
+    const label=MNF[+mm-1]+" "+(+dd)+", "+yy;
+    bindList(el,label,list.length+" book"+(list.length===1?"":"s")+" finished",list.sort((a,b)=>(a.title).localeCompare(b.title)));
+    el.style.cursor="pointer";
+    el.onclick=()=>gotoDrill(b=>{const m=/^(\d{4})\/(\d{2})\/(\d{2})/.exec(b.dateRead||"");return m&&(m[1]+"-"+m[2]+"-"+m[3])===key;},label);
   });
-  $("#heatScale").innerHTML=`Fewer <span class="sw" style="background:var(--paper2)"></span><span class="sw" style="background:rgba(58,110,165,.35)"></span><span class="sw" style="background:rgba(58,110,165,.7)"></span><span class="sw" style="background:rgba(58,110,165,1)"></span> More \u00b7 peak month = ${cmax} books`;
+  $("#heatScale").innerHTML=`Fewer <span class="sw" style="background:var(--paper2)"></span><span class="sw" style="background:rgba(58,110,165,.35)"></span><span class="sw" style="background:rgba(58,110,165,.7)"></span><span class="sw" style="background:rgba(58,110,165,1)"></span> More \u00b7 busiest day = ${cmax} book${cmax===1?"":"s"}`;
 }
 let paceGran="month";
 function renderPace(){
@@ -1569,7 +1656,7 @@ function initGraph(){
   const canvas=$("#graphCanvas"), ctx=canvas.getContext("2d");
   const wrap=canvas.parentElement;
   let DPR=Math.min(window.devicePixelRatio||1,2);
-  function size(){const r=wrap.getBoundingClientRect();canvas.width=r.width*DPR;canvas.height=620*DPR;canvas.style.height="620px";}
+  function size(){const r=wrap.getBoundingClientRect();const ch=window.innerWidth<=640?Math.max(380,Math.round(window.innerHeight*0.62)):620;canvas.width=Math.max(1,Math.round(r.width*DPR));canvas.height=ch*DPR;canvas.style.height=ch+"px";}
   size();
   const W=()=>canvas.width/DPR, H=()=>canvas.height/DPR;
   // degree
@@ -1718,6 +1805,7 @@ function initGraph(){
   window.addEventListener("resize",()=>{if($("#view-connections").classList.contains("active")){DPR=Math.min(window.devicePixelRatio||1,2);size();}});
 
   G={raf:null,moved:false};
+  if(!window._graphResizeBound){window._graphResizeBound=1;let _rt;window.addEventListener("resize",()=>{clearTimeout(_rt);_rt=setTimeout(()=>{if(G){size();draw();}},180);});}
   for(let s=0;s<260;s++){tick();}   // pre-settle silently
   alpha=0; draw();                   // open calm and still
 }
