@@ -449,20 +449,55 @@ footer.ft .ft-sub{display:block;margin-top:3px;color:var(--muted);font-size:.8re
 footer.ft .ft-li{display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-family:"Archivo";font-weight:600;
   font-size:.84rem;text-decoration:none;border:1px solid var(--line);border-radius:22px;padding:8px 16px;transition:.18s;background:var(--card)}
 footer.ft .ft-li:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+.brand:hover .bt{color:var(--blue)}
+
+#bookpop{position:fixed;z-index:220;background:var(--card);border:1px solid var(--line);border-radius:12px;
+  box-shadow:0 16px 44px rgba(31,37,48,.24);padding:12px;width:200px;opacity:0;pointer-events:none;transition:opacity .12s;display:flex;gap:11px}
+#bookpop.show{opacity:1}
+#bookpop .bpcov{width:52px;height:78px;border-radius:4px;flex:none;object-fit:cover;background:var(--paper2)}
+#bookpop .bpt{font-family:"Archivo";font-weight:700;font-size:.82rem;line-height:1.2;margin-bottom:3px}
+#bookpop .bpa{font-size:.74rem;color:var(--muted);line-height:1.25}
+#bookpop .bpm{font-size:.7rem;color:var(--faint);margin-top:5px}
+
+/* themes deep-dive */
+.theme-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.theme-controls .seg-toggle{margin:0}
+.tgroup{border:1px solid var(--line);border-radius:13px;margin-bottom:12px;overflow:hidden;background:var(--card)}
+.tgroup-head{display:flex;align-items:center;gap:13px;padding:14px 17px;cursor:pointer;user-select:none;transition:background .15s}
+.tgroup-head:hover{background:var(--paper2)}
+.tgroup-head .tdot{width:13px;height:13px;border-radius:50%;flex:none}
+.tgroup-head .tname{font-family:"Archivo";font-weight:700;font-size:1rem;flex:1}
+.tgroup-head .tmeta{font-size:.8rem;color:var(--muted)}
+.tgroup-head .tbar{width:120px;height:8px;border-radius:5px;background:var(--paper2);overflow:hidden;flex:none}
+.tgroup-head .tbar i{display:block;height:100%;border-radius:5px}
+.tgroup-head .chev{color:var(--faint);transition:transform .2s;font-size:.8rem;flex:none}
+.tgroup.open .chev{transform:rotate(90deg)}
+.tgroup-body{display:none;padding:6px 17px 16px}
+.tgroup.open .tgroup-body{display:block}
+.tg-books{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:4px}
+.tg-book{display:flex;gap:11px;align-items:center;padding:8px;border-radius:9px;cursor:pointer;transition:background .12s}
+.tg-book:hover{background:var(--paper2)}
+.tg-book .tgc{width:34px;height:51px;border-radius:3px;flex:none;object-fit:cover;background:var(--paper2);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.tg-book .tgt{font-size:.82rem;font-weight:600;line-height:1.2}
+.tg-book .tga{font-size:.72rem;color:var(--muted);margin-top:2px}
+.tg-book .tgd{font-size:.7rem;color:var(--faint);margin-top:2px}
+.tg-cross{font-size:.72rem;color:var(--muted);margin-top:10px;font-style:italic}
+
+.tgc.tgph{display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.12)}
 </style>
 </head>
 <body>
 <div id="tip"><span class="tt"></span><span class="ts"></span></div>
 <div id="listpop"></div>
+<div id="bookpop"></div>
 <nav>
   <div class="nav-in">
-    <div class="brand"><svg class="logo" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="brand" onclick="showView('home');window.scrollTo({top:0,behavior:'smooth'})" title="Back to the shelf" style="cursor:pointer"><svg class="logo" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="8" y="9" width="9" height="23" rx="1.5" fill="#2e6fb5"/>
 <rect x="17.5" y="11" width="8" height="21" rx="1.5" fill="#5b97d4"/>
 <rect x="25" y="8" width="8" height="24" rx="1.5" transform="rotate(7 29 20)" fill="#2f9e6b"/>
 </svg><span class="bt">Alex&rsquo;s Bookshelf</span></div>
-    <button class="tab active" data-view="home">Shelf</button>
-    <button class="tab" data-view="browse">Browse</button>
+    <button class="tab active" data-view="browse">Browse</button>
     <button class="tab" data-view="authors">Authors</button>
     <button class="tab" data-view="time">Over&nbsp;Time</button>
     <button class="tab" data-view="themes">Themes</button>
@@ -474,7 +509,7 @@ footer.ft .ft-li:hover{background:var(--blue);color:#fff;border-color:var(--blue
 <div class="wrap">
 
   <!-- HOME -->
-  <section class="view active" id="view-home">
+  <section class="view" id="view-home">
     <div class="hero">
       <div class="kicker">Alex Drost &middot; books I&rsquo;ve read</div>
       <h1>A shelf of <em>307</em> books,<br>and what I made of them.</h1>
@@ -489,7 +524,7 @@ footer.ft .ft-li:hover{background:var(--blue);color:#fff;border-color:var(--blue
   </section>
 
   <!-- BROWSE -->
-  <section class="view" id="view-browse">
+  <section class="view active" id="view-browse">
     <div class="section-head"><h2>Browse the library</h2><span class="sub" id="browseSub"></span></div>
     <div class="controls">
       <input id="q" type="search" placeholder="Search&hellip;" autocomplete="off">
@@ -557,13 +592,18 @@ footer.ft .ft-li:hover{background:var(--blue);color:#fff;border-color:var(--blue
     </div>
   </section>
 
-  <!-- THEMES -->
+    <!-- THEMES -->
   <section class="view" id="view-themes">
-    <div class="section-head"><h2>What the library is about</h2><span class="sub">Themes drawn from your enrichment tags &mdash; books often span several</span></div>
+    <div class="section-head"><h2>What the library is about</h2><span class="sub">Themes drawn from my enrichment notes &mdash; books often span several</span></div>
     <div class="panel">
-      <h3>Themes by number of books</h3>
-      <p class="cap">Click a theme to browse it. A single book can sit under more than one.</p>
-      <div class="tgrid" id="themeBars"></div>
+      <h3>Browse by theme</h3>
+      <p class="cap">Every theme, sized and expandable. <span class="hint">Click a theme to open it; click a book to read about it.</span></p>
+      <div class="theme-controls">
+        <span class="ll" style="font-family:Archivo;font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)">Sort books by</span>
+        <div class="seg-toggle" id="themeSort"><button class="on" data-s="recent">Recently completed</button><button data-s="title">Title</button><button data-s="pages">Length</button></div>
+        <button class="lreset" id="themeExpand" style="margin-left:auto">Expand all</button>
+      </div>
+      <div id="themeGroups"></div>
       <p class="legend" id="themeLegend"></p>
     </div>
   </section>
@@ -778,7 +818,8 @@ function readState(){
   if(bid){const b=BOOKS.find(x=>x.id===bid);if(b)setTimeout(()=>openModal(b),60);}
   _restoring=false;
 }
-window.addEventListener("hashchange",()=>{if(!_restoring)readState();});
+window.addEventListener("hashchange",()=>{if(!_restoring)if(!location.hash)showView("browse");
+readState();});
 function copyLink(btn){
   navigator.clipboard&&navigator.clipboard.writeText(location.href);
   if(btn){const o=btn.textContent;btn.textContent="Link copied \u2713";setTimeout(()=>btn.textContent=o,1400);}
@@ -923,6 +964,13 @@ function showListPop(e,title,sub,books){
 }
 function moveListPop(e){const lp=$("#listpop");const w=lp.offsetWidth||260,h=lp.offsetHeight||160;let x=e.clientX+14,y=e.clientY+14;if(x+w>innerWidth-10)x=e.clientX-w-14;if(y+h>innerHeight-10)y=e.clientY-h-14;lp.style.left=x+"px";lp.style.top=y+"px";}
 function hideListPop(){$("#listpop").classList.remove("show");}
+function showBookPop(e,bi){const b=BOOKS[bi];if(!b)return;const bp=$("#bookpop");
+  const cov=b.isbn?`https://covers.openlibrary.org/b/isbn/${b.isbn}-M.jpg?default=false`:"";
+  bp.innerHTML=`<img class="bpcov" src="/covers/${b.id}.jpg" onerror="this.onerror=null;this.src='${cov}';this.onerror=function(){this.style.visibility='hidden'}">`+
+    `<div><div class="bpt">${esc(b.title.split(":")[0])}</div><div class="bpa">${esc(b.author)}</div>${b.dateRead?`<div class="bpm">Completed ${fmtDate(b.dateRead)}</div>`:""}</div>`;
+  bp.classList.add("show");moveBookPop(e);}
+function moveBookPop(e){const bp=$("#bookpop");const w=bp.offsetWidth||200,h=bp.offsetHeight||100;let x=e.clientX+14,y=e.clientY+14;if(x+w>innerWidth-10)x=e.clientX-w-14;if(y+h>innerHeight-10)y=e.clientY-h-14;bp.style.left=x+"px";bp.style.top=y+"px";}
+function hideBookPop(){$("#bookpop").classList.remove("show");}
 function bindList(el,title,sub,books){el.addEventListener("mouseenter",e=>showListPop(e,title,sub,books));el.addEventListener("mousemove",moveListPop);el.addEventListener("mouseleave",hideListPop);}
 function bindTip(el,title,sub){el.addEventListener("mouseenter",e=>tipShow(e,title,sub));el.addEventListener("mousemove",tipMove);el.addEventListener("mouseleave",tipHide);}
 
@@ -1047,13 +1095,50 @@ function renderProfile(L){
   $("#profile h3").textContent = isAll ? "My reading profile" : "Reading profile \u2014 "+[LENS.year,LENS.theme,LENS.author].filter(Boolean).join(" \u00b7 ");
   $("#traits").innerHTML=traits.map(t=>`<div class="trait"><div class="th">${t[0]}</div><div class="tb">${t[1]}</div></div>`).join("");
 }
-function renderThemes(){
-  const counts={};BOOKS.forEach(b=>b.themes.forEach(t=>counts[t]=(counts[t]||0)+1));
-  const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]);const max=sorted[0][1];
-  $("#themeBars").innerHTML=sorted.map(([t,c])=>`<div class="trow" onclick="gotoTheme('${t.replace(/'/g,"\\'")}')"><span class="name">${esc(t)}</span><div class="track"><div class="fill" style="width:${c/max*100}%;background:${THEME_COLORS[t]||'#8c8270'}"></div></div><span class="num">${c}</span></div>`).join("");
-  const multi=BOOKS.filter(b=>b.themes.length>1).length;
-  $("#themeLegend").textContent=`${multi} of ${BOOKS.length} books span more than one theme, so the numbers above add up to more than ${BOOKS.length}.`;
+let themeSort="recent", themeAllOpen=false;
+function tgImgErr(img){
+  if(img.dataset.s==="0"&&img.dataset.isbn){img.dataset.s="1";img.src="https://covers.openlibrary.org/b/isbn/"+img.dataset.isbn+"-S.jpg?default=false";return;}
+  const tc=img.dataset.tc||"#9aa0a6";
+  const ph=document.createElement("div");ph.className="tgc tgph";ph.style.background=`linear-gradient(140deg,${tc},${shade(tc,-24)})`;
+  ph.innerHTML='<svg viewBox="0 0 24 24" width="16" height="16" fill="rgba(255,255,255,.85)"><path d="M6 4h11a2 2 0 0 1 2 2v14l-3-2-3 2-3-2-3 2V6a2 2 0 0 1 2-2z" opacity=".9"/></svg>';
+  if(img.parentNode)img.parentNode.replaceChild(ph,img);
 }
+function tgCover(b){const tc=THEME_COLORS[(b.themes&&b.themes[0])||"Other"]||"#9aa0a6";
+  return `<img class="tgc" src="/covers/${b.id}.jpg" data-s="0" data-isbn="${b.isbn||''}" data-tc="${tc}" onerror="tgImgErr(this)">`;}
+function sortThemeBooks(list){
+  if(themeSort==="title")return list.slice().sort((a,b)=>a.title.localeCompare(b.title));
+  if(themeSort==="pages")return list.slice().sort((a,b)=>num(b)-num(a));
+  return list.slice().sort((a,b)=>(b.dateRead||"").localeCompare(a.dateRead||""));
+}
+function renderThemes(){
+  const multi=BOOKS.filter(b=>b.themes.length>1).length;
+  $("#themeLegend").textContent=`${multi} of ${BOOKS.length} books span more than one theme, so theme counts add up to more than ${BOOKS.length}.`;
+  renderThemeGroups();
+}
+function renderThemeGroups(){
+  const byT={};BOOKS.forEach(b=>b.themes.forEach(t=>{(byT[t]=byT[t]||[]).push(b);}));
+  const order=THEME_ORDER.filter(t=>byT[t]);
+  const max=Math.max(...order.map(t=>byT[t].length),1);
+  $("#themeGroups").innerHTML=order.map(t=>{
+    const list=sortThemeBooks(byT[t]);
+    const avgp=Math.round(list.map(num).filter(n=>n>0).reduce((a,b)=>a+b,0)/(list.filter(b=>num(b)>0).length||1));
+    const multi=list.filter(b=>b.themes.length>1).length;
+    const books=list.map(b=>`<div class="tg-book" onclick="openModal(BOOKS[${BOOKS.indexOf(b)}])">${tgCover(b)}<div><div class="tgt">${esc(b.title.split(":")[0])}</div><div class="tga">${esc(b.author)}</div>${b.dateRead?`<div class="tgd">Completed ${fmtDate(b.dateRead)}</div>`:""}</div></div>`).join("");
+    return `<div class="tgroup${themeAllOpen?' open':''}" data-t="${esc(t)}">
+      <div class="tgroup-head">
+        <span class="tdot" style="background:${THEME_COLORS[t]}"></span>
+        <span class="tname">${esc(t)}</span>
+        <span class="tmeta">${list.length} books \u00b7 ~${avgp}pp avg</span>
+        <span class="tbar"><i style="width:${list.length/max*100}%;background:${THEME_COLORS[t]}"></i></span>
+        <span class="chev">\u25b8</span>
+      </div>
+      <div class="tgroup-body"><div class="tg-books">${books}</div><div class="tg-cross">${multi} of these also sit under other themes.</div></div>
+    </div>`;
+  }).join("");
+  $$("#themeGroups .tgroup-head").forEach(h=>h.addEventListener("click",()=>h.parentElement.classList.toggle("open")));
+}
+$("#themeSort").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;themeSort=b.dataset.s;$$("#themeSort button").forEach(x=>x.classList.toggle("on",x===b));renderThemeGroups();});
+$("#themeExpand").addEventListener("click",()=>{themeAllOpen=!themeAllOpen;$("#themeExpand").textContent=themeAllOpen?"Collapse all":"Expand all";$$("#themeGroups .tgroup").forEach(g=>g.classList.toggle("open",themeAllOpen));});
 
 /* ANALYTICS */
 const WD=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
@@ -1353,9 +1438,9 @@ function openModal(b){
       ${(b.core&&b.core.length)?`<div class="msec-h">Core ideas</div><ul class="mcore">${b.core.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>`:""}
       ${b.yearPub?`<div class="rrow"><span class="k">Published</span><span>${esc(b.yearPub)}</span></div>`:""}
       ${num(b)?`<div class="rrow"><span class="k">Pages</span><span>${num(b)}</span></div>`:""}
-      ${b.dateRead?`<div class="rrow"><span class="k">Date read</span><span>${esc(b.dateRead)}</span></div>`:`<div class="rrow"><span class="k">Date read</span><span style="color:var(--faint)">not recorded</span></div>`}
+      ${b.dateRead?`<div class="rrow"><span class="k">Date completed</span><span>${fmtDate(b.dateRead)}</span></div>`:`<div class="rrow"><span class="k">Date read</span><span style="color:var(--faint)">not recorded</span></div>`}
       ${b.tags?`<div class="mtags"><strong style="font-family:Archivo;font-weight:700;color:var(--ink)">Tags</strong> &middot; ${esc(b.tags)}</div>`:""}
-      ${(b.conn&&b.conn.length)?`<div class="msec-h">Connected reads (${b.conn.length})</div><div class="mconn">${b.conn.slice(0,10).map(cid=>{const cb=BOOKS.find(x=>x.id===cid);return cb?`<span class="cb" onclick="openModal(BOOKS[${BOOKS.indexOf(cb)}])" title="${esc(cb.title)}">${esc(cb.title.split(":")[0])}</span>`:"";}).join("")}</div>`:""}
+      ${(b.conn&&b.conn.length)?`<div class="msec-h">Related titles (${b.conn.length})</div><div class="mconn">${b.conn.slice(0,12).map(cid=>{const cb=BOOKS.find(x=>x.id===cid);return cb?`<span class="cb" data-bi="${BOOKS.indexOf(cb)}" onclick="openModal(BOOKS[${BOOKS.indexOf(cb)}])" onmouseenter="showBookPop(event,${BOOKS.indexOf(cb)})" onmousemove="moveBookPop(event)" onmouseleave="hideBookPop()">${esc(cb.title.split(":")[0])}</span>`:"";}).join("")}</div>`:""}
       ${b.id?`<a class="glink" href="https://www.goodreads.com/book/show/${esc(b.id)}" target="_blank" rel="noopener">View on Goodreads &rarr;</a>`:""}
     </div>`;
   observeCovers($("#sheet"));$("#modal").classList.add("open");writeState({book:b.id});
@@ -1514,6 +1599,7 @@ function initGraph(){
 
 function _stampSync(){var _sd=document.getElementById("syncDate");if(_sd)_sd.textContent=LAST_SYNCED;var _sf=document.getElementById("syncFoot");if(_sf)_sf.textContent=LAST_SYNCED;}_stampSync();window.addEventListener("load",_stampSync);
 renderHome();renderChips();renderBrowse();renderAuthors();renderTime();renderMonthTrend();renderThemes();renderAnalytics();
+if(!location.hash)showView("browse");
 readState();
 </script>
 <footer class="ft"><div class="ft-in"><div class="ft-left"><span class="ft-name">Alex Drost’s Bookshelf</span><span class="ft-sub">A living snapshot of what I’m reading · synced from Goodreads <span id="syncFoot"></span></span></div><a class="ft-li" href="https://www.linkedin.com/in/adrost/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg><span>Connect on LinkedIn</span></a></div></footer>
