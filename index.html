@@ -174,12 +174,16 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .stackbar{position:relative}
 /* years in review */
 .yir-wrap{display:flex;flex-direction:column;gap:20px}
-.yir-card{position:relative;display:grid;grid-template-columns:230px 1fr;gap:28px;background:linear-gradient(160deg,var(--blue-tint),var(--card) 55%);border:1px solid var(--line);border-radius:16px;padding:24px 26px 26px;box-shadow:var(--shadow);overflow:hidden}
+.yir-card{position:relative;display:flex;flex-direction:column;gap:22px;background:linear-gradient(160deg,var(--blue-tint),var(--card) 55%);border:1px solid var(--line);border-radius:16px;padding:24px 26px 26px;box-shadow:var(--shadow);overflow:hidden}
 .yir-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--blue-br),var(--green,#2f9e6b))}
-.yir-rail{border-right:1px solid var(--line);padding-right:24px}
-.yir-yr{font-family:"Archivo";font-weight:800;font-size:2.6rem;line-height:1;color:var(--blue-d)}
-.yir-sub{font-size:.82rem;color:var(--muted);margin-top:5px}
-.yir-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:18px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.yir-top{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.yir-yr{font-family:"Archivo";font-weight:800;font-size:3.4rem;line-height:1;color:var(--blue-d);flex:none}
+.yir-hero{flex:1;min-width:220px;cursor:pointer;border-radius:13px;padding:16px 22px;display:flex;align-items:baseline;gap:14px;background:linear-gradient(120deg,var(--blue-tint),transparent);border:1px solid var(--blue-lt);transition:transform .14s,border-color .14s,box-shadow .14s}
+.yir-hero:hover{transform:translateY(-2px);border-color:var(--blue);box-shadow:0 10px 24px rgba(58,110,165,.16)}
+.yir-hero-n{font-family:"Archivo";font-weight:800;font-size:3.2rem;line-height:.9;color:var(--blue-d);transition:color .14s}
+.yir-hero:hover .yir-hero-n{color:var(--blue)}
+.yir-hero-l{font-size:1rem;color:var(--ink2);font-family:"Archivo";font-weight:700}
+.yir-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .yir-stat{padding:12px 6px;text-align:center;background:var(--card)}
 .yir-stat .v{font-family:"Archivo";font-weight:800;font-size:1.3rem;line-height:1;color:var(--ink)}
 .yir-stat .l{font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-top:5px}
@@ -204,16 +208,24 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .yir-bk-meta{min-width:0}
 .yir-bk .yc-t{font-size:.8rem;font-weight:600;line-height:1.2;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .yir-bk .yc-a{font-size:.69rem;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.yir-seeall{margin-top:12px;background:none;border:1px solid var(--line);border-radius:9px;padding:8px 14px;font-family:"Archivo";font-weight:700;font-size:.78rem;color:var(--blue);cursor:pointer;transition:background .12s,border-color .12s}
+.yir-seeall:hover{background:var(--blue-tint);border-color:var(--blue-lt)}
+.standout-badge.clickable{cursor:pointer;transition:background .12s,border-color .12s}
+.standout-badge.clickable:hover{background:#f6e4b8;border-color:#dcae5e}
+.standout-badge.clickable:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.yir-flash{animation:yirflash 1.4s ease-out}
+@keyframes yirflash{0%{box-shadow:0 0 0 3px var(--blue-lt)}100%{box-shadow:0 0 0 3px transparent}}
 @media(max-width:860px){
-  .yir-card{grid-template-columns:1fr;gap:18px}
-  .yir-rail{border-right:0;border-bottom:1px solid var(--line);padding-right:0;padding-bottom:16px;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:14px}
-  .yir-stats{grid-template-columns:repeat(3,1fr);margin-top:0;grid-column:1/-1}
+  .yir-card{gap:18px}
+  .yir-hero{padding:13px 18px}
+  .yir-hero-n{font-size:2.6rem}
+  .yir-yr{font-size:2.8rem}
 }
 @media(max-width:640px){
   .yir-main{grid-template-columns:1fr;gap:18px}
   .yir-books{grid-template-columns:1fr}
   .yir-stats{grid-template-columns:1fr 1fr}
-  .yir-rail{grid-template-columns:1fr}
+  .yir-top{gap:14px}
 }
 
 .tgrid{display:grid;grid-template-columns:1fr;gap:10px}
@@ -358,12 +370,12 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 /* themes-over-time detail panel */
 .stack-layout{display:grid;grid-template-columns:1fr 300px;gap:26px;align-items:start}
 @media(max-width:820px){.stack-layout{grid-template-columns:1fr}}
-.sd{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:16px 18px;min-height:220px}
+.sd{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:16px 18px;height:360px;display:flex;flex-direction:column}
 .sd-head{display:flex;align-items:center;gap:8px;margin-bottom:3px}
 .sd-dot{width:10px;height:10px;border-radius:50%;flex:none;background:var(--blue)}
 .sd-title{font-family:"Archivo";font-weight:700;font-size:.95rem;line-height:1.15}
 .sd-sub{font-size:.78rem;color:var(--muted);margin-bottom:12px}
-.sd-list{display:flex;flex-direction:column;gap:2px;max-height:300px;overflow:auto}
+.sd-list{display:flex;flex-direction:column;gap:2px;flex:1;min-height:0;overflow:auto}
 .sd-item{display:flex;gap:9px;align-items:baseline;padding:6px 7px;border-radius:8px;cursor:pointer;transition:background .12s}
 .sd-item:hover{background:var(--card)}
 .sd-item .si-t{font-size:.82rem;font-weight:600;line-height:1.25;flex:1}
@@ -501,6 +513,15 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 #listpop .lprow .lt{flex:1;line-height:1.25;color:var(--ink2)}
 #listpop .lprow .ld{color:var(--faint);font-size:.72rem;white-space:nowrap}
 #listpop .lpmore{font-size:.74rem;color:var(--muted);font-style:italic;margin-top:6px}
+#listpop .lprows{height:188px;display:flex;flex-direction:column;justify-content:flex-start}
+#listpop .lprows .lprow:first-child{border-top:none}
+#listpop .mp-tot{display:flex;gap:16px;font-size:.84rem;color:var(--ink2);margin:2px 0 9px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+#listpop .mp-tot b{font-family:"Archivo";font-weight:800;color:var(--ink)}
+#listpop .mp-rows{display:flex;flex-direction:column;gap:4px}
+#listpop .mp-row{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--ink2)}
+#listpop .mp-dot{width:9px;height:9px;border-radius:2px;flex:none}
+#listpop .mp-t{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#listpop .mp-c{color:var(--faint);font-variant-numeric:tabular-nums}
 /* month heatmap */
 .heatgrid{display:grid;grid-template-columns:42px repeat(12,1fr);gap:5px;align-items:center}
 .heatgrid .hh{font-size:.68rem;color:var(--muted);text-align:center;font-family:"Archivo";font-weight:600}
@@ -567,11 +588,12 @@ footer.ft .ft-li:hover{background:var(--blue);color:#fff;border-color:var(--blue
 .brand:hover .bt{color:var(--blue)}
 
 #bookpop{position:fixed;z-index:220;background:var(--card);border:1px solid var(--line);border-radius:12px;
-  box-shadow:0 16px 44px rgba(31,37,48,.24);padding:12px;width:200px;opacity:0;pointer-events:none;transition:opacity .12s;display:flex;gap:11px}
+  box-shadow:0 16px 44px rgba(31,37,48,.24);padding:12px;width:288px;opacity:0;pointer-events:none;transition:opacity .12s;display:flex;gap:11px}
 #bookpop.show{opacity:1}
 #bookpop .bpcov{width:52px;height:78px;border-radius:4px;flex:none;object-fit:cover;background:var(--paper2)}
 #bookpop .bpt{font-family:"Archivo";font-weight:700;font-size:.82rem;line-height:1.2;margin-bottom:3px}
 #bookpop .bpa{font-size:.74rem;color:var(--muted);line-height:1.25}
+#bookpop .bpsum{font-size:.72rem;color:var(--ink2);line-height:1.4;margin-top:6px}
 #bookpop .bpm{font-size:.7rem;color:var(--faint);margin-top:5px}
 
 /* themes deep-dive */
@@ -719,6 +741,9 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
   /* feature open/footer links: bigger tap area */
   .ft-open{min-height:38px;display:inline-flex;align-items:center}
   .ft-li{min-height:40px}
+  /* footer follow/links live in the hamburger menu on mobile, so hide the row */
+  footer.ft .ft-links{display:none}
+  footer.ft .ft-in{justify-content:flex-start}
   /* reading calendar: clearly a horizontal-scroll panel on mobile */
   #heatGrid{-webkit-overflow-scrolling:touch}
   /* don't let the graph canvas fight vertical page scroll until touched */
@@ -784,9 +809,9 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
 <rect x="25" y="8" width="8" height="24" rx="1.5" transform="rotate(7 29 20)" fill="#2f9e6b"/>
 </svg><span class="bt">Alex&rsquo;s Bookshelf</span></div>
     <button class="tab" data-view="browse">Library</button>
+    <button class="tab" data-view="time">Timeline</button>
     <button class="tab" data-view="authors">Authors</button>
     <button class="tab" data-view="themes">Themes</button>
-    <button class="tab" data-view="time">Over&nbsp;Time</button>
     <button class="tab" data-view="connections">Connections</button>
     <button class="tab" data-view="analytics">Analytics</button>
     <button class="navtoggle" id="navToggle" aria-label="Menu" aria-expanded="false" onclick="toggleMenu()">
@@ -796,9 +821,10 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
   <div class="navmenu" id="navMenu">
     <button class="navlink" data-view="home">Home</button>
     <button class="navlink" data-view="browse">Library</button>
+    <button class="navlink" data-view="time">Timeline</button>
     <button class="navlink" data-view="authors">Authors</button>
     <button class="navlink" data-view="themes">Themes</button>
-    <button class="navlink" data-view="time">Over Time</button>
+    <button class="navlink" data-view="connections">Connections</button>
     <button class="navlink navlink-conn" data-view="analytics">Analytics</button>
     <div class="navmenu-sep"></div>
     <button class="navlink" onclick="closeMenu&&closeMenu();openRec()">Recommend a book</button>
@@ -1072,6 +1098,12 @@ const STANDOUT_OF={};Object.keys(STANDOUTS).forEach(y=>STANDOUTS[y].forEach(id=>
 const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
 function shade(hex,p){const n=parseInt(hex.slice(1),16);let r=(n>>16)&255,g=(n>>8)&255,b=n&255;const f=p/100;r=Math.round(r+(p<0?r:255-r)*f);g=Math.round(g+(p<0?g:255-g)*f);b=Math.round(b+(p<0?b:255-b)*f);return "#"+[r,g,b].map(x=>Math.max(0,Math.min(255,x)).toString(16).padStart(2,"0")).join("");}
 function esc(s){return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+// Escape HTML, then render simple markdown emphasis: **bold** -> <strong>, *italic* -> <em>.
+// Applied to descriptive text (summaries, core ideas) where book titles are marked with *...*.
+function fmtText(s){let t=esc(s);
+  t=t.replace(/\*\*([^*]+?)\*\*/g,"<strong>$1</strong>");
+  t=t.replace(/(^|[^*])\*([^*\n]+?)\*(?!\*)/g,"$1<em>$2</em>");
+  return t;}
 function num(b){const n=parseFloat(b.pages);return isFinite(n)&&n>0?n:0;}
 const THEME_COLORS={"Politics & Power": "#3a6ea5", "Business & Leadership": "#c6913f", "History": "#9c7b57", "Memoir & Biography": "#8268a6", "Psychology & Mind": "#3a8fb0", "Society & Culture": "#b06a93", "Tech & Future": "#5a66ad", "Journalism & Reporting": "#2f8a78", "Self-Help & Productivity": "#88a04a", "Crime & Justice": "#b3564c", "Science & Nature": "#5aa46a", "Other": "#9aa0a6"};
 const THEME_ORDER=Object.keys(THEME_COLORS);
@@ -1123,6 +1155,9 @@ function bookCard(b,delay,isLatest){return `<div class="book${isLatest?' is-late
 function byDateDesc(a,b){return (b.dateRead||"").localeCompare(a.dateRead||"");}
 
 function showView(v){hideAllPops();ensureView(v);$$(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view===v));$$(".navlink").forEach(t=>t.classList.toggle("active",t.dataset.view===v));$$(".view").forEach(s=>s.classList.toggle("active",s.id==="view-"+v));closeMenu();window.scrollTo({top:0,behavior:"smooth"});if(v==="connections")setTimeout(initGraph,30);writeState();}
+function gotoYearReview(y){if(typeof closeModal==="function")closeModal();hideAllPops();ensureView("time");$$(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view==="time"));$$(".navlink").forEach(t=>t.classList.toggle("active",t.dataset.view==="time"));$$(".view").forEach(s=>s.classList.toggle("active",s.id==="view-time"));closeMenu();writeState();
+  const scrollToYear=(tries)=>{const card=document.getElementById("yir-"+y);if(card&&card.offsetParent!==null){const top=card.getBoundingClientRect().top+window.pageYOffset-70;window.scrollTo({top:Math.max(0,top),behavior:"smooth"});card.classList.add("yir-flash");setTimeout(()=>card.classList.remove("yir-flash"),1400);}else if(tries>0){requestAnimationFrame(()=>scrollToYear(tries-1));}};
+  requestAnimationFrame(()=>requestAnimationFrame(()=>scrollToYear(10)));}
 function toggleMenu(){const m=$("#navMenu"),t=$("#navToggle");const open=m.classList.toggle("open");t.setAttribute("aria-expanded",open?"true":"false");}
 function closeMenu(){const m=$("#navMenu");if(m&&m.classList.contains("open")){m.classList.remove("open");$("#navToggle").setAttribute("aria-expanded","false");}}
 
@@ -1176,14 +1211,14 @@ $$("[data-view]").forEach(el=>el.addEventListener("click",()=>showView(el.datase
 /* HOME */
 function featureCard(b){
   const cov=`<div class="cover" data-i="${ID2I[b.id]}" data-ph="${esc(phHTML(b))}"></div>`;
-  const core=(b.core&&b.core.length)?`<ul class="ft-core">${b.core.slice(0,3).map(c=>`<li>${esc(c)}</li>`).join("")}</ul>`:"";
+  const core=(b.core&&b.core.length)?`<ul class="ft-core">${b.core.slice(0,3).map(c=>`<li>${fmtText(c)}</li>`).join("")}</ul>`:"";
   const themes=(b.themes||[]).slice(0,3).map(t=>`<span class="ft-th" style="background:${THEME_COLORS[t]||'#8a8f98'}22;color:${shade(THEME_COLORS[t]||'#555',-34)}">${esc(t)}</span>`).join("");
   return `<div class="ft-cover" onclick="openModal(BOOKS[${ID2I[b.id]}])">${cov}<span class="ft-tag">Latest read</span></div>
     <div class="ft-body">
       <div class="ft-themes">${themes}</div>
       <h3 class="ft-title" onclick="openModal(BOOKS[${ID2I[b.id]}])">${esc(b.title)}</h3>
       <div class="ft-author">${esc(b.author)}${b.dateRead?` &middot; completed ${fmtDate(b.dateRead)}`:""}</div>
-      ${b.summary?`<p class="ft-sum">${esc(b.summary)}</p>`:""}
+      ${b.summary?`<p class="ft-sum">${fmtText(b.summary)}</p>`:""}
       ${core}
       <button class="ft-open" onclick="openModal(BOOKS[${ID2I[b.id]}])">Read more about it &rarr;</button>
     </div>`;
@@ -1365,17 +1400,19 @@ function tipHide(){TIP.classList.remove("show");}
 function fmtDate(d){if(!d)return "\u2014";const m=/^(\d{4})\/(\d{2})/.exec(d);if(!m)return d;const MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];return MN[+m[2]-1]+" "+m[1];}
 function showListPop(e,title,sub,books){
   const lp=$("#listpop");
-  const rows=books.slice(0,9).map(b=>`<div class="lprow"><span class="lt">${esc(b.title.split(":")[0])}</span><span class="ld">${fmtDate(b.dateRead)}</span></div>`).join("");
-  const more=books.length>9?`<div class="lpmore">+${books.length-9} more</div>`:"";
-  lp.innerHTML=`<div class="lph">${esc(title)}</div><div class="lpsub">${esc(sub)}</div>${rows}${more}`;
+  const MAXROWS=8;
+  const rows=books.slice(0,MAXROWS).map(b=>`<div class="lprow"><span class="lt">${esc(b.title.split(":")[0])}</span><span class="ld">${fmtDate(b.dateRead)}</span></div>`).join("");
+  const more=books.length>MAXROWS?`<div class="lpmore">+${books.length-MAXROWS} more</div>`:"";
+  lp.innerHTML=`<div class="lph">${esc(title)}</div><div class="lpsub">${esc(sub)}</div><div class="lprows">${rows}</div>${more}`;
   lp.classList.add("show");moveListPop(e);
 }
 function moveListPop(e){const lp=$("#listpop");const w=lp.offsetWidth||260,h=lp.offsetHeight||160;let x=e.clientX+14,y=e.clientY+14;if(x+w>innerWidth-10)x=e.clientX-w-14;if(y+h>innerHeight-10)y=e.clientY-h-14;lp.style.left=x+"px";lp.style.top=y+"px";}
 function hideListPop(){$("#listpop").classList.remove("show");}
 function showBookPop(e,bi){const b=BOOKS[bi];if(!b)return;const bp=$("#bookpop");
   const cov=b.isbn?`https://covers.openlibrary.org/b/isbn/${b.isbn}-M.jpg?default=false`:"";
+  const sum=b.summary?(b.summary.length>200?b.summary.slice(0,200).replace(/\s+\S*$/,"")+"\u2026":b.summary):"";
   bp.innerHTML=`<img class="bpcov" src="/covers/${b.id}.jpg" onerror="this.onerror=null;this.src='${cov}';this.onerror=function(){this.style.visibility='hidden'}">`+
-    `<div><div class="bpt">${esc(b.title.split(":")[0])}</div><div class="bpa">${esc(b.author)}</div>${STANDOUT_OF[b.id]?`<div class="bps"><svg viewBox="0 0 24 24" width="10" height="10" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.06 6.6.78-4.9 4.5 1.3 6.56L12 17.9 6.1 20.9l1.3-6.56-4.9-4.5 6.6-.78z"/></svg>Standout read of ${STANDOUT_OF[b.id]}</div>`:""}${b.dateRead?`<div class="bpm">Completed ${fmtDate(b.dateRead)}</div>`:""}</div>`;
+    `<div><div class="bpt">${esc(b.title.split(":")[0])}</div><div class="bpa">${esc(b.author)}</div>${STANDOUT_OF[b.id]?`<div class="bps"><svg viewBox="0 0 24 24" width="10" height="10" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.06 6.6.78-4.9 4.5 1.3 6.56L12 17.9 6.1 20.9l1.3-6.56-4.9-4.5 6.6-.78z"/></svg>Standout read of ${STANDOUT_OF[b.id]}</div>`:""}${sum?`<div class="bpsum">${fmtText(sum)}</div>`:""}${b.dateRead?`<div class="bpm">Completed ${fmtDate(b.dateRead)}</div>`:""}</div>`;
   bp.classList.add("show");moveBookPop(e);}
 function moveBookPop(e){const bp=$("#bookpop");const w=bp.offsetWidth||200,h=bp.offsetHeight||100;let x=e.clientX+14,y=e.clientY+14;if(x+w>innerWidth-10)x=e.clientX-w-14;if(y+h>innerHeight-10)y=e.clientY-h-14;bp.style.left=x+"px";bp.style.top=y+"px";}
 function hideBookPop(){$("#bookpop").classList.remove("show");}
@@ -1433,10 +1470,10 @@ function renderYearStack(){
 let mtMetric="books";
 function renderMonthTrend(){
   const usePages=mtMetric==="pages";
-  const ymB={},ymP={},ymT={}; // ymT[k][theme]=metric value
+  const ymB={},ymP={},ymT={},ymTc={}; // ymT[k][theme]=metric value (fractional); ymTc[k][theme]=book count
   BOOKS.forEach(b=>{const m=/^(\d{4})\/(\d{2})/.exec(b.dateRead);if(!m)return;const k=m[1]+"/"+m[2];if(k<"2022/01")return;
     ymB[k]=(ymB[k]||0)+1;ymP[k]=(ymP[k]||0)+num(b);
-    const nthemes=(b.themes&&b.themes.length)||0;ymT[k]=ymT[k]||{};if(nthemes){const w=(usePages?num(b):1)/nthemes;b.themes.forEach(t=>{ymT[k][t]=(ymT[k][t]||0)+w;});}});
+    const nthemes=(b.themes&&b.themes.length)||0;ymT[k]=ymT[k]||{};ymTc[k]=ymTc[k]||{};if(nthemes){const w=(usePages?num(b):1)/nthemes;b.themes.forEach(t=>{ymT[k][t]=(ymT[k][t]||0)+w;ymTc[k][t]=(ymTc[k][t]||0)+1;});}});
   const keys=Object.keys(ymB).sort();
   if(!keys.length){$("#mtBars").innerHTML="";return;}
   const [y0,m0]=keys[0].split("/").map(Number), [y1,m1]=keys[keys.length-1].split("/").map(Number);
@@ -1463,9 +1500,28 @@ function renderMonthTrend(){
     const k=el.dataset.k;const [y,m]=k.split("/");
     const label=MN[+m-1]+" "+y;
     const nb=ymB[k]||0;
-    const sub=nb+" book"+(nb===1?"":"s")+(ymP[k]?" \u00b7 "+Math.round(ymP[k]).toLocaleString()+" pages":" \u00b7 no reads");
-    bindTip(el,label,nb===0?"no books finished":sub);
+    const pages=Math.round(ymP[k]||0);
+    const tc=ymTc[k]||{};
+    bindMonthPop(el,label,nb,pages,tc);
   });
+}
+function bindMonthPop(el,label,nb,pages,themeCounts){
+  el.addEventListener("mouseenter",e=>showMonthPop(e,label,nb,pages,themeCounts));
+  el.addEventListener("mousemove",moveListPop);
+  el.addEventListener("mouseleave",hideListPop);
+}
+function showMonthPop(e,label,nb,pages,themeCounts){
+  const lp=$("#listpop");
+  if(nb===0){
+    lp.innerHTML=`<div class="lph">${esc(label)}</div><div class="lpsub">no books finished</div><div class="mp-rows"></div>`;
+    lp.classList.add("show");moveListPop(e);return;
+  }
+  const entries=THEME_ORDER.filter(t=>themeCounts[t]).map(t=>[t,themeCounts[t]]).sort((a,b)=>b[1]-a[1]);
+  const rows=entries.map(([t,c])=>`<div class="mp-row"><span class="mp-dot" style="background:${THEME_COLORS[t]||'#8a8f98'}"></span><span class="mp-t">${esc(t)}</span><span class="mp-c">${c}</span></div>`).join("");
+  lp.innerHTML=`<div class="lph">${esc(label)}</div>`+
+    `<div class="mp-tot"><span><b>${nb}</b> book${nb===1?"":"s"}</span><span><b>${pages.toLocaleString()}</b> pages</span></div>`+
+    `<div class="mp-rows">${rows}</div>`;
+  lp.classList.add("show");moveListPop(e);
 }
 $("#mtToggle").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;mtMetric=b.dataset.m;$$("#mtToggle button").forEach(x=>x.classList.toggle("on",x===b));renderMonthTrend();});
 $("#tyToggle").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;tyMetric=b.dataset.m;$$("#tyToggle button").forEach(x=>x.classList.toggle("on",x===b));renderYearStack();});
@@ -1502,13 +1558,15 @@ function renderYearReview(){
     const elapsedMonths = partial ? Math.max(1, now.getMonth()+1) : 12;
     const pace = list.length ? (list.length/elapsedMonths) : 0;
     const paceStr = pace>=10 ? Math.round(pace)+"" : pace.toFixed(1);
+    // shortest legit read: ignore implausible page counts (audiobook/data-error entries
+    // sit at 1-12pp; the next real book jumps to ~100+, so a 60pp floor cleanly excludes them)
+    const shortCandidates=byLen.filter(b=>num(b)>=60);
+    const shortest=shortCandidates.length?shortCandidates[shortCandidates.length-1]:null;
     const stats=[
-      [list.length,"books"],
       [totPages>=1000?(totPages/1000).toFixed(totPages>=10000?0:1)+"k":totPages,"pages"],
       [authors,"authors"],
-      [Object.keys(tc).length,"themes"],
       [avgPages||"\u2014","avg pp"],
-      [paceStr,"per month"]
+      ["~"+paceStr,"books / month"]
     ];
     // theme-mix proportional bar (top themes + "other"); each segment hoverable
     const otherEntries=themeEntries.slice(4);
@@ -1516,17 +1574,21 @@ function renderYearReview(){
     const barSegs=topThemes.map(([t,c])=>`<span class="yir-mixseg" data-tt="${esc(t)}" data-ts="${Math.round(c/themeTot*100)}% \u00b7 ${c} book${c===1?"":"s"}" style="flex:${c};background:${THEME_COLORS[t]||'#8a8f98'}"></span>`).join("")
       + (otherEntries.length?`<span class="yir-mixseg" data-tt="${otherEntries.length} more theme${otherEntries.length===1?"":"s"}" data-ts="${esc(otherEntries.map(e=>e[0]).join(", "))}" style="flex:${otherCount};background:var(--line)"></span>`:"");
     const themeChips=topThemes.map(([t,c])=>`<span class="yir-th" style="background:${THEME_COLORS[t]||'#8a8f98'}"><span>${esc(t)}</span><span class="yc">${Math.round(c/themeTot*100)}%</span></span>`).join("");
-    const books=standout.map(b=>`<div class="yir-bk" onclick="openModal(BOOKS[${ID2I[b.id]}])">${yirCover(b)}<div class="yir-bk-meta"><div class="yc-t">${esc(b.title.split(":")[0])}</div><div class="yc-a">${esc(b.author)}</div></div></div>`).join("");
+    const books=standout.map(b=>`<div class="yir-bk" onclick="openModal(BOOKS[${ID2I[b.id]}])" onmouseenter="showBookPop(event,${ID2I[b.id]})" onmousemove="moveBookPop(event)" onmouseleave="hideBookPop()">${yirCover(b)}<div class="yir-bk-meta"><div class="yc-t">${esc(b.title.split(":")[0])}</div><div class="yc-a">${esc(b.author)}</div></div></div>`).join("");
     // highlight callouts
     const calls=[];
-    if(busiest)calls.push(`<span class="yir-call"><span class="yir-call-l">Busiest month</span><span class="yir-call-v">${MNF[+busiest[0]]} \u00b7 ${busiest[1]}</span></span>`);
+    if(busiest)calls.push(`<span class="yir-call"><span class="yir-call-l">Busiest month</span><span class="yir-call-v">${MNF[+busiest[0]]} \u00b7 ${busiest[1]} book${busiest[1]===1?"":"s"}</span></span>`);
     if(longest)calls.push(`<span class="yir-call"><span class="yir-call-l">Longest read</span><span class="yir-call-v">${esc(longest.title.split(":")[0])} \u00b7 ${num(longest)}pp</span></span>`);
-    return `<div class="yir-card">
-      <div class="yir-rail">
+    if(shortest&&shortest!==longest)calls.push(`<span class="yir-call"><span class="yir-call-l">Shortest read</span><span class="yir-call-v">${esc(shortest.title.split(":")[0])} \u00b7 ${num(shortest)}pp</span></span>`);
+    return `<div class="yir-card" id="yir-${y}">
+      <div class="yir-top">
         <div class="yir-yr">${y}</div>
-        <div class="yir-sub">${partial?"in progress \u2014 "+list.length+" so far":list.length+" books finished"}</div>
-        <div class="yir-stats">${stats.map(s=>`<div class="yir-stat"><div class="v">${s[0]}</div><div class="l">${s[1]}</div></div>`).join("")}</div>
+        <div class="yir-hero" onclick="gotoYear('${y}')" title="See all ${list.length} books from ${y}">
+          <div class="yir-hero-n">${list.length}</div>
+          <div class="yir-hero-l">books read in ${y}</div>
+        </div>
       </div>
+      <div class="yir-stats">${stats.map(s=>`<div class="yir-stat"><div class="v">${s[0]}</div><div class="l">${s[1]}</div></div>`).join("")}</div>
       <div class="yir-main">
         <div class="yir-col">
           <div class="yir-h">Theme mix</div>
@@ -1537,6 +1599,7 @@ function renderYearReview(){
         <div class="yir-col">
           <div class="yir-h">Standout reads</div>
           <div class="yir-books">${books}</div>
+          <button class="yir-seeall" onclick="gotoYear('${y}')">See my full ${y} &rarr;</button>
         </div>
       </div>
     </div>`;
@@ -2022,14 +2085,14 @@ function openModal(b){
       <div class="mcov" data-i="${ID2I[b.id]}" data-ph="${esc(phHTML(b))}"></div>
       <div class="mintro">
         <h2>${esc(b.title)}</h2>
-        ${STANDOUT_OF[b.id]?`<span class="standout-badge"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.06 6.6.78-4.9 4.5 1.3 6.56L12 17.9 6.1 20.9l1.3-6.56-4.9-4.5 6.6-.78z"/></svg>Standout read of ${STANDOUT_OF[b.id]}</span>`:""}
+        ${STANDOUT_OF[b.id]?`<span class="standout-badge clickable" role="button" tabindex="0" title="See the ${STANDOUT_OF[b.id]} standouts" onclick="gotoYearReview('${STANDOUT_OF[b.id]}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();gotoYearReview('${STANDOUT_OF[b.id]}')}"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.06 6.6.78-4.9 4.5 1.3 6.56L12 17.9 6.1 20.9l1.3-6.56-4.9-4.5 6.6-.78z"/></svg>Standout read of ${STANDOUT_OF[b.id]} &rarr;</span>`:""}
         <p class="by">by <span class="alink" onclick="gotoAuthor('${(b.author||'').replace(/'/g,"\\'")}');closeModal()">${esc(b.author)}</span></p>
         <div class="mthemes">${themes}</div>
-        ${b.summary?`<p class="msum">${esc(b.summary)}</p>`:""}
+        ${b.summary?`<p class="msum">${fmtText(b.summary)}</p>`:""}
       </div>
     </div>
     <div class="mbody">
-      ${(b.core&&b.core.length)?`<div class="msec-h">Core ideas</div><ul class="mcore">${b.core.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>`:""}
+      ${(b.core&&b.core.length)?`<div class="msec-h">Core ideas</div><ul class="mcore">${b.core.map(c=>`<li>${fmtText(c)}</li>`).join("")}</ul>`:""}
       ${b.yearPub?`<div class="rrow"><span class="k">Published</span><span>${esc(b.yearPub)}</span></div>`:""}
       ${num(b)?`<div class="rrow"><span class="k">Pages</span><span>${num(b)}</span></div>`:""}
       ${b.dateRead?`<div class="rrow"><span class="k">Read</span><span>${fmtDate(b.dateRead)}</span></div>`:`<div class="rrow"><span class="k">Read</span><span style="color:var(--faint)">not recorded</span></div>`}
@@ -2092,6 +2155,10 @@ function initGraph(){
   if(G) return;
   const canvas=$("#graphCanvas"), ctx=canvas.getContext("2d");
   const wrap=canvas.parentElement;
+  // If the connections view hasn't laid out yet (zero width), building the graph now
+  // would produce a 0-width canvas and the `if(G) return` guard would lock that in.
+  // Wait for a real width before initializing.
+  if(!wrap.getBoundingClientRect().width){requestAnimationFrame(initGraph);return;}
   let DPR=Math.min(window.devicePixelRatio||1,2);
   function size(){const r=wrap.getBoundingClientRect();const ch=window.innerWidth<=640?Math.max(380,Math.round(window.innerHeight*0.62)):620;canvas.width=Math.max(1,Math.round(r.width*DPR));canvas.height=ch*DPR;canvas.style.height=ch+"px";}
   size();
