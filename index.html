@@ -398,6 +398,7 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .mcore li::before{content:"";position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%;background:var(--blue-br)}
 .msec-h{font-family:"Archivo";font-weight:700;font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:18px 0 8px}
 .mconn{display:flex;flex-wrap:wrap;gap:6px}
+.mrel{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:4px 10px;margin-top:2px}
 .mconn .cb{font-size:.76rem;background:var(--paper2);border:1px solid var(--line);border-radius:8px;padding:4px 10px;cursor:pointer;transition:.15s;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mconn .cb:hover{border-color:var(--blue);color:var(--blue)}
 .sheet .mhead{display:flex;gap:24px;align-items:flex-start;margin-bottom:6px}
@@ -458,6 +459,7 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .cmptable th,.cmptable td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
 .cmptable th{font-family:"Archivo";font-weight:700;font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
 .cmptable td.n{font-family:"Archivo";font-weight:700;text-align:right}
+.cmptable th.n{text-align:right}
 .cmptable .barcell{width:40%}
 .cmpbar{height:9px;border-radius:5px;background:var(--paper2);position:relative;overflow:hidden}
 .cmpbar i{position:absolute;left:0;top:0;bottom:0;border-radius:5px}
@@ -959,6 +961,7 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
     <div class="graph-wrap">
       <div class="graph-tools">
         <input id="gsearch" class="gsearch" type="search" placeholder="Find a book in the web&hellip;" autocomplete="off">
+        <button class="lreset" id="graphReset" type="button">Reshuffle &#8635;</button>
         <span class="ghint">Books cluster by theme. Hover one to reveal its threads &middot; click to open &middot; scroll to zoom</span>
       </div>
       <canvas id="graphCanvas"></canvas>
@@ -980,6 +983,12 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
 
     <div class="profile" id="profile"><h3>My reading profile</h3><div class="traits" id="traits"></div></div>
     <div class="stat-grid" id="statCards"></div>
+
+    <div class="panel">
+      <h3>Records &amp; superlatives</h3>
+      <p class="cap">The edges of the shelf. <span class="hint">Click to open.</span></p>
+      <div class="records" id="records"></div>
+    </div>
 
     <div class="panel">
       <div class="panel-head"><h3>Reading pace</h3>
@@ -1049,13 +1058,6 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
       <div class="freshbar" id="freshBar"></div>
       <div class="fresh-legend" id="freshLegend"></div>
     </div>
-
-    <div class="panel">
-      <h3>Records &amp; superlatives</h3>
-      <p class="cap">The edges of the shelf. <span class="hint">Click to open.</span></p>
-      <div class="records" id="records"></div>
-    </div>
-    <p class="coverage-note" id="coverage"></p>
   </section>
 
 </div>
@@ -1782,15 +1784,10 @@ function renderAnalytics(){
   const avgPages=pages.length?Math.round(totalPages/pages.length):0;
   const medPages=pages.length?Math.round(median(pages)):0;
   const authors=lensAuthorCounts(L);
-  const pubs=L.map(b=>parseInt(b.yearPub)).filter(isFinite).sort((a,b)=>a-b);
-  const medianPub=pubs.length?pubs[Math.floor(pubs.length/2)]:"\u2014";
   const repeat=Object.values(authors).filter(x=>x.length>1).reduce((a,x)=>a+x.length,0);
   const yc={};L.forEach(b=>{if(b.yearRead)yc[ybucket(b.yearRead)]=(yc[ybucket(b.yearRead)]||0)+1;});
   const full=["2023","2024","2025"].filter(y=>yc[y]);
   const avgPerYear=full.length?Math.round(full.reduce((a,y)=>a+yc[y],0)/full.length):0;
-  // 2026 projection (only when not year-filtered)
-  const b26=BOOKS.filter(b=>b.yearRead==="2026").length;
-  const proj=Math.round(b26/5*12);
 
   const cards=[
     [L.length,"books"+(lensed?" in lens":""),lensed?`of ${BOOKS.length} total`:"",""],
@@ -1799,8 +1796,6 @@ function renderAnalytics(){
     ["~"+avgPerYear,"books / year","full years 2023\u201325",""],
     [Object.keys(authors).length,"authors",Object.values(authors).filter(x=>x.length>1).length+" read >once",""],
     [L.length?Math.round(repeat/L.length*100)+"%":"0%","from repeat authors",repeat+" books",""],
-    [medianPub,"median pub year","",""],
-    [lensed?"\u2014":"~"+proj,"2026 projection",lensed?"set lens to All":`${b26} read so far`,""],
   ];
   $("#statCards").innerHTML=cards.map(c=>`<div class="stat"><div class="big">${c[0]}</div><div class="lab">${c[1]}</div>${c[2]?`<div class="note">${c[2]}</div>`:""}</div>`).join("");
 
@@ -1849,9 +1844,6 @@ function renderAnalytics(){
   $("#freshLegend").innerHTML=FRESH_ORDER.filter(k=>fb[k]).map(k=>`<div class="it"><span class="sw" style="background:${FRESH_COLORS[k]}"></span>${k} &middot; ${fb[k]}</div>`).join("");
 
   renderRecords(L);
-  // ---- coverage / rigor readout ----
-  const dated=L.filter(b=>b.dateRead).length, withp=L.filter(b=>num(b)>0).length;
-  $("#coverage").textContent=`Based on ${L.length} books in this lens: ${dated} have read dates, ${withp} have page counts. Time-based panels use dated books only; Pre-2020 is grouped, and monthly views start in 2023 when Goodreads use became consistent.`;
 }
 
 function lensAuthorCounts(L){const m={};L.forEach(b=>{if(!b.author)return;(m[b.author]=m[b.author]||[]).push(b);});return m;}
@@ -1957,11 +1949,15 @@ function renderRecords(L){
   const pubs=L.filter(b=>/-?\d/.test(b.yearPub||"")&&parseInt(b.yearPub));
   const byPub=[...pubs].sort((a,b)=>parseInt(a.yearPub)-parseInt(b.yearPub));
   const byLen=L.filter(b=>num(b)>0).sort((a,b)=>num(b)-num(a));
-  const byConn=[...L].sort((a,b)=>(b.conn?b.conn.length:0)-(a.conn?a.conn.length:0));
   const recs=[];
   if(byPub.length){recs.push(["Oldest",byPub[0].yearPub,byPub[0]]);recs.push(["Newest",byPub[byPub.length-1].yearPub,byPub[byPub.length-1]]);}
-  if(byLen.length){recs.push(["Longest",num(byLen[0])+" pp",byLen[0]]);recs.push(["Shortest",num(byLen[byLen.length-1])+" pp",byLen[byLen.length-1]]);}
-  if(byConn.length&&byConn[0].conn&&byConn[0].conn.length)recs.push(["Most connected",byConn[0].conn.length+" links",byConn[0]]);
+  if(byLen.length){
+    recs.push(["Longest",num(byLen[0])+" pp",byLen[0]]);
+    // shortest legit read: skip implausibly low page counts (data errors / audiobook stubs)
+    const shortLegit=byLen.filter(b=>num(b)>=50);
+    const shortest=shortLegit.length?shortLegit[shortLegit.length-1]:byLen[byLen.length-1];
+    recs.push(["Shortest",num(shortest)+" pp",shortest]);
+  }
   $("#records").innerHTML=recs.map(r=>`<div class="rec" onclick="openModal(BOOKS[${BOOKS.indexOf(r[2])}])"><div class="rl">${r[0]}</div><div class="rv">${esc(String(r[1]))}</div><div class="rt">${esc(r[2].title.split(":")[0])}</div></div>`).join("");
 }
 
@@ -2110,7 +2106,7 @@ function openModal(b){
       ${b.yearPub?`<div class="rrow"><span class="k">Published</span><span>${esc(b.yearPub)}</span></div>`:""}
       ${num(b)?`<div class="rrow"><span class="k">Pages</span><span>${num(b)}</span></div>`:""}
       ${b.dateRead?`<div class="rrow"><span class="k">Read</span><span>${fmtDate(b.dateRead)}</span></div>`:`<div class="rrow"><span class="k">Read</span><span style="color:var(--faint)">not recorded</span></div>`}
-      ${(b.conn&&b.conn.length)?`<div class="msec-h">Related titles (${b.conn.length})</div><div class="mconn">${b.conn.slice(0,12).map(cid=>{const cb=BOOKS[ID2I[cid]];return cb?`<span class="cb" data-bi="${ID2I[cb.id]}" onclick="openModal(BOOKS[${ID2I[cb.id]}])" onmouseenter="showBookPop(event,${ID2I[cb.id]})" onmousemove="moveBookPop(event)" onmouseleave="hideBookPop()">${esc(cb.title.split(":")[0])}</span>`:"";}).join("")}</div>`:""}
+      ${(b.conn&&b.conn.length)?`<div class="msec-h">Related titles (${b.conn.length})</div><div class="mrel">${b.conn.slice(0,12).map(cid=>{const cb=BOOKS[ID2I[cid]];return cb?`<div class="yir-bk" onclick="openModal(BOOKS[${ID2I[cb.id]}])" onmouseenter="showBookPop(event,${ID2I[cb.id]})" onmousemove="moveBookPop(event)" onmouseleave="hideBookPop()">${yirCover(cb)}<div class="yir-bk-meta"><div class="yc-t">${esc(cb.title.split(":")[0])}</div><div class="yc-a">${esc(cb.author)}</div></div></div>`:"";}).join("")}</div>`:""}
       ${b.id?`<a class="glink" href="https://www.goodreads.com/book/show/${esc(b.id)}" target="_blank" rel="noopener">View on Goodreads &rarr;</a>`:""}
     </div>`;
   observeCovers($("#sheet"));hideAllPops();$("#modal").classList.add("open");writeState({book:b.id});
@@ -2326,6 +2322,18 @@ function initGraph(){
     const q=e.target.value.toLowerCase().trim();if(!q){hot=-1;return;}
     const idx=BOOKS.findIndex(b=>b.title.toLowerCase().includes(q));
     if(idx>=0){hot=idx;const n=nodes[idx];scale=1.4;panx=W()/2-n.x*scale;pany=H()/2-n.y*scale;draw();}
+  });
+
+  // reset -> reshuffle layout and clear all filters/zoom/search
+  const resetBtn=$("#graphReset");
+  if(resetBtn)resetBtn.addEventListener("click",()=>{
+    nodes.forEach(n=>{n.x=W()/2+(Math.random()-.5)*W()*0.7;n.y=H()/2+(Math.random()-.5)*H()*0.7;n.vx=0;n.vy=0;});
+    hidden.clear();
+    $$("#graphLegend .it").forEach(el=>el.classList.remove("off"));
+    hot=-1;dragging=null;scale=1;panx=0;pany=0;
+    const gs=$("#gsearch");if(gs)gs.value="";
+    alpha=1;for(let s=0;s<260;s++){tick();}   // re-settle silently
+    alpha=0;draw();                            // back to calm and still
   });
   window.addEventListener("resize",()=>{if($("#view-connections").classList.contains("active")){DPR=Math.min(window.devicePixelRatio||1,2);size();}});
 
