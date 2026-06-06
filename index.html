@@ -464,6 +464,9 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .msec-h{font-family:"Archivo";font-weight:700;font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:18px 0 8px}
 .mconn{display:flex;flex-wrap:wrap;gap:6px}
 .mrel{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:4px 10px;margin-top:2px}
+.mrel .mrel-bk{transition:background .14s,box-shadow .14s,transform .14s}
+.mrel .mrel-bk:hover{background:var(--blue-tint);box-shadow:0 4px 12px rgba(58,110,165,.14);transform:translateY(-1px)}
+.mrel .mrel-bk:hover .yc-t{color:var(--blue)}
 .mconn .cb{font-size:.76rem;background:var(--paper2);border:1px solid var(--line);border-radius:8px;padding:4px 10px;cursor:pointer;transition:.15s;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mconn .cb:hover{border-color:var(--blue);color:var(--blue)}
 .sheet .mhead{display:flex;gap:24px;align-items:flex-start;margin-bottom:6px}
@@ -764,22 +767,25 @@ footer.ft .ft-rec:hover{background:#6f8a2e;border-color:#6f8a2e;color:#fff}
 .ft-open{background:none;border:none;color:var(--blue);font-family:"Archivo";font-weight:700;font-size:.86rem;cursor:pointer;padding:0}
 .ft-open:hover{text-decoration:underline}
 /* featured reads (standout picks) */
-.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:38px}
-.feat-card{display:flex;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:18px;box-shadow:var(--shadow);align-items:flex-start}
+.feat-panel{position:relative;background:linear-gradient(165deg,var(--blue-tint),var(--card) 60%);border:1px solid var(--blue-lt);border-radius:18px;padding:8px 24px 26px;margin-bottom:38px;box-shadow:var(--shadow);overflow:hidden}
+.feat-panel::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--blue-br),var(--green))}
+.feat-panel .section-head{margin-top:18px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feat-card{display:flex;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:18px;box-shadow:0 4px 14px rgba(31,37,48,.08);align-items:flex-start;height:188px;overflow:hidden}
 .feat-cover{position:relative;flex:0 0 84px;width:84px;cursor:pointer}
-.feat-cover .cover{width:84px;aspect-ratio:2/3;border-radius:5px;box-shadow:0 8px 18px rgba(31,37,48,.2);transition:transform .18s}
+.feat-cover .cover{width:84px;height:126px;aspect-ratio:auto;border-radius:5px;box-shadow:0 8px 18px rgba(31,37,48,.2);transition:transform .18s}
 .feat-cover:hover .cover{transform:translateY(-3px)}
 .feat-cover .ph{padding:9px 8px}
 .feat-cover .ph .t{font-size:.62rem;line-height:1.18;-webkit-line-clamp:5}
 .feat-cover .ph .a{font-size:.54rem;margin-top:5px}
 .feat-star{position:absolute;top:5px;right:5px;z-index:3;display:inline-flex;align-items:center;gap:2px;background:#c98a1a;color:#fff;font-family:"Archivo";font-weight:700;font-size:.5rem;letter-spacing:.02em;padding:2px 5px;border-radius:5px;box-shadow:0 2px 5px rgba(0,0,0,.25)}
-.feat-body{min-width:0}
-.feat-title{font-family:"Archivo";font-weight:700;font-size:.98rem;line-height:1.16;margin:0 0 2px;cursor:pointer}
+.feat-body{min-width:0;display:flex;flex-direction:column;height:100%}
+.feat-title{font-family:"Archivo";font-weight:700;font-size:.98rem;line-height:1.16;margin:0 0 2px;cursor:pointer;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .feat-title:hover{color:var(--blue)}
-.feat-author{color:var(--muted);font-size:.74rem;margin-bottom:8px}
-.feat-sum{font-size:.78rem;line-height:1.42;color:var(--ink2);margin:0 0 8px;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
-.feat-meta{font-size:.68rem;color:var(--faint);font-family:"Archivo";font-weight:700;letter-spacing:.02em}
-@media(max-width:900px){.feat-grid{grid-template-columns:1fr}}
+.feat-author{color:var(--muted);font-size:.74rem;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.feat-sum{font-size:.78rem;line-height:1.42;color:var(--ink2);margin:0 0 8px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.feat-meta{font-size:.68rem;color:var(--faint);font-family:"Archivo";font-weight:700;letter-spacing:.02em;margin-top:auto}
+@media(max-width:900px){.feat-grid{grid-template-columns:1fr}.feat-card{height:auto;min-height:160px}}
 .home-cta{text-align:center;margin:6px 0 50px}
 .browse-all{background:var(--blue);color:#fff;border:none;border-radius:26px;padding:13px 30px;font-family:"Archivo";font-weight:700;font-size:.95rem;cursor:pointer;box-shadow:0 8px 20px rgba(58,110,165,.25);transition:.18s}
 .browse-all:hover{background:var(--blue-d);transform:translateY(-2px)}
@@ -940,11 +946,13 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
     </div>
     <div class="section-head"><h2>Most Recent Read</h2></div>
     <div class="feature" id="featureBook"></div>
+    <div class="feat-panel">
+      <div class="section-head"><h2>Featured Reads</h2><button class="more" id="featReshuffle">Shuffle &#8635;</button></div>
+      <div class="feat-grid" id="featGrid"></div>
+    </div>
     <div class="section-head"><h2>More from this year</h2><button class="more" id="recentReshuffle">Shuffle &#8635;</button></div>
     <div class="shelf" id="randomShelf"></div>
     <div class="home-cta"><button class="browse-all" data-view="browse">Browse all 305 books &rarr;</button></div>
-    <div class="section-head"><h2>Featured Reads</h2><button class="more" id="featReshuffle">Shuffle &#8635;</button></div>
-    <div class="feat-grid" id="featGrid"></div>
   </section>
 
   <!-- BROWSE -->
@@ -1371,7 +1379,7 @@ function renderFeatured(){
   const g=$("#featGrid");if(!g)return;
   const pool=featPool();
   for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
-  g.innerHTML=pool.slice(0,3).map(featCard).join("");
+  g.innerHTML=pool.slice(0,6).map(featCard).join("");
   observeCovers(g);
 }
 function renderHome(){
@@ -2241,8 +2249,8 @@ function openModal(b){
       ${(b.core&&b.core.length)?`<div class="msec-h">Core ideas</div><ul class="mcore">${b.core.map(c=>`<li>${fmtText(c)}</li>`).join("")}</ul>`:""}
       ${b.yearPub?`<div class="rrow"><span class="k">Published</span><span>${esc(b.yearPub)}</span></div>`:""}
       ${num(b)?`<div class="rrow"><span class="k">Pages</span><span>${num(b)}</span></div>`:""}
-      ${b.dateRead?`<div class="rrow"><span class="k">Read</span><span>${fmtDate(b.dateRead)}</span></div>`:`<div class="rrow"><span class="k">Read</span><span style="color:var(--faint)">not recorded</span></div>`}
-      ${(b.conn&&b.conn.length)?`<div class="msec-h">Related titles (${b.conn.length})</div><div class="mrel">${b.conn.slice(0,12).map(cid=>{const cb=BOOKS[ID2I[cid]];return cb?`<div class="yir-bk" onclick="openModal(BOOKS[${ID2I[cb.id]}])" onmouseenter="showBookPop(event,${ID2I[cb.id]})" onmousemove="moveBookPop(event)" onmouseleave="hideBookPop()">${yirCover(cb)}<div class="yir-bk-meta"><div class="yc-t">${esc(cb.title.split(":")[0])}</div><div class="yc-a">${esc(cb.author)}</div></div></div>`:"";}).join("")}</div>`:""}
+      ${b.dateRead?`<div class="rrow"><span class="k">Alex&rsquo;s read date</span><span>${fmtDate(b.dateRead)}</span></div>`:`<div class="rrow"><span class="k">Alex&rsquo;s read date</span><span style="color:var(--faint)">not recorded</span></div>`}
+      ${(b.conn&&b.conn.length)?`<div class="msec-h">Related titles (${b.conn.length})</div><div class="mrel">${b.conn.slice(0,12).map(cid=>{const cb=BOOKS[ID2I[cid]];return cb?`<div class="yir-bk mrel-bk" onclick="openModal(BOOKS[${ID2I[cb.id]}])">${yirCover(cb)}<div class="yir-bk-meta"><div class="yc-t">${esc(cb.title.split(":")[0])}</div><div class="yc-a">${esc(cb.author)}</div></div></div>`:"";}).join("")}</div>`:""}
       ${b.id?`<a class="glink" href="https://www.goodreads.com/book/show/${esc(b.id)}" target="_blank" rel="noopener">View on Goodreads &rarr;</a>`:""}
     </div>`;
   observeCovers($("#sheet"));hideAllPops();$("#modal").classList.add("open");writeState({book:b.id});
