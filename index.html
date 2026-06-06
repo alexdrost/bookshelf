@@ -1354,7 +1354,7 @@ function renderRecentShelf(){
 // Featured reads: random assortment drawn from the 2023/24/25 standout picks (18 books).
 // Update the year list here when a new year's standouts are added (e.g. add "2026").
 const FEAT_YEARS=["2025","2024","2023"];
-const FEAT_POOL=FEAT_YEARS.flatMap(y=>(STANDOUTS[y]||[])).map(id=>BOOKS[ID2I[id]]).filter(Boolean);
+function featPool(){return FEAT_YEARS.flatMap(y=>(STANDOUTS[y]||[])).map(id=>BOOKS[ID2I[id]]).filter(Boolean);}
 function featCard(b){
   const cov=`<div class="cover" data-i="${ID2I[b.id]}" data-ph="${esc(phHTML(b))}"></div>`;
   const yr=STANDOUT_OF[b.id];
@@ -1369,7 +1369,7 @@ function featCard(b){
 }
 function renderFeatured(){
   const g=$("#featGrid");if(!g)return;
-  const pool=FEAT_POOL.slice();
+  const pool=featPool();
   for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
   g.innerHTML=pool.slice(0,3).map(featCard).join("");
   observeCovers(g);
