@@ -109,6 +109,10 @@ nav{position:sticky;top:0;z-index:30;background:rgba(244,241,233,.82);backdrop-f
 .section-head .sub{color:var(--muted);font-size:.85rem}
 .section-head .more{margin-left:auto;background:var(--blue);border:none;border-radius:22px;padding:7px 17px;font-family:"Archivo";font-weight:600;font-size:.78rem;color:#fff;cursor:pointer;transition:.2s;letter-spacing:.03em}
 .section-head .more:hover{background:var(--blue-d);transform:translateY(-1px);box-shadow:var(--shadow-g)}
+.home-divider{display:flex;align-items:center;justify-content:center;margin:54px 0 8px}
+.home-divider span{display:block;width:100%;max-width:560px;height:1px;background:linear-gradient(90deg,transparent,var(--blue-lt),transparent)}
+.section-head-c{display:block;text-align:center;margin:18px 0 22px}
+.section-head-c h2{font-size:1.85rem}
 
 .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(124px,1fr));gap:26px}
 .shelf.spotlight{grid-template-columns:repeat(auto-fill,minmax(152px,1fr))}
@@ -771,10 +775,12 @@ footer.ft .ft-rec:hover{background:#6f8a2e;border-color:#6f8a2e;color:#fff}
 .feat-panel::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--blue-br),var(--green))}
 .feat-panel .section-head{margin-top:18px}
 .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.feat-card{display:flex;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:18px;box-shadow:0 4px 14px rgba(31,37,48,.08);align-items:flex-start;height:188px;overflow:hidden}
-.feat-cover{position:relative;flex:0 0 84px;width:84px;cursor:pointer}
+.feat-card{display:flex;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:18px;box-shadow:0 4px 14px rgba(31,37,48,.08);align-items:flex-start;height:188px;overflow:hidden;cursor:pointer;transition:transform .16s,box-shadow .16s,border-color .16s}
+.feat-card:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(31,37,48,.16);border-color:var(--blue-lt)}
+.feat-card:hover .feat-title{color:var(--blue)}
+.feat-card:hover .feat-cover .cover{transform:translateY(-2px)}
+.feat-cover{position:relative;flex:0 0 84px;width:84px}
 .feat-cover .cover{width:84px;height:126px;aspect-ratio:auto;border-radius:5px;box-shadow:0 8px 18px rgba(31,37,48,.2);transition:transform .18s}
-.feat-cover:hover .cover{transform:translateY(-3px)}
 .feat-cover .ph{padding:9px 8px}
 .feat-cover .ph .t{font-size:.62rem;line-height:1.18;-webkit-line-clamp:5}
 .feat-cover .ph .a{font-size:.54rem;margin-top:5px}
@@ -950,7 +956,8 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
       <div class="section-head"><h2>Featured Reads</h2><button class="more" id="featReshuffle">Shuffle &#8635;</button></div>
       <div class="feat-grid" id="featGrid"></div>
     </div>
-    <div class="section-head"><h2>More from this year</h2><button class="more" id="recentReshuffle">Shuffle &#8635;</button></div>
+    <div class="home-divider"><span></span></div>
+    <div class="section-head section-head-c"><h2>More from my library</h2></div>
     <div class="shelf" id="randomShelf"></div>
     <div class="home-cta"><button class="browse-all" data-view="browse">Browse all 305 books &rarr;</button></div>
   </section>
@@ -1321,10 +1328,6 @@ window.addEventListener("hashchange",()=>{
   if(!location.hash){showView("home");return;}
   readState();
 });
-function copyLink(btn){
-  navigator.clipboard&&navigator.clipboard.writeText(location.href);
-  if(btn){const o=btn.textContent;btn.textContent="Link copied \u2713";setTimeout(()=>btn.textContent=o,1400);}
-}
 $$("[data-view]").forEach(el=>el.addEventListener("click",()=>showView(el.dataset.view)));
 
 /* HOME */
@@ -1366,10 +1369,10 @@ function featPool(){return FEAT_YEARS.flatMap(y=>(STANDOUTS[y]||[])).map(id=>BOO
 function featCard(b){
   const cov=`<div class="cover" data-i="${ID2I[b.id]}" data-ph="${esc(phHTML(b))}"></div>`;
   const yr=STANDOUT_OF[b.id];
-  return `<div class="feat-card">
-    <div class="feat-cover" onclick="openModal(BOOKS[${ID2I[b.id]}])">${cov}${yr?`<span class="feat-star" title="Standout read of ${yr}"><svg viewBox="0 0 24 24" width="8" height="8" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.06 6.6.78-4.9 4.5 1.3 6.56L12 17.9 6.1 20.9l1.3-6.56-4.9-4.5 6.6-.78z"/></svg>${yr}</span>`:""}</div>
+  return `<div class="feat-card" onclick="openModal(BOOKS[${ID2I[b.id]}])">
+    <div class="feat-cover">${cov}${yr?`<span class="feat-star" title="Standout read of ${yr}"><svg viewBox="0 0 24 24" width="8" height="8" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.06 6.6.78-4.9 4.5 1.3 6.56L12 17.9 6.1 20.9l1.3-6.56-4.9-4.5 6.6-.78z"/></svg>${yr}</span>`:""}</div>
     <div class="feat-body">
-      <h3 class="feat-title" onclick="openModal(BOOKS[${ID2I[b.id]}])">${esc(b.title.split(":")[0])}</h3>
+      <h3 class="feat-title">${esc(b.title.split(":")[0])}</h3>
       <div class="feat-author">${esc(b.author)}</div>
       ${b.summary?`<p class="feat-sum">${fmtText(b.summary)}</p>`:""}
       ${b.dateRead?`<div class="feat-meta">Completed ${fmtDate(b.dateRead)}</div>`:""}
@@ -1389,7 +1392,6 @@ function renderHome(){
   renderFeatured();
   const hc=$("#heroCount");if(hc)hc.textContent=String(BOOKS.length);
 }
-function reshuffle(){const pool=BOOKS.slice();for(let i=pool.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[pool[i],pool[j]]=[pool[j],pool[i]];}$("#randomShelf").innerHTML=pool.slice(0,12).map((b,i)=>bookCard(b,i*40)).join("");observeCovers($("#randomShelf"));}
 
 
 /* BROWSE */
@@ -1464,14 +1466,10 @@ $("#emptyReset").addEventListener("click",()=>{$("#q").value="";activeTheme="";y
 
 $("#themeChips").addEventListener("click",e=>{const c=e.target.closest(".chip");if(!c)return;activeTheme=c.dataset.t;yearFilter="";drill=null;$("#q").value="";renderChips();renderBrowse();writeState();});
 function gotoTheme(t){activeTheme=t;yearFilter="";drill=null;$("#q").value="";renderChips();renderBrowse();showView("browse");}
-function gotoTag(t){if(typeof closeModal==="function")closeModal();activeTheme="";yearFilter="";drill=null;sortMode="dateRead";$("#q").value=t;$$("#sortBtns button").forEach(x=>x.classList.toggle("on",x.dataset.s==="dateRead"));ensureView("browse");renderChips();renderBrowse();showView("browse");writeState();}
 function gotoYear(y){activeTheme="";yearFilter=y;drill=null;$("#q").value="";renderChips();renderBrowse();showView("browse");}
 
 /* AUTHORS */
 
-function authorCounts(){const m={};BOOKS.forEach(b=>{if(!b.author)return;(m[b.author]=m[b.author]||[]).push(b);});return m;}
-function initials(name){const p=name.trim().split(/\s+/);return ((p[0]||"")[0]||"")+((p[p.length-1]||"")[0]||"");}
-function faceColor(name){let h=0;for(let i=0;i<name.length;i++)h=(h*31+name.charCodeAt(i))>>>0;const pal=Object.values(THEME_COLORS);return pal[h%pal.length];}
 const faceCache=new Map();
 async function lookupFace(name){
   if(faceCache.has(name))return faceCache.get(name);
@@ -1540,12 +1538,8 @@ function renderAuthorBatch(){
 $("#authorMore").addEventListener("click",renderAuthorBatch);
 $("#aq").addEventListener("input",renderAuthors);
 $("#ascope").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;asort=b.dataset.s;$$("#ascope button").forEach(x=>x.classList.toggle("on",x===b));renderAuthors();});
-function gotoAuthor(a){activeTheme="";yearFilter="";drill=null;sortMode="dateRead";$("#q").value=a;$$("#sortBtns button").forEach(x=>x.classList.toggle("on",x.dataset.s==="dateRead"));showView("browse");renderChips();renderBrowse();writeState();}
 const YEAR_ORDER=["Pre-2020","2020","2021","2022","2023","2024","2025","2026"];
 function ybucket(yr){return (yr&&yr>="2020")?yr:"Pre-2020";}
-function gotoBucket(bk){if(bk==="Pre-2020"){gotoDrill(b=>b.yearRead&&b.yearRead<"2020","read before 2020");}else{gotoYear(bk);}}
-function gotoDrill(fn,label){drill={fn,label};activeTheme="";yearFilter="";$("#q").value="";renderChips();renderBrowse();showView("browse");}
-function gotoTagSearch(tag){activeTheme="";yearFilter="";drill=null;$("#q").value=tag;renderChips();renderBrowse();showView("browse");}
 /* tooltip */
 const TIP=$("#tip"),TIPT=TIP.querySelector(".tt"),TIPS=TIP.querySelector(".ts");
 function tipShow(e,title,sub){TIPT.textContent=title;TIPS.textContent=sub||"";TIP.classList.add("show");tipMove(e);}
@@ -2641,7 +2635,6 @@ async function bootstrap(){
   // ----- original init sequence (unchanged behavior) -----
   if(!VIEW_RENDERED)VIEW_RENDERED={};
   renderHome(); VIEW_RENDERED.home=true;
-  var _rr=document.getElementById("recentReshuffle");if(_rr)_rr.addEventListener("click",renderRecentShelf);
   var _fr=document.getElementById("featReshuffle");if(_fr)_fr.addEventListener("click",renderFeatured);
   var _ba=document.querySelector(".browse-all");if(_ba)_ba.addEventListener("click",()=>showView("browse"));
   if(!location.hash)showView("home");else ensureView("browse");
