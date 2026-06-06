@@ -763,6 +763,23 @@ footer.ft .ft-rec:hover{background:#6f8a2e;border-color:#6f8a2e;color:#fff}
 .ft-core li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--blue-br)}
 .ft-open{background:none;border:none;color:var(--blue);font-family:"Archivo";font-weight:700;font-size:.86rem;cursor:pointer;padding:0}
 .ft-open:hover{text-decoration:underline}
+/* featured reads (standout picks) */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:38px}
+.feat-card{display:flex;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:18px;box-shadow:var(--shadow);align-items:flex-start}
+.feat-cover{position:relative;flex:0 0 84px;width:84px;cursor:pointer}
+.feat-cover .cover{width:84px;aspect-ratio:2/3;border-radius:5px;box-shadow:0 8px 18px rgba(31,37,48,.2);transition:transform .18s}
+.feat-cover:hover .cover{transform:translateY(-3px)}
+.feat-cover .ph{padding:9px 8px}
+.feat-cover .ph .t{font-size:.62rem;line-height:1.18;-webkit-line-clamp:5}
+.feat-cover .ph .a{font-size:.54rem;margin-top:5px}
+.feat-star{position:absolute;top:5px;right:5px;z-index:3;display:inline-flex;align-items:center;gap:2px;background:#c98a1a;color:#fff;font-family:"Archivo";font-weight:700;font-size:.5rem;letter-spacing:.02em;padding:2px 5px;border-radius:5px;box-shadow:0 2px 5px rgba(0,0,0,.25)}
+.feat-body{min-width:0}
+.feat-title{font-family:"Archivo";font-weight:700;font-size:.98rem;line-height:1.16;margin:0 0 2px;cursor:pointer}
+.feat-title:hover{color:var(--blue)}
+.feat-author{color:var(--muted);font-size:.74rem;margin-bottom:8px}
+.feat-sum{font-size:.78rem;line-height:1.42;color:var(--ink2);margin:0 0 8px;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.feat-meta{font-size:.68rem;color:var(--faint);font-family:"Archivo";font-weight:700;letter-spacing:.02em}
+@media(max-width:900px){.feat-grid{grid-template-columns:1fr}}
 .home-cta{text-align:center;margin:6px 0 50px}
 .browse-all{background:var(--blue);color:#fff;border:none;border-radius:26px;padding:13px 30px;font-family:"Archivo";font-weight:700;font-size:.95rem;cursor:pointer;box-shadow:0 8px 20px rgba(58,110,165,.25);transition:.18s}
 .browse-all:hover{background:var(--blue-d);transform:translateY(-2px)}
@@ -926,6 +943,8 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
     <div class="section-head"><h2>More from this year</h2><button class="more" id="recentReshuffle">Shuffle &#8635;</button></div>
     <div class="shelf" id="randomShelf"></div>
     <div class="home-cta"><button class="browse-all" data-view="browse">Browse all 305 books &rarr;</button></div>
+    <div class="section-head"><h2>Featured Reads</h2><button class="more" id="featReshuffle">Shuffle &#8635;</button></div>
+    <div class="feat-grid" id="featGrid"></div>
   </section>
 
   <!-- BROWSE -->
@@ -1332,10 +1351,34 @@ function renderRecentShelf(){
   $("#randomShelf").innerHTML=pool.slice(0,16).map((b,i)=>bookCard(b,i*40)).join("");
   observeCovers($("#randomShelf"));
 }
+// Featured reads: random assortment drawn from the 2023/24/25 standout picks (18 books).
+// Update the year list here when a new year's standouts are added (e.g. add "2026").
+const FEAT_YEARS=["2025","2024","2023"];
+const FEAT_POOL=FEAT_YEARS.flatMap(y=>(STANDOUTS[y]||[])).map(id=>BOOKS[ID2I[id]]).filter(Boolean);
+function featCard(b){
+  const cov=`<div class="cover" data-i="${ID2I[b.id]}" data-ph="${esc(phHTML(b))}"></div>`;
+  const yr=STANDOUT_OF[b.id];
+  return `<div class="feat-card">
+    <div class="feat-cover" onclick="openModal(BOOKS[${ID2I[b.id]}])">${cov}${yr?`<span class="feat-star" title="Standout read of ${yr}"><svg viewBox="0 0 24 24" width="8" height="8" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.06 6.6.78-4.9 4.5 1.3 6.56L12 17.9 6.1 20.9l1.3-6.56-4.9-4.5 6.6-.78z"/></svg>${yr}</span>`:""}</div>
+    <div class="feat-body">
+      <h3 class="feat-title" onclick="openModal(BOOKS[${ID2I[b.id]}])">${esc(b.title.split(":")[0])}</h3>
+      <div class="feat-author">${esc(b.author)}</div>
+      ${b.summary?`<p class="feat-sum">${fmtText(b.summary)}</p>`:""}
+      ${b.dateRead?`<div class="feat-meta">Completed ${fmtDate(b.dateRead)}</div>`:""}
+    </div></div>`;
+}
+function renderFeatured(){
+  const g=$("#featGrid");if(!g)return;
+  const pool=FEAT_POOL.slice();
+  for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+  g.innerHTML=pool.slice(0,3).map(featCard).join("");
+  observeCovers(g);
+}
 function renderHome(){
   const dated=BOOKS.filter(b=>b.dateRead).sort(byDateDesc);
   if(dated.length){$("#featureBook").innerHTML=featureCard(dated[0]);observeCovers($("#featureBook"));}
   renderRecentShelf();
+  renderFeatured();
   const hc=$("#heroCount");if(hc)hc.textContent=String(BOOKS.length);
 }
 function reshuffle(){const pool=BOOKS.slice();for(let i=pool.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[pool[i],pool[j]]=[pool[j],pool[i]];}$("#randomShelf").innerHTML=pool.slice(0,12).map((b,i)=>bookCard(b,i*40)).join("");observeCovers($("#randomShelf"));}
@@ -2591,6 +2634,7 @@ async function bootstrap(){
   if(!VIEW_RENDERED)VIEW_RENDERED={};
   renderHome(); VIEW_RENDERED.home=true;
   var _rr=document.getElementById("recentReshuffle");if(_rr)_rr.addEventListener("click",renderRecentShelf);
+  var _fr=document.getElementById("featReshuffle");if(_fr)_fr.addEventListener("click",renderFeatured);
   var _ba=document.querySelector(".browse-all");if(_ba)_ba.addEventListener("click",()=>showView("browse"));
   if(!location.hash)showView("home");else ensureView("browse");
   readState();
