@@ -4,6 +4,28 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Alex&rsquo;s Bookshelf</title>
+
+<!-- SEO / description -->
+<meta name="description" content="A personal library of 305 books — annotated, themed, and mapped by the threads that run between them.">
+
+<!-- Open Graph (Facebook, LinkedIn, iMessage, Slack, Discord, most chat apps) -->
+<meta property="og:title" content="Alex's Bookshelf">
+<meta property="og:description" content="A personal library of 305 books — annotated, themed, and mapped by the threads that run between them.">
+<meta property="og:image" content="https://bookshelf.drost.us/share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Alex's Bookshelf — recent reads visualized as a constellation of connected books.">
+<meta property="og:url" content="https://bookshelf.drost.us/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Alex's Bookshelf">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Alex's Bookshelf">
+<meta name="twitter:description" content="A personal library of 305 books — annotated, themed, and mapped by the threads that run between them.">
+<meta name="twitter:image" content="https://bookshelf.drost.us/share.png">
+<meta name="twitter:image:alt" content="Alex's Bookshelf — recent reads visualized as a constellation of connected books.">
+
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='8' y='9' width='9' height='23' rx='1.5' fill='%233a6ea5'/%3E%3Crect x='17.5' y='11' width='8' height='21' rx='1.5' fill='%236b9bc8'/%3E%3Crect x='25' y='8' width='8' height='24' rx='1.5' transform='rotate(7 29 20)' fill='%232f9e6b'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -347,6 +369,49 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .glink{display:inline-block;margin-top:16px;font-family:"Archivo";font-size:.84rem;color:var(--blue);text-decoration:none;font-weight:700}
 .glink:hover{text-decoration:underline}
 .x{position:absolute;top:14px;right:16px;border:none;background:none;font-size:1.7rem;cursor:pointer;color:var(--faint);line-height:1}.x:hover{color:var(--ink)}
+/* author popup */
+.apop-head{display:flex;align-items:center;gap:18px;margin-bottom:22px;padding-right:30px}
+.apop-head .aface{width:96px;height:96px;flex-shrink:0;margin:0}
+.apop-head .aface .sil{width:52px;height:52px}
+.apop-title{display:flex;flex-direction:column;gap:4px}
+.apop-title h2{margin:0;font-family:"Archivo";font-weight:800;font-size:1.5rem;line-height:1.15;color:var(--ink)}
+.apop-title .apop-count{font-size:.9rem;color:var(--blue);font-weight:600}
+.apop-books{display:flex;flex-direction:column;gap:2px}
+.apop-book{display:flex;align-items:center;gap:12px;padding:9px 4px;border-top:1px solid var(--line);cursor:pointer;border-radius:6px;transition:background .12s}
+.apop-book:hover{background:var(--paper2)}
+.apop-book .tgc{width:38px;height:57px;border-radius:3px;flex:none;object-fit:cover;background:var(--paper2);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.apop-meta{display:flex;flex-direction:column;gap:3px;min-width:0}
+.apop-book .abt{font-family:"Archivo";font-weight:600;font-size:.96rem;color:var(--ink);line-height:1.25}
+.apop-book .aby{font-size:.78rem;color:var(--muted);white-space:nowrap}
+/* macro search */
+.searchbtn{display:inline-flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:6px 14px;font-family:"Archivo";font-weight:600;font-size:.8rem;color:var(--ink2);cursor:pointer;transition:.16s;text-transform:none;letter-spacing:0}
+.searchbtn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-tint)}
+.searchbtn svg{flex:none}
+.searchmodal{position:fixed;inset:0;z-index:120;background:rgba(31,37,48,.42);backdrop-filter:blur(3px);display:none;align-items:flex-start;justify-content:center;padding:60px 18px 30px}
+.searchmodal.open{display:flex}
+.search-panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;width:100%;max-width:720px;max-height:82vh;display:flex;flex-direction:column;box-shadow:0 30px 70px rgba(31,37,48,.32);overflow:hidden}
+.search-bar{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line);flex:none}
+.search-bar .search-ico{color:var(--muted);flex:none}
+.search-bar input{flex:1;border:none;background:none;outline:none;font-family:"Inter",sans-serif;font-size:1.08rem;color:var(--ink)}
+.search-bar input::placeholder{color:var(--faint)}
+.search-x{border:none;background:none;font-size:1.7rem;line-height:1;color:var(--faint);cursor:pointer;flex:none;padding:0 4px}
+.search-x:hover{color:var(--ink)}
+.search-meta{padding:9px 18px;font-size:.78rem;color:var(--muted);border-bottom:1px solid var(--line);flex:none;min-height:16px}
+.search-results{overflow-y:auto;padding:6px}
+.sr-item{display:flex;gap:13px;align-items:flex-start;padding:11px 12px;border-radius:10px;cursor:pointer;transition:background .12s}
+.sr-item:hover{background:var(--card)}
+.sr-item .tgc{width:42px;height:63px;border-radius:3px;flex:none;object-fit:cover;background:var(--paper2);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.sr-body{min-width:0;flex:1}
+.sr-title{font-family:"Archivo";font-weight:700;font-size:.98rem;color:var(--ink);line-height:1.25}
+.sr-by{font-size:.82rem;color:var(--muted);margin-top:1px}
+.sr-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.sr-tag{font-size:.68rem;font-family:"Archivo";font-weight:600;color:var(--ink2);background:var(--paper2);border-radius:10px;padding:2px 8px}
+.sr-tag.theme{color:#fff}
+.sr-snip{font-size:.8rem;color:var(--ink2);margin-top:6px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sr-item mark{background:var(--blue-lt);color:var(--ink);border-radius:2px;padding:0 1px}
+.sr-where{font-size:.7rem;color:var(--faint);margin-top:5px;text-transform:uppercase;letter-spacing:.05em}
+.search-empty{padding:40px 18px;text-align:center;color:var(--muted);font-size:.92rem}
+@media(max-width:560px){.searchmodal{padding:0}.search-panel{max-width:none;max-height:100vh;height:100vh;border-radius:0;border:none}}
 @media(max-width:560px){.sheet{flex-direction:column}.sheet .mcov{width:130px;margin:0 auto}.trow{grid-template-columns:120px 1fr 38px;gap:10px}}
 
 /* author cards */
@@ -826,6 +891,7 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
     <button class="tab" data-view="themes">Themes</button>
     <button class="tab" data-view="connections">Connections</button>
     <button class="tab" data-view="analytics">Analytics</button>
+    <button class="searchbtn" id="searchBtn" aria-label="Search the library" onclick="openSearch()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Search</span></button>
     <button class="navtoggle" id="navToggle" aria-label="Menu" aria-expanded="false" onclick="toggleMenu()">
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
@@ -839,6 +905,7 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
     <button class="navlink" data-view="connections">Connections</button>
     <button class="navlink navlink-conn" data-view="analytics">Analytics</button>
     <div class="navmenu-sep"></div>
+    <button class="navlink" onclick="closeMenu&&closeMenu();openSearch()">Search the library</button>
     <button class="navlink" onclick="closeMenu&&closeMenu();openRec()">Recommend a book</button>
     <a class="navsocial" href="https://www.goodreads.com/alex-drost" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M11.43 23.94c-2.16-.1-4-1.05-4.92-2.74-.36-.66-.5-1.2-.5-1.9h2.2c.07.5.18.84.42 1.2.55.83 1.5 1.28 2.85 1.3 2.2.03 3.5-1.36 3.5-3.84v-2.2c-.78 1.3-2.1 2-3.86 2-3.1 0-5.2-2.46-5.2-6.13 0-3.74 2.12-6.3 5.27-6.3 1.76 0 3.06.74 3.8 2.04V5.1h2.13v13.06c0 3.7-2.16 5.86-5.7 5.78h.01zm.32-7.97c2.1 0 3.46-1.8 3.46-4.4 0-2.62-1.37-4.43-3.45-4.43-2.13 0-3.42 1.74-3.42 4.43 0 2.7 1.3 4.4 3.4 4.4z"/></svg>Follow Alex on Goodreads</a>
     <a class="navsocial" href="https://www.linkedin.com/in/adrost/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.95V1.73C24 .77 23.2 0 22.22 0z"/></svg>Connect with Alex on LinkedIn</a>
@@ -850,12 +917,11 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
   <section class="view active" id="view-home">
     <div class="hero">
       <div class="kicker">Alex Drost &middot; books I&rsquo;ve read</div>
-      <h1>A shelf of <em>305</em> books,<br>and what I made of them.</h1>
-      <p>This is my reading. Start with what I just finished, shuffle through this year&rsquo;s reads, or dive into the full library.</p>
-      <div class="lead-stats" id="leadStats"></div>
+      <h1>A shelf of <em id="heroCount">305</em> books I&rsquo;ve read.</h1>
+      <p>Years of reading in one place &mdash; and the connections I&rsquo;ve made along the way.</p>
       <div class="synced">Last updated <b id="updDate"></b> &middot; a personal snapshot of my reading.</div>
     </div>
-    <div class="section-head"><h2>Most Recent Read</h2><span class="sub" id="recentSub"></span></div>
+    <div class="section-head"><h2>Most Recent Read</h2></div>
     <div class="feature" id="featureBook"></div>
     <div class="section-head"><h2>More from this year</h2><button class="more" id="recentReshuffle">Shuffle &#8635;</button></div>
     <div class="shelf" id="randomShelf"></div>
@@ -896,8 +962,7 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
       <span class="count" id="acount"></span>
     </div>
     <div class="acards" id="authorCards"></div>
-    <div class="tail-head" id="tailHead"><span class="chev">&#9656;</span><h3>Read once</h3><span class="tc" id="tailCount"></span></div>
-    <div class="tail-wrap" id="tailWrap"><div class="tailgrid" id="tailGrid"></div></div>
+    <button class="showmore" id="authorMore" style="display:none"></button>
   </section>
 
   <!-- TIME -->
@@ -1062,6 +1127,18 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
 
 </div>
 <div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+<div class="modal" id="authorModal"><div class="sheet" id="authorSheet"></div></div>
+<div class="searchmodal" id="searchModal">
+  <div class="search-panel" role="dialog" aria-modal="true" aria-label="Search the library">
+    <div class="search-bar">
+      <svg class="search-ico" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="searchInput" type="search" autocomplete="off" placeholder="Search titles, authors, themes, tags, descriptions&hellip;">
+      <button class="search-x" aria-label="Close" onclick="closeSearch()">&times;</button>
+    </div>
+    <div class="search-meta" id="searchMeta"></div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
 <div class="modal" id="recModal">
   <div class="sheet rec-sheet" role="dialog" aria-modal="true" aria-labelledby="recTitle">
     <button class="rec-close" aria-label="Close" onclick="closeRec()">&times;</button>
@@ -1254,23 +1331,19 @@ function renderRecentShelf(){
 }
 function renderHome(){
   const dated=BOOKS.filter(b=>b.dateRead).sort(byDateDesc);
-  if(dated.length){$("#featureBook").innerHTML=featureCard(dated[0]);observeCovers($("#featureBook"));$("#recentSub").textContent=`Completed ${fmtDate(dated[0].dateRead)}`;}
-  const y=new Date().getFullYear();
+  if(dated.length){$("#featureBook").innerHTML=featureCard(dated[0]);observeCovers($("#featureBook"));}
   renderRecentShelf();
-  const yrs=BOOKS.map(b=>b.yearRead).filter(Boolean);
-  const span=yrs.length?`${Math.min(...yrs)}\u2013${Math.max(...yrs)}`:"\u2014";
-  const themeCount=new Set(BOOKS.flatMap(b=>b.themes)).size;
-  const stats=[[String(BOOKS.length),"books read"],[span,"years tracked"],[themeCount,"themes"],[BOOKS.filter(b=>b.yearRead===String(y)).length,"read in "+y]];
-  $("#leadStats").innerHTML=stats.map(s=>`<div class="s"><span class="n">${s[0]}</span><span class="l">${s[1]}</span></div>`).join("");
+  const hc=$("#heroCount");if(hc)hc.textContent=String(BOOKS.length);
 }
 function reshuffle(){const pool=BOOKS.slice();for(let i=pool.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[pool[i],pool[j]]=[pool[j],pool[i]];}$("#randomShelf").innerHTML=pool.slice(0,12).map((b,i)=>bookCard(b,i*40)).join("");observeCovers($("#randomShelf"));}
 
 
 /* BROWSE */
  // drill={fn,label}
+const CHIP_HIDE=new Set(["Religion & Faith"]);
 function renderChips(){
   const counts={};BOOKS.forEach(b=>b.themes.forEach(t=>counts[t]=(counts[t]||0)+1));
-  const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  const sorted=Object.entries(counts).filter(([t])=>!CHIP_HIDE.has(t)).sort((a,b)=>b[1]-a[1]);
   $("#themeChips").innerHTML=`<span class="chip ${activeTheme===''?'on':''}" data-t="">All themes</span>`+sorted.map(([t,c])=>`<span class="chip ${activeTheme===t?'on':''}" data-t="${esc(t)}" style="--dot:${THEME_COLORS[t]||'#8a8f98'}">${esc(t)}<span class="c">${c}</span></span>`).join("");
 }
 function latestReadId(){const d=BOOKS.filter(b=>b.dateRead).sort(byDateDesc);return d.length?d[0].id:null;}
@@ -1334,7 +1407,7 @@ $("#emptyReset").addEventListener("click",()=>{$("#q").value="";activeTheme="";y
 $("#themeChips").addEventListener("click",e=>{const c=e.target.closest(".chip");if(!c)return;activeTheme=c.dataset.t;yearFilter="";drill=null;$("#q").value="";renderChips();renderBrowse();writeState();});
 function gotoTheme(t){activeTheme=t;yearFilter="";drill=null;$("#q").value="";renderChips();renderBrowse();showView("browse");}
 function gotoTag(t){if(typeof closeModal==="function")closeModal();activeTheme="";yearFilter="";drill=null;sortMode="dateRead";$("#q").value=t;$$("#sortBtns button").forEach(x=>x.classList.toggle("on",x.dataset.s==="dateRead"));ensureView("browse");renderChips();renderBrowse();showView("browse");writeState();}
-function gotoYear(y){activeTheme="";yearFilter=y;drill=null;scope="all";$("#q").value="";$$("#scope button").forEach(x=>x.classList.toggle("on",x.dataset.s==="all"));renderChips();renderBrowse();showView("browse");}
+function gotoYear(y){activeTheme="";yearFilter=y;drill=null;$("#q").value="";renderChips();renderBrowse();showView("browse");}
 
 /* AUTHORS */
 
@@ -1359,51 +1432,62 @@ function observeFaces(){document.querySelectorAll(".aface[data-face]:not([data-s
 
 const SIL=`<svg class="sil" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12.5c2.5 0 4.5-2.2 4.5-4.9S14.5 2.7 12 2.7 7.5 4.9 7.5 7.6 9.5 12.5 12 12.5zm0 2.2c-3.6 0-8 1.9-8 5.1v1.5h16v-1.5c0-3.2-4.4-5.1-8-5.1z"/></svg>`;
 function avatarHTML(name,bg){return `<div class="aface" data-face="${esc(name)}" style="background-color:${bg||'var(--paper2)'}">${SIL}</div>`;}
-let tailShown=0; const TAIL_BATCH=32; let tailData=[];
+let authorShown=0; const AUTHOR_BATCH=48; let authorData=[];
+function normAuthorMap(){
+  const m={};
+  BOOKS.forEach(b=>{if(!b.author)return;b.author.split(",").forEach(raw=>{const a=authorKey(raw);if(!a)return;(m[a]=m[a]||[]).push(b);});});
+  return m;
+}
+function lastName(a){const p=a.trim().split(/\s+/);return (p[p.length-1]||"").toLowerCase();}
+function recentYear(bs){return bs.reduce((mx,b)=>{const y=b.yearRead||"";return y>mx?y:mx;},"");}
+const AUTHOR_HIDE=new Set(["harvard business review"]);
 function renderAuthors(){
-  const m=authorCounts();
+  const m=normAuthorMap();
   const q=$("#aq").value.toLowerCase().trim();
-  const all=Object.entries(m).filter(([a])=>!q||a.toLowerCase().includes(q));
-  let multi=all.filter(([,bs])=>bs.length>1);
-  let single=all.filter(([,bs])=>bs.length===1);
-  multi.sort((a,b)=> asort==="alpha"? a[0].localeCompare(b[0]) : (b[1].length-a[1].length)||a[0].localeCompare(b[0]));
-  single.sort((a,b)=>a[0].localeCompare(b[0]));
-  $("#authorCards").innerHTML=multi.map(([a,bs])=>{
+  let all=Object.entries(m).filter(([a])=>!AUTHOR_HIDE.has(a.toLowerCase())&&(!q||a.toLowerCase().includes(q)));
+  if(asort==="alpha"){
+    all.sort((a,b)=>lastName(a[0]).localeCompare(lastName(b[0]))||a[0].localeCompare(b[0]));
+  }else{
+    all.sort((a,b)=>
+      (b[1].length-a[1].length) ||
+      recentYear(b[1]).localeCompare(recentYear(a[1])) ||
+      lastName(a[0]).localeCompare(lastName(b[0])) ||
+      a[0].localeCompare(b[0])
+    );
+  }
+  authorData=all; authorShown=0;
+  $("#authorCards").innerHTML="";
+  renderAuthorBatch();
+  const multi=all.filter(([,bs])=>bs.length>1).length;
+  $("#acount").textContent=`${all.length} author${all.length===1?"":"s"}`;
+  $("#authorSub").textContent=`${all.length} authors in all \u00b7 ${multi} read more than once`;
+  observeFaces();
+}
+function renderAuthorBatch(){
+  const slice=authorData.slice(authorShown,authorShown+AUTHOR_BATCH);
+  const h=slice.map(([a,bs])=>{
     const themes=[...new Set(bs.flatMap(x=>x.themes))].slice(0,3).join(" \u00b7 ");
-    return `<div class="acard" onclick="gotoAuthor('${a.replace(/'/g,"\\'")}')">
+    return `<div class="acard" onclick="openAuthor('${a.replace(/'/g,"\\'")}')">
       ${avatarHTML(a)}
       <div class="an">${esc(a)}</div>
-      <div class="acount">${bs.length} books</div>
+      <div class="acount">${bs.length} book${bs.length===1?"":"s"}</div>
       <div class="athemes">${esc(themes)}</div>
     </div>`;}).join("");
-  tailData=single; tailShown=0;
-  $("#tailGrid").innerHTML='<div class="tailcards" id="tailCards"></div><button class="showmore" id="tailMore"></button>';
-  renderTailBatch();
-  $("#tailMore").addEventListener("click",renderTailBatch);
-  $("#tailCount").textContent=`${single.length} author${single.length===1?"":"s"} with a single book`;
-  $("#acount").textContent=`${multi.length} multi-book \u00b7 ${single.length} single`;
-  $("#authorSub").textContent=`${Object.keys(m).length} authors in all \u00b7 ${Object.values(m).filter(x=>x.length>1).length} read more than once`;
-  if(q){$("#tailWrap").classList.add("open");$("#tailHead").classList.add("open");}
+  $("#authorCards").insertAdjacentHTML("beforeend",h);
+  authorShown+=slice.length;
+  const more=authorData.length-authorShown;const btn=$("#authorMore");
+  if(more>0){btn.style.display="block";btn.textContent=`Show ${Math.min(AUTHOR_BATCH,more)} more (${more} left)`;}else btn.style.display="none";
   observeFaces();
 }
-function renderTailBatch(){
-  const slice=tailData.slice(tailShown,tailShown+TAIL_BATCH);
-  const h=slice.map(([a,bs])=>`<div class="acard sm" onclick="gotoAuthor('${a.replace(/'/g,"\\'")}')">${avatarHTML(a)}<div class="an">${esc(a)}</div></div>`).join("");
-  $("#tailCards").insertAdjacentHTML("beforeend",h);
-  tailShown+=slice.length;
-  const more=tailData.length-tailShown;const btn=$("#tailMore");
-  if(more>0){btn.style.display="block";btn.textContent=`Show ${Math.min(TAIL_BATCH,more)} more (${more} left)`;}else btn.style.display="none";
-  observeFaces();
-}
-$("#tailHead").addEventListener("click",()=>{$("#tailWrap").classList.toggle("open");$("#tailHead").classList.toggle("open");});
+$("#authorMore").addEventListener("click",renderAuthorBatch);
 $("#aq").addEventListener("input",renderAuthors);
 $("#ascope").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;asort=b.dataset.s;$$("#ascope button").forEach(x=>x.classList.toggle("on",x===b));renderAuthors();});
 function gotoAuthor(a){activeTheme="";yearFilter="";drill=null;sortMode="dateRead";$("#q").value=a;$$("#sortBtns button").forEach(x=>x.classList.toggle("on",x.dataset.s==="dateRead"));showView("browse");renderChips();renderBrowse();writeState();}
 const YEAR_ORDER=["Pre-2020","2020","2021","2022","2023","2024","2025","2026"];
 function ybucket(yr){return (yr&&yr>="2020")?yr:"Pre-2020";}
 function gotoBucket(bk){if(bk==="Pre-2020"){gotoDrill(b=>b.yearRead&&b.yearRead<"2020","read before 2020");}else{gotoYear(bk);}}
-function gotoDrill(fn,label){drill={fn,label};activeTheme="";yearFilter="";scope="all";$("#q").value="";$$("#scope button").forEach(x=>x.classList.toggle("on",x.dataset.s==="all"));renderChips();renderBrowse();showView("browse");}
-function gotoTagSearch(tag){scope="tag";activeTheme="";yearFilter="";drill=null;$("#q").value=tag;$$("#scope button").forEach(x=>x.classList.toggle("on",x.dataset.s==="tag"));renderChips();renderBrowse();showView("browse");}
+function gotoDrill(fn,label){drill={fn,label};activeTheme="";yearFilter="";$("#q").value="";renderChips();renderBrowse();showView("browse");}
+function gotoTagSearch(tag){activeTheme="";yearFilter="";drill=null;$("#q").value=tag;renderChips();renderBrowse();showView("browse");}
 /* tooltip */
 const TIP=$("#tip"),TIPT=TIP.querySelector(".tt"),TIPS=TIP.querySelector(".ts");
 function tipShow(e,title,sub){TIPT.textContent=title;TIPS.textContent=sub||"";TIP.classList.add("show");tipMove(e);}
@@ -1588,7 +1672,9 @@ function renderYearReview(){
     ];
     // theme-mix proportional bar — every theme gets its own color across the full bar
     const barSegs=themeEntries.map(([t,c])=>`<span class="yir-mixseg" data-tt="${esc(t)}" data-ts="${Math.round(c/themeTot*100)}% \u00b7 ${c} book${c===1?"":"s"}" style="flex:${c};background:${THEME_COLORS[t]||'#8a8f98'}"></span>`).join("");
-    const themeChips=themeEntries.map(([t,c])=>`<span class="yir-th" style="background:${THEME_COLORS[t]||'#8a8f98'}"><span>${esc(t)}</span><span class="yc">${Math.round(c/themeTot*100)}%</span></span>`).join("");
+    // legend pills: only the larger themes (keep to ~two lines) — the full mix stays in the bar + hover
+    const chipThemes=themeEntries.filter(([,c],i)=>i<4||c/themeTot>=0.08).slice(0,7);
+    const themeChips=chipThemes.map(([t,c])=>`<span class="yir-th" style="background:${THEME_COLORS[t]||'#8a8f98'}"><span>${esc(t)}</span><span class="yc">${Math.round(c/themeTot*100)}%</span></span>`).join("");
     const books=standout.map(b=>`<div class="yir-bk" onclick="openModal(BOOKS[${ID2I[b.id]}])" onmouseenter="showBookPop(event,${ID2I[b.id]})" onmousemove="moveBookPop(event)" onmouseleave="hideBookPop()">${yirCover(b)}<div class="yir-bk-meta"><div class="yc-t">${esc(b.title.split(":")[0])}</div><div class="yc-a">${esc(b.author)}</div></div></div>`).join("");
     // highlight callouts
     const calls=[];
@@ -2096,7 +2182,7 @@ function openModal(b){
       <div class="mintro">
         <h2>${esc(b.title)}</h2>
         ${STANDOUT_OF[b.id]?`<span class="standout-badge clickable" role="button" tabindex="0" title="See the ${STANDOUT_OF[b.id]} standouts" onclick="gotoYearReview('${STANDOUT_OF[b.id]}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();gotoYearReview('${STANDOUT_OF[b.id]}')}"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.06 6.6.78-4.9 4.5 1.3 6.56L12 17.9 6.1 20.9l1.3-6.56-4.9-4.5 6.6-.78z"/></svg>Standout read of ${STANDOUT_OF[b.id]} &rarr;</span>`:""}
-        <p class="by">by <span class="alink" onclick="gotoAuthor('${(b.author||'').replace(/'/g,"\\'")}');closeModal()">${esc(b.author)}</span></p>
+        <p class="by">by <span class="alink" onclick="closeModal();openAuthor('${authorKey((b.author||'').split(',')[0]).replace(/'/g,"\\'")}')">${esc(b.author)}</span></p>
         <div class="mthemes">${themes}</div>
         ${b.summary?`<p class="msum">${fmtText(b.summary)}</p>`:""}
       </div>
@@ -2114,7 +2200,111 @@ function openModal(b){
 document.body.addEventListener("click",e=>{const c=e.target.closest(".book");if(c)openModal(BOOKS[+c.dataset.i]);});
 function closeModal(){const m=$("#modal");if(!m.classList.contains("open"))return;m.classList.remove("open");hideAllPops();writeState();}
 $("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal();});
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeAuthor();}});
+
+/* ===== Author popup ===== */
+function authorKey(s){return (s||"").replace(/\s+/g," ").trim();}
+function booksByAuthor(name){
+  const target=authorKey(name);
+  return BOOKS.filter(b=>b.author&&b.author.split(",").some(a=>authorKey(a)===target))
+    .sort((a,b)=>(b.dateRead||"").localeCompare(a.dateRead||""));
+}
+function openAuthor(name){
+  const nm=authorKey(name);
+  const bs=booksByAuthor(nm);
+  const rows=bs.map(b=>`<div class="apop-book" onclick="closeAuthor();openModal(BOOKS[${ID2I[b.id]}])">${tgCover(b)}<div class="apop-meta"><span class="abt">${esc(b.title.split(":")[0])}</span>${b.yearRead?`<span class="aby">Read ${esc(b.yearRead)}</span>`:""}</div></div>`).join("");
+  $("#authorSheet").innerHTML=`
+    <button class="x" aria-label="Close" onclick="closeAuthor()">&times;</button>
+    <div class="apop-head">
+      ${avatarHTML(nm)}
+      <div class="apop-title">
+        <h2>${esc(nm)}</h2>
+        <span class="apop-count">${bs.length} book${bs.length===1?"":"s"} read</span>
+      </div>
+    </div>
+    <div class="apop-books">${rows}</div>`;
+  observeFaces();
+  $("#authorModal").classList.add("open");
+}
+function closeAuthor(){const m=$("#authorModal");if(m)m.classList.remove("open");}
+$("#authorModal").addEventListener("click",e=>{if(e.target.id==="authorModal")closeAuthor();});
+
+/* ===== Macro search ===== */
+function escRe(s){return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");}
+function hl(text,tokens){
+  let out=esc(text||"");
+  tokens.forEach(t=>{if(!t)return;out=out.replace(new RegExp("("+escRe(esc(t))+")","ig"),"<mark>$1</mark>");});
+  return out;
+}
+function snippet(text,tokens){
+  if(!text)return "";
+  const low=text.toLowerCase();
+  let pos=-1;
+  for(const t of tokens){const i=low.indexOf(t);if(i>=0&&(pos<0||i<pos))pos=i;}
+  if(pos<0)return hl(text.slice(0,220),tokens);
+  const start=Math.max(0,pos-70);
+  const frag=(start>0?"\u2026":"")+text.slice(start,start+240)+(start+240<text.length?"\u2026":"");
+  return hl(frag,tokens);
+}
+function searchBooks(q){
+  const tokens=q.toLowerCase().split(/\s+/).filter(Boolean);
+  if(!tokens.length)return [];
+  const res=[];
+  BOOKS.forEach(b=>{
+    const title=(b.title||"").toLowerCase();
+    const author=(b.author||"").toLowerCase();
+    const themes=(b.themes||[]).join(" ").toLowerCase();
+    const tags=(b.tags||"").toLowerCase();
+    const summary=(b.summary||"").toLowerCase();
+    const core=(b.core||[]).join(" \u00b7 ").toLowerCase();
+    const hay=[title,author,themes,tags,summary,core];
+    let score=0;const where=new Set();
+    const ok=tokens.every(t=>{
+      let hit=false;
+      if(title.includes(t)){hit=true;where.add("title");score+=title===t?100:(title.startsWith(t)?40:title.split(/\s+/).includes(t)?22:12);}
+      if(author.includes(t)){hit=true;where.add("author");score+=author.startsWith(t)?30:18;}
+      if(themes.includes(t)){hit=true;where.add("theme");score+=14;}
+      if(tags.includes(t)){hit=true;where.add("tag");score+=14;}
+      if(summary.includes(t)){hit=true;where.add("description");score+=6;}
+      if(core.includes(t)){hit=true;where.add("key ideas");score+=5;}
+      return hit;
+    });
+    if(ok)res.push({b,score,where:[...where]});
+  });
+  return res.sort((a,b)=>b.score-a.score||(b.b.dateRead||"").localeCompare(a.b.dateRead||""));
+}
+function runSearch(){
+  const q=$("#searchInput").value.trim();
+  const meta=$("#searchMeta"),box=$("#searchResults");
+  if(!q){meta.textContent="";box.innerHTML='<div class="search-empty">Search across titles, authors, themes, tags, and the full text of every description.</div>';return;}
+  const tokens=q.toLowerCase().split(/\s+/).filter(Boolean);
+  const hits=searchBooks(q);
+  meta.textContent=`${hits.length} ${hits.length===1?"match":"matches"} for \u201c${q}\u201d`;
+  if(!hits.length){box.innerHTML='<div class="search-empty">No matches. Try a different term \u2014 an author, a theme, or a word from a description.</div>';return;}
+  box.innerHTML=hits.slice(0,60).map(({b,where})=>{
+    const themeTags=(b.themes||[]).map(t=>`<span class="sr-tag theme" style="background:${THEME_COLORS[t]||'#8a8f98'}">${hl(t,tokens)}</span>`).join("");
+    const tagBits=(b.tags||"").split(",").map(s=>s.trim()).filter(Boolean).slice(0,4).map(t=>`<span class="sr-tag">${hl(t,tokens)}</span>`).join("");
+    const snip=snippet(b.summary,tokens);
+    return `<div class="sr-item" onclick="closeSearch();openModal(BOOKS[${ID2I[b.id]}])">
+      ${tgCover(b)}
+      <div class="sr-body">
+        <div class="sr-title">${hl(b.title,tokens)}</div>
+        <div class="sr-by">${hl(b.author,tokens)}${b.yearRead?` \u00b7 read ${esc(b.yearRead)}`:""}</div>
+        <div class="sr-tags">${themeTags}${tagBits}</div>
+        ${snip?`<div class="sr-snip">${snip}</div>`:""}
+        <div class="sr-where">matched in ${where.join(" \u00b7 ")}</div>
+      </div>
+    </div>`;
+  }).join("");
+}
+function openSearch(){const m=$("#searchModal");if(!m)return;m.classList.add("open");runSearch();setTimeout(()=>$("#searchInput").focus(),60);}
+function closeSearch(){const m=$("#searchModal");if(m)m.classList.remove("open");}
+$("#searchInput").addEventListener("input",runSearch);
+$("#searchModal").addEventListener("click",e=>{if(e.target.id==="searchModal")closeSearch();});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape")closeSearch();
+  if((e.metaKey||e.ctrlKey)&&e.key==="k"){e.preventDefault();openSearch();}
+});
 
 /* ===== Recommend-a-book form (Formspree) ===== */
 const REC_ENDPOINT="https://formspree.io/f/mbderepk";
@@ -2345,7 +2535,7 @@ function initGraph(){
 
 function _stampSync(){var _u1=document.getElementById("updDate");if(_u1)_u1.textContent=LAST_UPDATED;var _u2=document.getElementById("updFoot");if(_u2)_u2.textContent=LAST_UPDATED;}_stampSync();window.addEventListener("load",_stampSync);
 var VIEW_RENDERED;
-var scope="all", activeTheme="", yearFilter="", drill=null, asort="count", sortMode="dateRead";
+var activeTheme="", yearFilter="", drill=null, asort="count", sortMode="dateRead";
 function ensureView(v){
   if(!VIEW_RENDERED)VIEW_RENDERED={};
   if(VIEW_RENDERED[v])return; VIEW_RENDERED[v]=true;
