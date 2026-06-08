@@ -196,8 +196,8 @@ const OL = "https://covers.openlibrary.org/b/isbn/";
 
 /* ===================== CLOUD SYNC (Cloudflare Worker + KV) ===================== */
 /* Fill these two in after deploying the Worker. Leave SYNC_URL empty to stay local-only. */
-const SYNC_URL = "__SYNC_URL__";      // e.g. "https://bookshelf-review-sync.YOURNAME.workers.dev/state"
-const SYNC_SECRET = "__SYNC_SECRET__"; // the same secret you set on the Worker
+const SYNC_URL = "https://bookshelf-review-sync.drost.workers.dev/state";      // e.g. "https://bookshelf-review-sync.YOURNAME.workers.dev/state"
+const SYNC_SECRET = "7kmZUOQVQuxzBbscAMXZwftK"; // the same secret you set on the Worker
 
 let pushTimer=null, lastPush=0, syncOn = !!SYNC_URL && SYNC_URL.indexOf("__SYNC")!==0 && /^https?:/.test(SYNC_URL);
 function setPill(cls,txt){ const p=document.getElementById('syncpill'); if(!p)return; p.className='syncpill '+(cls||''); p.textContent=txt; }
