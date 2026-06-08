@@ -100,6 +100,29 @@ textarea.cmt:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px 
 .nav .next{background:var(--accent);color:#fff}
 .nav .next:hover{background:#8c4636}
 .savednote{text-align:center;font-size:13px;color:var(--ink2);font-style:italic;margin-top:14px;height:16px}
+.reviewedbar{display:flex;align-items:center;gap:12px;margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.reviewedbtn{font-family:'Fraunces';font-weight:600;font-size:15px;padding:10px 18px;border:1.5px solid var(--accent2);background:var(--card);color:var(--accent2);border-radius:10px;cursor:pointer;transition:all .14s}
+.reviewedbtn:hover{background:#eef3f0}
+.reviewedbtn.on{background:var(--up);border-color:var(--up);color:#fff}
+.revdate{font-size:13px;color:var(--ink2);font-style:italic}
+.jitem.reviewed .dot{box-shadow:0 0 0 2px var(--card),0 0 0 3.5px var(--up)}
+.modal{position:fixed;inset:0;background:rgba(38,33,26,.55);display:none;z-index:60;align-items:center;justify-content:center;padding:24px}
+.modal.open{display:flex}
+.modalcard{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 50px rgba(60,48,30,.35);max-width:440px;width:100%;padding:30px 30px 24px;text-align:center;animation:rise .25s ease}
+.modalicon{font-size:34px;color:var(--down);margin-bottom:6px;line-height:1}
+.modalcard h3{font-size:24px;margin-bottom:10px}
+.modalcard p{color:var(--ink2);font-size:15px;margin:0 0 10px;line-height:1.5}
+.modaltip{color:var(--accent2);font-weight:600}
+.modalbtns{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.modalbtns button{font-family:'Fraunces';font-weight:600;font-size:16px;padding:13px;border-radius:10px;cursor:pointer;border:none;transition:all .14s}
+.m-export{background:var(--accent2);color:#fff}
+.m-export:hover{background:#26503f}
+.m-export.done{background:var(--up);opacity:.85}
+.m-erase{background:var(--card);color:var(--down);border:1.5px solid var(--down)}
+.m-erase:hover{background:var(--down);color:#fff}
+.m-cancel{margin-top:14px;background:none;border:none;color:var(--ink2);font-family:'Newsreader',serif;font-size:15px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.m-cancel:hover{color:var(--ink)}
+.modalnote{font-size:13px;color:var(--accent2);font-style:italic;height:18px;margin-top:10px}
 
 /* term browse */
 .termgrid{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
@@ -170,13 +193,30 @@ textarea.cmt:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px 
         <button id="modeBook" class="active">By book</button>
         <button id="modeTerm">By term</button>
         <button id="jumpBtn">Jump</button>
+        <button id="exportBtn" title="Download a Markdown checkpoint of everything so far">Export MD</button>
         <button id="finishBtn">Finish</button>
+        <button id="resetBtn" title="Erase everything and start over" style="border-color:var(--down);color:var(--down)">Reset</button>
       </div>
     </div>
     <div class="row" style="margin-top:8px"><div class="counter" id="counter"></div><div class="syncpill" id="syncpill" title="Cloud sync status">local only</div></div>
     <div class="bar"><i id="barfill"></i></div>
   </div>
   <div class="wrap" style="padding-top:0"><div id="stage"></div></div>
+</div>
+
+<div class="modal" id="resetModal">
+  <div class="modalcard">
+    <div class="modalicon">&#9888;</div>
+    <h3>Reset everything?</h3>
+    <p>This erases <b>all ratings, comments, reviewed marks, and progress</b> — on this browser <b>and in the cloud</b>. It cannot be undone.</p>
+    <p class="modaltip">We strongly recommend exporting a copy first.</p>
+    <div class="modalbtns">
+      <button class="m-export" id="mExport">&#11015; Export MD first</button>
+      <button class="m-erase" id="mErase">Yes, erase everything</button>
+    </div>
+    <button class="m-cancel" id="mCancel">Cancel — keep my work</button>
+    <div class="modalnote" id="mNote"></div>
+  </div>
 </div>
 
 <div class="drawer" id="drawer">
@@ -219,36 +259,63 @@ async function cloudPut(stateObj){
   catch(e){ setPill('off','offline · saved locally'); }
 }
 function schedulePush(){ if(!syncOn) return; clearTimeout(pushTimer); pushTimer=setTimeout(()=>cloudPut(state), 900); }
-/* Pull cloud state on startup and reconcile by timestamp (newest wins). */
+
+let mode = "book";    // "book" | "term" | "termbooks" | "done"  (restored)
+let activeTerm = null;
+let state = load();   // current review state (restored)
+/* ---- merge helpers ---- */
+function recTouched(r){ if(!r) return false;
+  return (r.book&&(r.book.v||(r.book.c&&r.book.c.trim()))) ||
+    (r.themeItems&&Object.keys(r.themeItems).length) || (r.tagItems&&Object.keys(r.tagItems).length) ||
+    (r.links&&Object.values(r.links).some(x=>x&&x.v)) ||
+    (r.notes&&((r.notes.themes&&r.notes.themes.trim())||(r.notes.tags&&r.notes.tags.trim()))); }
+function anyData(s){ if(!s) return false;
+  if(s.books) for(const k in s.books){ if(recTouched(s.books[k])) return true; }
+  if(s.terms) for(const t in s.terms){ if(Object.keys(s.terms[t]||{}).length) return true; }
+  return false; }
+/* Merge two states. Per book: keep whichever record has data; if both, prefer the side whose state.updated is newer. */
+function mergeStates(localS, cloudS, localNewer){
+  const out={ v:2, cur: (localNewer? (localS.cur||0) : (cloudS.cur||0)), books:{}, terms:{}, themes:{}, updated: Math.max(localS.updated||0, cloudS.updated||0) };
+  const keys=new Set([...Object.keys(localS.books||{}), ...Object.keys(cloudS.books||{})]);
+  keys.forEach(k=>{ const lr=(localS.books||{})[k], cr=(cloudS.books||{})[k];
+    if(recTouched(lr)&&recTouched(cr)) out.books[k]= localNewer? lr : cr;
+    else out.books[k]= recTouched(lr)? lr : (recTouched(cr)? cr : (lr||cr)); });
+  // terms: union; per term, per book, prefer newer side on conflict
+  const tkeys=new Set([...Object.keys(localS.terms||{}), ...Object.keys(cloudS.terms||{})]);
+  tkeys.forEach(t=>{ const lt=(localS.terms||{})[t]||{}, ct=(cloudS.terms||{})[t]||{}; const m={...(localNewer?ct:lt),...(localNewer?lt:ct)}; if(Object.keys(m).length) out.terms[t]=m; });
+  return out;
+}
+
+let userInteracted=false;
+/* Reconcile with cloud ONCE, before the app becomes interactive. Merges; never loses data. */
 async function initSync(){
   if(!syncOn){ setPill('','local only'); return; }
   setPill('saving','checking…');
+  const localS=state, localUpdated=state.updated||0, localHas=anyData(localS);
   const cloud=await cloudGet();
-  const localUpdated = state.updated||0;
-  if(cloud && cloud.state && (cloud.updated||0) > localUpdated){
-    cloud.state.updated = cloud.updated||Date.now();
-    state = cloud.state; state.terms=state.terms||{}; state.themes=state.themes||{};
-    try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){}
-    setPill('ok','synced'); render();
-  } else if(cloud!==null){
-    setPill('ok','synced');
-    if(localUpdated > (cloud.updated||0)) cloudPut(state); // push our newer local up
-  }
+  if(cloud===null){ /* offline: keep local, will push on next save */ return; }
+  const cloudS=cloud.state||{books:{},terms:{},themes:{},updated:0}; cloudS.updated=cloud.updated||0;
+  const cloudHas=anyData(cloudS);
+  if(!cloudHas && !localHas){ setPill('ok','synced'); return; }            // both empty
+  if(cloudHas && !localHas){                                              // adopt cloud
+    cloudS.terms=cloudS.terms||{}; cloudS.themes=cloudS.themes||{};
+    state=cloudS; try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){} setPill('ok','synced'); return; }
+  if(localHas && !cloudHas){ setPill('ok','synced'); schedulePush(); return; } // push local up
+  // both have data -> MERGE (newest side wins per-conflict). Nothing discarded.
+  const localNewer = localUpdated >= (cloudS.updated||0);
+  state = mergeStates(localS, cloudS, localNewer);
+  try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}
+  setPill('ok','synced'); schedulePush();   // push merged result so both sides converge
 }
 
-
-let mode = "book"; // "book" | "term" | "termbooks" | "done"
-let activeTerm = null;
-
-let state = load();
 function load(){
   try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.v===2){ s.terms=s.terms||{}; s.themes=s.themes||{}; return s; } }catch(e){}
   return { v:2, cur:0, books:{}, terms:{}, themes:{}, updated:0 };
   // terms[term] = {plus:bool/minus} global per-term verdict? -> we store per (book,term) in book record AND a standalone term view writes link-style up/down per book
 }
-function save(){ state.updated=Date.now(); try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} flashSaved(); schedulePush(); }
-function bk(i){ if(!state.books[i]) state.books[i]={themeItems:{},tagItems:{},book:{v:null,c:""},links:{},notes:{themes:"",tags:""}};
-  const r=state.books[i]; r.themeItems=r.themeItems||{}; r.tagItems=r.tagItems||{}; r.book=r.book||{v:null,c:""}; r.links=r.links||{}; r.notes=r.notes||{themes:"",tags:""}; return r; }
+function save(){ userInteracted=true; state.updated=Date.now(); try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} flashSaved(); schedulePush(); }
+function bk(i){ if(!state.books[i]) state.books[i]={themeItems:{},tagItems:{},book:{v:null,c:""},links:{},notes:{themes:"",tags:""},reviewedAt:null};
+  const r=state.books[i]; r.themeItems=r.themeItems||{}; r.tagItems=r.tagItems||{}; r.book=r.book||{v:null,c:""}; r.links=r.links||{}; r.notes=r.notes||{themes:"",tags:""}; if(r.reviewedAt===undefined) r.reviewedAt=null; return r; }
 
 function coverHTML(o, cls, phcls, label){
   const sources=[];
@@ -271,7 +338,12 @@ function tryEnter(){ const v=document.getElementById('pw').value;
 document.getElementById('enter').onclick=tryEnter;
 document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')tryEnter();});
 if(sessionStorage.getItem('bsr_ok')==='1') showApp();
-function showApp(){ gate.style.display='none'; app.style.display='block'; render(); initSync(); }
+async function showApp(){ gate.style.display='none'; app.style.display='block';
+  // Phase 1: reconcile with cloud BEFORE first interactive render (no race window).
+  await initSync();
+  // Phase 2: now render the (possibly merged) state. From here on, late cloud writes never replace state.
+  render();
+}
 
 const stage=document.getElementById('stage');
 let saveTimer=null;
@@ -338,14 +410,21 @@ function renderBook(){
       <button class="down ${rec.book.v==='down'?'on':''}" data-v="down">&#128078; Needs work</button></div>
     <textarea class="cmt" id="cmt-book" placeholder="Comments — assumptions to test, links to add, swaps, anything to revisit…">${esc(rec.book.c||'')}</textarea>
 
+    <div class="reviewedbar">
+      <button class="reviewedbtn ${rec.reviewedAt?'on':''}" id="reviewedBtn">${rec.reviewedAt?'&#10003; Reviewed':'Mark reviewed'}</button>
+      <span class="revdate" id="revdate">${rec.reviewedAt?('on '+fmtDate(rec.reviewedAt)):'not yet reviewed'}</span>
+    </div>
     <div class="nav"><button class="prev" id="prevB">&larr; Back</button>
-      <button class="next" id="nextB">${i===DATA.length-1?'Finish':'Skip / Next &rarr;'}</button></div>
+      <button class="next" id="nextB">${i===DATA.length-1?'Finish':'Next &rarr;'}</button></div>
     <div class="savednote" id="savednote"></div>
   </div>`;
 
   // per-item theme/tag handlers
   stage.querySelectorAll('.seclabel + .itemrow, .itemrow').forEach(()=>{});
   bindItemRows(rec);
+  // Mark reviewed toggle (stamps/clears an ISO date)
+  const rb=document.getElementById('reviewedBtn');
+  if(rb) rb.onclick=()=>{ rec.reviewedAt = rec.reviewedAt? null : new Date().toISOString(); save(); renderBook(); };
   // links
   stage.querySelectorAll('.linkrow[data-k]').forEach(row=>{ const k=+row.dataset.k;
     row.querySelectorAll('.lk-toggle button').forEach(btn=>{ btn.onclick=()=>{ if(!rec.links[k])rec.links[k]={v:null};
@@ -416,12 +495,13 @@ function renderTermBooks(){
 }
 
 function touched(r){ if(!r)return false;
+  if(r.reviewedAt) return true;
   return (r.book&&(r.book.v||(r.book.c&&r.book.c.trim()))) ||
     (r.themeItems&&Object.keys(r.themeItems).length) || (r.tagItems&&Object.keys(r.tagItems).length) ||
     (r.links&&Object.values(r.links).some(x=>x&&x.v)) ||
     (r.notes&&((r.notes.themes&&r.notes.themes.trim())||(r.notes.tags&&r.notes.tags.trim()))); }
-function updateProgress(){ const total=DATA.length; let n=0; for(const k in state.books) if(touched(state.books[k]))n++;
-  document.getElementById('counter').textContent=`${n} of ${total} books touched`+(mode==="book"?` · viewing #${Math.min(state.cur+1,total)}`:(mode==="termbooks"?` · term: ${activeTerm}`:""));
+function updateProgress(){ const total=DATA.length; let n=0,rev=0; for(const k in state.books){ const r=state.books[k]; if(touched(r))n++; if(r&&r.reviewedAt)rev++; }
+  document.getElementById('counter').textContent=`${rev} of ${total} reviewed · ${n} touched`+(mode==="book"?` · viewing #${Math.min(state.cur+1,total)}`:(mode==="termbooks"?` · term: ${activeTerm}`:""));
   document.getElementById('barfill').style.width=(100*Math.min(mode==="book"?state.cur:n,total)/total)+'%'; }
 
 function renderDone(){
@@ -435,7 +515,7 @@ function renderDone(){
   let termRated=0; for(const tm2 in state.terms) termRated+=Object.keys(state.terms[tm2]).length;
   stage.innerHTML=`<div class="done">
     <h2>That's the shelf.</h2>
-    <p>${t} of ${DATA.length} books touched.</p>
+    <p>${(function(){let rv=0;for(const k in state.books)if(state.books[k]&&state.books[k].reviewedAt)rv++;return rv;})()} of ${DATA.length} marked reviewed · ${t} touched.</p>
     <p>Links: ${lu} &#128077; / ${ld} &#128078; · Overall: ${bu} &#128077; / ${bd} &#128078;</p>
     <p>Themes: ${tp} + / ${tnu} ~ / ${tm} &minus; · Terms: ${gp} + / ${gnu} ~ / ${gm} &minus; · Term-view ratings: ${termRated}</p>
     <div class="exportbtns"><button class="md" id="expMd">Download Markdown</button><button class="jsonb" id="expJson">Download JSON</button></div>
@@ -450,13 +530,14 @@ function renderDone(){
 }
 function dl(n,txt,ty){ const b=new Blob([txt],{type:ty}); const u=URL.createObjectURL(b); const a=document.createElement('a'); a.href=u; a.download=n; a.click(); URL.revokeObjectURL(u); }
 function stamp(){ return new Date().toISOString().slice(0,10); }
+function fmtDate(iso){ try{ const d=new Date(iso); return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}); }catch(e){ return iso; } }
 function thumbWord(v){ return v==='up'?'👍':(v==='down'?'👎':''); }
 function pmWord(v){ return v==='plus'?'+':(v==='minus'?'−':''); }
 
 function exportJson(){
   const out={exported:new Date().toISOString(),books:[],term_view:{}};
   DATA.forEach((b,i)=>{ const r=state.books[i]; if(!r||!touched(r))return;
-    out.books.push({title:b.title,author:b.author,
+    out.books.push({title:b.title,author:b.author,reviewedAt:r.reviewedAt||null,
       themes:b.themeList.map(t=>({theme:t,verdict:r.themeItems[t]||null})).filter(x=>x.verdict),
       themes_note:r.notes.themes||"",
       terms:b.tags.map(t=>({term:t,verdict:r.tagItems[t]||null})).filter(x=>x.verdict),
@@ -473,6 +554,7 @@ function exportMd(){
   let any=false;
   DATA.forEach((b,i)=>{ const r=state.books[i]; if(!r||!touched(r))return; any=true;
     m+=`## ${b.title} — ${b.author}\n`;
+    if(r.reviewedAt) m+=`- **Reviewed:** ${fmtDate(r.reviewedAt)}\n`;
     if(r.book.v) m+=`- **Overall:** ${thumbWord(r.book.v)}\n`;
     if(r.book.c&&r.book.c.trim()) m+=`- **Comment:** ${r.book.c.trim()}\n`;
     const tp=b.themeList.filter(t=>r.themeItems[t]==='plus'),tn=b.themeList.filter(t=>r.themeItems[t]==='neutral'),tm2=b.themeList.filter(t=>r.themeItems[t]==='minus');
@@ -506,13 +588,30 @@ document.getElementById('jumpBtn').onclick=()=>{ buildJump(); drawer.classList.a
 document.getElementById('closeDrawer').onclick=()=>drawer.classList.remove('open');
 drawer.addEventListener('click',e=>{ if(e.target===drawer) drawer.classList.remove('open'); });
 document.getElementById('finishBtn').onclick=()=>{ mode="done"; render(); window.scrollTo(0,0); };
+document.getElementById('exportBtn').onclick=()=>{ exportMd(); };
+const resetModal=document.getElementById('resetModal');
+function openResetModal(){ document.getElementById('mNote').textContent=''; document.getElementById('mExport').classList.remove('done'); document.getElementById('mExport').innerHTML='&#11015; Export MD first'; resetModal.classList.add('open'); }
+function closeResetModal(){ resetModal.classList.remove('open'); }
+document.getElementById('resetBtn').onclick=openResetModal;
+document.getElementById('mCancel').onclick=closeResetModal;
+resetModal.addEventListener('click',e=>{ if(e.target===resetModal) closeResetModal(); });
+document.getElementById('mExport').onclick=()=>{ exportMd();
+  const ex=document.getElementById('mExport'); ex.classList.add('done'); ex.innerHTML='&#10003; Exported';
+  document.getElementById('mNote').textContent='Saved a Markdown copy. You can erase now if you’re sure.'; };
+document.getElementById('mErase').onclick=()=>{
+  state={v:2,cur:0,books:{},terms:{},themes:{},updated:Date.now()};
+  try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){}
+  schedulePush(); // overwrite cloud with the empty state too
+  closeResetModal(); mode="book"; setActive(); render(); window.scrollTo(0,0);
+};
 document.getElementById('jumpfilter').addEventListener('input',buildJump);
 function buildJump(){ const f=document.getElementById('jumpfilter').value.toLowerCase();
   const ul=document.getElementById('jlist'); ul.innerHTML=''; document.getElementById('drawersub').textContent=`${DATA.length} titles · click to jump`;
   DATA.forEach((b,i)=>{ if(f && !(b.title.toLowerCase().includes(f)||(b.author||'').toLowerCase().includes(f))) return;
     const r=state.books[i]; const cls=(r&&r.book&&r.book.v==='down')?'down':(touched(r)?'done':'');
-    const li=document.createElement('li'); li.className=`jitem ${cls} ${i===state.cur&&mode==="book"?'cur':''}`;
-    li.innerHTML=`<span class="dot"></span><span class="jt">${esc(b.title)}</span><span class="ji">#${i+1}</span>`;
+    const revd=(r&&r.reviewedAt)?'reviewed':'';
+    const li=document.createElement('li'); li.className=`jitem ${cls} ${revd} ${i===state.cur&&mode==="book"?'cur':''}`;
+    li.innerHTML=`<span class="dot"></span><span class="jt">${esc(b.title)}</span><span class="ji">${r&&r.reviewedAt?'&#10003; ':''}#${i+1}</span>`;
     li.onclick=()=>{ state.cur=i; mode="book"; setActive(); save(); drawer.classList.remove('open'); render(); window.scrollTo(0,0); };
     ul.appendChild(li); });
 }
