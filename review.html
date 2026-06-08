@@ -66,7 +66,10 @@ h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:600;line-height:1.1;ma
 .pm{display:flex;gap:4px}
 .pm button{border:1px solid var(--line);background:var(--card);width:34px;height:30px;border-radius:7px;cursor:pointer;font-size:18px;font-weight:700;line-height:1;transition:all .12s;display:flex;align-items:center;justify-content:center;color:var(--ink2)}
 .pm button.on-plus{background:var(--up);border-color:var(--up);color:#fff}
+.pm button.on-neutral{background:var(--gold);border-color:var(--gold);color:#fff}
 .pm button.on-minus{background:var(--down);border-color:var(--down);color:#fff}
+.itemrow.neutral{background:var(--paper2)}
+.itemrow.neutral .it{color:var(--ink2)}
 
 .minicmt{width:100%;margin-top:8px;min-height:42px;padding:9px 12px;font-family:'Newsreader',serif;font-size:15px;border:1px dashed var(--line);border-radius:9px;background:var(--paper);color:var(--ink);resize:vertical}
 
@@ -281,12 +284,13 @@ function setActive(){ document.getElementById('modeBook').classList.toggle('acti
 
 function pmRow(item, idx, recMap){
   const v=recMap[item]||null;
-  return `<div class="itemrow ${v==='minus'?'minus':''}" data-item="${esc(item)}">
+  return `<div class="itemrow ${v==='minus'?'minus':''} ${v==='neutral'?'neutral':''}" data-item="${esc(item)}">
     ${idx!=null?`<span class="itn">${idx+1}</span>`:''}
     <span class="it">${esc(item)}</span>
     <span class="pm">
-      <button data-pm="plus" class="${v==='plus'?'on-plus':''}" title="Plus">+</button>
-      <button data-pm="minus" class="${v==='minus'?'on-minus':''}" title="Minus">&minus;</button>
+      <button data-pm="plus" class="${v==='plus'?'on-plus':''}" title="Yes — fits well">+</button>
+      <button data-pm="neutral" class="${v==='neutral'?'on-neutral':''}" title="Maybe / neutral">~</button>
+      <button data-pm="minus" class="${v==='minus'?'on-minus':''}" title="No — doesn't fit">&minus;</button>
     </span></div>`;
 }
 
@@ -422,18 +426,18 @@ function updateProgress(){ const total=DATA.length; let n=0; for(const k in stat
 
 function renderDone(){
   updateProgress(); document.getElementById('barfill').style.width='100%';
-  let t=0,lu=0,ld=0,bu=0,bd=0,tp=0,tm=0,gp=0,gm=0;
+  let t=0,lu=0,ld=0,bu=0,bd=0,tp=0,tm=0,tnu=0,gp=0,gm=0,gnu=0;
   for(const k in state.books){ const r=state.books[k]; if(touched(r))t++;
     if(r.book.v==='up')bu++; if(r.book.v==='down')bd++;
     if(r.links)Object.values(r.links).forEach(x=>{if(x.v==='up')lu++;if(x.v==='down')ld++;});
-    if(r.themeItems)Object.values(r.themeItems).forEach(v=>{if(v==='plus')tp++;if(v==='minus')tm++;});
-    if(r.tagItems)Object.values(r.tagItems).forEach(v=>{if(v==='plus')gp++;if(v==='minus')gm++;}); }
+    if(r.themeItems)Object.values(r.themeItems).forEach(v=>{if(v==='plus')tp++;if(v==='minus')tm++;if(v==='neutral')tnu++;});
+    if(r.tagItems)Object.values(r.tagItems).forEach(v=>{if(v==='plus')gp++;if(v==='minus')gm++;if(v==='neutral')gnu++;}); }
   let termRated=0; for(const tm2 in state.terms) termRated+=Object.keys(state.terms[tm2]).length;
   stage.innerHTML=`<div class="done">
     <h2>That's the shelf.</h2>
     <p>${t} of ${DATA.length} books touched.</p>
     <p>Links: ${lu} &#128077; / ${ld} &#128078; · Overall: ${bu} &#128077; / ${bd} &#128078;</p>
-    <p>Themes: ${tp} + / ${tm} &minus; · Terms: ${gp} + / ${gm} &minus; · Term-view ratings: ${termRated}</p>
+    <p>Themes: ${tp} + / ${tnu} ~ / ${tm} &minus; · Terms: ${gp} + / ${gnu} ~ / ${gm} &minus; · Term-view ratings: ${termRated}</p>
     <div class="exportbtns"><button class="md" id="expMd">Download Markdown</button><button class="jsonb" id="expJson">Download JSON</button></div>
     <div class="exportbtns" style="margin-top:6px">
       <button class="prev" id="backToReview" style="font-family:Fraunces;font-weight:600;padding:10px 20px;border:1px solid var(--line);background:var(--card);border-radius:10px;cursor:pointer">&larr; Back to review</button>
@@ -471,12 +475,14 @@ function exportMd(){
     m+=`## ${b.title} — ${b.author}\n`;
     if(r.book.v) m+=`- **Overall:** ${thumbWord(r.book.v)}\n`;
     if(r.book.c&&r.book.c.trim()) m+=`- **Comment:** ${r.book.c.trim()}\n`;
-    const tp=b.themeList.filter(t=>r.themeItems[t]==='plus'),tm2=b.themeList.filter(t=>r.themeItems[t]==='minus');
+    const tp=b.themeList.filter(t=>r.themeItems[t]==='plus'),tn=b.themeList.filter(t=>r.themeItems[t]==='neutral'),tm2=b.themeList.filter(t=>r.themeItems[t]==='minus');
     if(tp.length) m+=`- **Themes +:** ${tp.join('; ')}\n`;
+    if(tn.length) m+=`- **Themes ~ (maybe):** ${tn.join('; ')}\n`;
     if(tm2.length) m+=`- **Themes −:** ${tm2.join('; ')}\n`;
     if(r.notes.themes&&r.notes.themes.trim()) m+=`- **Themes note:** _${r.notes.themes.trim()}_\n`;
-    const gp=b.tags.filter(t=>r.tagItems[t]==='plus'),gm=b.tags.filter(t=>r.tagItems[t]==='minus');
+    const gp=b.tags.filter(t=>r.tagItems[t]==='plus'),gn=b.tags.filter(t=>r.tagItems[t]==='neutral'),gm=b.tags.filter(t=>r.tagItems[t]==='minus');
     if(gp.length) m+=`- **Terms +:** ${gp.join('; ')}\n`;
+    if(gn.length) m+=`- **Terms ~ (maybe):** ${gn.join('; ')}\n`;
     if(gm.length) m+=`- **Terms −:** ${gm.join('; ')}\n`;
     if(r.notes.tags&&r.notes.tags.trim()) m+=`- **Terms note:** _${r.notes.tags.trim()}_\n`;
     const up=[],down=[]; b.links.forEach((l,k)=>{const v=r.links[k]&&r.links[k].v; if(v==='up')up.push(l.label); if(v==='down')down.push(l.label);});
