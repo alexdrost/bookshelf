@@ -6,11 +6,11 @@
 <title>Alex&rsquo;s Bookshelf</title>
 
 <!-- SEO / description -->
-<meta name="description" content="A personal library of 305 books — annotated, themed, and mapped by the threads that run between them.">
+<meta name="description" content="A personal library of 300+ books — annotated, themed, and mapped by the threads that run between them.">
 
 <!-- Open Graph (Facebook, LinkedIn, iMessage, Slack, Discord, most chat apps) -->
 <meta property="og:title" content="Alex's Bookshelf">
-<meta property="og:description" content="A personal library of 305 books — annotated, themed, and mapped by the threads that run between them.">
+<meta property="og:description" content="A personal library of 300+ books — annotated, themed, and mapped by the threads that run between them.">
 <meta property="og:image" content="https://bookshelf.drost.us/share.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -22,7 +22,7 @@
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Alex's Bookshelf">
-<meta name="twitter:description" content="A personal library of 305 books — annotated, themed, and mapped by the threads that run between them.">
+<meta name="twitter:description" content="A personal library of 300+ books — annotated, themed, and mapped by the threads that run between them.">
 <meta name="twitter:image" content="https://bookshelf.drost.us/share.png">
 <meta name="twitter:image:alt" content="Alex's Bookshelf — recent reads visualized as a constellation of connected books.">
 
@@ -373,6 +373,7 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .glink{display:inline-block;margin-top:16px;font-family:"Archivo";font-size:.84rem;color:var(--blue);text-decoration:none;font-weight:700}
 .glink:hover{text-decoration:underline}
 .x{position:absolute;top:14px;right:16px;border:none;background:none;font-size:1.7rem;cursor:pointer;color:var(--faint);line-height:1}.x:hover{color:var(--ink)}
+.mcopy{position:absolute;top:16px;right:52px;border:1px solid var(--line);background:var(--paper2);border-radius:8px;padding:5px 11px;font-family:"Archivo";font-weight:600;font-size:.74rem;color:var(--muted);cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:5px;letter-spacing:.02em;z-index:2}.mcopy:hover{border-color:var(--blue);color:var(--blue)}.mcopy.copied{border-color:var(--green,#2f9e6b);color:var(--green,#2f9e6b)}.mcopy svg{width:13px;height:13px}
 /* author popup */
 .apop-head{display:flex;align-items:center;gap:18px;margin-bottom:22px;padding-right:30px}
 .apop-head .aface{width:96px;height:96px;flex-shrink:0;margin:0}
@@ -720,6 +721,8 @@ footer.ft .ft-rec:hover{background:#6f8a2e;border-color:#6f8a2e;color:#fff}
 .shelf-board{height:14px;margin:0 -26px;border-radius:0 0 16px 16px;
   background:linear-gradient(180deg,#c9c2b2,#a99f8a);box-shadow:inset 0 2px 3px rgba(255,255,255,.4),0 10px 18px rgba(31,37,48,.16)}
 @media(max-width:640px){.shelf-feature .book{width:104px}}
+/* Hide Featured Reads on mobile; go straight into "More from my library" (desktop keeps it) */
+@media(max-width:640px){.feat-panel{display:none}}
 
 
 @media(max-width:640px){
@@ -959,7 +962,7 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
     <div class="home-divider"><span></span></div>
     <div class="section-head section-head-c"><h2>More from my library</h2></div>
     <div class="shelf" id="randomShelf"></div>
-    <div class="home-cta"><button class="browse-all" data-view="browse">Browse all 305 books &rarr;</button></div>
+    <div class="home-cta"><button class="browse-all" data-view="browse">See my full 300+ bookshelf &rarr;</button></div>
   </section>
 
   <!-- BROWSE -->
@@ -1056,7 +1059,7 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
 
   <!-- CONNECTIONS -->
   <section class="view" id="view-connections">
-    <div class="section-head"><h2>The web of connections</h2><span class="sub">305 books grouped by theme. Threads stay hidden until you hover a book &mdash; then its connections light up</span></div>
+    <div class="section-head"><h2>The web of connections</h2><span class="sub">300+ books grouped by theme. Threads stay hidden until you hover a book &mdash; then its connections light up</span></div>
     <div class="graph-wrap">
       <div class="graph-tools">
         <input id="gsearch" class="gsearch" type="search" placeholder="Find a book in the web&hellip;" autocomplete="off">
@@ -2225,10 +2228,18 @@ $("#paceToggle").addEventListener("click",e=>{const b=e.target.closest("button")
 
 
 /* MODAL */
+function copyBookLink(id,btn){
+  const url=location.origin+location.pathname+"#book="+id;
+  const done=()=>{if(!btn)return;const lab=btn.querySelector(".mcopy-lab");const prev=lab?lab.textContent:"";btn.classList.add("copied");if(lab)lab.textContent="Copied \u2713";setTimeout(()=>{btn.classList.remove("copied");if(lab)lab.textContent=prev||"Copy link";},1600);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done).catch(()=>fallbackCopy(url,done));}
+  else{fallbackCopy(url,done);}
+}
+function fallbackCopy(text,cb){try{const t=document.createElement("textarea");t.value=text;t.style.position="fixed";t.style.opacity="0";document.body.appendChild(t);t.select();document.execCommand("copy");document.body.removeChild(t);cb&&cb();}catch(e){}}
 function openModal(b){
   const themes=b.themes.map(t=>`<span class="mtheme" onclick="gotoTheme('${t.replace(/'/g,"\\'")}');closeModal()"><span style="width:8px;height:8px;border-radius:50%;background:${THEME_COLORS[t]||'#8a8f98'};display:inline-block"></span>${esc(t)}</span>`).join("");
   $("#sheet").innerHTML=`
     <button class="x" onclick="closeModal()">&times;</button>
+    <button class="mcopy" id="mcopyBtn" title="Copy a link to this book" onclick="copyBookLink('${esc(b.id)}',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg><span class="mcopy-lab">Copy link</span></button>
     <div class="mhead">
       <div class="mcov" data-i="${ID2I[b.id]}" data-ph="${esc(phHTML(b))}"></div>
       <div class="mintro">
@@ -2247,7 +2258,7 @@ function openModal(b){
       ${(b.conn&&b.conn.length)?`<div class="msec-h">Related titles (${b.conn.length})</div><div class="mrel">${b.conn.slice(0,12).map(cid=>{const cb=BOOKS[ID2I[cid]];return cb?`<div class="yir-bk mrel-bk" onclick="openModal(BOOKS[${ID2I[cb.id]}])">${yirCover(cb)}<div class="yir-bk-meta"><div class="yc-t">${esc(cb.title.split(":")[0])}</div><div class="yc-a">${esc(cb.author)}</div></div></div>`:"";}).join("")}</div>`:""}
       ${b.id?`<a class="glink" href="https://www.goodreads.com/book/show/${esc(b.id)}" target="_blank" rel="noopener">View on Goodreads &rarr;</a>`:""}
     </div>`;
-  observeCovers($("#sheet"));hideAllPops();$("#modal").classList.add("open");writeState({book:b.id});
+  observeCovers($("#sheet"));$("#sheet").scrollTop=0;hideAllPops();$("#modal").classList.add("open");writeState({book:b.id});
 }
 document.body.addEventListener("click",e=>{const c=e.target.closest(".book");if(c)openModal(BOOKS[+c.dataset.i]);});
 function closeModal(){const m=$("#modal");if(!m.classList.contains("open"))return;m.classList.remove("open");hideAllPops();writeState();}
