@@ -373,7 +373,7 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .glink{display:inline-block;margin-top:16px;font-family:"Archivo";font-size:.84rem;color:var(--blue);text-decoration:none;font-weight:700}
 .glink:hover{text-decoration:underline}
 .x{position:absolute;top:14px;right:16px;border:none;background:none;font-size:1.7rem;cursor:pointer;color:var(--faint);line-height:1}.x:hover{color:var(--ink)}
-.mcopy{position:absolute;top:16px;right:52px;border:1px solid var(--line);background:var(--paper2);border-radius:8px;padding:5px 11px;font-family:"Archivo";font-weight:600;font-size:.74rem;color:var(--muted);cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:5px;letter-spacing:.02em;z-index:2}.mcopy:hover{border-color:var(--blue);color:var(--blue)}.mcopy.copied{border-color:var(--green,#2f9e6b);color:var(--green,#2f9e6b)}.mcopy svg{width:13px;height:13px}
+.mcopy{position:absolute;top:16px;right:50px;border:none;background:none;padding:4px;cursor:pointer;color:var(--faint);line-height:0;transition:.15s;z-index:2}.mcopy:hover{color:var(--blue)}.mcopy.copied{color:var(--green,#2f9e6b)}.mcopy svg{width:17px;height:17px;display:block}
 /* author popup */
 .apop-head{display:flex;align-items:center;gap:18px;margin-bottom:22px;padding-right:30px}
 .apop-head .aface{width:96px;height:96px;flex-shrink:0;margin:0}
@@ -2230,7 +2230,7 @@ $("#paceToggle").addEventListener("click",e=>{const b=e.target.closest("button")
 /* MODAL */
 function copyBookLink(id,btn){
   const url=location.origin+location.pathname+"#book="+id;
-  const done=()=>{if(!btn)return;const lab=btn.querySelector(".mcopy-lab");const prev=lab?lab.textContent:"";btn.classList.add("copied");if(lab)lab.textContent="Copied \u2713";setTimeout(()=>{btn.classList.remove("copied");if(lab)lab.textContent=prev||"Copy link";},1600);};
+  const done=()=>{if(!btn)return;btn.classList.add("copied");const pt=btn.getAttribute("title");btn.setAttribute("title","Copied \u2713");setTimeout(()=>{btn.classList.remove("copied");btn.setAttribute("title",pt||"Copy link to this book");},1600);};
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done).catch(()=>fallbackCopy(url,done));}
   else{fallbackCopy(url,done);}
 }
@@ -2239,7 +2239,7 @@ function openModal(b){
   const themes=b.themes.map(t=>`<span class="mtheme" onclick="gotoTheme('${t.replace(/'/g,"\\'")}');closeModal()"><span style="width:8px;height:8px;border-radius:50%;background:${THEME_COLORS[t]||'#8a8f98'};display:inline-block"></span>${esc(t)}</span>`).join("");
   $("#sheet").innerHTML=`
     <button class="x" onclick="closeModal()">&times;</button>
-    <button class="mcopy" id="mcopyBtn" title="Copy a link to this book" onclick="copyBookLink('${esc(b.id)}',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg><span class="mcopy-lab">Copy link</span></button>
+    <button class="mcopy" id="mcopyBtn" aria-label="Copy a link to this book" title="Copy link to this book" onclick="copyBookLink('${esc(b.id)}',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></button>
     <div class="mhead">
       <div class="mcov" data-i="${ID2I[b.id]}" data-ph="${esc(phHTML(b))}"></div>
       <div class="mintro">
