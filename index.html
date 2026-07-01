@@ -79,7 +79,7 @@ nav{position:sticky;top:0;z-index:30;background:rgba(244,241,233,.82);backdrop-f
 .navlink:last-of-type{border-bottom:0}
 .navlink:hover{background:var(--paper2);color:var(--blue)}
 .navlink.active{color:var(--blue)}
-.navmenu-sep{height:1px;background:var(--line);margin:8px 0 6px}
+.navmenu-sep{height:1px;background:var(--line);margin:12px 0 8px}
 .navsocial{display:flex;align-items:center;gap:9px;font-family:"Archivo";font-weight:600;font-size:.9rem;color:var(--blue);text-decoration:none;padding:11px 8px;border-radius:10px}
 .navsocial:hover{background:var(--blue-tint)}
 
@@ -370,10 +370,12 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .rrow{display:flex;font-size:.88rem;padding:6px 0;border-top:1px solid var(--line)}
 .rrow .k{color:var(--muted);width:108px;flex-shrink:0}
 .mtags{font-size:.8rem;color:var(--muted);margin-top:12px;line-height:1.6}
-.glink{display:inline-block;margin-top:16px;font-family:"Archivo";font-size:.84rem;color:var(--blue);text-decoration:none;font-weight:700}
-.glink:hover{text-decoration:underline}
+.glink{display:inline-flex;align-items:center;gap:5px;margin:0 0 16px;font-family:"Archivo";font-size:.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .15s}
+.glink svg{opacity:.7;transition:opacity .15s}
+.glink:hover{color:var(--blue)}
+.glink:hover svg{opacity:1}
 .x{position:absolute;top:14px;right:16px;border:none;background:none;font-size:1.7rem;cursor:pointer;color:var(--faint);line-height:1}.x:hover{color:var(--ink)}
-.mcopy{position:absolute;top:16px;right:50px;border:none;background:none;padding:4px;cursor:pointer;color:var(--faint);line-height:0;transition:.15s;z-index:2}.mcopy:hover{color:var(--blue)}.mcopy.copied{color:var(--green,#2f9e6b)}.mcopy svg{width:17px;height:17px;display:block}
+.mcopy{position:absolute;top:14px;left:14px;border:none;background:rgba(255,255,255,.82);backdrop-filter:blur(3px);border-radius:7px;padding:5px;cursor:pointer;color:var(--muted);line-height:0;transition:.15s;z-index:3;box-shadow:0 1px 4px rgba(31,37,48,.14)}.mcopy:hover{color:var(--blue)}.mcopy.copied{color:var(--green,#2f9e6b)}.mcopy svg{width:16px;height:16px;display:block}
 /* author popup */
 .apop-head{display:flex;align-items:center;gap:18px;margin-bottom:22px;padding-right:30px}
 .apop-head .aface{width:96px;height:96px;flex-shrink:0;margin:0}
@@ -466,7 +468,7 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .mcore{margin:0 0 14px;padding:0;list-style:none}
 .mcore li{position:relative;padding-left:16px;font-size:.86rem;line-height:1.45;margin-bottom:7px;color:var(--ink2)}
 .mcore li::before{content:"";position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%;background:var(--blue-br)}
-.msec-h{font-family:"Archivo";font-weight:700;font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:18px 0 8px}
+.msec-h{font-family:"Archivo";font-weight:800;font-size:.95rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);margin:22px 0 10px}
 .mconn{display:flex;flex-wrap:wrap;gap:6px}
 .mrel{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:4px 10px;margin-top:2px}
 .mrel .mrel-bk{transition:background .14s,box-shadow .14s,transform .14s}
@@ -860,6 +862,10 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
   /* modal: use more of the screen, comfortable close target */
   .sheet{max-height:92vh;padding:22px 18px}
   .sheet .x{width:40px;height:40px;font-size:1.5rem}
+  /* Library theme pills: single horizontal-scroll row on mobile so the book grid is reachable without a long scroll */
+  .chips{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;margin:12px -18px 16px;padding:2px 18px 8px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chips .chip{flex:0 0 auto;scroll-snap-align:start}
   /* chips & related-title pills: easier to tap */
   .chip{min-height:36px}
   .cb{min-height:34px;display:inline-flex;align-items:center}
@@ -904,6 +910,10 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
 .tagchip{font-size:.78rem;font-family:"Archivo";font-weight:600;color:var(--ink2);background:var(--paper2);border:1px solid var(--line);border-radius:14px;padding:5px 12px;cursor:pointer;transition:.15s;line-height:1.2}
 .tagchip:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
 @media(max-width:640px){.tagchip{min-height:34px;display:inline-flex;align-items:center}}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .modal.open .sheet{animation:none}
+}
 </style>
 </head>
 <body>
@@ -937,8 +947,7 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
     <button class="navlink" data-view="connections">Connections</button>
     <button class="navlink navlink-conn" data-view="analytics">Analytics</button>
     <div class="navmenu-sep"></div>
-    <button class="navlink" onclick="closeMenu&&closeMenu();openSearch()">Search the library</button>
-    <button class="navlink" onclick="closeMenu&&closeMenu();openRec()">Recommend a book</button>
+    <button class="navsocial" type="button" onclick="closeMenu&&closeMenu();openRec()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/><line x1="15.5" y1="9" x2="17.5" y2="9"/></svg>Recommend a book</button>
     <a class="navsocial" href="https://www.goodreads.com/alex-drost" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M11.43 23.94c-2.16-.1-4-1.05-4.92-2.74-.36-.66-.5-1.2-.5-1.9h2.2c.07.5.18.84.42 1.2.55.83 1.5 1.28 2.85 1.3 2.2.03 3.5-1.36 3.5-3.84v-2.2c-.78 1.3-2.1 2-3.86 2-3.1 0-5.2-2.46-5.2-6.13 0-3.74 2.12-6.3 5.27-6.3 1.76 0 3.06.74 3.8 2.04V5.1h2.13v13.06c0 3.7-2.16 5.86-5.7 5.78h.01zm.32-7.97c2.1 0 3.46-1.8 3.46-4.4 0-2.62-1.37-4.43-3.45-4.43-2.13 0-3.42 1.74-3.42 4.43 0 2.7 1.3 4.4 3.4 4.4z"/></svg>Follow Alex on Goodreads</a>
     <a class="navsocial" href="https://www.linkedin.com/in/adrost/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.95V1.73C24 .77 23.2 0 22.22 0z"/></svg>Connect with Alex on LinkedIn</a>
   </div>
@@ -949,7 +958,7 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
   <section class="view active" id="view-home">
     <div class="hero">
       <div class="kicker">Alex Drost &middot; books I&rsquo;ve read</div>
-      <h1>A shelf of <em id="heroCount">305</em> books I&rsquo;ve read.</h1>
+      <h1>A shelf of <em id="heroCount">300+</em> books I&rsquo;ve read.</h1>
       <p>Years of reading in one place &mdash; and the connections I&rsquo;ve made along the way.</p>
       <div class="synced">Last updated <b id="updDate"></b> &middot; a personal snapshot of my reading.</div>
     </div>
@@ -1765,7 +1774,7 @@ function renderYearReview(){
   observeYirCovers();
 }
 function yirCover(b){const tc=THEME_COLORS[(b.themes&&b.themes[0])||"Other"]||"#9aa0a6";
-  return `<img class="yc-cov" src="/covers/${b.id}.jpg" data-s="0" data-isbn="${b.isbn||''}" data-tc="${tc}" onerror="yirImgErr(this)">`;}
+  return `<img class="yc-cov" loading="lazy" src="/covers/${b.id}.jpg" data-s="0" data-isbn="${b.isbn||''}" data-tc="${tc}" onerror="yirImgErr(this)">`;}
 function yirImgErr(img){
   if(img.dataset.s==="0"&&img.dataset.isbn){img.dataset.s="1";img.src="https://covers.openlibrary.org/b/isbn/"+img.dataset.isbn+"-S.jpg?default=false";return;}
   const tc=img.dataset.tc||"#9aa0a6";
@@ -1847,7 +1856,7 @@ function tgImgErr(img){
   if(img.parentNode)img.parentNode.replaceChild(ph,img);
 }
 function tgCover(b){const tc=THEME_COLORS[(b.themes&&b.themes[0])||"Other"]||"#9aa0a6";
-  return `<img class="tgc" src="/covers/${b.id}.jpg" data-s="0" data-isbn="${b.isbn||''}" data-tc="${tc}" onerror="tgImgErr(this)">`;}
+  return `<img class="tgc" loading="lazy" src="/covers/${b.id}.jpg" data-s="0" data-isbn="${b.isbn||''}" data-tc="${tc}" onerror="tgImgErr(this)">`;}
 function sortThemeBooks(list){
   if(themeSort==="title")return list.slice().sort((a,b)=>a.title.localeCompare(b.title));
   if(themeSort==="pages")return list.slice().sort((a,b)=>num(b)-num(a));
@@ -2246,6 +2255,7 @@ function openModal(b){
         <h2>${esc(b.title)}</h2>
         ${STANDOUT_OF[b.id]?`<span class="standout-badge clickable" role="button" tabindex="0" title="See the ${STANDOUT_OF[b.id]} standouts" onclick="gotoYearReview('${STANDOUT_OF[b.id]}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();gotoYearReview('${STANDOUT_OF[b.id]}')}"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.06 6.6.78-4.9 4.5 1.3 6.56L12 17.9 6.1 20.9l1.3-6.56-4.9-4.5 6.6-.78z"/></svg>Standout read of ${STANDOUT_OF[b.id]} &rarr;</span>`:""}
         <p class="by">by <span class="alink" onclick="closeModal();openAuthor('${authorKey((b.author||'').split(',')[0]).replace(/'/g,"\\'")}')">${esc(b.author)}</span></p>
+        ${b.id?`<a class="glink" href="https://www.goodreads.com/book/show/${esc(b.id)}" target="_blank" rel="noopener" title="View this book on Goodreads"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M11.43 23.94c-2.16-.1-4-1.05-4.92-2.74-.36-.66-.5-1.2-.5-1.9h2.2c.07.5.18.84.42 1.2.55.83 1.5 1.28 2.85 1.3 2.2.03 3.5-1.36 3.5-3.84v-2.2c-.78 1.3-2.1 2-3.86 2-3.1 0-5.2-2.46-5.2-6.13 0-3.74 2.12-6.3 5.27-6.3 1.76 0 3.06.74 3.8 2.04V5.1h2.13v13.06c0 3.7-2.16 5.86-5.7 5.78h.01zm.32-7.97c2.1 0 3.46-1.8 3.46-4.4 0-2.62-1.37-4.43-3.45-4.43-2.13 0-3.42 1.74-3.42 4.43 0 2.7 1.3 4.4 3.4 4.4z"/></svg>View on Goodreads</a>`:""}
         <div class="mthemes">${themes}</div>
         ${b.summary?`<p class="msum">${fmtText(b.summary)}</p>`:""}
       </div>
@@ -2256,7 +2266,6 @@ function openModal(b){
       ${num(b)?`<div class="rrow"><span class="k">Pages</span><span>${num(b)}</span></div>`:""}
       ${b.dateRead?`<div class="rrow"><span class="k">Alex&rsquo;s read date</span><span>${fmtDate(b.dateRead)}</span></div>`:`<div class="rrow"><span class="k">Alex&rsquo;s read date</span><span style="color:var(--faint)">not recorded</span></div>`}
       ${(b.conn&&b.conn.length)?`<div class="msec-h">Related titles (${b.conn.length})</div><div class="mrel">${b.conn.slice(0,12).map(cid=>{const cb=BOOKS[ID2I[cid]];return cb?`<div class="yir-bk mrel-bk" onclick="openModal(BOOKS[${ID2I[cb.id]}])">${yirCover(cb)}<div class="yir-bk-meta"><div class="yc-t">${esc(cb.title.split(":")[0])}</div><div class="yc-a">${esc(cb.author)}</div></div></div>`:"";}).join("")}</div>`:""}
-      ${b.id?`<a class="glink" href="https://www.goodreads.com/book/show/${esc(b.id)}" target="_blank" rel="noopener">View on Goodreads &rarr;</a>`:""}
     </div>`;
   observeCovers($("#sheet"));$("#sheet").scrollTop=0;hideAllPops();$("#modal").classList.add("open");writeState({book:b.id});
 }
@@ -2542,7 +2551,7 @@ function initGraph(){
     const card=$("#gcard");
     if(hit>=0){const b=BOOKS[hit];
       const tc=THEME_COLORS[(b.themes&&b.themes[0])||"Other"]||"#9aa0a6";
-      const cov=`<img class="gc-cov" src="/covers/${b.id}.jpg" data-s="0" data-isbn="${b.isbn||''}" data-tc="${tc}" onerror="gcImgErr(this)">`;
+      const cov=`<img class="gc-cov" loading="lazy" src="/covers/${b.id}.jpg" data-s="0" data-isbn="${b.isbn||''}" data-tc="${tc}" onerror="gcImgErr(this)">`;
       card.innerHTML=`<div class="gc-row">${cov}<div class="gc-txt"><div class="gt">${esc(b.title.split(":")[0])}</div><div class="ga">${esc(b.author)}</div><div class="gd">${nbr[hit].size} connections \u00b7 ${esc((b.themes&&b.themes[0])||"")}</div></div></div>`;
       card.style.left=Math.min(mx+14,W()-220)+"px";card.style.top=Math.max(my-10,8)+"px";card.classList.add("show");canvas.style.cursor="pointer";}
     else {card.classList.remove("show");canvas.style.cursor="grab";}
