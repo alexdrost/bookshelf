@@ -589,7 +589,7 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .wbcol.peak .wl{color:var(--amber);font-weight:700}
 /* book-list popover */
 #listpop{position:fixed;z-index:210;background:var(--card);border:1px solid var(--line);border-radius:12px;
-  box-shadow:0 14px 40px rgba(31,37,48,.22);padding:13px 15px;max-width:300px;opacity:0;pointer-events:none;
+  box-shadow:0 14px 40px rgba(31,37,48,.22);padding:13px 15px;max-width:330px;opacity:0;pointer-events:none;
   transition:opacity .12s;transform:translateY(4px)}
 #listpop.show{opacity:1}
 #listpop .lph{font-family:"Archivo";font-weight:700;font-size:.86rem;margin-bottom:2px}
@@ -607,6 +607,14 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 #listpop .mp-dot{width:9px;height:9px;border-radius:2px;flex:none}
 #listpop .mp-t{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #listpop .mp-c{color:var(--faint);font-variant-numeric:tabular-nums}
+/* month-trend popover: book rows with covers */
+#listpop .mbk-rows{display:flex;flex-direction:column;gap:7px}
+#listpop .mbk-row{display:flex;align-items:center;gap:9px}
+#listpop .mbk-cov{width:26px;height:39px;flex:none;object-fit:cover;border-radius:3px;box-shadow:0 1px 4px rgba(31,37,48,.18)}
+#listpop .mbk-ph{width:26px;height:39px;flex:none;border-radius:3px}
+#listpop .mbk-meta{display:flex;flex-direction:column;min-width:0;line-height:1.2}
+#listpop .mbk-t{font-size:.78rem;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#listpop .mbk-a{font-size:.7rem;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* month heatmap */
 .heatgrid{display:grid;grid-template-columns:42px repeat(12,1fr);gap:5px;align-items:center}
 .heatgrid .hh{font-size:.68rem;color:var(--muted);text-align:center;font-family:"Archivo";font-weight:600}
@@ -1214,7 +1222,18 @@ footer.ft .ft-gr:hover{background:#553b08;border-color:#553b08;color:#fff}
 <script>
 
 const LAST_SYNCED="June 3, 2026";
-const LAST_UPDATED="June 2026"; // month + year of the most recent site update
+// Derived at runtime from the most recent published dateRead in books.json.
+// Falls back to the current month if BOOKS is empty or all dates are missing.
+let LAST_UPDATED="";
+function computeLastUpdated(){
+  const MNF=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const src=(typeof BOOKS!=="undefined"&&BOOKS)?BOOKS:[];
+  let best="";
+  src.forEach(b=>{const m=/^(\d{4})\/(\d{2})/.exec(b.dateRead||"");if(!m)return;const k=m[1]+"/"+m[2];if(k>best)best=k;});
+  if(!best){const n=new Date();return MNF[n.getMonth()]+" "+n.getFullYear();}
+  const [y,mo]=best.split("/");
+  return MNF[+mo-1]+" "+y;
+}
 let BOOKS = [];   // populated by bootstrap() from books.json
 let ID2I={};
 let EDGES = [];   // populated by bootstrap() from books.json
@@ -1630,9 +1649,9 @@ function renderYearStack(){
 let mtMetric="books";
 function renderMonthTrend(){
   const usePages=mtMetric==="pages";
-  const ymB={},ymP={},ymT={},ymTc={}; // ymT[k][theme]=metric value (fractional); ymTc[k][theme]=book count
+  const ymB={},ymP={},ymT={},ymTc={},ymBk={}; // ymT[k][theme]=metric value (fractional); ymTc[k][theme]=book count; ymBk[k]=book objects
   BOOKS.forEach(b=>{const m=/^(\d{4})\/(\d{2})/.exec(b.dateRead);if(!m)return;const k=m[1]+"/"+m[2];if(k<"2022/01")return;
-    ymB[k]=(ymB[k]||0)+1;ymP[k]=(ymP[k]||0)+num(b);
+    ymB[k]=(ymB[k]||0)+1;ymP[k]=(ymP[k]||0)+num(b);(ymBk[k]=ymBk[k]||[]).push(b);
     const nthemes=(b.themes&&b.themes.length)||0;ymT[k]=ymT[k]||{};ymTc[k]=ymTc[k]||{};if(nthemes){const w=(usePages?num(b):1)/nthemes;b.themes.forEach(t=>{ymT[k][t]=(ymT[k][t]||0)+w;ymTc[k][t]=(ymTc[k][t]||0)+1;});}});
   const keys=Object.keys(ymB).sort();
   if(!keys.length){$("#mtBars").innerHTML="";return;}
@@ -1664,26 +1683,40 @@ function renderMonthTrend(){
     const label=MN[+m-1]+" "+y;
     const nb=ymB[k]||0;
     const pages=Math.round(ymP[k]||0);
-    const tc=ymTc[k]||{};
-    bindMonthPop(el,label,nb,pages,tc);
+    // chronological within the month (oldest first) — reads naturally on a timeline
+    const list=(ymBk[k]||[]).slice().sort((a,b)=>(a.dateRead||"").localeCompare(b.dateRead||""));
+    bindMonthPop(el,label,nb,pages,list);
   });
 }
-function bindMonthPop(el,label,nb,pages,themeCounts){
-  el.addEventListener("mouseenter",e=>showMonthPop(e,label,nb,pages,themeCounts));
+function bindMonthPop(el,label,nb,pages,books){
+  el.addEventListener("mouseenter",e=>showMonthPop(e,label,nb,pages,books));
   el.addEventListener("mousemove",moveListPop);
   el.addEventListener("mouseleave",hideListPop);
 }
-function showMonthPop(e,label,nb,pages,themeCounts){
+function mtImgErr(img){
+  if(img.dataset.s==="0"&&img.dataset.isbn){img.dataset.s="1";img.src="https://covers.openlibrary.org/b/isbn/"+img.dataset.isbn+"-S.jpg?default=false";return;}
+  const tc=img.dataset.tc||"#9aa0a6";
+  const ph=document.createElement("div");ph.className="mbk-cov mbk-ph";ph.style.background=`linear-gradient(140deg,${tc},${shade(tc,-24)})`;
+  img.replaceWith(ph);
+}
+function showMonthPop(e,label,nb,pages,books){
   const lp=$("#listpop");
   if(nb===0){
-    lp.innerHTML=`<div class="lph">${esc(label)}</div><div class="lpsub">no books finished</div><div class="mp-rows"></div>`;
+    lp.innerHTML=`<div class="lph">${esc(label)}</div><div class="lpsub">no books finished</div><div class="mbk-rows"></div>`;
     lp.classList.add("show");moveListPop(e);return;
   }
-  const entries=THEME_ORDER.filter(t=>themeCounts[t]).map(t=>[t,themeCounts[t]]).sort((a,b)=>b[1]-a[1]);
-  const rows=entries.map(([t,c])=>`<div class="mp-row"><span class="mp-dot" style="background:${THEME_COLORS[t]||'#8a8f98'}"></span><span class="mp-t">${esc(t)}</span><span class="mp-c">${c}</span></div>`).join("");
+  const MAX=6;
+  const rows=books.slice(0,MAX).map(b=>{
+    const tc=(b.themes&&b.themes.length&&THEME_COLORS[b.themes[0]])||"#9aa0a6";
+    return `<div class="mbk-row">`+
+      `<img class="mbk-cov" loading="lazy" src="/covers/${b.id}.jpg" data-s="0" data-isbn="${b.isbn||''}" data-tc="${tc}" onerror="mtImgErr(this)">`+
+      `<span class="mbk-meta"><span class="mbk-t">${esc(b.title.split(":")[0])}</span><span class="mbk-a">${esc(b.author)}</span></span>`+
+    `</div>`;
+  }).join("");
+  const more=books.length>MAX?`<div class="lpmore">+${books.length-MAX} more</div>`:"";
   lp.innerHTML=`<div class="lph">${esc(label)}</div>`+
     `<div class="mp-tot"><span><b>${nb}</b> book${nb===1?"":"s"}</span><span><b>${pages.toLocaleString()}</b> pages</span></div>`+
-    `<div class="mp-rows">${rows}</div>`;
+    `<div class="mbk-rows">${rows}</div>${more}`;
   lp.classList.add("show");moveListPop(e);
 }
 $("#mtToggle").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;mtMetric=b.dataset.m;$$("#mtToggle button").forEach(x=>x.classList.toggle("on",x===b));renderMonthTrend();});
@@ -2609,7 +2642,7 @@ function initGraph(){
   alpha=0.9; draw(); G.raf=requestAnimationFrame(loop);
 }
 
-function _stampSync(){var _u1=document.getElementById("updDate");if(_u1)_u1.textContent=LAST_UPDATED;var _u2=document.getElementById("updFoot");if(_u2)_u2.textContent=LAST_UPDATED;}_stampSync();window.addEventListener("load",_stampSync);
+function _stampSync(){LAST_UPDATED=computeLastUpdated();var _u1=document.getElementById("updDate");if(_u1)_u1.textContent=LAST_UPDATED;var _u2=document.getElementById("updFoot");if(_u2)_u2.textContent=LAST_UPDATED;}_stampSync();window.addEventListener("load",_stampSync);
 var VIEW_RENDERED;
 var activeTheme="", yearFilter="", drill=null, asort="count", sortMode="dateRead";
 function ensureView(v){
@@ -2651,6 +2684,9 @@ async function bootstrap(){
   }
   // build the id->index map now that BOOKS exists
   ID2I={}; BOOKS.forEach((b,i)=>ID2I[b.id]=i);
+
+  // BOOKS is now populated — derive "Last updated" from the newest published dateRead
+  _stampSync();
 
   // ----- original init sequence (unchanged behavior) -----
   if(!VIEW_RENDERED)VIEW_RENDERED={};
