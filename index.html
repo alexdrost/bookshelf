@@ -328,11 +328,14 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .modal{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;background:rgba(28,32,38,.5);padding:24px;backdrop-filter:blur(2px)}
 .modal.open{display:flex}
 .modal.open .sheet{animation:sheetin .2s cubic-bezier(.2,.8,.2,1)}
-/* in-place swap when jumping to a related title from inside an open modal */
-.modal.open .sheet.swapout{animation:sheetswapout .13s ease-in forwards}
-.modal.open .sheet.swapin{animation:sheetswapin .22s cubic-bezier(.2,.8,.2,1)}
-@keyframes sheetswapout{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(-14px)}}
-@keyframes sheetswapin{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
+/* in-place swap when jumping to a related title from inside an open modal.
+   Pure opacity — no transform, no height animation, no layout work — so it stays
+   smooth on a tall scrolling sheet even on mid-range hardware. The repaint happens
+   while the sheet is fully transparent, so any size change is never seen.
+   (sheetin also animates opacity on fresh open; a running animation takes
+   precedence over a transition on the same property, so the two never fight.) */
+.sheet{transition:opacity .19s ease}
+.modal.open .sheet.swapping{animation:none;opacity:0;transition:opacity .16s ease;will-change:opacity}
 .rec-sheet{max-width:540px;padding:34px 34px 30px}
 .rec-close{position:absolute;top:16px;right:18px;background:none;border:none;font-size:1.7rem;line-height:1;color:var(--muted);cursor:pointer;padding:4px 8px;border-radius:8px}
 .rec-close:hover{background:var(--paper2);color:var(--ink)}
@@ -381,6 +384,19 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .glink:hover svg{opacity:1}
 .x{position:absolute;top:14px;right:16px;border:none;background:none;font-size:1.7rem;cursor:pointer;color:var(--faint);line-height:1}.x:hover{color:var(--ink)}
 .mcopy{position:absolute;top:14px;left:14px;border:none;background:rgba(255,255,255,.82);backdrop-filter:blur(3px);border-radius:7px;padding:5px;cursor:pointer;color:var(--muted);line-height:0;transition:.15s;z-index:3;box-shadow:0 1px 4px rgba(31,37,48,.14)}.mcopy:hover{color:var(--blue)}.mcopy.copied{color:var(--green,#2f9e6b)}.mcopy svg{width:16px;height:16px;display:block}
+/* click confirmation bubble for the copy-link button */
+.mcopy .ctoast{position:absolute;top:50%;left:calc(100% + 8px);transform:translate(-4px,-50%);
+  background:var(--ink,#1f2530);color:#fff;font-family:"Archivo";font-weight:600;font-size:.72rem;
+  line-height:1;white-space:nowrap;padding:6px 9px;border-radius:6px;pointer-events:none;
+  opacity:0;transition:opacity .16s ease,transform .16s ease;
+  box-shadow:0 4px 14px rgba(31,37,48,.22);display:flex;align-items:center;gap:5px}
+.mcopy .ctoast::before{content:"";position:absolute;right:100%;top:50%;transform:translateY(-50%);
+  border:4px solid transparent;border-right-color:var(--ink,#1f2530)}
+.mcopy.copied .ctoast{opacity:1;transform:translate(0,-50%)}
+.mcopy.copyfail{color:var(--red,#c0473f)}
+.mcopy.copyfail .ctoast{background:var(--red,#c0473f)}
+.mcopy.copyfail .ctoast::before{border-right-color:var(--red,#c0473f)}
+.mcopy .ctoast svg{width:11px;height:11px;display:block;flex:none}
 /* author popup */
 .apop-head{display:flex;align-items:center;gap:18px;margin-bottom:22px;padding-right:30px}
 .apop-head .aface{width:96px;height:96px;flex-shrink:0;margin:0}
@@ -2282,16 +2298,30 @@ $("#paceToggle").addEventListener("click",e=>{const b=e.target.closest("button")
 /* MODAL */
 function copyBookLink(id,btn){
   const url=location.origin+location.pathname+"#book="+id;
-  const done=()=>{if(!btn)return;btn.classList.add("copied");const pt=btn.getAttribute("title");btn.setAttribute("title","Copied \u2713");setTimeout(()=>{btn.classList.remove("copied");btn.setAttribute("title",pt||"Copy link to this book");},1600);};
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done).catch(()=>fallbackCopy(url,done));}
-  else{fallbackCopy(url,done);}
+  const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+  const flash=(msg,ok)=>{
+    if(!btn)return;
+    const t=btn.querySelector(".ctoast");
+    if(t)t.innerHTML=(ok?CHECK:"")+"<span>"+msg+"</span>";
+    btn.classList.add("copied");
+    btn.classList.toggle("copyfail",!ok);
+    clearTimeout(btn._ctid);
+    btn._ctid=setTimeout(()=>{btn.classList.remove("copied","copyfail");},1700);
+  };
+  const done=()=>flash("Link copied",true);
+  const fail=()=>flash("Copy failed",false);
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(done).catch(()=>fallbackCopy(url,done,fail));
+  }else{
+    fallbackCopy(url,done,fail);
+  }
 }
-function fallbackCopy(text,cb){try{const t=document.createElement("textarea");t.value=text;t.style.position="fixed";t.style.opacity="0";document.body.appendChild(t);t.select();document.execCommand("copy");document.body.removeChild(t);cb&&cb();}catch(e){}}
+function fallbackCopy(text,cb,errcb){try{const t=document.createElement("textarea");t.value=text;t.style.position="fixed";t.style.opacity="0";document.body.appendChild(t);t.select();const ok=document.execCommand("copy");document.body.removeChild(t);if(ok){cb&&cb();}else{errcb?errcb():(cb&&cb());}}catch(e){errcb&&errcb();}}
 function paintModal(b){
   const themes=b.themes.map(t=>`<span class="mtheme" onclick="gotoTheme('${t.replace(/'/g,"\\'")}');closeModal()"><span style="width:8px;height:8px;border-radius:50%;background:${THEME_COLORS[t]||'#8a8f98'};display:inline-block"></span>${esc(t)}</span>`).join("");
   $("#sheet").innerHTML=`
     <button class="x" onclick="closeModal()">&times;</button>
-    <button class="mcopy" id="mcopyBtn" aria-label="Copy a link to this book" title="Copy link to this book" onclick="copyBookLink('${esc(b.id)}',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></button>
+    <button class="mcopy" id="mcopyBtn" aria-label="Copy a link to this book" title="Copy link to this book" onclick="copyBookLink('${esc(b.id)}',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg><span class="ctoast" role="status" aria-live="polite"></span></button>
     <div class="mhead">
       <div class="mcov" data-i="${ID2I[b.id]}" data-ph="${esc(phHTML(b))}"></div>
       <div class="mintro">
@@ -2313,24 +2343,25 @@ function paintModal(b){
   observeCovers($("#sheet"));$("#sheet").scrollTop=0;hideAllPops();$("#modal").classList.add("open");writeState({book:b.id});
 }
 // Jumping to a related title while the modal is already open swaps content in place,
-// which reads as "nothing happened." Slide the old card out, the new one in, so the
-// jump is legible. Fresh opens keep the original sheetin animation.
+// which reads as "nothing happened." Crossfade so the jump is legible. Opacity only —
+// no transforms, no height animation, no forced reflows — so it stays smooth. The
+// repaint happens while the sheet is invisible, so any size change is never seen.
+// Fresh opens keep the original sheetin animation.
+let _swapping=false;
 function openModal(b){
   const m=$("#modal"),sh=$("#sheet");
   const isSwap=m&&sh&&m.classList.contains("open");
   const reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if(!isSwap||reduce){paintModal(b);return;}
+  if(_swapping)return;              // ignore rapid re-clicks mid-fade
+  _swapping=true;
   hideAllPops();
-  sh.classList.remove("swapin");
-  void sh.offsetWidth;            // restart the animation
-  sh.classList.add("swapout");
+  sh.classList.add("swapping");     // opacity -> 0 over 160ms
   setTimeout(()=>{
-    sh.classList.remove("swapout");
-    paintModal(b);
-    void sh.offsetWidth;
-    sh.classList.add("swapin");
-    setTimeout(()=>sh.classList.remove("swapin"),240);
-  },130);                          // matches sheetswapout duration
+    paintModal(b);                  // repaint while fully transparent
+    sh.classList.remove("swapping");// opacity -> 1 over 200ms
+    _swapping=false;
+  },170);
 }
 document.body.addEventListener("click",e=>{const c=e.target.closest(".book");if(c)openModal(BOOKS[+c.dataset.i]);});
 function closeModal(){const m=$("#modal");if(!m.classList.contains("open"))return;m.classList.remove("open");hideAllPops();writeState();}
