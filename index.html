@@ -328,6 +328,11 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .modal{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;background:rgba(28,32,38,.5);padding:24px;backdrop-filter:blur(2px)}
 .modal.open{display:flex}
 .modal.open .sheet{animation:sheetin .2s cubic-bezier(.2,.8,.2,1)}
+/* in-place swap when jumping to a related title from inside an open modal */
+.modal.open .sheet.swapout{animation:sheetswapout .13s ease-in forwards}
+.modal.open .sheet.swapin{animation:sheetswapin .22s cubic-bezier(.2,.8,.2,1)}
+@keyframes sheetswapout{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(-14px)}}
+@keyframes sheetswapin{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
 .rec-sheet{max-width:540px;padding:34px 34px 30px}
 .rec-close{position:absolute;top:16px;right:18px;background:none;border:none;font-size:1.7rem;line-height:1;color:var(--muted);cursor:pointer;padding:4px 8px;border-radius:8px}
 .rec-close:hover{background:var(--paper2);color:var(--ink)}
@@ -608,11 +613,14 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 #listpop .mp-t{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #listpop .mp-c{color:var(--faint);font-variant-numeric:tabular-nums}
 /* month-trend popover: book rows with covers */
+/* fixed width so the box doesn't resize as you sweep month to month —
+   long titles/authors truncate rather than stretching the card */
+#listpop.mtpop{width:310px;max-width:310px}
 #listpop .mbk-rows{display:flex;flex-direction:column;gap:7px}
-#listpop .mbk-row{display:flex;align-items:center;gap:9px}
+#listpop .mbk-row{display:flex;align-items:center;gap:9px;min-width:0}
 #listpop .mbk-cov{width:26px;height:39px;flex:none;object-fit:cover;border-radius:3px;box-shadow:0 1px 4px rgba(31,37,48,.18)}
 #listpop .mbk-ph{width:26px;height:39px;flex:none;border-radius:3px}
-#listpop .mbk-meta{display:flex;flex-direction:column;min-width:0;line-height:1.2}
+#listpop .mbk-meta{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.2}
 #listpop .mbk-t{font-size:.78rem;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #listpop .mbk-a{font-size:.7rem;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* month heatmap */
@@ -1579,6 +1587,7 @@ function tipHide(){TIP.classList.remove("show");}
 function fmtDate(d){if(!d)return "\u2014";const m=/^(\d{4})\/(\d{2})/.exec(d);if(!m)return d;const MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];return MN[+m[2]-1]+" "+m[1];}
 function showListPop(e,title,sub,books){
   const lp=$("#listpop");
+  lp.classList.remove("mtpop"); // month-trend fixed width is opt-in; other popovers auto-size
   const MAXROWS=8;
   const rows=books.slice(0,MAXROWS).map(b=>`<div class="lprow"><span class="lt">${esc(b.title.split(":")[0])}</span><span class="ld">${fmtDate(b.dateRead)}</span></div>`).join("");
   const more=books.length>MAXROWS?`<div class="lpmore">+${books.length-MAXROWS} more</div>`:"";
@@ -1701,6 +1710,7 @@ function mtImgErr(img){
 }
 function showMonthPop(e,label,nb,pages,books){
   const lp=$("#listpop");
+  lp.classList.add("mtpop"); // fixed-width mode: no resize as you sweep across months
   if(nb===0){
     lp.innerHTML=`<div class="lph">${esc(label)}</div><div class="lpsub">no books finished</div><div class="mbk-rows"></div>`;
     lp.classList.add("show");moveListPop(e);return;
@@ -2277,7 +2287,7 @@ function copyBookLink(id,btn){
   else{fallbackCopy(url,done);}
 }
 function fallbackCopy(text,cb){try{const t=document.createElement("textarea");t.value=text;t.style.position="fixed";t.style.opacity="0";document.body.appendChild(t);t.select();document.execCommand("copy");document.body.removeChild(t);cb&&cb();}catch(e){}}
-function openModal(b){
+function paintModal(b){
   const themes=b.themes.map(t=>`<span class="mtheme" onclick="gotoTheme('${t.replace(/'/g,"\\'")}');closeModal()"><span style="width:8px;height:8px;border-radius:50%;background:${THEME_COLORS[t]||'#8a8f98'};display:inline-block"></span>${esc(t)}</span>`).join("");
   $("#sheet").innerHTML=`
     <button class="x" onclick="closeModal()">&times;</button>
@@ -2301,6 +2311,26 @@ function openModal(b){
       ${(b.conn&&b.conn.length)?`<div class="msec-h">Related titles (${b.conn.length})</div><div class="mrel">${b.conn.slice(0,12).map(cid=>{const cb=BOOKS[ID2I[cid]];return cb?`<div class="yir-bk mrel-bk" onclick="openModal(BOOKS[${ID2I[cb.id]}])">${yirCover(cb)}<div class="yir-bk-meta"><div class="yc-t">${esc(cb.title.split(":")[0])}</div><div class="yc-a">${esc(cb.author)}</div></div></div>`:"";}).join("")}</div>`:""}
     </div>`;
   observeCovers($("#sheet"));$("#sheet").scrollTop=0;hideAllPops();$("#modal").classList.add("open");writeState({book:b.id});
+}
+// Jumping to a related title while the modal is already open swaps content in place,
+// which reads as "nothing happened." Slide the old card out, the new one in, so the
+// jump is legible. Fresh opens keep the original sheetin animation.
+function openModal(b){
+  const m=$("#modal"),sh=$("#sheet");
+  const isSwap=m&&sh&&m.classList.contains("open");
+  const reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(!isSwap||reduce){paintModal(b);return;}
+  hideAllPops();
+  sh.classList.remove("swapin");
+  void sh.offsetWidth;            // restart the animation
+  sh.classList.add("swapout");
+  setTimeout(()=>{
+    sh.classList.remove("swapout");
+    paintModal(b);
+    void sh.offsetWidth;
+    sh.classList.add("swapin");
+    setTimeout(()=>sh.classList.remove("swapin"),240);
+  },130);                          // matches sheetswapout duration
 }
 document.body.addEventListener("click",e=>{const c=e.target.closest(".book");if(c)openModal(BOOKS[+c.dataset.i]);});
 function closeModal(){const m=$("#modal");if(!m.classList.contains("open"))return;m.classList.remove("open");hideAllPops();writeState();}
