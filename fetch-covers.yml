@@ -1,10 +1,10 @@
 name: Fetch Book Covers
 
 on:
-  workflow_dispatch:  # lets you run it manually from the Actions tab
+  workflow_dispatch:
 
 permissions:
-  contents: write   # allows the workflow to commit files back to the repo
+  contents: write
 
 jobs:
   fetch-covers:
@@ -18,13 +18,19 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Download covers
+      - name: Pass 1 — ISBN lookup
         run: python3 fetch_covers.py
+
+      - name: Pass 2 — title/author search
+        run: python3 fetch_missing_covers.py
+
+      - name: Pass 3 — hardcoded cover IDs
+        run: python3 fetch_hardcoded_covers.py
 
       - name: Commit covers to repo
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add covers/ missing.csv
-          git diff --staged --quiet || git commit -m "Add book cover images"
+          git add -A covers/ missing.csv 2>/dev/null || git add -A covers/
+          git diff --staged --quiet || git commit -m "chore: fetch book covers"
           git push
