@@ -1,0 +1,55 @@
+# Cloudflare Pages reads this file from the root of the deployed directory.
+# Indentation is significant: two spaces under each path pattern.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+
+# NOTE ON PRECEDENCE: Cloudflare Pages MERGES every matching rule and joins duplicate header
+# names with a comma. It does not let a more specific path override a broader one. So
+# Cache-Control must appear on exactly one matching rule per path — never on /* as well.
+#
+# HTML is deliberately absent below: Pages already serves it as
+# `public, max-age=0, must-revalidate`, and directory URLs (/library/, /book/x/) cannot be
+# matched by a *.html pattern anyway, so an explicit rule would cover 404.html and nothing else.
+
+# books.json changes whenever a book is added or edited. Five minutes keeps the client-side
+# library, search and graph current while still absorbing repeat visits.
+/books.json
+  Cache-Control: public, max-age=300, must-revalidate
+
+/data/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+# Covers rarely change, but they are replaceable — 30 days rather than immutable, so a bad
+# cover can be swapped without cache-busting the filename.
+/covers/*
+  Cache-Control: public, max-age=2592000
+
+/share.png
+  Cache-Control: public, max-age=2592000
+
+/assets/img/*
+  Cache-Control: public, max-age=2592000
+
+# Fonts are self-hosted and content-stable. A year, and immutable, because the filenames
+# carry the weight and style.
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+# CSS and JS have no content hash in their names, so they cannot be immutable — a deploy
+# must be able to change them. One day plus revalidation is the honest setting.
+/styles/*
+  Cache-Control: public, max-age=86400, must-revalidate
+
+/assets/js/*
+  Cache-Control: public, max-age=86400, must-revalidate
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600
+
+/robots.txt
+  Cache-Control: public, max-age=3600

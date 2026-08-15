@@ -284,6 +284,26 @@ const PERSON_ABOUT = {
   hasCredential: [{ '@type': 'EducationalOccupationalCredential', credentialCategory: 'license', name: 'Certified Public Accountant (CPA)', recognizedBy: { '@type': 'Organization', name: 'State of Michigan' } }],
   alumniOf: [{ '@type': 'CollegeOrUniversity', name: 'Northwood University' }, { '@type': 'CollegeOrUniversity', name: 'Walsh College' }],
 };
+/**
+ * WebSite node, emitted alongside Person as a two-node @graph on every page.
+ * `author`/`publisher` reference the Person by @id rather than repeating it — that shared
+ * identifier is what resolves this site and the rest of the portfolio to one entity.
+ * No SearchAction: Google deprecated the sitelinks searchbox.
+ */
+const WEBSITE = {
+  '@type': 'WebSite', '@id': `${ORIGIN}/#website`, url: `${ORIGIN}/`,
+  name: 'Alex Drost\u2019s Bookshelf',
+  description: 'A personal library of annotated books, themed and mapped by the threads that run between them.',
+  inLanguage: 'en-US',
+  author: { '@id': `${ORIGIN}/#alexdrost` },
+  publisher: { '@id': `${ORIGIN}/#alexdrost` },
+};
+/** Person + WebSite as one graph. The Person keeps its own @context at the graph level. */
+const identityGraph = (person) => {
+  const { '@context': _ctx, ...node } = person;
+  return { '@context': 'https://schema.org', '@graph': [node, WEBSITE] };
+};
+
 const J = (o) => JSON.stringify(o, null, 2);
 
 function breadcrumb(trail) {
@@ -353,7 +373,7 @@ function emit(routePath, templateName, ctx, { indexable = true, priority = 0.5 }
   const page = ctx.page;
   page.breadcrumbJson = breadcrumb(page.trail || [{ name: 'Bookshelf', path: '/' }, { name: page.crumb, path: page.path }]);
   const html = GENERATED(templateName) + env.render(templateName, {
-    site, nav: NAV, personJson: J(page.person || PERSON), ...ctx,
+    site, nav: NAV, personJson: J(identityGraph(page.person || PERSON)), ...ctx,
   });
   const rel = routePath === '/' ? 'index.html' : `${routePath.replace(/^\//, '')}/index.html`;
   const abs = path.join(DIST, rel);
@@ -546,6 +566,9 @@ for (const b of orderedRead) {
   const yearLink = b.yearRead && yearsPresent.includes(b.yearRead) ? `/${b.yearRead}` : null;
   const page = {
     path: b.href, crumb: b.shortTitle, noindex,
+    // These are articles about a book, not the site itself. og:type frames how LinkedIn and
+    // Slack render the preview; "website" on 321 subpages is simply the wrong assertion.
+    ogType: 'article',
     title: `${b.shortTitle} by ${b.author} — Summary & Key Ideas | Alex Drost’s Bookshelf`,
     description: describe(b.teaser || `${b.title} by ${b.author}.`),
     h1Plain: b.title,
@@ -559,7 +582,7 @@ for (const b of orderedRead) {
 {
   const page = { path: '/404', crumb: 'Not found', noindex: true, title: 'Page not found — Alex Drost’s Bookshelf', description: 'That page is not on the shelf. Browse the library, the standout reads, or the connection map instead.', h1Plain: 'Not found' };
   page.breadcrumbJson = breadcrumb([{ name: 'Bookshelf', path: '/' }]);
-  fs.writeFileSync(path.join(DIST, '404.html'), GENERATED('404.njk') + env.render('404.njk', { site, nav: NAV, page, personJson: J(PERSON) }));
+  fs.writeFileSync(path.join(DIST, '404.html'), GENERATED('404.njk') + env.render('404.njk', { site, nav: NAV, page, personJson: J(identityGraph(PERSON)) }));
 }
 
 // ---------------------------------------------------------------- assets
@@ -601,7 +624,8 @@ fs.writeFileSync(path.join(DIST, 'data/slugs.json'), JSON.stringify(Object.fromE
 // empty object the moment the Worker is fixed, and app.js then applies nothing.
 fs.writeFileSync(path.join(DIST, 'data/titles.json'),
   JSON.stringify(Object.fromEntries(books.filter((b) => !String(data.books.find((x) => x.id === b.id).title || '').trim()).map((b) => [b.id, b.title]))));
-for (const extra of ['share.png']) { const p = path.join(SRC, extra); if (exists(p)) fs.copyFileSync(p, path.join(DIST, extra)); }
+// _headers is read by Cloudflare Pages from the deploy root — caching and security headers.
+for (const extra of ['share.png', '_headers']) { const p = path.join(SRC, extra); if (exists(p)) fs.copyFileSync(p, path.join(DIST, extra)); }
 
 // ---------------------------------------------------------------- robots + sitemap
 fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`);

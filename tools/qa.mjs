@@ -145,6 +145,7 @@ notes.push(`${uniquePairs(cmap).size} unique undirected pairs rendered`);
 
 // ---------------------------------------------------------------- SCHEMA
 const personIds = new Set();
+const websiteIds = new Set();
 let jsonBlocks = 0;
 for (const p of pages) {
   const blocks = [...p.html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
@@ -153,18 +154,28 @@ for (const p of pages) {
     jsonBlocks++;
     let parsed = null;
     try { parsed = JSON.parse(body); } catch (e) { fails.push(`${p.file}: JSON-LD does not parse — ${e.message}`); continue; }
-    if (parsed['@type'] === 'Person') {
-      personIds.add(parsed['@id']);
-      if ('email' in parsed || 'telephone' in parsed) fails.push(`${p.file}: Person carries email/telephone`);
-      if (parsed.sameAs.length !== 8) fails.push(`${p.file}: sameAs has ${parsed.sameAs.length} nodes, expected 8`);
-    }
-    if (parsed['@type'] === 'Book' && 'numberOfPages' in parsed) {
-      if (!parsed.numberOfPages) fails.push(`${p.file}: numberOfPages is zero`);
+    // Person and WebSite ship as a two-node @graph, so walk the graph as well as the root.
+    for (const node of (parsed['@graph'] ?? [parsed])) {
+      if (node['@type'] === 'Person') {
+        personIds.add(node['@id']);
+        if ('email' in node || 'telephone' in node) fails.push(`${p.file}: Person carries email/telephone`);
+        if (node.sameAs.length !== 8) fails.push(`${p.file}: sameAs has ${node.sameAs.length} nodes, expected 8`);
+      }
+      if (node['@type'] === 'WebSite') {
+        websiteIds.add(node['@id']);
+        // The whole point of the graph is that WebSite points at Person by @id.
+        if (node.author?.['@id'] !== `${ORIGIN}/#alexdrost`) fails.push(`${p.file}: WebSite.author does not reference the Person @id`);
+        if (node.publisher?.['@id'] !== `${ORIGIN}/#alexdrost`) fails.push(`${p.file}: WebSite.publisher does not reference the Person @id`);
+      }
+      if (node['@type'] === 'Book' && 'numberOfPages' in node) {
+        if (!node.numberOfPages) fails.push(`${p.file}: numberOfPages is zero`);
+      }
     }
   }
 }
 passes.push(`all ${jsonBlocks} JSON-LD blocks parse`);
 check(personIds.size === 1 && personIds.has(`${ORIGIN}/#alexdrost`), `Person @id identical across all ${pages.length} pages`, [...personIds].join(', '));
+check(websiteIds.size === 1 && websiteIds.has(`${ORIGIN}/#website`), `WebSite @id identical across all ${pages.length} pages`, [...websiteIds].join(', '));
 for (const token of ['aggregateRating', 'ratingValue', '"Review"', 'reviewRating', 'SearchAction']) {
   const bad = pages.filter((p) => p.html.includes(token));
   check(bad.length === 0, `no ${token} anywhere`, bad.slice(0, 3).map((b) => b.file).join(', '));
