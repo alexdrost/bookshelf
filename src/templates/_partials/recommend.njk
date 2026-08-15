@@ -1,4 +1,5 @@
-{# SESSION 2 Step 7 — retained unchanged, including the Formspree endpoint. #}
+{# Formspree endpoint lives in app.js (REC_ENDPOINT). Two modes share this one form:
+   openRec() for a book recommendation, openRec("contact") for a general message. #}
 <div class="modal" id="recModal">
   <div class="sheet rec-sheet" role="dialog" aria-modal="true" aria-labelledby="recTitle">
     <button class="rec-close" aria-label="Close" onclick="closeRec()">&times;</button>
@@ -12,10 +13,10 @@
         <label class="rec-field"><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
       </div>
       <div class="rec-grid">
-        <label class="rec-field"><span>Book title</span><input type="text" name="book_title" required></label>
+        <label class="rec-field" data-f="book_title"><span>Book title</span><input type="text" name="book_title" required></label>
         <label class="rec-field"><span>Author</span><input type="text" name="author"></label>
       </div>
-      <label class="rec-field"><span>Why this one? <em>(optional)</em></span><textarea name="comments" rows="3"></textarea></label>
+      <label class="rec-field" data-f="comments"><span>Why this one? <em>(optional)</em></span><textarea name="comments" rows="3"></textarea></label>
       <div class="rec-foot">
         <span class="rec-status" id="recStatus" role="status" aria-live="polite"></span>
         <button type="submit" class="rec-submit" id="recSubmit">Send recommendation</button>

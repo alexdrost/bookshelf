@@ -1,11 +1,28 @@
 {% extends "_layout.njk" %}
 {% block content %}
+    {# The one page that stays a narrow column: it is a person and an essay, and prose
+       reads better at ~70 characters than spread across the full width. #}
     <div class="page-head">
       <div class="kicker">{{ copy.kicker }}</div>
       <h1>{{ copy.h1 | safe }}</h1>
       <p class="standfirst">{{ copy.standfirst | safe }}</p>
     </div>
+    {% if copy.portrait %}
+    <figure class="portrait">
+      <img src="{{ copy.portrait }}" width="280" height="280" alt="Alex Drost" loading="eager" fetchpriority="high">
+    </figure>
+    {% endif %}
     <div class="prose">
 {{ copy.html | safe }}
     </div>
+
+    <section class="pagesec">
+      <div class="ctabox">
+        <div class="ctabox-body">
+          <h2>Get in touch</h2>
+          <p>A book worth adding, a correction, or a question about how any of this works &mdash; all welcome.</p>
+        </div>
+        <button class="ctabtn" type="button" onclick="openRec('contact')">Send a message</button>
+      </div>
+    </section>
 {% endblock %}

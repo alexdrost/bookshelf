@@ -357,3 +357,66 @@ function initConnections() {
 if (document.getElementById('graphCanvas') || document.getElementById('egoPanel')) {
   window.addEventListener('load', initConnections);
 }
+
+/* ============================================================================
+   SESSION 4 — the theme matrix becomes interactive.
+   Server-rendered numbers stay exactly as they are; this only adds a panel that
+   lists the actual book pairs behind a cell. With JS off the table still reads.
+   ========================================================================== */
+(function () {
+  const table = document.querySelector('.matrix');
+  const panel = document.getElementById('mxDetail');
+  if (!table || !panel) return;
+  const titleEl = document.getElementById('mxdTitle');
+  const listEl = document.getElementById('mxdList');
+  const closeEl = document.getElementById('mxdClose');
+
+  const linkFor = (b) => {
+    const slug = (typeof SLUGS !== 'undefined' && SLUGS) ? SLUGS[b.id] : null;
+    const name = b.shortTitle || String(b.title || '').split(':')[0];
+    return slug ? `<a href="/book/${slug}">${esc(name)}</a>` : esc(name);
+  };
+
+  function pairsFor(a, b) {
+    if (typeof BOOKS === 'undefined' || !BOOKS.length) return [];
+    const byId = new Map(BOOKS.map((x) => [x.id, x]));
+    const seen = new Set(), out = [];
+    for (const x of BOOKS) {
+      if (x.shelf !== 'read' || !(x.themes || []).includes(a)) continue;
+      for (const cid of (x.conn || [])) {
+        const y = byId.get(cid);
+        if (!y || y.shelf !== 'read' || !(y.themes || []).includes(b)) continue;
+        const key = [x.id, y.id].sort().join('|');
+        if (seen.has(key)) continue;
+        seen.add(key);
+        out.push([x, y]);
+      }
+    }
+    return out;
+  }
+
+  function open(td) {
+    const a = td.dataset.a, b = td.dataset.b;
+    const found = pairsFor(a, b).concat(a === b ? [] : pairsFor(b, a))
+      .filter((p, i, all) => all.findIndex((q) => [q[0].id, q[1].id].sort().join() === [p[0].id, p[1].id].sort().join()) === i);
+    table.querySelectorAll('td.sel').forEach((e) => e.classList.remove('sel'));
+    td.classList.add('sel');
+    titleEl.textContent = `${a} ↔ ${b} — ${td.dataset.n} links`;
+    listEl.innerHTML = found.length
+      ? found.slice(0, 60).map(([x, y]) => `<div class="mxd-pair">${linkFor(x)}<span class="x">↔</span>${linkFor(y)}</div>`).join('')
+      : '<div class="mxd-pair">Links counted across theme overlap; the individual pairs are on the book pages.</div>';
+    panel.hidden = false;
+    panel.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  table.addEventListener('click', (e) => { const td = e.target.closest('td.hot'); if (td) open(td); });
+  table.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const td = e.target.closest('td.hot');
+    if (td) { e.preventDefault(); open(td); }
+  });
+  closeEl.addEventListener('click', () => {
+    panel.hidden = true;
+    table.querySelectorAll('td.sel').forEach((e) => e.classList.remove('sel'));
+  });
+})();

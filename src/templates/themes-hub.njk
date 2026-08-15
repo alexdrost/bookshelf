@@ -1,20 +1,30 @@
 {% extends "_layout.njk" %}
 {% block content %}
-    <div class="page-head">
+    <div class="page-head wide">
       <div class="kicker">Themes</div>
       <h1>What the library is about</h1>
       <p class="standfirst">{{ site.themeCount }} themes drawn from the enrichment notes. Most books sit under one or two, so the counts add up to more than {{ site.readCount }}.</p>
     </div>
-    {# Editorial order from themes.json — deliberately NOT by count. #}
+    {# Editorial order from themes.json — deliberately NOT by count. Two cards across;
+       the six covers are a fresh biased-random draw on every build. #}
     <div class="pagesec">
-      {% for t in themeIndex %}
-      <a class="themerow" href="/themes/{{ t.slug }}">
-        <span class="themerow-head">
-          <span class="themerow-name">{{ t.name }}</span>
-          <span class="themerow-count">{{ t.books.length }} books</span>
-        </span>
-        <span class="themerow-intro">{{ t.intro }}</span>
-      </a>
-      {% endfor %}
+      <div class="themegrid">
+        {% for t in themeIndex %}
+        <a class="themecard" href="/themes/{{ t.slug }}">
+          <span class="tc-bar" style="background:{{ t.color }}"></span>
+          {% if t.tiles.length %}
+          <span class="tc-tiles">
+            {% for b in t.tiles %}<span class="tc-tile"><img src="/covers/{{ b.id }}.jpg" width="88" height="132" alt="" loading="lazy"></span>{% endfor %}
+          </span>
+          {% endif %}
+          <span class="tc-head">
+            <span class="tc-name">{{ t.name }}</span>
+            <span class="tc-count">{{ t.books.length }}</span>
+          </span>
+          <span class="tc-intro">{{ t.intro }}</span>
+          <span class="tc-go">Browse {{ t.books.length }} books &rarr;</span>
+        </a>
+        {% endfor %}
+      </div>
     </div>
 {% endblock %}

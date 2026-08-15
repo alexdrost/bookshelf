@@ -1,24 +1,54 @@
 {% extends "_layout.njk" %}
 {% block content %}
-    <div class="page-head">
+    <div class="page-head wide">
       <div class="kicker">{{ copy.kicker }}</div>
       <h1>{{ copy.h1 | safe }}</h1>
       <p class="standfirst">{{ copy.standfirst | safe }}</p>
     </div>
-    <div class="prose">
+    <div class="prose wide">
 {{ copy.html | safe }}
     </div>
 
-    {# One list, one source: every public book whose Shelf is `currently-reading`.
-       No derived buckets — Notion has no property that could ever fill them. #}
+    {# READING — two across, large covers. These are books with something to say already,
+       so they get room; the shelf is small by definition. #}
     <section class="pagesec">
-      <div class="section-head"><h2>On the desk right now</h2><span class="sub">{{ currentlyReading.length }}</span></div>
+      <div class="section-head"><h2>Currently reading</h2><span class="sub">{{ currentlyReading.length }}</span></div>
       {% if currentlyReading.length %}
-        <div class="cardlist">
-          {% for book in currentlyReading %}{% set teaser = book.teaser %}{% include "_partials/book-card.njk" %}{% endfor %}
+        <div class="nowlist">
+          {% for book in currentlyReading %}
+          <div class="nowcard">
+            <div class="now-cov">{% if book.hasCover %}<img src="/covers/{{ book.id }}.jpg" width="200" height="300" alt="{{ book.title }} by {{ book.author }}" loading="eager">{% else %}<span class="now-ph">{{ book.shortTitle }}</span>{% endif %}</div>
+            <div class="now-body">
+              <h3 class="now-t">{{ book.shortTitle }}</h3>
+              <div class="now-a">{{ book.author }}</div>
+              {% if book.themes.length %}<div class="now-themes">{% for t in book.themes | take(2) %}<span>{{ t }}</span>{% endfor %}</div>{% endif %}
+              {% if book.teaser %}<p class="now-note">{{ book.teaser }}</p>{% endif %}
+              <div class="now-meta">{% if book.yearPub %}{{ book.yearPub }}{% endif %}{% if book.pagesNum %} &middot; {{ book.pagesNum | num }} pages{% endif %}</div>
+            </div>
+          </div>
+          {% endfor %}
         </div>
       {% else %}
         <p class="emptynote">Nothing open at the moment &mdash; everything finished is in <a href="/library">the library</a>.</p>
       {% endif %}
     </section>
+
+    {# TBR — no page to click through to, so these deliberately do not look clickable:
+       no link, no colour change on the title, just the card lifting its border. #}
+    {% if tbr.length %}
+    <section class="pagesec">
+      <div class="section-head"><h2>On deck</h2><span class="sub">{{ tbr.length }} on the to-be-read shelf</span></div>
+      <p class="pagesec-intro">Bought, borrowed or queued. No summary yet &mdash; that gets written when a book lands.</p>
+      <div class="tbrgrid">
+        {% for book in tbr %}
+        <div class="tbrcard">
+          <div class="tbr-cov">{% if book.hasCover %}<img src="/covers/{{ book.id }}.jpg" width="132" height="198" alt="{{ book.title }} by {{ book.author }}" loading="lazy">{% else %}<span class="tbr-ph">{{ book.shortTitle }}</span>{% endif %}</div>
+          <div class="tbr-t">{{ book.shortTitle }}</div>
+          <div class="tbr-a">{{ book.author }}</div>
+          {% if book.yearPub %}<div class="tbr-y">{{ book.yearPub }}</div>{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
 {% endblock %}

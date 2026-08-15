@@ -35,14 +35,17 @@
         {% if book.pagesNum %}<div class="rrow"><span class="k">Pages</span><span>{{ book.pagesNum }}</span></div>{% endif %}
         {% if book.isbn %}<div class="rrow"><span class="k">ISBN</span><span>{{ book.isbn }}</span></div>{% endif %}
         <div class="rrow"><span class="k">Read</span><span>{% if book.dateRead %}{% if yearLink %}<a href="{{ yearLink }}">{{ book.dateRead | date }}</a>{% else %}{{ book.dateRead | date }}{% endif %}{% else %}<span style="color:var(--faint)">not recorded</span>{% endif %}</span></div>
-        {% if book.tags %}<div class="mtags">{{ book.tags }}</div>{% endif %}
       </div>
     </article>
 
     {# Step 2 — the connections module. Prominent, not buried: this is the reason
        {{ site.readCount }} book pages read as a library rather than as filler. #}
     <section class="pagesec" id="connections">
-      <div class="section-head"><h2>Connected to {{ connections.length }} other books</h2><span class="sub">shared themes first</span></div>
+      <div class="section-head has-action">
+        <h2>Connected to {{ connections.length }} other books</h2>
+        {# Hash fragment, not a query parameter — creates no new indexable URL. #}
+        {% if connections.length %}<a class="mapbtn" href="/connections#book={{ book.id }}">See the connection map <span aria-hidden="true">&rarr;</span></a>{% endif %}
+      </div>
       {% if connections.length %}
       <div class="cardlist">
         {% for c in connections %}
@@ -54,17 +57,15 @@
           <span class="pc-body">
             <span class="pc-t">{{ c.book.shortTitle }}</span>
             <span class="pc-a">{{ c.book.author }}</span>
-            <span class="pc-note">{% if c.shared.length %}Shares {{ c.shared | join(" &middot; ") | safe }}{% else %}A cross-theme link{% endif %}</span>
+            {% if c.book.dateRead %}<span class="pc-when">Read {{ c.book.dateRead | date }}</span>{% endif %}
+            {% if c.book.teaser %}<span class="pc-note">{{ c.book.teaser }}</span>{% endif %}
           </span>
         </a>
         {% endfor %}
       </div>
-      {# Hash fragment, not a query parameter — this creates no new indexable URL. #}
-      <p class="pagesec-intro" style="margin-top:18px"><a href="/connections#book={{ book.id }}">See {{ book.shortTitle }} in the connection map &rarr;</a></p>
       {% else %}
       <p class="emptynote">No connections recorded for this one yet.</p>
       {% endif %}
     </section>
 
-    <p class="pagesec-intro" style="margin-top:30px"><a href="/library">Back to the library</a>{% if yearLink %} &middot; <a href="{{ yearLink }}">everything from {{ book.yearRead }}</a>{% endif %}</p>
 {% endblock %}

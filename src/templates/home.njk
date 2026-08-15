@@ -1,9 +1,9 @@
 {% extends "_layout.njk" %}
 {% block content %}
-    <div class="hero">
-      <div class="kicker">Alex Drost &middot; books I&rsquo;ve read</div>
-      <h1>Alex Drost&rsquo;s bookshelf &mdash; <em>{{ site.publicCount }}</em> books, annotated and connected.</h1>
-      <p>Years of reading in one place &mdash; and {{ site.uniqueConnections | num }} hand-made connections between the books.</p>
+    {# The heading was saying what the stat bar shows better. h1 kept for SEO and
+       screen readers, visually hidden — a page still needs exactly one. #}
+    <div class="hero bare">
+      <h1 class="visually-hidden">Alex Drost&rsquo;s bookshelf &mdash; {{ site.publicCount }} books, annotated and connected</h1>
       <div class="lead-stats">
         <a class="s" href="/library" style="text-decoration:none"><span class="n">{{ site.readCount }}</span><span class="l">Books read</span></a>
         <a class="s" href="/connections" style="text-decoration:none"><span class="n">{{ site.uniqueConnections | num }}</span><span class="l">Connections</span></a>
@@ -26,14 +26,15 @@
         <div class="ft-author">{{ featuredBook.author }}{% if featuredBook.dateRead %} &middot; completed {{ featuredBook.dateRead | date }}{% endif %}</div>
         {# Guardrail 5: the full summary and core ideas live on exactly one URL.
            The feature block keeps its visual treatment but teases rather than republishes. #}
-        {% if featuredBook.teaser %}<p class="ft-sum">{{ featuredBook.teaser }}</p>{% endif %}
+        {% if featuredBook.summary %}<p class="ft-sum">{{ featuredBook.leadIn | safe }}</p>{% endif %}
+        {% if featuredBook.core and featuredBook.core.length %}<p class="ft-core"><span class="ft-corek">Core idea</span> {{ featuredBook.coreLead | safe }}</p>{% endif %}
         <a class="ft-open" href="{{ featuredBook.href }}">Read more about it &rarr;</a>
       </div>
     </div>
 
     {% if picks.length %}
     <div class="feat-panel">
-      <div class="section-head"><h2>Standout reads</h2><a class="more" href="/picks">All picks &rarr;</a></div>
+      <div class="section-head"><h2>Standout reads</h2><a class="more" href="/recommendations">All recommendations &rarr;</a></div>
       <div class="cardlist">
         {% for book in picks %}{% include "_partials/book-card.njk" %}{% endfor %}
       </div>

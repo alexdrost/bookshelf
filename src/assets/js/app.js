@@ -239,7 +239,30 @@ document.addEventListener("keydown",e=>{
 
 /* ===== Recommend-a-book form (Formspree) ===== */
 const REC_ENDPOINT="https://formspree.io/f/mbderepk";
-function openRec(){const m=$("#recModal");if(!m)return;m.classList.add("open");setTimeout(()=>{const f=m.querySelector("input[name=name]");if(f)f.focus();},60);}
+/* One form, one Formspree endpoint, two framings. "contact" drops the book fields to
+   optional and retitles — a general message and a book recommendation are the same
+   envelope, and a second endpoint would be a second thing to keep working. */
+const REC_MODES={
+  recommend:{title:"Recommend a book",sub:"Read something I\u2019d love? Send it my way \u2014 I\u2019m always adding to the stack.",
+    label:"Book title",send:"Send recommendation",why:"Why this one? <em>(optional)</em>",requireBook:true},
+  contact:{title:"Get in touch",sub:"A question, a correction, or just something worth reading \u2014 it all lands in the same inbox.",
+    label:"Book title <em>(optional)</em>",send:"Send message",why:"Your message",requireBook:false},
+};
+let REC_MODE="recommend";
+function openRec(mode){
+  const m=$("#recModal");if(!m)return;
+  const cfg=REC_MODES[mode]||REC_MODES.recommend;REC_MODE=(mode in REC_MODES)?mode:"recommend";
+  const t=$("#recTitle"),sub=m.querySelector(".rec-sub"),btn=$("#recSubmit"),
+        bookLab=m.querySelector('label[data-f="book_title"] span'),
+        whyLab=m.querySelector('label[data-f="comments"] span');
+  if(t)t.textContent=cfg.title;
+  if(sub)sub.innerHTML=cfg.sub;
+  if(btn)btn.textContent=cfg.send;
+  if(bookLab)bookLab.innerHTML=cfg.label;
+  if(whyLab)whyLab.innerHTML=cfg.why;
+  m.classList.add("open");
+  setTimeout(()=>{const f=m.querySelector("input[name=name]");if(f)f.focus();},60);
+}
 function closeRec(){const m=$("#recModal");if(m)m.classList.remove("open");}
 (function(){
   const modal=$("#recModal");if(!modal)return;
@@ -252,7 +275,7 @@ function closeRec(){const m=$("#recModal");if(m)m.classList.remove("open");}
     statusEl.className="rec-status";statusEl.textContent="";
     // validation
     let firstBad=null;
-    ["name","email","book_title"].forEach(n=>{
+    (REC_MODE==="contact"?["name","email"]:["name","email","book_title"]).forEach(n=>{
       const inp=form.elements[n],fld=inp.closest(".rec-field");
       let bad=!inp.value.trim();
       if(n==="email"&&inp.value.trim()&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inp.value.trim()))bad=true;

@@ -149,10 +149,15 @@ const v = validate({ books, themes: themesCfg, ledger });
 const byId = new Map(books.map((b) => [b.id, b]));
 const publicBooks = books.filter((b) => b.public);
 const readBooks = publicBooks.filter((b) => b.shelf === 'read');
-// /up-next is exactly one thing: every public book on the currently-reading shelf.
-// Notion's Shelf property only offers `read` and `currently-reading`, so inventing
-// "set aside" and "next up" buckets gave the page two sections that could never fill.
-const currentlyReading = publicBooks.filter((b) => b.shelf === 'currently-reading')
+// Shelf drives everything on /up-next. Notion's select now has three values, and the
+// `currently-reading` -> `reading` rename is accepted either way so a sync during the
+// rename can never produce an empty page.
+const isReading = (b) => b.shelf === 'reading' || b.shelf === 'currently-reading';
+const isTBR = (b) => String(b.shelf || '').toLowerCase() === 'tbr';
+const currentlyReading = publicBooks.filter(isReading)
+  .sort((a, b) => a.title.localeCompare(b.title, 'en'));
+// To-be-read: no page, no connections, no summary — a cover, a title and a year.
+const tbr = publicBooks.filter(isTBR)
   .sort((a, b) => a.title.localeCompare(b.title, 'en'));
 
 // Canonical catalog order: dateRead desc, undated last, Goodreads ID as tiebreaker.
@@ -169,13 +174,27 @@ const orderedRead = readBooks.slice().sort(catalogDesc);
 const cmap = connectionMap(books);
 const pairs = uniquePairs(cmap);
 const themeNames = themesCfg.map((t) => t.source);
-const matrix = themeMatrix(books, cmap, themeNames);
+// Themes shown on the /connections matrix. Theology & Faith connects to almost nothing,
+// so it contributed an empty row and column and made the whole grid read as broken.
+// It still has a theme page, books, and nodes in the graph — it is only off these axes.
+const MATRIX_EXCLUDE = new Set(['Theology & Faith', 'Religion & Faith']);
+const matrixThemes = themeNames.filter((t) => !MATRIX_EXCLUDE.has(t));
+const matrixThemesCfg = themesCfg.filter((t) => !MATRIX_EXCLUDE.has(t.name));
+const matrix = themeMatrix(books, cmap, matrixThemes);
 // Peak off-diagonal value, so the heat shading in the matrix is scaled to real data
 // rather than a hardcoded ceiling that goes wrong as the shelf grows.
 const matrixMax = Math.max(1, ...matrix.flatMap((row, i) => row.filter((_, j) => i !== j)));
-const crossPairs = matrixPairs(matrix, themeNames);
+const crossPairs = matrixPairs(matrix, matrixThemes);
 const bridges = bridgeBooks(books, cmap, 12);
-const featured = featuredPairs(books, cmap, 18);
+// PAIRS. src/data/pairs.json is the editor: order, membership and the hand-written
+// `note` all come from there. Anything listed but not resolvable (a book that is no
+// longer public, a typo'd id) is dropped rather than rendered half-built.
+const pairsCfg = exists(path.join(SRC, 'data/pairs.json')) ? readJson(path.join(SRC, 'data/pairs.json')).pairs : [];
+const featured = pairsCfg
+  .map((p) => ({ a: byId.get(String(p.a)), b: byId.get(String(p.b)), note: (p.note || '').trim() }))
+  .filter((p) => p.a && p.b && p.a.public && p.b.public);
+const pairsMissing = pairsCfg.length - featured.length;
+const featuredNoted = featured.filter((p) => p.note).length;
 const lag = publicationLag(readBooks);
 const streaks = streaksAndGaps(readBooks);
 const cumPages = cumulativePages(readBooks);
@@ -190,10 +209,40 @@ for (const b of books) {
 }
 const thinlyConnected = readBooks.filter((b) => b.connections.length < 3);
 
-const themeIndex = themesCfg.map((t) => ({
-  ...t,
-  books: orderedRead.filter((b) => (b.themes || []).includes(t.source)),
-})).filter((t) => t.books.length);
+/**
+ * Weighted sample without replacement, biased toward the front of the list.
+ * `orderedRead` is newest-first, so weight 1/(rank+2) makes a recent read roughly
+ * three times likelier than one from the back of the shelf — varied on every build,
+ * but never a random grab from 2019 while this year's books sit unshown.
+ */
+function biasedSample(list, n) {
+  const pool = list.map((b, i) => ({ b, w: 1 / (i + 2) }));
+  const out = [];
+  while (out.length < n && pool.length) {
+    let total = 0;
+    for (const p of pool) total += p.w;
+    let r = Math.random() * total, k = 0;
+    while (k < pool.length - 1 && (r -= pool[k].w) > 0) k++;
+    out.push(pool.splice(k, 1)[0].b);
+  }
+  return out;
+}
+
+// The site palette, keyed on the Notion theme name (`source`), matching app.js.
+const THEME_COLORS = {
+  'Politics & Power': '#3a6ea5', 'Business & Finance': '#c6913f',
+  'History & Foreign Affairs': '#9c7b57', 'Personal Growth & Leadership': '#88a04a',
+  'Memoir & Biography': '#8268a6', 'Psychology & Mind': '#3a8fb0',
+  'Society & Culture': '#b06a93', 'Religion & Faith': '#b3864c',
+  'Tech & Future': '#5a66ad', 'Crime & Justice': '#b3564c', 'Other': '#9aa0a6',
+};
+
+const THEME_TILES = 6;   // one row of six in a card that sits two-up on the page
+const themeIndex = themesCfg.map((t) => {
+  const books = orderedRead.filter((b) => (b.themes || []).includes(t.source));
+  return { ...t, books, color: THEME_COLORS[t.source] || THEME_COLORS.Other,
+    tiles: biasedSample(books.filter((b) => b.hasCover), THEME_TILES) };
+}).filter((t) => t.books.length);
 
 const yearsPresent = [...new Set(readBooks.map((b) => b.yearRead).filter(Boolean))]
   .filter((y) => +y >= YEAR_FLOOR).sort();
@@ -295,13 +344,12 @@ env.addFilter('startsWith', (s2, p2) => String(s2 ?? '').startsWith(p2));
 
 const NAV = [
   { label: 'Library', path: '/library' },
-  { label: 'Themes', path: '/themes' },
+  { label: 'Up Next', path: '/up-next' },
   { label: 'Timeline', path: '/timeline' },
+  { label: 'Themes', path: '/themes' },
   { label: 'Connections', path: '/connections' },
   { label: 'Analytics', path: '/analytics' },
-  { label: 'Picks', path: '/picks' },
-  { label: 'Reading', path: '/reading' },
-  { label: 'Reading Now', path: '/up-next' },
+  { label: 'Recommendations', path: '/recommendations' },
   { label: 'About', path: '/about' },
 ];
 const GENERATED = (name) => `<!-- GENERATED — DO NOT EDIT. Source: src/templates/${name} -->\n`;
@@ -333,7 +381,7 @@ function copyPage(file) {
   scanMarkers(file, body); scanMarkers(file, JSON.stringify(meta));
   return {
     meta,
-    copy: { kicker: fill(meta.kicker), h1: fill(meta.h1), standfirst: fill(meta.standfirst), html: markdown(fill(body)) },
+    copy: { kicker: fill(meta.kicker), h1: fill(meta.h1), standfirst: fill(meta.standfirst), portrait: meta.portrait || '', html: markdown(fill(body)) },
   };
 }
 
@@ -341,7 +389,19 @@ function copyPage(file) {
 // ---- / -----------------------------------------------------------------
 {
   const featuredBook = orderedRead[0];
-  const recent = orderedRead.slice(0, 18);
+  // The home feature read as a stub at one sentence. Two sentences plus the first core
+  // idea — still well short of the book page, so guardrail 5 holds.
+  {
+    const full = plain(featuredBook.summary || '').trim();
+    const cut = (t, max) => (t.length > max ? t.slice(0, max).replace(/\s+\S*$/, '') + '\u2026' : t);
+    let two = full, hits = 0;
+    for (const mm of full.matchAll(/[.!?](\s|$)/g)) { hits++; if (hits === 2) { two = full.slice(0, mm.index + 1); break; } }
+    featuredBook.leadIn = fmtText(cut(two, 340));
+    featuredBook.coreLead = fmtText(cut(plain((featuredBook.core || [])[0] || ''), 190));
+  }
+  // 24 — three full rows of eight on desktop, and it divides by 2, 3, 4 and 6, so no
+  // row is left with orphans at any breakpoint.
+  const recent = orderedRead.slice(0, 24);
   const page = {
     path: '/', crumb: 'Home',
     title: `Alex Drost’s Bookshelf — ${site.publicCount} Books, Annotated and Connected`,
@@ -352,11 +412,10 @@ function copyPage(file) {
   emit('/', 'home.njk', { page, featuredBook, recent, picks: picks.slice(0, 6), themeIndex }, { priority: 1.0 });
 }
 
-// ---- /about /reading /picks /up-next -----------------------------------
+// ---- /about /recommendations /up-next ----------------------------------
 for (const [route, tpl, file, schema, prio] of [
   ['/about', 'about.njk', 'about.md', null, 0.9],
-  ['/reading', 'reading.njk', 'reading.md', 'article', 0.9],
-  ['/picks', 'picks.njk', 'picks.md', 'article', 0.9],
+  ['/recommendations', 'picks.njk', 'recommendations.md', 'article', 0.9],
   ['/up-next', 'up-next.njk', 'up-next.md', null, 0.7],
 ]) {
   const { meta, copy } = copyPage(file);
@@ -366,7 +425,7 @@ for (const [route, tpl, file, schema, prio] of [
     person: route === '/about' ? PERSON_ABOUT : PERSON,
   };
   if (schema === 'article') page.extraJson = articleSchema(page);
-  emit(route, tpl, { page, copy, picks, picksMode, picksYears, clusters, currentlyReading }, { priority: prio });
+  emit(route, tpl, { page, copy, picks, picksMode, picksYears, clusters, currentlyReading, tbr }, { priority: prio });
 }
 
 // ---- /library + pagination ---------------------------------------------
@@ -471,8 +530,8 @@ for (const y of yearIndex) {
   };
   page.extraJson = articleSchema(page);
   emit('/connections', 'connections.njk', {
-    page, featured, matrix, matrixMax, themeNames, themesCfg, crossPairs: crossPairs.slice(0, 12),
-    featuredProvisional: true,
+    page, featured, matrix, matrixMax, themeNames, themesCfg: matrixThemesCfg, crossPairs: crossPairs.slice(0, 12),
+    featuredProvisional: featuredNoted < featured.length,
   }, { priority: 0.8 });
 }
 
@@ -485,7 +544,7 @@ for (const y of yearIndex) {
     trail: [{ name: 'Bookshelf', path: '/' }, { name: 'Analytics', path: '/analytics' }],
   };
   page.extraJson = articleSchema(page);
-  emit('/analytics', 'analytics.njk', { page, lag, streaks, cumPages, crossPairs: crossPairs.slice(0, 10), matrix, themeNames, themesCfg }, { priority: 0.8 });
+  emit('/analytics', 'analytics.njk', { page, lag, streaks, cumPages, crossPairs: crossPairs.slice(0, 10), matrix, themeNames: matrixThemes, themesCfg: matrixThemesCfg }, { priority: 0.8 });
 }
 
 // ---- /book/{slug} × 318 -------------------------------------------------
@@ -560,7 +619,7 @@ const line = (s = '') => console.log(s);
 line();
 line(B('BUILD REPORT — bookshelf.drost.us, SESSIONS 1–3'));
 line('='.repeat(74));
-line(`books ............... ${books.length} total · ${readBooks.length} read · ${currentlyReading.length} currently-reading`);
+line(`books ............... ${books.length} total · ${readBooks.length} read · ${currentlyReading.length} reading · ${tbr.length} to-be-read`);
 line(`connections ......... ${pairs.size} unique undirected pairs (public + read)`);
 line(`titles recovered .... ${recovered}${recovered ? '  <-- bridge file, not books.json' : ''}`);
 line(`routes .............. ${writtenRoutes.length}  (${libraryPages} library · ${themeIndex.length} theme · ${yearIndex.length} year · ${orderedRead.length} book) + /404`);
