@@ -11,6 +11,7 @@
    "dateRead": "2019/10/01",
    "yearRead": "2019",
    "shelf": "read",
+   "slug": "rich-dad-poor-dad",
    "themes": [
     "Business & Finance"
    ],
@@ -24,9 +25,7 @@
    "conn": [
     "41881472",
     "368593"
-   ],
-   "slug": "rich-dad-poor-dad",
-   "public": true
+   ]
   },
   {
    "id": "23878688",
@@ -38,6 +37,7 @@
    "dateRead": "2019/10/01",
    "yearRead": "2019",
    "shelf": "read",
+   "slug": "the-5-love-languages",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -53,9 +53,7 @@
     "13588356",
     "6596",
     "4865"
-   ],
-   "slug": "the-5-love-languages",
-   "public": true
+   ]
   },
   {
    "id": "4865",
@@ -67,6 +65,7 @@
    "dateRead": "2019/11/01",
    "yearRead": "2019",
    "shelf": "read",
+   "slug": "how-to-win-friends-influence-people",
    "themes": [
     "Psychology & Mind",
     "Society & Culture"
@@ -86,9 +85,7 @@
     "41215667",
     "22571554",
     "18325440"
-   ],
-   "slug": "how-to-win-friends-influence-people",
-   "public": true
+   ]
   },
   {
    "id": "6596",
@@ -100,6 +97,7 @@
    "dateRead": "2019/11/01",
    "yearRead": "2019",
    "shelf": "read",
+   "slug": "the-four-agreements",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -124,9 +122,7 @@
     "34565022",
     "4865",
     "30197119"
-   ],
-   "slug": "the-four-agreements",
-   "public": true
+   ]
   },
   {
    "id": "36072",
@@ -138,6 +134,7 @@
    "dateRead": "2019/11/01",
    "yearRead": "2019",
    "shelf": "read",
+   "slug": "the-7-habits-of-highly-effective-people",
    "themes": [
     "Personal Growth & Leadership"
    ],
@@ -159,9 +156,7 @@
     "18668059",
     "40109367",
     "38714388"
-   ],
-   "slug": "the-7-habits-of-highly-effective-people",
-   "public": true
+   ]
   },
   {
    "id": "3228917",
@@ -173,6 +168,7 @@
    "dateRead": "2019/11/01",
    "yearRead": "2019",
    "shelf": "read",
+   "slug": "outliers",
    "themes": [
     "Society & Culture"
    ],
@@ -192,9 +188,7 @@
     "41721428",
     "213034913",
     "40121378"
-   ],
-   "slug": "outliers",
-   "public": true
+   ]
   },
   {
    "id": "18144590",
@@ -206,6 +200,7 @@
    "dateRead": "2020/01/01",
    "yearRead": "2020",
    "shelf": "read",
+   "slug": "the-alchemist",
    "themes": [
     "Personal Growth & Leadership"
    ],
@@ -222,9 +217,7 @@
     "60965426",
     "177152",
     "32895535"
-   ],
-   "slug": "the-alchemist",
-   "public": true
+   ]
   },
   {
    "id": "407999",
@@ -236,6 +229,7 @@
    "dateRead": "2020/02/01",
    "yearRead": "2020",
    "shelf": "read",
+   "slug": "competitive-strategy",
    "themes": [
     "Business & Finance"
    ],
@@ -251,9 +245,7 @@
     "113934",
     "38390751",
     "38606235"
-   ],
-   "slug": "competitive-strategy",
-   "public": true
+   ]
   },
   {
    "id": "26222932",
@@ -265,6 +257,7 @@
    "dateRead": "2020/02/01",
    "yearRead": "2020",
    "shelf": "read",
+   "slug": "content-inc",
    "themes": [
     "Business & Finance"
    ],
@@ -281,9 +274,7 @@
     "22573915",
     "38606235",
     "38644312"
-   ],
-   "slug": "content-inc",
-   "public": true
+   ]
   },
   {
    "id": "41215667",
@@ -295,6 +286,7 @@
    "dateRead": "2020/02/01",
    "yearRead": "2020",
    "shelf": "read",
+   "slug": "building-a-story-brand",
    "themes": [
     "Business & Finance"
    ],
@@ -317,9 +309,7 @@
     "35863927",
     "2612",
     "4865"
-   ],
-   "slug": "building-a-story-brand",
-   "public": true
+   ]
   },
   {
    "id": "12609433",
@@ -331,6 +321,7 @@
    "dateRead": "2020/06/01",
    "yearRead": "2020",
    "shelf": "read",
+   "slug": "the-power-of-habit",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -349,9 +340,7 @@
     "44595007",
     "55723020",
     "157095669"
-   ],
-   "slug": "the-power-of-habit",
-   "public": true
+   ]
   },
   {
    "id": "40121378",
@@ -363,6 +352,7 @@
    "dateRead": "2020/06/01",
    "yearRead": "2020",
    "shelf": "read",
+   "slug": "atomic-habits",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -397,9 +387,7 @@
     "30307982",
     "10009377",
     "39901314"
-   ],
-   "slug": "atomic-habits",
-   "public": true
+   ]
   },
   {
    "id": "8753495",
@@ -411,6 +399,7 @@
    "dateRead": "2020/08/01",
    "yearRead": "2020",
    "shelf": "read",
+   "slug": "the-fiery-trial",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -426,9 +415,7 @@
     "132917",
     "32191706",
     "202102082"
-   ],
-   "slug": "the-fiery-trial",
-   "public": true
+   ]
   },
   {
    "id": "37570546",
@@ -440,6 +427,7 @@
    "dateRead": "2020/09/01",
    "yearRead": "2020",
    "shelf": "read",
+   "slug": "maybe-you-should-talk-to-someone",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -462,9 +450,7 @@
     "221754271",
     "58330567",
     "34565022"
-   ],
-   "slug": "maybe-you-should-talk-to-someone",
-   "public": true
+   ]
   },
   {
    "id": "23500254",
@@ -476,6 +462,7 @@
    "dateRead": "2020/11/01",
    "yearRead": "2020",
    "shelf": "read",
+   "slug": "the-power-of-vulnerability",
    "themes": [
     "Psychology & Mind"
    ],
@@ -493,9 +480,7 @@
     "34565022",
     "40109367",
     "18693771"
-   ],
-   "slug": "the-power-of-vulnerability",
-   "public": true
+   ]
   },
   {
    "id": "40109367",
@@ -507,6 +492,7 @@
    "dateRead": "2020/11/01",
    "yearRead": "2020",
    "shelf": "read",
+   "slug": "dare-to-lead",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -527,9 +513,7 @@
     "34565022",
     "23500254",
     "36072"
-   ],
-   "slug": "dare-to-lead",
-   "public": true
+   ]
   },
   {
    "id": "23692271",
@@ -541,6 +525,7 @@
    "dateRead": "2020/11/09",
    "yearRead": "2020",
    "shelf": "read",
+   "slug": "sapiens",
    "themes": [
     "History & Foreign Affairs",
     "Psychology & Mind"
@@ -558,10 +543,9 @@
     "204927599",
     "6617037",
     "12158480",
+    "18730589",
     "222376657"
-   ],
-   "slug": "sapiens",
-   "public": true
+   ]
   },
   {
    "id": "13588356",
@@ -573,6 +557,7 @@
    "dateRead": "2020/12/01",
    "yearRead": "2020",
    "shelf": "read",
+   "slug": "daring-greatly",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -598,9 +583,7 @@
     "53642699",
     "157095669",
     "221754271"
-   ],
-   "slug": "daring-greatly",
-   "public": true
+   ]
   },
   {
    "id": "34565022",
@@ -612,6 +595,7 @@
    "dateRead": "2020/12/01",
    "yearRead": "2020",
    "shelf": "read",
+   "slug": "braving-the-wilderness",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -630,9 +614,7 @@
     "23500254",
     "6596",
     "37570546"
-   ],
-   "slug": "braving-the-wilderness",
-   "public": true
+   ]
   },
   {
    "id": "35099718",
@@ -644,6 +626,7 @@
    "dateRead": "2020/12/01",
    "yearRead": "2020",
    "shelf": "read",
+   "slug": "so-you-want-to-talk-about-race",
    "themes": [
     "Society & Culture"
    ],
@@ -662,9 +645,7 @@
     "48589165",
     "40265832",
     "34014218"
-   ],
-   "slug": "so-you-want-to-talk-about-race",
-   "public": true
+   ]
   },
   {
    "id": "38644312",
@@ -676,6 +657,7 @@
    "dateRead": "2021/01/01",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "leveraged-learning",
    "themes": [
     "Business & Finance",
     "Society & Culture"
@@ -693,9 +675,7 @@
     "38606235",
     "22573915",
     "22571554"
-   ],
-   "slug": "leveraged-learning",
-   "public": true
+   ]
   },
   {
    "id": "39901314",
@@ -707,6 +687,7 @@
    "dateRead": "2021/01/01",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "outer-order-inner-calm",
    "themes": [
     "Personal Growth & Leadership"
    ],
@@ -723,9 +704,7 @@
     "40121378",
     "44595007",
     "197773418"
-   ],
-   "slug": "outer-order-inner-calm",
-   "public": true
+   ]
   },
   {
    "id": "40265832",
@@ -737,6 +716,7 @@
    "dateRead": "2021/01/01",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "how-to-be-an-antiracist",
    "themes": [
     "Society & Culture"
    ],
@@ -755,9 +735,7 @@
     "43708708",
     "48589165",
     "35099718"
-   ],
-   "slug": "how-to-be-an-antiracist",
-   "public": true
+   ]
   },
   {
    "id": "43708708",
@@ -769,6 +747,7 @@
    "dateRead": "2021/01/01",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "white-fragility",
    "themes": [
     "Society & Culture"
    ],
@@ -786,9 +765,7 @@
     "35099718",
     "48589165",
     "34014218"
-   ],
-   "slug": "white-fragility",
-   "public": true
+   ]
   },
   {
    "id": "51942513",
@@ -800,6 +777,7 @@
    "dateRead": "2021/01/02",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "think-like-a-monk",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -818,9 +796,7 @@
     "177152",
     "139360",
     "60965426"
-   ],
-   "slug": "think-like-a-monk",
-   "public": true
+   ]
   },
   {
    "id": "132913",
@@ -832,6 +808,7 @@
    "dateRead": "2021/01/17",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "reconstruction",
    "themes": [
     "History & Foreign Affairs",
     "Society & Culture"
@@ -850,9 +827,7 @@
     "34758210",
     "90590139",
     "27209433"
-   ],
-   "slug": "reconstruction",
-   "public": true
+   ]
   },
   {
    "id": "32714199",
@@ -864,6 +839,7 @@
    "dateRead": "2021/01/17",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "the-craving-mind",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -887,9 +863,7 @@
     "56863374",
     "157981712",
     "56688463"
-   ],
-   "slug": "the-craving-mind",
-   "public": true
+   ]
   },
   {
    "id": "25489625",
@@ -901,6 +875,7 @@
    "dateRead": "2021/02/01",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "between-the-world-and-me",
    "themes": [
     "Memoir & Biography",
     "Society & Culture"
@@ -919,9 +894,7 @@
     "35099718",
     "48589165",
     "43708708"
-   ],
-   "slug": "between-the-world-and-me",
-   "public": true
+   ]
   },
   {
    "id": "34014218",
@@ -933,6 +906,7 @@
    "dateRead": "2021/02/01",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "white-working-class",
    "themes": [
     "Society & Culture"
    ],
@@ -955,9 +929,7 @@
     "43708708",
     "48589165",
     "35099718"
-   ],
-   "slug": "white-working-class",
-   "public": true
+   ]
   },
   {
    "id": "48589165",
@@ -969,6 +941,7 @@
    "dateRead": "2021/02/01",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "the-black-friend",
    "themes": [
     "Society & Culture"
    ],
@@ -985,9 +958,7 @@
     "40265832",
     "35099718",
     "34014218"
-   ],
-   "slug": "the-black-friend",
-   "public": true
+   ]
   },
   {
    "id": "30197119",
@@ -999,6 +970,7 @@
    "dateRead": "2021/03/01",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "liminal-thinking",
    "themes": [
     "Psychology & Mind"
    ],
@@ -1015,9 +987,7 @@
     "29342515",
     "40121378",
     "6596"
-   ],
-   "slug": "liminal-thinking",
-   "public": true
+   ]
   },
   {
    "id": "38714388",
@@ -1029,6 +999,7 @@
    "dateRead": "2021/03/01",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "the-dichotomy-of-leadership",
    "themes": [
     "Personal Growth & Leadership"
    ],
@@ -1046,9 +1017,7 @@
     "18668059",
     "38390751",
     "36072"
-   ],
-   "slug": "the-dichotomy-of-leadership",
-   "public": true
+   ]
   },
   {
    "id": "56688463",
@@ -1060,6 +1029,7 @@
    "dateRead": "2021/03/01",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "how-to-train-your-mind",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -1078,9 +1048,7 @@
     "32714199",
     "44595007",
     "25744928"
-   ],
-   "slug": "how-to-train-your-mind",
-   "public": true
+   ]
   },
   {
    "id": "31850779",
@@ -1092,6 +1060,7 @@
    "dateRead": "2021/03/04",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "the-vanishing-middle-class",
    "themes": [
     "Society & Culture"
    ],
@@ -1115,9 +1084,7 @@
     "52118381",
     "199344862",
     "176444106"
-   ],
-   "slug": "the-vanishing-middle-class",
-   "public": true
+   ]
   },
   {
    "id": "29342515",
@@ -1129,6 +1096,7 @@
    "dateRead": "2021/05/05",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "the-coaching-habit",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -1151,9 +1119,7 @@
     "4865",
     "30197119",
     "18325440"
-   ],
-   "slug": "the-coaching-habit",
-   "public": true
+   ]
   },
   {
    "id": "368593",
@@ -1165,6 +1131,7 @@
    "dateRead": "2021/06/01",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "the-4-hour-workweek",
    "themes": [
     "Personal Growth & Leadership"
    ],
@@ -1184,9 +1151,7 @@
     "25744928",
     "197773418",
     "22571554"
-   ],
-   "slug": "the-4-hour-workweek",
-   "public": true
+   ]
   },
   {
    "id": "55361205",
@@ -1198,6 +1163,7 @@
    "dateRead": "2021/11/01",
    "yearRead": "2021",
    "shelf": "read",
+   "slug": "a-promised-land",
    "themes": [
     "Memoir & Biography",
     "Politics & Power"
@@ -1215,9 +1181,7 @@
     "198493808",
     "55749283",
     "58450272"
-   ],
-   "slug": "a-promised-land",
-   "public": true
+   ]
   },
   {
    "id": "30307982",
@@ -1229,6 +1193,7 @@
    "dateRead": "2022/01/01",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "the-art-of-less-doing",
    "themes": [
     "Business & Finance",
     "Personal Growth & Leadership"
@@ -1247,9 +1212,7 @@
     "368593",
     "40121378",
     "10009377"
-   ],
-   "slug": "the-art-of-less-doing",
-   "public": true
+   ]
   },
   {
    "id": "18693771",
@@ -1261,6 +1224,7 @@
    "dateRead": "2022/02/01",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "the-body-keeps-the-score",
    "themes": [
     "Psychology & Mind"
    ],
@@ -1286,9 +1250,7 @@
     "58330567",
     "23500254",
     "139360"
-   ],
-   "slug": "the-body-keeps-the-score",
-   "public": true
+   ]
   },
   {
    "id": "139360",
@@ -1300,6 +1262,7 @@
    "dateRead": "2022/03/01",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "yoga-and-the-quest-for-the-true-self",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -1317,9 +1280,7 @@
     "4271372",
     "32895535",
     "18693771"
-   ],
-   "slug": "yoga-and-the-quest-for-the-true-self",
-   "public": true
+   ]
   },
   {
    "id": "18325440",
@@ -1331,6 +1292,7 @@
    "dateRead": "2022/03/01",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "ditch-the-pitch",
    "themes": [
     "Personal Growth & Leadership"
    ],
@@ -1347,9 +1309,7 @@
     "4865",
     "29342515",
     "22571554"
-   ],
-   "slug": "ditch-the-pitch",
-   "public": true
+   ]
   },
   {
    "id": "4271372",
@@ -1361,6 +1321,7 @@
    "dateRead": "2022/04/01",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "the-revolutionary-trauma-release-process",
    "themes": [
     "Psychology & Mind"
    ],
@@ -1377,9 +1338,7 @@
     "50997029",
     "20556323",
     "139360"
-   ],
-   "slug": "the-revolutionary-trauma-release-process",
-   "public": true
+   ]
   },
   {
    "id": "12821470",
@@ -1391,6 +1350,7 @@
    "dateRead": "2022/05/01",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "the-republican-brain",
    "themes": [
     "Politics & Power",
     "Psychology & Mind"
@@ -1408,9 +1368,7 @@
     "35356384",
     "199344862",
     "56898187"
-   ],
-   "slug": "the-republican-brain",
-   "public": true
+   ]
   },
   {
    "id": "58330567",
@@ -1422,6 +1380,7 @@
    "dateRead": "2022/05/01",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "atlas-of-the-heart",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -1440,9 +1399,7 @@
     "23500254",
     "37570546",
     "18693771"
-   ],
-   "slug": "atlas-of-the-heart",
-   "public": true
+   ]
   },
   {
    "id": "10009377",
@@ -1454,6 +1411,7 @@
    "dateRead": "2022/06/01",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "the-12-week-year",
    "themes": [
     "Personal Growth & Leadership"
    ],
@@ -1472,13 +1430,11 @@
     "30307982",
     "40121378",
     "13586928"
-   ],
-   "slug": "the-12-week-year",
-   "public": true
+   ]
   },
   {
    "id": "18927310",
-   "title": "The Original Watergate Stories (Kindle Single) (The Washington Post Book 1)",
+   "title": "The Original Watergate Stories",
    "author": "The Washington Post",
    "isbn": "9781938120589",
    "pages": "202",
@@ -1486,6 +1442,7 @@
    "dateRead": "2022/06/01",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "the-original-watergate-stories",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -1503,9 +1460,7 @@
     "96123",
     "86615",
     "27214080"
-   ],
-   "slug": "the-original-watergate-stories",
-   "public": true
+   ]
   },
   {
    "id": "22573915",
@@ -1517,6 +1472,7 @@
    "dateRead": "2022/06/01",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "the-membership-economy",
    "themes": [
     "Business & Finance"
    ],
@@ -1534,9 +1490,7 @@
     "22571554",
     "38740751",
     "38644312"
-   ],
-   "slug": "the-membership-economy",
-   "public": true
+   ]
   },
   {
    "id": "31138556",
@@ -1548,6 +1502,7 @@
    "dateRead": "2022/07/01",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "homo-deus",
    "themes": [
     "History & Foreign Affairs",
     "Tech & Future"
@@ -1565,9 +1520,7 @@
     "204927599",
     "90590134",
     "56620811"
-   ],
-   "slug": "homo-deus",
-   "public": true
+   ]
   },
   {
    "id": "34758210",
@@ -1579,6 +1532,7 @@
    "dateRead": "2022/07/01",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "the-color-of-money",
    "themes": [
     "History & Foreign Affairs",
     "Society & Culture"
@@ -1598,9 +1552,7 @@
     "32191706",
     "6617037",
     "27209433"
-   ],
-   "slug": "the-color-of-money",
-   "public": true
+   ]
   },
   {
    "id": "55776895",
@@ -1612,6 +1564,7 @@
    "dateRead": "2022/07/01",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "the-tragedy-of-rudy-giuliani",
    "themes": [
     "Politics & Power"
    ],
@@ -1631,9 +1584,7 @@
     "203579090",
     "35276688",
     "60461917"
-   ],
-   "slug": "the-tragedy-of-rudy-giuliani",
-   "public": true
+   ]
   },
   {
    "id": "38820046",
@@ -1645,6 +1596,7 @@
    "dateRead": "2022/07/20",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "21-lessons-for-the-21st-century",
    "themes": [
     "History & Foreign Affairs",
     "Tech & Future"
@@ -1662,9 +1614,7 @@
     "204927599",
     "90590134",
     "56620811"
-   ],
-   "slug": "21-lessons-for-the-21st-century",
-   "public": true
+   ]
   },
   {
    "id": "18668059",
@@ -1676,6 +1626,7 @@
    "dateRead": "2022/07/24",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "the-obstacle-is-the-way",
    "themes": [
     "Personal Growth & Leadership"
    ],
@@ -1694,9 +1645,7 @@
     "40121378",
     "36072",
     "38714388"
-   ],
-   "slug": "the-obstacle-is-the-way",
-   "public": true
+   ]
   },
   {
    "id": "40046060",
@@ -1708,6 +1657,7 @@
    "dateRead": "2022/07/24",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "republic-of-lies",
    "themes": [
     "Society & Culture"
    ],
@@ -1727,9 +1677,7 @@
     "59546340",
     "209999111",
     "216857785"
-   ],
-   "slug": "republic-of-lies",
-   "public": true
+   ]
   },
   {
    "id": "132917",
@@ -1741,6 +1689,7 @@
    "dateRead": "2022/08/05",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "a-short-history-of-reconstruction",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -1757,9 +1706,7 @@
     "25489625",
     "32191706",
     "27209433"
-   ],
-   "slug": "a-short-history-of-reconstruction",
-   "public": true
+   ]
   },
   {
    "id": "38390751",
@@ -1771,6 +1718,7 @@
    "dateRead": "2022/08/05",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "the-infinite-game",
    "themes": [
     "Business & Finance",
     "Personal Growth & Leadership"
@@ -1790,9 +1738,7 @@
     "36072",
     "10418591",
     "38714388"
-   ],
-   "slug": "the-infinite-game",
-   "public": true
+   ]
   },
   {
    "id": "58684275",
@@ -1804,6 +1750,7 @@
    "dateRead": "2022/08/05",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "torn-apart",
    "themes": [
     "Politics & Power",
     "Society & Culture"
@@ -1823,9 +1770,7 @@
     "40265832",
     "35099718",
     "43708708"
-   ],
-   "slug": "torn-apart",
-   "public": true
+   ]
   },
   {
    "id": "35171984",
@@ -1837,6 +1782,7 @@
    "dateRead": "2022/09/04",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "fantasyland",
    "themes": [
     "History & Foreign Affairs",
     "Society & Culture"
@@ -1861,9 +1807,7 @@
     "50487024",
     "216857785",
     "202102082"
-   ],
-   "slug": "fantasyland",
-   "public": true
+   ]
   },
   {
    "id": "53562067",
@@ -1875,6 +1819,7 @@
    "dateRead": "2022/09/18",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "evil-geniuses",
    "themes": [
     "History & Foreign Affairs",
     "Society & Culture"
@@ -1908,9 +1853,7 @@
     "224003226",
     "233334472",
     "13622997"
-   ],
-   "slug": "evil-geniuses",
-   "public": true
+   ]
   },
   {
    "id": "44148905",
@@ -1922,6 +1865,7 @@
    "dateRead": "2022/10/11",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "american-carnage",
    "themes": [
     "Politics & Power"
    ],
@@ -1941,9 +1885,7 @@
     "195790601",
     "60387898",
     "50486810"
-   ],
-   "slug": "american-carnage",
-   "public": true
+   ]
   },
   {
    "id": "177152",
@@ -1955,6 +1897,7 @@
    "dateRead": "2022/10/14",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "a-theory-of-everything",
    "themes": [
     "Psychology & Mind"
    ],
@@ -1972,9 +1915,7 @@
     "36613747",
     "18144590",
     "139360"
-   ],
-   "slug": "a-theory-of-everything",
-   "public": true
+   ]
   },
   {
    "id": "59616977",
@@ -1986,6 +1927,7 @@
    "dateRead": "2022/10/19",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "building-a-second-brain",
    "themes": [
     "Personal Growth & Leadership"
    ],
@@ -2003,9 +1945,7 @@
     "60965426",
     "157981712",
     "39901314"
-   ],
-   "slug": "building-a-second-brain",
-   "public": true
+   ]
   },
   {
    "id": "60399106",
@@ -2017,6 +1957,7 @@
    "dateRead": "2022/10/22",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "the-divider",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -2036,9 +1977,7 @@
     "53317913",
     "58546518",
     "49378800"
-   ],
-   "slug": "the-divider",
-   "public": true
+   ]
   },
   {
    "id": "1633",
@@ -2050,6 +1989,7 @@
    "dateRead": "2022/10/25",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "getting-things-done",
    "themes": [
     "Personal Growth & Leadership"
    ],
@@ -2070,9 +2010,7 @@
     "39901314",
     "113934",
     "368593"
-   ],
-   "slug": "getting-things-done",
-   "public": true
+   ]
   },
   {
    "id": "63029353",
@@ -2084,6 +2022,7 @@
    "dateRead": "2022/10/27",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "the-trump-tapes",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -2103,9 +2042,7 @@
     "27507",
     "86615",
     "27506"
-   ],
-   "slug": "the-trump-tapes",
-   "public": true
+   ]
   },
   {
    "id": "59608800",
@@ -2117,6 +2054,7 @@
    "dateRead": "2022/10/30",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "not-in-it-to-win-it",
    "themes": [
     "Religion & Faith"
    ],
@@ -2132,9 +2070,7 @@
     "112975131",
     "78642417",
     "204316955"
-   ],
-   "slug": "not-in-it-to-win-it",
-   "public": true
+   ]
   },
   {
    "id": "50155421",
@@ -2146,6 +2082,7 @@
    "dateRead": "2022/10/31",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "twilight-of-democracy",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -2169,9 +2106,7 @@
     "50486810",
     "53952310",
     "55749283"
-   ],
-   "slug": "twilight-of-democracy",
-   "public": true
+   ]
   },
   {
    "id": "53121662",
@@ -2183,6 +2118,7 @@
    "dateRead": "2022/11/12",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "jesus-and-john-wayne",
    "themes": [
     "History & Foreign Affairs",
     "Religion & Faith"
@@ -2207,10 +2143,9 @@
     "167770288",
     "61423989",
     "211003831",
-    "202102082"
-   ],
-   "slug": "jesus-and-john-wayne",
-   "public": true
+    "202102082",
+    "220160840"
+   ]
   },
   {
    "id": "60526486",
@@ -2222,6 +2157,7 @@
    "dateRead": "2022/12/17",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "for-a-dollar-and-a-dream",
    "themes": [
     "History & Foreign Affairs",
     "Society & Culture"
@@ -2238,9 +2174,7 @@
     "204236707",
     "53562067",
     "25852784"
-   ],
-   "slug": "for-a-dollar-and-a-dream",
-   "public": true
+   ]
   },
   {
    "id": "45897523",
@@ -2252,6 +2186,7 @@
    "dateRead": "2022/12/18",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "blowout",
    "themes": [
     "Politics & Power"
    ],
@@ -2268,10 +2203,9 @@
     "39888196",
     "24040192",
     "37506133",
+    "52038578",
     "17707481"
-   ],
-   "slug": "blowout",
-   "public": true
+   ]
   },
   {
    "id": "25602451",
@@ -2283,6 +2217,7 @@
    "dateRead": "2022/12/24",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "losing-the-signal",
    "themes": [
     "Business & Finance",
     "Tech & Future"
@@ -2303,10 +2238,9 @@
     "122765395",
     "213034913",
     "55994102",
-    "59366216"
-   ],
-   "slug": "losing-the-signal",
-   "public": true
+    "59366216",
+    "218319936"
+   ]
   },
   {
    "id": "31920777",
@@ -2318,6 +2252,7 @@
    "dateRead": "2022/12/28",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "american-kingpin",
    "themes": [
     "Crime & Justice"
    ],
@@ -2334,9 +2269,7 @@
     "41436213",
     "37976541",
     "44643351"
-   ],
-   "slug": "american-kingpin",
-   "public": true
+   ]
   },
   {
    "id": "60018575",
@@ -2348,6 +2281,7 @@
    "dateRead": "2022/12/29",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "discipline-is-destiny",
    "themes": [
     "Personal Growth & Leadership"
    ],
@@ -2365,9 +2299,7 @@
     "59088361",
     "36072",
     "38714388"
-   ],
-   "slug": "discipline-is-destiny",
-   "public": true
+   ]
   },
   {
    "id": "61278539",
@@ -2379,6 +2311,7 @@
    "dateRead": "2022/12/29",
    "yearRead": "2022",
    "shelf": "read",
+   "slug": "ejaculate-responsibly",
    "themes": [
     "Society & Culture"
    ],
@@ -2393,9 +2326,7 @@
     "54233271",
     "36373587",
     "53121662"
-   ],
-   "slug": "ejaculate-responsibly",
-   "public": true
+   ]
   },
   {
    "id": "60704408",
@@ -2407,6 +2338,7 @@
    "dateRead": "2023/01/02",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-january-6th-report",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -2427,9 +2359,7 @@
     "58395041",
     "58546518",
     "209999111"
-   ],
-   "slug": "the-january-6th-report",
-   "public": true
+   ]
   },
   {
    "id": "38740751",
@@ -2441,6 +2371,7 @@
    "dateRead": "2023/01/06",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-snowball-system",
    "themes": [
     "Business & Finance",
     "Personal Growth & Leadership"
@@ -2462,9 +2393,7 @@
     "16130157",
     "22573915",
     "22571554"
-   ],
-   "slug": "the-snowball-system",
-   "public": true
+   ]
   },
   {
    "id": "10418591",
@@ -2476,6 +2405,7 @@
    "dateRead": "2023/01/09",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "i-moved-your-cheese",
    "themes": [
     "Business & Finance",
     "Personal Growth & Leadership"
@@ -2492,9 +2422,7 @@
     "30197119",
     "368593",
     "3754705"
-   ],
-   "slug": "i-moved-your-cheese",
-   "public": true
+   ]
   },
   {
    "id": "580305",
@@ -2506,6 +2434,7 @@
    "dateRead": "2023/01/13",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "chasing-daylight",
    "themes": [
     "Memoir & Biography"
    ],
@@ -2522,9 +2451,7 @@
     "58446721",
     "60965426",
     "221754271"
-   ],
-   "slug": "chasing-daylight",
-   "public": true
+   ]
   },
   {
    "id": "38606235",
@@ -2536,6 +2463,7 @@
    "dateRead": "2023/01/14",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "subscribed",
    "themes": [
     "Business & Finance"
    ],
@@ -2552,9 +2480,7 @@
     "41215667",
     "407999",
     "38644312"
-   ],
-   "slug": "subscribed",
-   "public": true
+   ]
   },
   {
    "id": "44595007",
@@ -2566,6 +2492,7 @@
    "dateRead": "2023/01/17",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "indistractable",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -2589,9 +2516,7 @@
     "56863374",
     "56688463",
     "39901314"
-   ],
-   "slug": "indistractable",
-   "public": true
+   ]
   },
   {
    "id": "55180251",
@@ -2603,6 +2528,7 @@
    "dateRead": "2023/01/21",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "how-to-win-client-business",
    "themes": [
     "Business & Finance",
     "Personal Growth & Leadership"
@@ -2619,9 +2545,7 @@
     "35863927",
     "41215667",
     "22571554"
-   ],
-   "slug": "how-to-win-client-business",
-   "public": true
+   ]
   },
   {
    "id": "35863927",
@@ -2633,6 +2557,7 @@
    "dateRead": "2023/01/24",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "how-clients-buy",
    "themes": [
     "Business & Finance",
     "Personal Growth & Leadership",
@@ -2649,9 +2574,7 @@
     "38740751",
     "55180251",
     "41215667"
-   ],
-   "slug": "how-clients-buy",
-   "public": true
+   ]
   },
   {
    "id": "53238858",
@@ -2663,6 +2586,7 @@
    "dateRead": "2023/01/24",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "what-happened-to-you",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -2682,9 +2606,7 @@
     "56124858",
     "4271372",
     "157981712"
-   ],
-   "slug": "what-happened-to-you",
-   "public": true
+   ]
   },
   {
    "id": "35356384",
@@ -2696,6 +2618,7 @@
    "dateRead": "2023/01/28",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "how-democracies-die",
    "themes": [
     "Politics & Power"
    ],
@@ -2721,9 +2644,7 @@
     "45046725",
     "55749283",
     "12821470"
-   ],
-   "slug": "how-democracies-die",
-   "public": true
+   ]
   },
   {
    "id": "58783229",
@@ -2735,6 +2656,7 @@
    "dateRead": "2023/02/06",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-flag-and-the-cross",
    "themes": [
     "Politics & Power",
     "Religion & Faith"
@@ -2752,10 +2674,9 @@
     "211003831",
     "52764767",
     "112975131",
-    "202102082"
-   ],
-   "slug": "the-flag-and-the-cross",
-   "public": true
+    "202102082",
+    "220160840"
+   ]
   },
   {
    "id": "50997029",
@@ -2767,6 +2688,7 @@
    "dateRead": "2023/02/09",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "how-to-do-the-work",
    "themes": [
     "Psychology & Mind"
    ],
@@ -2785,9 +2707,7 @@
     "53642699",
     "4271372",
     "56124858"
-   ],
-   "slug": "how-to-do-the-work",
-   "public": true
+   ]
   },
   {
    "id": "60321447",
@@ -2799,6 +2719,7 @@
    "dateRead": "2023/02/09",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "chip-war",
    "themes": [
     "History & Foreign Affairs",
     "Tech & Future"
@@ -2818,10 +2739,9 @@
     "195820877",
     "31125556",
     "24396871",
-    "90590134"
-   ],
-   "slug": "chip-war",
-   "public": true
+    "90590134",
+    "218319936"
+   ]
   },
   {
    "id": "12143200",
@@ -2833,6 +2753,7 @@
    "dateRead": "2023/02/12",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "drift",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -2852,9 +2773,7 @@
     "205495275",
     "55749283",
     "56898213"
-   ],
-   "slug": "drift",
-   "public": true
+   ]
   },
   {
    "id": "29633355",
@@ -2866,6 +2785,7 @@
    "dateRead": "2023/02/17",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "men-without-work",
    "themes": [
     "Society & Culture"
    ],
@@ -2884,9 +2804,7 @@
     "221754271",
     "199344862",
     "27209433"
-   ],
-   "slug": "men-without-work",
-   "public": true
+   ]
   },
   {
    "id": "57933306",
@@ -2898,6 +2816,7 @@
    "dateRead": "2023/02/18",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "stolen-focus",
    "themes": [
     "Psychology & Mind",
     "Tech & Future"
@@ -2918,9 +2837,7 @@
     "199461393",
     "157981712",
     "223436601"
-   ],
-   "slug": "stolen-focus",
-   "public": true
+   ]
   },
   {
    "id": "24040192",
@@ -2932,6 +2849,7 @@
    "dateRead": "2023/02/19",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-new-tsar",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -2949,9 +2867,7 @@
     "50716468",
     "63365317",
     "211003730"
-   ],
-   "slug": "the-new-tsar",
-   "public": true
+   ]
   },
   {
    "id": "54233271",
@@ -2963,6 +2879,7 @@
    "dateRead": "2023/02/19",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-making-of-biblical-womanhood",
    "themes": [
     "History & Foreign Affairs",
     "Religion & Faith"
@@ -2981,9 +2898,7 @@
     "78642417",
     "167770288",
     "60393585"
-   ],
-   "slug": "the-making-of-biblical-womanhood",
-   "public": true
+   ]
   },
   {
    "id": "36373587",
@@ -2995,6 +2910,7 @@
    "dateRead": "2023/02/20",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "pure",
    "themes": [
     "Memoir & Biography",
     "Psychology & Mind",
@@ -3015,9 +2931,7 @@
     "78642417",
     "60393585",
     "60209478"
-   ],
-   "slug": "pure",
-   "public": true
+   ]
   },
   {
    "id": "13260065",
@@ -3029,6 +2943,7 @@
    "dateRead": "2023/03/11",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-lost-bank",
    "themes": [
     "Business & Finance"
    ],
@@ -3047,9 +2962,7 @@
     "199797519",
     "211179569",
     "22699774"
-   ],
-   "slug": "the-lost-bank",
-   "public": true
+   ]
   },
   {
    "id": "59088361",
@@ -3061,6 +2974,7 @@
    "dateRead": "2023/03/25",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "do-hard-things",
    "themes": [
     "Psychology & Mind"
    ],
@@ -3080,9 +2994,7 @@
     "38714388",
     "3228917",
     "157095669"
-   ],
-   "slug": "do-hard-things",
-   "public": true
+   ]
   },
   {
    "id": "60965426",
@@ -3094,6 +3006,7 @@
    "dateRead": "2023/03/31",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-creative-act",
    "themes": [
     "Memoir & Biography"
    ],
@@ -3111,9 +3024,7 @@
     "25744928",
     "18144590",
     "51942513"
-   ],
-   "slug": "the-creative-act",
-   "public": true
+   ]
   },
   {
    "id": "20556323",
@@ -3125,6 +3036,7 @@
    "dateRead": "2023/04/02",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "complex-ptsd",
    "themes": [
     "Psychology & Mind"
    ],
@@ -3142,9 +3054,7 @@
     "50997029",
     "53642699",
     "4271372"
-   ],
-   "slug": "complex-ptsd",
-   "public": true
+   ]
   },
   {
    "id": "25852784",
@@ -3156,6 +3066,7 @@
    "dateRead": "2023/04/09",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "evicted",
    "themes": [
     "Society & Culture"
    ],
@@ -3179,9 +3090,7 @@
     "218671853",
     "176444106",
     "221754271"
-   ],
-   "slug": "evicted",
-   "public": true
+   ]
   },
   {
    "id": "51660",
@@ -3193,6 +3102,7 @@
    "dateRead": "2023/04/11",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "food-of-the-gods",
    "themes": [
     "History & Foreign Affairs",
     "Psychology & Mind"
@@ -3209,9 +3119,7 @@
     "36613747",
     "241471051",
     "55723020"
-   ],
-   "slug": "food-of-the-gods",
-   "public": true
+   ]
   },
   {
    "id": "32191706",
@@ -3223,6 +3131,7 @@
    "dateRead": "2023/04/13",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-color-of-law",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -3242,9 +3151,7 @@
     "25489625",
     "40265832",
     "52764767"
-   ],
-   "slug": "the-color-of-law",
-   "public": true
+   ]
   },
   {
    "id": "60461917",
@@ -3256,6 +3163,7 @@
    "dateRead": "2023/04/24",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "servants-of-the-damned",
    "themes": [
     "Crime & Justice",
     "Politics & Power"
@@ -3279,9 +3187,7 @@
     "53746013",
     "239511576",
     "55776895"
-   ],
-   "slug": "servants-of-the-damned",
-   "public": true
+   ]
   },
   {
    "id": "56898187",
@@ -3293,6 +3199,7 @@
    "dateRead": "2023/05/06",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "corruptible",
    "themes": [
     "Politics & Power",
     "Society & Culture"
@@ -3311,10 +3218,9 @@
     "50716468",
     "62926960",
     "53952310",
-    "12821470"
-   ],
-   "slug": "corruptible",
-   "public": true
+    "12821470",
+    "52038578"
+   ]
   },
   {
    "id": "36613747",
@@ -3326,6 +3232,7 @@
    "dateRead": "2023/05/07",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "how-to-change-your-mind",
    "themes": [
     "Psychology & Mind"
    ],
@@ -3345,9 +3252,7 @@
     "32895535",
     "30841980",
     "177152"
-   ],
-   "slug": "how-to-change-your-mind",
-   "public": true
+   ]
   },
   {
    "id": "61336679",
@@ -3359,6 +3264,7 @@
    "dateRead": "2023/05/21",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-declassification-engine",
    "themes": [
     "History & Foreign Affairs",
     "Society & Culture"
@@ -3379,9 +3285,7 @@
     "11305364",
     "24396871",
     "55429560"
-   ],
-   "slug": "the-declassification-engine",
-   "public": true
+   ]
   },
   {
    "id": "60393585",
@@ -3393,6 +3297,7 @@
    "dateRead": "2023/05/29",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "christianity-made-me-talk-like-an-idiot",
    "themes": [
     "Religion & Faith"
    ],
@@ -3408,10 +3313,9 @@
     "36373587",
     "78642417",
     "167770288",
-    "60209478"
-   ],
-   "slug": "christianity-made-me-talk-like-an-idiot",
-   "public": true
+    "60209478",
+    "220160840"
+   ]
   },
   {
    "id": "58446721",
@@ -3423,6 +3327,7 @@
    "dateRead": "2023/05/30",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-power-of-regret",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -3441,9 +3346,7 @@
     "37570546",
     "40121378",
     "53642699"
-   ],
-   "slug": "the-power-of-regret",
-   "public": true
+   ]
   },
   {
    "id": "22699774",
@@ -3455,6 +3358,7 @@
    "dateRead": "2023/06/04",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-lords-of-creation",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -3471,9 +3375,7 @@
     "6691186",
     "44034135",
     "211179569"
-   ],
-   "slug": "the-lords-of-creation",
-   "public": true
+   ]
   },
   {
    "id": "11324722",
@@ -3485,6 +3387,7 @@
    "dateRead": "2023/06/18",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-righteous-mind",
    "themes": [
     "Politics & Power"
    ],
@@ -3506,9 +3409,7 @@
     "216857785",
     "53952310",
     "30197119"
-   ],
-   "slug": "the-righteous-mind",
-   "public": true
+   ]
   },
   {
    "id": "60462182",
@@ -3520,6 +3421,7 @@
    "dateRead": "2023/06/25",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "tracers-in-the-dark",
    "themes": [
     "Crime & Justice",
     "Tech & Future"
@@ -3538,9 +3440,7 @@
     "37976541",
     "44643351",
     "40367623"
-   ],
-   "slug": "tracers-in-the-dark",
-   "public": true
+   ]
   },
   {
    "id": "3754705",
@@ -3552,6 +3452,7 @@
    "dateRead": "2023/06/27",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "little-black-book-of-entrepreneurship",
    "themes": [
     "Business & Finance"
    ],
@@ -3567,9 +3468,7 @@
     "69571",
     "38740751",
     "10418591"
-   ],
-   "slug": "little-black-book-of-entrepreneurship",
-   "public": true
+   ]
   },
   {
    "id": "6617037",
@@ -3581,6 +3480,7 @@
    "dateRead": "2023/07/04",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "debt",
    "themes": [
     "Business & Finance",
     "History & Foreign Affairs"
@@ -3600,9 +3500,7 @@
     "6691186",
     "210084984",
     "222376657"
-   ],
-   "slug": "debt",
-   "public": true
+   ]
   },
   {
    "id": "48806578",
@@ -3614,6 +3512,7 @@
    "dateRead": "2023/07/29",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "it-was-all-a-lie",
    "themes": [
     "Politics & Power"
    ],
@@ -3631,9 +3530,7 @@
     "101025305",
     "112975131",
     "13622997"
-   ],
-   "slug": "it-was-all-a-lie",
-   "public": true
+   ]
   },
   {
    "id": "29379464",
@@ -3645,6 +3542,7 @@
    "dateRead": "2023/08/01",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "american-pain",
    "themes": [
     "Crime & Justice"
    ],
@@ -3664,9 +3562,7 @@
     "209786389",
     "210454076",
     "220458600"
-   ],
-   "slug": "american-pain",
-   "public": true
+   ]
   },
   {
    "id": "39888196",
@@ -3678,6 +3574,7 @@
    "dateRead": "2023/08/01",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "trump-russia",
    "themes": [
     "Crime & Justice",
     "Politics & Power"
@@ -3695,9 +3592,7 @@
     "37506133",
     "52717403",
     "45730424"
-   ],
-   "slug": "trump-russia",
-   "public": true
+   ]
   },
   {
    "id": "62926960",
@@ -3709,6 +3604,7 @@
    "dateRead": "2023/08/06",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "end-times",
    "themes": [
     "Politics & Power",
     "Society & Culture"
@@ -3727,10 +3623,9 @@
     "53562067",
     "31850779",
     "195790601",
-    "216857785"
-   ],
-   "slug": "end-times",
-   "public": true
+    "216857785",
+    "18730589"
+   ]
   },
   {
    "id": "58203328",
@@ -3742,6 +3637,7 @@
    "dateRead": "2023/08/19",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "midnight-in-washington",
    "themes": [
     "Memoir & Biography",
     "Politics & Power"
@@ -3762,9 +3658,7 @@
     "211143818",
     "216818514",
     "40588302"
-   ],
-   "slug": "midnight-in-washington",
-   "public": true
+   ]
   },
   {
    "id": "41881472",
@@ -3776,6 +3670,7 @@
    "dateRead": "2023/08/22",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-psychology-of-money",
    "themes": [
     "Business & Finance",
     "Psychology & Mind"
@@ -3797,9 +3692,7 @@
     "204236707",
     "58485511",
     "222376657"
-   ],
-   "slug": "the-psychology-of-money",
-   "public": true
+   ]
   },
   {
    "id": "23258873",
@@ -3811,6 +3704,7 @@
    "dateRead": "2023/09/04",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-general-and-the-genius",
    "themes": [
     "History & Foreign Affairs",
     "Memoir & Biography"
@@ -3828,9 +3722,7 @@
     "24396871",
     "182733784",
     "199798785"
-   ],
-   "slug": "the-general-and-the-genius",
-   "public": true
+   ]
   },
   {
    "id": "33917107",
@@ -3842,6 +3734,7 @@
    "dateRead": "2023/09/05",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "on-tyranny",
    "themes": [
     "Politics & Power"
    ],
@@ -3862,9 +3755,7 @@
     "74892462",
     "242488944",
     "204901666"
-   ],
-   "slug": "on-tyranny",
-   "public": true
+   ]
   },
   {
    "id": "48557815",
@@ -3876,6 +3767,7 @@
    "dateRead": "2023/09/17",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "a-warning",
    "themes": [
     "Politics & Power"
    ],
@@ -3893,9 +3785,7 @@
     "50696262",
     "59720687",
     "40226205"
-   ],
-   "slug": "a-warning",
-   "public": true
+   ]
   },
   {
    "id": "74892462",
@@ -3907,6 +3797,7 @@
    "dateRead": "2023/09/17",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "blowback",
    "themes": [
     "Politics & Power"
    ],
@@ -3926,9 +3817,7 @@
     "230169785",
     "242488944",
     "204901666"
-   ],
-   "slug": "blowback",
-   "public": true
+   ]
   },
   {
    "id": "52764767",
@@ -3940,6 +3829,7 @@
    "dateRead": "2023/09/24",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "white-too-long",
    "themes": [
     "Religion & Faith"
    ],
@@ -3958,9 +3848,7 @@
     "32191706",
     "204316955",
     "112975131"
-   ],
-   "slug": "white-too-long",
-   "public": true
+   ]
   },
   {
    "id": "167770288",
@@ -3972,6 +3860,7 @@
    "dateRead": "2023/09/30",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "counting-the-cost",
    "themes": [
     "Memoir & Biography",
     "Religion & Faith"
@@ -3990,9 +3879,7 @@
     "53121662",
     "60209478",
     "78642417"
-   ],
-   "slug": "counting-the-cost",
-   "public": true
+   ]
   },
   {
    "id": "188437148",
@@ -4004,6 +3891,7 @@
    "dateRead": "2023/10/15",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "american-gun",
    "themes": [
     "Society & Culture"
    ],
@@ -4022,9 +3910,7 @@
     "220458600",
     "235629746",
     "221226864"
-   ],
-   "slug": "american-gun",
-   "public": true
+   ]
   },
   {
    "id": "122765395",
@@ -4036,6 +3922,7 @@
    "dateRead": "2023/10/17",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "elon-musk",
    "themes": [
     "Memoir & Biography",
     "Tech & Future"
@@ -4053,10 +3940,9 @@
     "220161058",
     "207567968",
     "37976541",
-    "213034913"
-   ],
-   "slug": "elon-musk",
-   "public": true
+    "213034913",
+    "218319936"
+   ]
   },
   {
    "id": "113934",
@@ -4068,6 +3954,7 @@
    "dateRead": "2023/10/22",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-goal",
    "themes": [
     "Business & Finance",
     "Personal Growth & Leadership"
@@ -4084,9 +3971,7 @@
     "38390751",
     "13586928",
     "1633"
-   ],
-   "slug": "the-goal",
-   "public": true
+   ]
   },
   {
    "id": "32895535",
@@ -4098,6 +3983,7 @@
    "dateRead": "2023/10/29",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "why-buddhism-is-true",
    "themes": [
     "Psychology & Mind"
    ],
@@ -4120,9 +4006,7 @@
     "241471051",
     "18144590",
     "139360"
-   ],
-   "slug": "why-buddhism-is-true",
-   "public": true
+   ]
   },
   {
    "id": "78642417",
@@ -4134,6 +4018,7 @@
    "dateRead": "2023/11/02",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "testimony",
    "themes": [
     "Memoir & Biography",
     "Religion & Faith"
@@ -4155,9 +4040,7 @@
     "112975131",
     "60209478",
     "204316955"
-   ],
-   "slug": "testimony",
-   "public": true
+   ]
   },
   {
    "id": "61796680",
@@ -4169,6 +4052,7 @@
    "dateRead": "2023/11/05",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "recoding-america",
    "themes": [
     "Tech & Future"
    ],
@@ -4185,9 +4069,7 @@
     "58433804",
     "197773418",
     "223736214"
-   ],
-   "slug": "recoding-america",
-   "public": true
+   ]
   },
   {
    "id": "34014215",
@@ -4199,6 +4081,7 @@
    "dateRead": "2023/11/10",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "happiness-hbr-emotional-intelligence",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -4217,9 +4100,7 @@
     "13588356",
     "40109367",
     "56688463"
-   ],
-   "slug": "happiness-hbr-emotional-intelligence",
-   "public": true
+   ]
   },
   {
    "id": "101025305",
@@ -4231,6 +4112,7 @@
    "dateRead": "2023/11/10",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "romney",
    "themes": [
     "Memoir & Biography"
    ],
@@ -4249,9 +4131,7 @@
     "122769179",
     "216818514",
     "13622997"
-   ],
-   "slug": "romney",
-   "public": true
+   ]
   },
   {
    "id": "58433804",
@@ -4263,6 +4143,7 @@
    "dateRead": "2023/11/14",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-future-of-work",
    "themes": [
     "Tech & Future"
    ],
@@ -4279,9 +4160,7 @@
     "56863374",
     "197773418",
     "25744928"
-   ],
-   "slug": "the-future-of-work",
-   "public": true
+   ]
   },
   {
    "id": "168677579",
@@ -4293,6 +4172,7 @@
    "dateRead": "2023/11/14",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "prequel",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -4313,9 +4193,7 @@
     "62919402",
     "195790601",
     "37506133"
-   ],
-   "slug": "prequel",
-   "public": true
+   ]
   },
   {
    "id": "148365315",
@@ -4327,6 +4205,7 @@
    "dateRead": "2023/11/21",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "tired-of-winning",
    "themes": [
     "Politics & Power"
    ],
@@ -4346,9 +4225,7 @@
     "60387898",
     "230169785",
     "60584133"
-   ],
-   "slug": "tired-of-winning",
-   "public": true
+   ]
   },
   {
    "id": "49378800",
@@ -4360,6 +4237,7 @@
    "dateRead": "2023/11/22",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "front-row-at-the-trump-show",
    "themes": [
     "Politics & Power"
    ],
@@ -4379,9 +4257,7 @@
     "230169785",
     "35108805",
     "96123"
-   ],
-   "slug": "front-row-at-the-trump-show",
-   "public": true
+   ]
   },
   {
    "id": "58395041",
@@ -4393,6 +4269,7 @@
    "dateRead": "2023/11/23",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "betrayal",
    "themes": [
     "Politics & Power"
    ],
@@ -4414,9 +4291,7 @@
     "52576769",
     "58412441",
     "58436503"
-   ],
-   "slug": "betrayal",
-   "public": true
+   ]
   },
   {
    "id": "200342444",
@@ -4428,6 +4303,7 @@
    "dateRead": "2023/11/25",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "pipeline-to-power",
    "themes": [
     "Politics & Power",
     "Society & Culture"
@@ -4448,9 +4324,7 @@
     "223854728",
     "44453035",
     "214325852"
-   ],
-   "slug": "pipeline-to-power",
-   "public": true
+   ]
   },
   {
    "id": "123273891",
@@ -4462,6 +4336,7 @@
    "dateRead": "2023/12/03",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-fabulist",
    "themes": [
     "Politics & Power"
    ],
@@ -4477,9 +4352,7 @@
     "37976541",
     "60387898",
     "199797519"
-   ],
-   "slug": "the-fabulist",
-   "public": true
+   ]
   },
   {
    "id": "134115745",
@@ -4491,6 +4364,7 @@
    "dateRead": "2023/12/07",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "oath-and-honor",
    "themes": [
     "Memoir & Biography",
     "Politics & Power"
@@ -4516,9 +4390,7 @@
     "60584133",
     "209812423",
     "40588302"
-   ],
-   "slug": "oath-and-honor",
-   "public": true
+   ]
   },
   {
    "id": "112975131",
@@ -4530,6 +4402,7 @@
    "dateRead": "2023/12/10",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "the-kingdom-the-power-and-the-glory",
    "themes": [
     "Religion & Faith"
    ],
@@ -4549,10 +4422,9 @@
     "52764767",
     "78642417",
     "44453035",
-    "204316955"
-   ],
-   "slug": "the-kingdom-the-power-and-the-glory",
-   "public": true
+    "204316955",
+    "220160840"
+   ]
   },
   {
    "id": "41012533",
@@ -4564,6 +4436,7 @@
    "dateRead": "2023/12/17",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "fear",
    "themes": [
     "Politics & Power"
    ],
@@ -4590,9 +4463,7 @@
     "54897158",
     "96123",
     "35356384"
-   ],
-   "slug": "fear",
-   "public": true
+   ]
   },
   {
    "id": "53317913",
@@ -4604,6 +4475,7 @@
    "dateRead": "2023/12/21",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "rage",
    "themes": [
     "Politics & Power"
    ],
@@ -4623,9 +4495,7 @@
     "27507",
     "52576769",
     "44425746"
-   ],
-   "slug": "rage",
-   "public": true
+   ]
   },
   {
    "id": "58546518",
@@ -4637,6 +4507,7 @@
    "dateRead": "2023/12/24",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "peril",
    "themes": [
     "Politics & Power"
    ],
@@ -4662,9 +4533,7 @@
     "58436503",
     "59720687",
     "96123"
-   ],
-   "slug": "peril",
-   "public": true
+   ]
   },
   {
    "id": "122769179",
@@ -4676,6 +4545,7 @@
    "dateRead": "2023/12/29",
    "yearRead": "2023",
    "shelf": "read",
+   "slug": "renegade",
    "themes": [
     "Memoir & Biography",
     "Politics & Power"
@@ -4697,9 +4567,7 @@
     "211143818",
     "216818514",
     "209812423"
-   ],
-   "slug": "renegade",
-   "public": true
+   ]
   },
   {
    "id": "58935131",
@@ -4711,6 +4579,7 @@
    "dateRead": "2024/01/05",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "unthinkable",
    "themes": [
     "Politics & Power"
    ],
@@ -4728,9 +4597,7 @@
     "122769179",
     "211143818",
     "40588302"
-   ],
-   "slug": "unthinkable",
-   "public": true
+   ]
   },
   {
    "id": "55723020",
@@ -4742,6 +4609,7 @@
    "dateRead": "2024/01/17",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "dopamine-nation",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -4766,9 +4634,7 @@
     "43868109",
     "44643351",
     "218726721"
-   ],
-   "slug": "dopamine-nation",
-   "public": true
+   ]
   },
   {
    "id": "32622193",
@@ -4780,6 +4646,7 @@
    "dateRead": "2024/02/07",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "a-little-history-of-economics",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -4797,9 +4664,7 @@
     "12158480",
     "210084984",
     "222376657"
-   ],
-   "slug": "a-little-history-of-economics",
-   "public": true
+   ]
   },
   {
    "id": "6691186",
@@ -4811,6 +4676,7 @@
    "dateRead": "2024/03/03",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "how-markets-fail",
    "themes": [
     "Business & Finance"
    ],
@@ -4834,9 +4700,7 @@
     "58450272",
     "12158480",
     "199797519"
-   ],
-   "slug": "how-markets-fail",
-   "public": true
+   ]
   },
   {
    "id": "62919402",
@@ -4848,6 +4712,7 @@
    "dateRead": "2024/03/20",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "homegrown",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -4866,9 +4731,7 @@
     "61423989",
     "235629746",
     "195790601"
-   ],
-   "slug": "homegrown",
-   "public": true
+   ]
   },
   {
    "id": "25744928",
@@ -4880,6 +4743,7 @@
    "dateRead": "2024/03/26",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "deep-work",
    "themes": [
     "Personal Growth & Leadership"
    ],
@@ -4904,9 +4768,7 @@
     "56688463",
     "22571554",
     "368593"
-   ],
-   "slug": "deep-work",
-   "public": true
+   ]
   },
   {
    "id": "46223297",
@@ -4918,6 +4780,7 @@
    "dateRead": "2024/03/28",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "permanent-record",
    "themes": [
     "Memoir & Biography"
    ],
@@ -4939,9 +4802,7 @@
     "207689829",
     "210963085",
     "223436601"
-   ],
-   "slug": "permanent-record",
-   "public": true
+   ]
   },
   {
    "id": "13586928",
@@ -4953,6 +4814,7 @@
    "dateRead": "2024/04/02",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "playing-to-win",
    "themes": [
     "Business & Finance"
    ],
@@ -4969,9 +4831,7 @@
     "113934",
     "29342515",
     "10009377"
-   ],
-   "slug": "playing-to-win",
-   "public": true
+   ]
   },
   {
    "id": "197773418",
@@ -4983,6 +4843,7 @@
    "dateRead": "2024/04/02",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "slow-productivity",
    "themes": [
     "Personal Growth & Leadership"
    ],
@@ -5009,9 +4870,7 @@
     "41721428",
     "368593",
     "39901314"
-   ],
-   "slug": "slow-productivity",
-   "public": true
+   ]
   },
   {
    "id": "182733784",
@@ -5023,6 +4882,7 @@
    "dateRead": "2024/04/19",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "nuclear-war",
    "themes": [
     "Business & Finance",
     "History & Foreign Affairs"
@@ -5043,9 +4903,7 @@
     "40538681",
     "90590134",
     "243319478"
-   ],
-   "slug": "nuclear-war",
-   "public": true
+   ]
   },
   {
    "id": "24396871",
@@ -5057,6 +4915,7 @@
    "dateRead": "2024/04/26",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "the-pentagon-s-brain",
    "themes": [
     "History & Foreign Affairs",
     "Tech & Future"
@@ -5082,9 +4941,7 @@
     "50716468",
     "210963085",
     "243319478"
-   ],
-   "slug": "the-pentagon-s-brain",
-   "public": true
+   ]
   },
   {
    "id": "30841980",
@@ -5096,6 +4953,7 @@
    "dateRead": "2024/05/02",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "phenomena",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -5113,9 +4971,7 @@
     "41716921",
     "36613747",
     "210963085"
-   ],
-   "slug": "phenomena",
-   "public": true
+   ]
   },
   {
    "id": "53642699",
@@ -5127,6 +4983,7 @@
    "dateRead": "2024/05/04",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "the-mountain-is-you",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -5144,9 +5001,7 @@
     "58446721",
     "6596",
     "13588356"
-   ],
-   "slug": "the-mountain-is-you",
-   "public": true
+   ]
   },
   {
    "id": "41716921",
@@ -5158,6 +5013,7 @@
    "dateRead": "2024/05/09",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "surprise-kill-vanish",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -5182,9 +5038,7 @@
     "199798602",
     "220458600",
     "211003730"
-   ],
-   "slug": "surprise-kill-vanish",
-   "public": true
+   ]
   },
   {
    "id": "11305364",
@@ -5196,6 +5050,7 @@
    "dateRead": "2024/05/15",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "area-51",
    "themes": [
     "History & Foreign Affairs",
     "Society & Culture"
@@ -5216,9 +5071,7 @@
     "41716921",
     "17333289",
     "210963085"
-   ],
-   "slug": "area-51",
-   "public": true
+   ]
   },
   {
    "id": "17333289",
@@ -5230,6 +5083,7 @@
    "dateRead": "2024/05/19",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "operation-paperclip",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -5250,9 +5104,7 @@
     "11305364",
     "40538681",
     "243319478"
-   ],
-   "slug": "operation-paperclip",
-   "public": true
+   ]
   },
   {
    "id": "55429560",
@@ -5264,6 +5116,7 @@
    "dateRead": "2024/05/27",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "first-platoon",
    "themes": [
     "History & Foreign Affairs",
     "Society & Culture"
@@ -5283,9 +5136,7 @@
     "41436213",
     "220458600",
     "56898213"
-   ],
-   "slug": "first-platoon",
-   "public": true
+   ]
   },
   {
    "id": "195820877",
@@ -5297,6 +5148,7 @@
    "dateRead": "2024/06/02",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "world-on-the-brink",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power",
@@ -5318,9 +5170,7 @@
     "56620811",
     "90590134",
     "205495275"
-   ],
-   "slug": "world-on-the-brink",
-   "public": true
+   ]
   },
   {
    "id": "59546340",
@@ -5332,6 +5182,7 @@
    "dateRead": "2024/06/11",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "sandy-hook",
    "themes": [
     "Crime & Justice",
     "Society & Culture"
@@ -5354,9 +5205,7 @@
     "207689829",
     "222733476",
     "203040700"
-   ],
-   "slug": "sandy-hook",
-   "public": true
+   ]
   },
   {
    "id": "157095669",
@@ -5368,6 +5217,7 @@
    "dateRead": "2024/06/12",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "hidden-potential",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -5389,9 +5239,7 @@
     "157981712",
     "213034913",
     "12609433"
-   ],
-   "slug": "hidden-potential",
-   "public": true
+   ]
   },
   {
    "id": "58450272",
@@ -5403,6 +5251,7 @@
    "dateRead": "2024/06/16",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "trillion-dollar-triage",
    "themes": [
     "Business & Finance"
    ],
@@ -5421,9 +5270,7 @@
     "207689829",
     "211179569",
     "55361205"
-   ],
-   "slug": "trillion-dollar-triage",
-   "public": true
+   ]
   },
   {
    "id": "43868109",
@@ -5435,6 +5282,7 @@
    "dateRead": "2024/06/23",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "empire-of-pain",
    "themes": [
     "Crime & Justice",
     "Society & Culture"
@@ -5460,9 +5308,7 @@
     "209786389",
     "199797519",
     "218671853"
-   ],
-   "slug": "empire-of-pain",
-   "public": true
+   ]
   },
   {
    "id": "56863374",
@@ -5474,6 +5320,7 @@
    "dateRead": "2024/06/29",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "mindfulness",
    "themes": [
     "Personal Growth & Leadership",
     "Psychology & Mind"
@@ -5492,9 +5339,7 @@
     "32895535",
     "56688463",
     "44595007"
-   ],
-   "slug": "mindfulness",
-   "public": true
+   ]
   },
   {
    "id": "195790601",
@@ -5506,6 +5351,7 @@
    "dateRead": "2024/07/12",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "when-the-clock-broke",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -5526,9 +5372,7 @@
     "62926960",
     "61423989",
     "235629746"
-   ],
-   "slug": "when-the-clock-broke",
-   "public": true
+   ]
   },
   {
    "id": "27161156",
@@ -5540,6 +5384,7 @@
    "dateRead": "2024/07/26",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "hillbilly-elegy",
    "themes": [
     "Memoir & Biography",
     "Politics & Power",
@@ -5562,9 +5407,7 @@
     "199344862",
     "27209433",
     "221226864"
-   ],
-   "slug": "hillbilly-elegy",
-   "public": true
+   ]
   },
   {
    "id": "52576769",
@@ -5576,6 +5419,7 @@
    "dateRead": "2024/07/28",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "a-very-stable-genius",
    "themes": [
     "Politics & Power"
    ],
@@ -5595,9 +5439,7 @@
     "58546518",
     "60387898",
     "58395041"
-   ],
-   "slug": "a-very-stable-genius",
-   "public": true
+   ]
   },
   {
    "id": "90590139",
@@ -5609,6 +5451,7 @@
    "dateRead": "2024/07/29",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "democracy-awakening",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -5636,9 +5479,7 @@
     "13622997",
     "242488944",
     "204901666"
-   ],
-   "slug": "democracy-awakening",
-   "public": true
+   ]
   },
   {
    "id": "58412441",
@@ -5650,6 +5491,7 @@
    "dateRead": "2024/08/03",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "i-alone-can-fix-it",
    "themes": [
     "Politics & Power"
    ],
@@ -5670,9 +5512,7 @@
     "59720687",
     "50696262",
     "239511576"
-   ],
-   "slug": "i-alone-can-fix-it",
-   "public": true
+   ]
   },
   {
    "id": "55057586",
@@ -5684,6 +5524,7 @@
    "dateRead": "2024/08/04",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "zero-fail",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -5700,9 +5541,7 @@
     "27214080",
     "239511576",
     "198493808"
-   ],
-   "slug": "zero-fail",
-   "public": true
+   ]
   },
   {
    "id": "211143818",
@@ -5714,6 +5553,7 @@
    "dateRead": "2024/08/10",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "the-art-of-power",
    "themes": [
     "Business & Finance",
     "Memoir & Biography",
@@ -5737,9 +5577,7 @@
     "210999999",
     "223927267",
     "216818514"
-   ],
-   "slug": "the-art-of-power",
-   "public": true
+   ]
   },
   {
    "id": "41436213",
@@ -5751,6 +5589,7 @@
    "dateRead": "2024/08/12",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "sandworm",
    "themes": [
     "History & Foreign Affairs",
     "Tech & Future"
@@ -5772,9 +5611,7 @@
     "211003730",
     "63365317",
     "183932735"
-   ],
-   "slug": "sandworm",
-   "public": true
+   ]
   },
   {
    "id": "36595101",
@@ -5786,6 +5623,7 @@
    "dateRead": "2024/08/15",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "fire-and-fury",
    "themes": [
     "Politics & Power"
    ],
@@ -5806,9 +5644,7 @@
     "35276688",
     "40226205",
     "60387898"
-   ],
-   "slug": "fire-and-fury",
-   "public": true
+   ]
   },
   {
    "id": "58436503",
@@ -5820,6 +5656,7 @@
    "dateRead": "2024/08/17",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "landslide",
    "themes": [
     "Politics & Power"
    ],
@@ -5840,9 +5677,7 @@
     "55776895",
     "222292401",
     "203579090"
-   ],
-   "slug": "landslide",
-   "public": true
+   ]
   },
   {
    "id": "59493278",
@@ -5854,6 +5689,7 @@
    "dateRead": "2024/08/18",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "they-want-to-kill-americans",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -5873,9 +5709,7 @@
     "199798602",
     "59546340",
     "235629746"
-   ],
-   "slug": "they-want-to-kill-americans",
-   "public": true
+   ]
   },
   {
    "id": "50487024",
@@ -5887,6 +5721,7 @@
    "dateRead": "2024/08/23",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "how-did-we-get-here",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -5907,9 +5742,7 @@
     "209366041",
     "40588302",
     "60321052"
-   ],
-   "slug": "how-did-we-get-here",
-   "public": true
+   ]
   },
   {
    "id": "41939872",
@@ -5921,6 +5754,7 @@
    "dateRead": "2024/08/24",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "the-threat",
    "themes": [
     "Memoir & Biography",
     "Politics & Power"
@@ -5942,9 +5776,7 @@
     "54897158",
     "96123",
     "44425746"
-   ],
-   "slug": "the-threat",
-   "public": true
+   ]
   },
   {
    "id": "52118381",
@@ -5956,6 +5788,7 @@
    "dateRead": "2024/08/24",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "the-system",
    "themes": [
     "Politics & Power",
     "Society & Culture"
@@ -5977,9 +5810,7 @@
     "176444106",
     "233334472",
     "242488944"
-   ],
-   "slug": "the-system",
-   "public": true
+   ]
   },
   {
    "id": "52717403",
@@ -5991,6 +5822,7 @@
    "dateRead": "2024/08/27",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "american-oligarchs",
    "themes": [
     "Politics & Power",
     "Society & Culture"
@@ -6010,10 +5842,9 @@
     "60387898",
     "54916250",
     "224003226",
-    "53746013"
-   ],
-   "slug": "american-oligarchs",
-   "public": true
+    "53746013",
+    "52038578"
+   ]
   },
   {
    "id": "35108805",
@@ -6025,6 +5856,7 @@
    "dateRead": "2024/08/29",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "a-higher-loyalty",
    "themes": [
     "Memoir & Biography",
     "Politics & Power",
@@ -6055,9 +5887,7 @@
     "44425746",
     "239511576",
     "55361205"
-   ],
-   "slug": "a-higher-loyalty",
-   "public": true
+   ]
   },
   {
    "id": "40226205",
@@ -6069,6 +5899,7 @@
    "dateRead": "2024/08/31",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "unhinged",
    "themes": [
     "Politics & Power"
    ],
@@ -6085,9 +5916,7 @@
     "35108805",
     "54916250",
     "60387898"
-   ],
-   "slug": "unhinged",
-   "public": true
+   ]
   },
   {
    "id": "34114362",
@@ -6099,6 +5928,7 @@
    "dateRead": "2024/09/02",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "what-happened",
    "themes": [
     "Memoir & Biography",
     "Politics & Power",
@@ -6117,9 +5947,7 @@
     "216864525",
     "60387898",
     "232466984"
-   ],
-   "slug": "what-happened",
-   "public": true
+   ]
   },
   {
    "id": "150065063",
@@ -6131,6 +5959,7 @@
    "dateRead": "2024/09/03",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "attack-from-within",
    "themes": [
     "Politics & Power",
     "Society & Culture"
@@ -6152,9 +5981,7 @@
     "204927599",
     "214325852",
     "223436601"
-   ],
-   "slug": "attack-from-within",
-   "public": true
+   ]
   },
   {
    "id": "60584133",
@@ -6166,6 +5993,7 @@
    "dateRead": "2024/09/05",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "the-big-lie",
    "themes": [
     "Politics & Power"
    ],
@@ -6183,9 +6011,7 @@
     "134115745",
     "150065063",
     "209999111"
-   ],
-   "slug": "the-big-lie",
-   "public": true
+   ]
   },
   {
    "id": "35230469",
@@ -6197,6 +6023,7 @@
    "dateRead": "2024/09/08",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "fascism",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -6216,9 +6043,7 @@
     "183932735",
     "90590139",
     "36177789"
-   ],
-   "slug": "fascism",
-   "public": true
+   ]
   },
   {
    "id": "56124858",
@@ -6230,6 +6055,7 @@
    "dateRead": "2024/09/11",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "the-reckoning",
    "themes": [
     "Politics & Power",
     "Society & Culture"
@@ -6247,9 +6073,7 @@
     "50997029",
     "54114950",
     "90590139"
-   ],
-   "slug": "the-reckoning",
-   "public": true
+   ]
   },
   {
    "id": "199344862",
@@ -6261,6 +6085,7 @@
    "dateRead": "2024/09/13",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "white-rural-rage",
    "themes": [
     "Politics & Power"
    ],
@@ -6280,9 +6105,7 @@
     "27209433",
     "53952310",
     "12821470"
-   ],
-   "slug": "white-rural-rage",
-   "public": true
+   ]
   },
   {
    "id": "37506133",
@@ -6294,6 +6117,7 @@
    "dateRead": "2024/09/19",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "the-plot-to-destroy-democracy",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -6317,9 +6141,7 @@
     "183932735",
     "40367623",
     "211003730"
-   ],
-   "slug": "the-plot-to-destroy-democracy",
-   "public": true
+   ]
   },
   {
    "id": "60387898",
@@ -6331,6 +6153,7 @@
    "dateRead": "2024/09/21",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "confidence-man",
    "themes": [
     "Politics & Power"
    ],
@@ -6364,9 +6187,7 @@
     "222292401",
     "54897158",
     "96123"
-   ],
-   "slug": "confidence-man",
-   "public": true
+   ]
   },
   {
    "id": "208930976",
@@ -6378,6 +6199,7 @@
    "dateRead": "2024/09/30",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "lucky-loser",
    "themes": [
     "Politics & Power",
     "Society & Culture"
@@ -6397,9 +6219,7 @@
     "45730424",
     "54916250",
     "224003226"
-   ],
-   "slug": "lucky-loser",
-   "public": true
+   ]
   },
   {
    "id": "204927599",
@@ -6411,6 +6231,7 @@
    "dateRead": "2024/10/09",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "nexus",
    "themes": [
     "History & Foreign Affairs",
     "Tech & Future"
@@ -6432,9 +6253,7 @@
     "150065063",
     "63251778",
     "241471051"
-   ],
-   "slug": "nexus",
-   "public": true
+   ]
   },
   {
    "id": "50486810",
@@ -6446,6 +6265,7 @@
    "dateRead": "2024/10/13",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "war-for-eternity",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -6465,9 +6285,7 @@
     "44453035",
     "183932735",
     "231198166"
-   ],
-   "slug": "war-for-eternity",
-   "public": true
+   ]
   },
   {
    "id": "217217007",
@@ -6479,6 +6297,7 @@
    "dateRead": "2024/10/17",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "war",
    "themes": [
     "Politics & Power"
    ],
@@ -6498,9 +6317,7 @@
     "59720687",
     "223927267",
     "63365317"
-   ],
-   "slug": "war",
-   "public": true
+   ]
   },
   {
    "id": "12158480",
@@ -6512,6 +6329,7 @@
    "dateRead": "2024/10/21",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "why-nations-fail",
    "themes": [
     "Politics & Power"
    ],
@@ -6533,10 +6351,9 @@
     "63251778",
     "205495275",
     "31125556",
-    "176444106"
-   ],
-   "slug": "why-nations-fail",
-   "public": true
+    "176444106",
+    "18730589"
+   ]
   },
   {
    "id": "54916250",
@@ -6548,6 +6365,7 @@
    "dateRead": "2024/10/23",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "disloyal",
    "themes": [
     "Memoir & Biography",
     "Politics & Power"
@@ -6568,9 +6386,7 @@
     "60387898",
     "208930976",
     "54897158"
-   ],
-   "slug": "disloyal",
-   "public": true
+   ]
   },
   {
    "id": "209812423",
@@ -6582,6 +6398,7 @@
    "dateRead": "2024/10/24",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "true-gretch",
    "themes": [
     "Memoir & Biography",
     "Personal Growth & Leadership"
@@ -6599,9 +6416,7 @@
     "216818514",
     "122769179",
     "134115745"
-   ],
-   "slug": "true-gretch",
-   "public": true
+   ]
   },
   {
    "id": "204316955",
@@ -6613,6 +6428,7 @@
    "dateRead": "2024/10/27",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "undivided",
    "themes": [
     "Politics & Power",
     "Religion & Faith"
@@ -6631,9 +6447,7 @@
     "78642417",
     "40265832",
     "35099718"
-   ],
-   "slug": "undivided",
-   "public": true
+   ]
   },
   {
    "id": "63251778",
@@ -6645,6 +6459,7 @@
    "dateRead": "2024/10/31",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "the-heat-will-kill-you-first",
    "themes": [
     "Society & Culture",
     "Tech & Future"
@@ -6661,9 +6476,7 @@
     "176444106",
     "43868109",
     "204927599"
-   ],
-   "slug": "the-heat-will-kill-you-first",
-   "public": true
+   ]
   },
   {
    "id": "201896702",
@@ -6675,6 +6488,7 @@
    "dateRead": "2024/11/03",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "at-war-with-ourselves",
    "themes": [
     "Memoir & Biography",
     "Politics & Power"
@@ -6693,9 +6507,7 @@
     "50696262",
     "35108805",
     "25716725"
-   ],
-   "slug": "at-war-with-ourselves",
-   "public": true
+   ]
   },
   {
    "id": "199798785",
@@ -6707,6 +6519,7 @@
    "dateRead": "2024/11/22",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "challenger",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -6723,9 +6536,7 @@
     "23258873",
     "37976541",
     "24396871"
-   ],
-   "slug": "challenger",
-   "public": true
+   ]
   },
   {
    "id": "40538681",
@@ -6737,6 +6548,7 @@
    "dateRead": "2024/11/26",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "midnight-in-chernobyl",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -6752,10 +6564,9 @@
     "199798785",
     "55994102",
     "17333289",
+    "18730589",
     "243319478"
-   ],
-   "slug": "midnight-in-chernobyl",
-   "public": true
+   ]
   },
   {
    "id": "198493808",
@@ -6767,6 +6578,7 @@
    "dateRead": "2024/11/29",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "the-situation-room",
    "themes": [
     "Politics & Power"
    ],
@@ -6785,9 +6597,7 @@
     "59720687",
     "209366041",
     "55361205"
-   ],
-   "slug": "the-situation-room",
-   "public": true
+   ]
   },
   {
    "id": "40588302",
@@ -6799,6 +6609,7 @@
    "dateRead": "2024/12/01",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "impeachment",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -6818,9 +6629,7 @@
     "18927310",
     "96123",
     "25786035"
-   ],
-   "slug": "impeachment",
-   "public": true
+   ]
   },
   {
    "id": "55994102",
@@ -6832,6 +6641,7 @@
    "dateRead": "2024/12/06",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "flying-blind",
    "themes": [
     "Business & Finance"
    ],
@@ -6851,10 +6661,9 @@
     "43868109",
     "207567968",
     "216247552",
-    "218671853"
-   ],
-   "slug": "flying-blind",
-   "public": true
+    "218671853",
+    "25817264"
+   ]
   },
   {
    "id": "171681821",
@@ -6866,6 +6675,7 @@
    "dateRead": "2024/12/09",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "the-anxious-generation",
    "themes": [
     "Psychology & Mind",
     "Society & Culture"
@@ -6885,9 +6695,7 @@
     "223436601",
     "218726721",
     "60321052"
-   ],
-   "slug": "the-anxious-generation",
-   "public": true
+   ]
   },
   {
    "id": "59720687",
@@ -6899,6 +6707,7 @@
    "dateRead": "2024/12/17",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "a-sacred-oath",
    "themes": [
     "History & Foreign Affairs",
     "Memoir & Biography",
@@ -6924,9 +6733,7 @@
     "58412441",
     "27507",
     "27506"
-   ],
-   "slug": "a-sacred-oath",
-   "public": true
+   ]
   },
   {
    "id": "44643351",
@@ -6938,6 +6745,7 @@
    "dateRead": "2024/12/18",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "fentanyl-inc",
    "themes": [
     "Crime & Justice"
    ],
@@ -6956,9 +6764,7 @@
     "31920777",
     "218726721",
     "220458600"
-   ],
-   "slug": "fentanyl-inc",
-   "public": true
+   ]
   },
   {
    "id": "199461393",
@@ -6970,6 +6776,7 @@
    "dateRead": "2024/12/20",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "the-death-of-truth",
    "themes": [
     "Business & Finance",
     "Politics & Power"
@@ -6996,9 +6803,7 @@
     "203579090",
     "231198166",
     "204901666"
-   ],
-   "slug": "the-death-of-truth",
-   "public": true
+   ]
   },
   {
    "id": "63365317",
@@ -7010,6 +6815,7 @@
    "dateRead": "2024/12/22",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "the-showman",
    "themes": [
     "Memoir & Biography",
     "Politics & Power"
@@ -7027,9 +6833,7 @@
     "217217007",
     "24040192",
     "211003730"
-   ],
-   "slug": "the-showman",
-   "public": true
+   ]
   },
   {
    "id": "16130157",
@@ -7041,6 +6845,7 @@
    "dateRead": "2024/12/30",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "the-firm",
    "themes": [
     "Business & Finance"
    ],
@@ -7059,10 +6864,9 @@
     "38740751",
     "218671853",
     "216247552",
-    "207567968"
-   ],
-   "slug": "the-firm",
-   "public": true
+    "207567968",
+    "52038578"
+   ]
   },
   {
    "id": "207689829",
@@ -7074,6 +6878,7 @@
    "dateRead": "2024/12/31",
    "yearRead": "2024",
    "shelf": "read",
+   "slug": "on-call",
    "themes": [
     "Memoir & Biography"
    ],
@@ -7090,9 +6895,7 @@
     "37976541",
     "46223297",
     "59546340"
-   ],
-   "slug": "on-call",
-   "public": true
+   ]
   },
   {
    "id": "2612",
@@ -7104,6 +6907,7 @@
    "dateRead": "2025/01/01",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "the-tipping-point",
    "themes": [
     "Society & Culture"
    ],
@@ -7120,9 +6924,7 @@
     "11324722",
     "40121378",
     "41215667"
-   ],
-   "slug": "the-tipping-point",
-   "public": true
+   ]
   },
   {
    "id": "54114950",
@@ -7134,6 +6936,7 @@
    "dateRead": "2025/01/04",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "too-much-and-never-enough",
    "themes": [
     "Politics & Power"
    ],
@@ -7150,9 +6953,7 @@
     "60387898",
     "208930976",
     "18693771"
-   ],
-   "slug": "too-much-and-never-enough",
-   "public": true
+   ]
   },
   {
    "id": "216857785",
@@ -7164,6 +6965,7 @@
    "dateRead": "2025/01/12",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "revenge-of-the-tipping-point",
    "themes": [
     "Society & Culture"
    ],
@@ -7181,9 +6983,7 @@
     "40046060",
     "35171984",
     "62926960"
-   ],
-   "slug": "revenge-of-the-tipping-point",
-   "public": true
+   ]
   },
   {
    "id": "45046725",
@@ -7195,6 +6995,7 @@
    "dateRead": "2025/01/14",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "let-the-people-pick-the-president",
    "themes": [
     "Politics & Power"
    ],
@@ -7210,9 +7011,7 @@
     "35356384",
     "90590139",
     "13622997"
-   ],
-   "slug": "let-the-people-pick-the-president",
-   "public": true
+   ]
   },
   {
    "id": "209786389",
@@ -7224,6 +7023,7 @@
    "dateRead": "2025/01/19",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "framed",
    "themes": [
     "Crime & Justice"
    ],
@@ -7243,9 +7043,7 @@
     "210454076",
     "222733476",
     "203040700"
-   ],
-   "slug": "framed",
-   "public": true
+   ]
   },
   {
    "id": "183932735",
@@ -7257,6 +7055,7 @@
    "dateRead": "2025/01/20",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "autocracy-inc",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -7277,10 +7076,9 @@
     "211003730",
     "45730424",
     "50716468",
-    "55749283"
-   ],
-   "slug": "autocracy-inc",
-   "public": true
+    "55749283",
+    "52038578"
+   ]
   },
   {
    "id": "210999999",
@@ -7292,6 +7090,7 @@
    "dateRead": "2025/01/25",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "something-lost-something-gained",
    "themes": [
     "Memoir & Biography"
    ],
@@ -7309,9 +7108,7 @@
     "232466984",
     "27214080",
     "223927267"
-   ],
-   "slug": "something-lost-something-gained",
-   "public": true
+   ]
   },
   {
    "id": "61423989",
@@ -7323,6 +7120,7 @@
    "dateRead": "2025/02/05",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "a-fever-in-the-heartland",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -7344,9 +7142,7 @@
     "27209433",
     "199798602",
     "235629746"
-   ],
-   "slug": "a-fever-in-the-heartland",
-   "public": true
+   ]
   },
   {
    "id": "60209478",
@@ -7358,6 +7154,7 @@
    "dateRead": "2025/02/16",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "a-billion-years",
    "themes": [
     "Memoir & Biography",
     "Religion & Faith"
@@ -7374,9 +7171,7 @@
     "60393585",
     "167770288",
     "78642417"
-   ],
-   "slug": "a-billion-years",
-   "public": true
+   ]
   },
   {
    "id": "209999111",
@@ -7388,6 +7183,7 @@
    "dateRead": "2025/02/16",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "ministry-of-truth",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power",
@@ -7407,9 +7203,7 @@
     "60584133",
     "199461393",
     "60704408"
-   ],
-   "slug": "ministry-of-truth",
-   "public": true
+   ]
   },
   {
    "id": "41721428",
@@ -7421,6 +7215,7 @@
    "dateRead": "2025/02/19",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "cant-hurt-me",
    "themes": [
     "Memoir & Biography",
     "Psychology & Mind"
@@ -7440,9 +7235,7 @@
     "197773418",
     "38714388",
     "3228917"
-   ],
-   "slug": "cant-hurt-me",
-   "public": true
+   ]
   },
   {
    "id": "50716468",
@@ -7454,6 +7247,7 @@
    "dateRead": "2025/02/28",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "becoming-kim-jong-un",
    "themes": [
     "History & Foreign Affairs",
     "Memoir & Biography"
@@ -7472,9 +7266,7 @@
     "24396871",
     "41716921",
     "221972207"
-   ],
-   "slug": "becoming-kim-jong-un",
-   "public": true
+   ]
   },
   {
    "id": "210454076",
@@ -7486,6 +7278,7 @@
    "dateRead": "2025/03/02",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "the-devil-at-his-elbow",
    "themes": [
     "Crime & Justice"
    ],
@@ -7504,9 +7297,7 @@
     "203040700",
     "199797519",
     "222733476"
-   ],
-   "slug": "the-devil-at-his-elbow",
-   "public": true
+   ]
   },
   {
    "id": "199797519",
@@ -7518,6 +7309,7 @@
    "dateRead": "2025/03/16",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "madoff",
    "themes": [
     "Crime & Justice",
     "Memoir & Biography"
@@ -7541,9 +7333,7 @@
     "211179569",
     "53746013",
     "38743564"
-   ],
-   "slug": "madoff",
-   "public": true
+   ]
   },
   {
    "id": "204236707",
@@ -7555,6 +7345,7 @@
    "dateRead": "2025/03/22",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "on-the-edge",
    "themes": [
     "Society & Culture",
     "Tech & Future"
@@ -7575,10 +7366,9 @@
     "157095669",
     "123276708",
     "224003226",
-    "43889703"
-   ],
-   "slug": "on-the-edge",
-   "public": true
+    "43889703",
+    "218319936"
+   ]
   },
   {
    "id": "27209433",
@@ -7590,6 +7380,7 @@
    "dateRead": "2025/03/27",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "white-trash",
    "themes": [
     "History & Foreign Affairs",
     "Society & Culture"
@@ -7611,9 +7402,7 @@
     "34014218",
     "34758210",
     "132913"
-   ],
-   "slug": "white-trash",
-   "public": true
+   ]
   },
   {
    "id": "44453035",
@@ -7625,6 +7414,7 @@
    "dateRead": "2025/03/28",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "the-power-worshippers",
    "themes": [
     "Religion & Faith"
    ],
@@ -7643,10 +7433,9 @@
     "112975131",
     "50486810",
     "211003831",
-    "27833494"
-   ],
-   "slug": "the-power-worshippers",
-   "public": true
+    "27833494",
+    "220160840"
+   ]
   },
   {
    "id": "211003831",
@@ -7658,6 +7447,7 @@
    "dateRead": "2025/03/29",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "money-lies-and-god",
    "themes": [
     "Politics & Power",
     "Religion & Faith"
@@ -7678,10 +7468,9 @@
     "53121662",
     "27833494",
     "231198166",
-    "44034135"
-   ],
-   "slug": "money-lies-and-god",
-   "public": true
+    "44034135",
+    "220160840"
+   ]
   },
   {
    "id": "216864525",
@@ -7693,6 +7482,7 @@
    "dateRead": "2025/04/05",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "fight",
    "themes": [
     "Politics & Power"
    ],
@@ -7710,9 +7500,7 @@
     "223927267",
     "60387898",
     "222292401"
-   ],
-   "slug": "fight",
-   "public": true
+   ]
   },
   {
    "id": "27833494",
@@ -7724,6 +7512,7 @@
    "dateRead": "2025/04/06",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "dark-money",
    "themes": [
     "Politics & Power"
    ],
@@ -7746,9 +7535,7 @@
     "35276688",
     "224003226",
     "214325852"
-   ],
-   "slug": "dark-money",
-   "public": true
+   ]
   },
   {
    "id": "207567968",
@@ -7760,6 +7547,7 @@
    "dateRead": "2025/04/16",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "play-nice",
    "themes": [
     "Business & Finance",
     "Tech & Future"
@@ -7780,9 +7568,7 @@
     "16130157",
     "59366216",
     "220161058"
-   ],
-   "slug": "play-nice",
-   "public": true
+   ]
   },
   {
    "id": "56620811",
@@ -7794,6 +7580,7 @@
    "dateRead": "2025/04/19",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "the-age-of-ai-and-our-human-future",
    "themes": [
     "Tech & Future"
    ],
@@ -7810,9 +7597,7 @@
     "204927599",
     "90590134",
     "195820877"
-   ],
-   "slug": "the-age-of-ai-and-our-human-future",
-   "public": true
+   ]
   },
   {
    "id": "202102082",
@@ -7824,6 +7609,7 @@
    "dateRead": "2025/05/04",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "keeping-the-faith",
    "themes": [
     "History & Foreign Affairs",
     "Religion & Faith"
@@ -7841,9 +7627,7 @@
     "35171984",
     "58783229",
     "53121662"
-   ],
-   "slug": "keeping-the-faith",
-   "public": true
+   ]
   },
   {
    "id": "209366041",
@@ -7855,6 +7639,7 @@
    "dateRead": "2025/05/07",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "countdown-1960",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -7871,9 +7656,7 @@
     "198493808",
     "96123",
     "55361205"
-   ],
-   "slug": "countdown-1960",
-   "public": true
+   ]
   },
   {
    "id": "33874545",
@@ -7885,6 +7668,7 @@
    "dateRead": "2025/05/10",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "shattered",
    "themes": [
     "Politics & Power"
    ],
@@ -7901,9 +7685,7 @@
     "216864525",
     "60387898",
     "232466984"
-   ],
-   "slug": "shattered",
-   "public": true
+   ]
   },
   {
    "id": "27214080",
@@ -7915,6 +7697,7 @@
    "dateRead": "2025/05/23",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "five-presidents",
    "themes": [
     "History & Foreign Affairs",
     "Memoir & Biography"
@@ -7936,9 +7719,7 @@
     "55361205",
     "25786035",
     "18927310"
-   ],
-   "slug": "five-presidents",
-   "public": true
+   ]
   },
   {
    "id": "223927267",
@@ -7950,6 +7731,7 @@
    "dateRead": "2025/05/26",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "original-sin",
    "themes": [
     "Politics & Power"
    ],
@@ -7966,9 +7748,7 @@
     "216864525",
     "232466984",
     "211143818"
-   ],
-   "slug": "original-sin",
-   "public": true
+   ]
   },
   {
    "id": "210963085",
@@ -7980,6 +7760,7 @@
    "dateRead": "2025/05/30",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "imminent",
    "themes": [
     "History & Foreign Affairs",
     "Tech & Future"
@@ -7997,9 +7778,7 @@
     "11305364",
     "24396871",
     "46223297"
-   ],
-   "slug": "imminent",
-   "public": true
+   ]
   },
   {
    "id": "216247552",
@@ -8011,6 +7790,7 @@
    "dateRead": "2025/06/04",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "no-more-tears",
    "themes": [
     "Business & Finance"
    ],
@@ -8028,9 +7808,7 @@
     "16130157",
     "37976541",
     "60461917"
-   ],
-   "slug": "no-more-tears",
-   "public": true
+   ]
   },
   {
    "id": "220161058",
@@ -8042,6 +7820,7 @@
    "dateRead": "2025/06/07",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "apple-in-china",
    "themes": [
     "History & Foreign Affairs",
     "Tech & Future"
@@ -8064,9 +7843,7 @@
     "31125556",
     "213034913",
     "223436601"
-   ],
-   "slug": "apple-in-china",
-   "public": true
+   ]
   },
   {
    "id": "90590134",
@@ -8078,6 +7855,7 @@
    "dateRead": "2025/06/08",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "the-coming-wave",
    "themes": [
     "Tech & Future"
    ],
@@ -8098,10 +7876,9 @@
     "195820877",
     "182733784",
     "211399783",
-    "243319478"
-   ],
-   "slug": "the-coming-wave",
-   "public": true
+    "243319478",
+    "218319936"
+   ]
   },
   {
    "id": "210084984",
@@ -8113,6 +7890,7 @@
    "dateRead": "2025/06/11",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "how-countries-go-broke",
    "themes": [
     "Business & Finance"
    ],
@@ -8131,10 +7909,9 @@
     "58450272",
     "58485511",
     "211179569",
+    "18730589",
     "222376657"
-   ],
-   "slug": "how-countries-go-broke",
-   "public": true
+   ]
   },
   {
    "id": "40367623",
@@ -8146,6 +7923,7 @@
    "dateRead": "2025/06/19",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "dawn-of-the-code-war",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -8163,9 +7941,7 @@
     "60462182",
     "37506133",
     "25716725"
-   ],
-   "slug": "dawn-of-the-code-war",
-   "public": true
+   ]
   },
   {
    "id": "59366216",
@@ -8177,6 +7953,7 @@
    "dateRead": "2025/06/22",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "the-man-who-broke-capitalism",
    "themes": [
     "Business & Finance"
    ],
@@ -8195,10 +7972,9 @@
     "207567968",
     "25602451",
     "218671853",
-    "44034135"
-   ],
-   "slug": "the-man-who-broke-capitalism",
-   "public": true
+    "44034135",
+    "25817264"
+   ]
   },
   {
    "id": "199798602",
@@ -8210,6 +7986,7 @@
    "dateRead": "2025/06/22",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "code-name",
    "themes": [
     "Memoir & Biography"
    ],
@@ -8229,9 +8006,7 @@
     "221972207",
     "235629746",
     "220458600"
-   ],
-   "slug": "code-name",
-   "public": true
+   ]
   },
   {
    "id": "25716725",
@@ -8243,6 +8018,7 @@
    "dateRead": "2025/06/27",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "playing-to-the-edge",
    "themes": [
     "History & Foreign Affairs",
     "Memoir & Biography",
@@ -8267,9 +8043,7 @@
     "86615",
     "27507",
     "27506"
-   ],
-   "slug": "playing-to-the-edge",
-   "public": true
+   ]
   },
   {
    "id": "157981712",
@@ -8281,6 +8055,7 @@
    "dateRead": "2025/07/21",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "why-we-remember",
    "themes": [
     "Psychology & Mind"
    ],
@@ -8298,9 +8073,7 @@
     "157095669",
     "57933306",
     "241471051"
-   ],
-   "slug": "why-we-remember",
-   "public": true
+   ]
   },
   {
    "id": "218671853",
@@ -8312,6 +8085,7 @@
    "dateRead": "2025/07/25",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "bad-company",
    "themes": [
     "Business & Finance"
    ],
@@ -8330,10 +8104,9 @@
     "25852784",
     "43868109",
     "55994102",
-    "224003226"
-   ],
-   "slug": "bad-company",
-   "public": true
+    "224003226",
+    "25817264"
+   ]
   },
   {
    "id": "205495275",
@@ -8345,6 +8118,7 @@
    "dateRead": "2025/07/31",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "the-myth-of-american-idealism",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -8363,9 +8137,7 @@
     "55749283",
     "12143200",
     "56898213"
-   ],
-   "slug": "the-myth-of-american-idealism",
-   "public": true
+   ]
   },
   {
    "id": "31125556",
@@ -8377,6 +8149,7 @@
    "dateRead": "2025/08/13",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "destined-for-war",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -8394,10 +8167,9 @@
     "220161058",
     "223736214",
     "221972207",
-    "12158480"
-   ],
-   "slug": "destined-for-war",
-   "public": true
+    "12158480",
+    "18730589"
+   ]
   },
   {
    "id": "123276708",
@@ -8409,6 +8181,7 @@
    "dateRead": "2025/08/16",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "number-go-up",
    "themes": [
     "Crime & Justice"
    ],
@@ -8429,9 +8202,7 @@
     "38743564",
     "43889703",
     "222376657"
-   ],
-   "slug": "number-go-up",
-   "public": true
+   ]
   },
   {
    "id": "222733476",
@@ -8443,6 +8214,7 @@
    "dateRead": "2025/08/18",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "the-idaho-four",
    "themes": [
     "Crime & Justice"
    ],
@@ -8458,9 +8230,7 @@
     "203040700",
     "209786389",
     "59546340"
-   ],
-   "slug": "the-idaho-four",
-   "public": true
+   ]
   },
   {
    "id": "36177789",
@@ -8472,6 +8242,7 @@
    "dateRead": "2025/08/24",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "the-despots-apprentice",
    "themes": [
     "Politics & Power"
    ],
@@ -8489,9 +8260,7 @@
     "33917107",
     "35230469",
     "53952310"
-   ],
-   "slug": "the-despots-apprentice",
-   "public": true
+   ]
   },
   {
    "id": "213034913",
@@ -8503,6 +8272,7 @@
    "dateRead": "2025/09/11",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "source-code",
    "themes": [
     "Memoir & Biography"
    ],
@@ -8520,9 +8290,7 @@
     "220161058",
     "157095669",
     "3228917"
-   ],
-   "slug": "source-code",
-   "public": true
+   ]
   },
   {
    "id": "232466984",
@@ -8534,6 +8302,7 @@
    "dateRead": "2025/10/12",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "107-days",
    "themes": [
     "Memoir & Biography",
     "Politics & Power"
@@ -8553,9 +8322,7 @@
     "216864525",
     "33874545",
     "223927267"
-   ],
-   "slug": "107-days",
-   "public": true
+   ]
   },
   {
    "id": "211179569",
@@ -8567,6 +8334,7 @@
    "dateRead": "2025/10/19",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "1929",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -8585,9 +8353,7 @@
     "210084984",
     "199797519",
     "7495395"
-   ],
-   "slug": "1929",
-   "public": true
+   ]
   },
   {
    "id": "218726721",
@@ -8599,6 +8365,7 @@
    "dateRead": "2025/10/25",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "losing-big",
    "themes": [
     "Business & Finance",
     "Society & Culture"
@@ -8617,9 +8384,7 @@
     "204236707",
     "55723020",
     "171681821"
-   ],
-   "slug": "losing-big",
-   "public": true
+   ]
   },
   {
    "id": "50696262",
@@ -8631,6 +8396,7 @@
    "dateRead": "2025/10/30",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "the-room-where-it-happened",
    "themes": [
     "Memoir & Biography",
     "Politics & Power"
@@ -8650,9 +8416,7 @@
     "41012533",
     "58412441",
     "53952310"
-   ],
-   "slug": "the-room-where-it-happened",
-   "public": true
+   ]
   },
   {
    "id": "53952310",
@@ -8664,6 +8428,7 @@
    "dateRead": "2025/11/02",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "authoritarian-nightmare",
    "themes": [
     "Politics & Power"
    ],
@@ -8684,9 +8449,7 @@
     "199344862",
     "12821470",
     "233334472"
-   ],
-   "slug": "authoritarian-nightmare",
-   "public": true
+   ]
   },
   {
    "id": "211399783",
@@ -8698,6 +8461,7 @@
    "dateRead": "2025/11/16",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "the-thinking-machine",
    "themes": [
     "Memoir & Biography",
     "Tech & Future"
@@ -8717,10 +8481,9 @@
     "220161058",
     "213034913",
     "90590134",
-    "223736214"
-   ],
-   "slug": "the-thinking-machine",
-   "public": true
+    "223736214",
+    "218319936"
+   ]
   },
   {
    "id": "230169785",
@@ -8732,6 +8495,7 @@
    "dateRead": "2025/11/23",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "retribution",
    "themes": [
     "Politics & Power"
    ],
@@ -8752,9 +8516,7 @@
     "222292401",
     "60387898",
     "221226864"
-   ],
-   "slug": "retribution",
-   "public": true
+   ]
   },
   {
    "id": "220458600",
@@ -8766,6 +8528,7 @@
    "dateRead": "2025/11/29",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "the-fort-bragg-cartel",
    "themes": [
     "Crime & Justice"
    ],
@@ -8783,9 +8546,7 @@
     "29379464",
     "44643351",
     "199798602"
-   ],
-   "slug": "the-fort-bragg-cartel",
-   "public": true
+   ]
   },
   {
    "id": "216818514",
@@ -8797,6 +8558,7 @@
    "dateRead": "2025/12/01",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "mad-house",
    "themes": [
     "Politics & Power"
    ],
@@ -8815,9 +8577,7 @@
     "122769179",
     "209812423",
     "211143818"
-   ],
-   "slug": "mad-house",
-   "public": true
+   ]
   },
   {
    "id": "55749283",
@@ -8829,6 +8589,7 @@
    "dateRead": "2025/12/07",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "after-the-fall",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -8849,9 +8610,7 @@
     "12143200",
     "27506",
     "55361205"
-   ],
-   "slug": "after-the-fall",
-   "public": true
+   ]
   },
   {
    "id": "211003730",
@@ -8863,6 +8622,7 @@
    "dateRead": "2025/12/10",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "death-is-our-business",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -8883,9 +8643,7 @@
     "41716921",
     "221972207",
     "37506133"
-   ],
-   "slug": "death-is-our-business",
-   "public": true
+   ]
   },
   {
    "id": "221972207",
@@ -8897,6 +8655,7 @@
    "dateRead": "2025/12/14",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "the-mission",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -8922,9 +8681,7 @@
     "86615",
     "27507",
     "27506"
-   ],
-   "slug": "the-mission",
-   "public": true
+   ]
   },
   {
    "id": "35276688",
@@ -8936,6 +8693,7 @@
    "dateRead": "2025/12/20",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "devil-s-bargain",
    "themes": [
     "Politics & Power"
    ],
@@ -8956,9 +8714,7 @@
     "53345186",
     "231198166",
     "55776895"
-   ],
-   "slug": "devil-s-bargain",
-   "public": true
+   ]
   },
   {
    "id": "60321052",
@@ -8970,6 +8726,7 @@
    "dateRead": "2025/12/22",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "profiles-in-ignorance",
    "themes": [
     "Politics & Power"
    ],
@@ -8986,9 +8743,7 @@
     "50487024",
     "199461393",
     "171681821"
-   ],
-   "slug": "profiles-in-ignorance",
-   "public": true
+   ]
   },
   {
    "id": "25786035",
@@ -9000,6 +8755,7 @@
    "dateRead": "2025/12/24",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "the-last-of-the-presidents-men",
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -9017,9 +8773,7 @@
     "27507",
     "18927310",
     "27214080"
-   ],
-   "slug": "the-last-of-the-presidents-men",
-   "public": true
+   ]
   },
   {
    "id": "86615",
@@ -9031,6 +8785,7 @@
    "dateRead": "2025/12/31",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "bush-at-war",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -9054,9 +8809,7 @@
     "35108805",
     "18927310",
     "56898213"
-   ],
-   "slug": "bush-at-war",
-   "public": true
+   ]
   },
   {
    "id": "96123",
@@ -9068,6 +8821,7 @@
    "dateRead": "2025/12/31",
    "yearRead": "2025",
    "shelf": "read",
+   "slug": "all-the-presidents-men",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -9088,9 +8842,7 @@
     "41939872",
     "86615",
     "27507"
-   ],
-   "slug": "all-the-presidents-men",
-   "public": true
+   ]
   },
   {
    "id": "27507",
@@ -9102,6 +8854,7 @@
    "dateRead": "2026/01/02",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "plan-of-attack",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -9126,9 +8879,7 @@
     "221972207",
     "59720687",
     "56898213"
-   ],
-   "slug": "plan-of-attack",
-   "public": true
+   ]
   },
   {
    "id": "176444106",
@@ -9140,6 +8891,7 @@
    "dateRead": "2026/01/06",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "abundance",
    "themes": [
     "Politics & Power",
     "Society & Culture"
@@ -9161,9 +8913,7 @@
     "31850779",
     "223736214",
     "242488944"
-   ],
-   "slug": "abundance",
-   "public": true
+   ]
   },
   {
    "id": "224003226",
@@ -9175,6 +8925,7 @@
    "dateRead": "2026/01/10",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "the-haves-and-have-yachts",
    "themes": [
     "Society & Culture"
    ],
@@ -9193,9 +8944,7 @@
     "208930976",
     "204236707",
     "218671853"
-   ],
-   "slug": "the-haves-and-have-yachts",
-   "public": true
+   ]
   },
   {
    "id": "223736214",
@@ -9207,6 +8956,7 @@
    "dateRead": "2026/01/12",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "breakneck",
    "themes": [
     "History & Foreign Affairs",
     "Tech & Future"
@@ -9226,9 +8976,7 @@
     "176444106",
     "211399783",
     "61796680"
-   ],
-   "slug": "breakneck",
-   "public": true
+   ]
   },
   {
    "id": "7495395",
@@ -9240,6 +8988,7 @@
    "dateRead": "2026/01/18",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "the-quants",
    "themes": [
     "Business & Finance"
    ],
@@ -9260,9 +9009,7 @@
     "58485511",
     "38743564",
     "43889703"
-   ],
-   "slug": "the-quants",
-   "public": true
+   ]
   },
   {
    "id": "233334472",
@@ -9274,6 +9021,7 @@
    "dateRead": "2026/01/24",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "the-last-american-president",
    "themes": [
     "Politics & Power"
    ],
@@ -9291,9 +9039,7 @@
     "53562067",
     "223854728",
     "53952310"
-   ],
-   "slug": "the-last-american-president",
-   "public": true
+   ]
   },
   {
    "id": "223854728",
@@ -9305,6 +9051,7 @@
    "dateRead": "2026/01/25",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "the-project",
    "themes": [
     "Politics & Power"
    ],
@@ -9324,9 +9071,7 @@
     "233334472",
     "242488944",
     "204901666"
-   ],
-   "slug": "the-project",
-   "public": true
+   ]
   },
   {
    "id": "27506",
@@ -9338,6 +9083,7 @@
    "dateRead": "2026/01/26",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "state-of-denial",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -9359,9 +9105,7 @@
     "55749283",
     "239511576",
     "56898213"
-   ],
-   "slug": "state-of-denial",
-   "public": true
+   ]
   },
   {
    "id": "203040700",
@@ -9373,6 +9117,7 @@
    "dateRead": "2026/01/27",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "when-the-night-comes-falling",
    "themes": [
     "Crime & Justice"
    ],
@@ -9388,9 +9133,7 @@
     "222733476",
     "209786389",
     "59546340"
-   ],
-   "slug": "when-the-night-comes-falling",
-   "public": true
+   ]
   },
   {
    "id": "214325852",
@@ -9402,6 +9145,7 @@
    "dateRead": "2026/01/30",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "murder-the-truth",
    "themes": [
     "Crime & Justice"
    ],
@@ -9419,9 +9163,7 @@
     "199461393",
     "150065063",
     "27833494"
-   ],
-   "slug": "murder-the-truth",
-   "public": true
+   ]
   },
   {
    "id": "45730424",
@@ -9433,6 +9175,7 @@
    "dateRead": "2026/02/03",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "dark-towers",
    "themes": [
     "Business & Finance",
     "Politics & Power"
@@ -9452,9 +9195,7 @@
     "183932735",
     "214325852",
     "60387898"
-   ],
-   "slug": "dark-towers",
-   "public": true
+   ]
   },
   {
    "id": "223436601",
@@ -9466,6 +9207,7 @@
    "dateRead": "2026/02/06",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "careless-people",
    "themes": [
     "Politics & Power"
    ],
@@ -9484,9 +9226,7 @@
     "46223297",
     "220161058",
     "37976541"
-   ],
-   "slug": "careless-people",
-   "public": true
+   ]
   },
   {
    "id": "53746013",
@@ -9498,6 +9238,7 @@
    "dateRead": "2026/02/09",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "perversion-of-justice",
    "themes": [
     "Crime & Justice"
    ],
@@ -9514,9 +9255,7 @@
     "199797519",
     "52717403",
     "37976541"
-   ],
-   "slug": "perversion-of-justice",
-   "public": true
+   ]
   },
   {
    "id": "59808061",
@@ -9528,6 +9267,7 @@
    "dateRead": "2026/02/11",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "too-famous",
    "themes": [
     "Society & Culture",
     "Politics & Power"
@@ -9547,9 +9287,7 @@
     "203579090",
     "55776895",
     "60387898"
-   ],
-   "slug": "too-famous",
-   "public": true
+   ]
   },
   {
    "id": "44425746",
@@ -9561,6 +9299,7 @@
    "dateRead": "2026/02/15",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "siege",
    "themes": [
     "Politics & Power"
    ],
@@ -9582,9 +9321,7 @@
     "35108805",
     "41939872",
     "55776895"
-   ],
-   "slug": "siege",
-   "public": true
+   ]
   },
   {
    "id": "222292401",
@@ -9596,6 +9333,7 @@
    "dateRead": "2026/02/15",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "all-or-nothing",
    "themes": [
     "Politics & Power"
    ],
@@ -9616,9 +9354,7 @@
     "216864525",
     "60387898",
     "55776895"
-   ],
-   "slug": "all-or-nothing",
-   "public": true
+   ]
   },
   {
    "id": "203579090",
@@ -9630,6 +9366,7 @@
    "dateRead": "2026/02/20",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "the-fall",
    "themes": [
     "Memoir & Biography"
    ],
@@ -9650,9 +9387,7 @@
     "58436503",
     "199461393",
     "55776895"
-   ],
-   "slug": "the-fall",
-   "public": true
+   ]
   },
   {
    "id": "239511576",
@@ -9664,6 +9399,7 @@
    "dateRead": "2026/02/23",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "injustice",
    "themes": [
     "Crime & Justice",
     "Politics & Power"
@@ -9684,9 +9420,7 @@
     "60461917",
     "27506",
     "54897158"
-   ],
-   "slug": "injustice",
-   "public": true
+   ]
   },
   {
    "id": "221754271",
@@ -9698,6 +9432,7 @@
    "dateRead": "2026/03/07",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "coming-up-short",
    "themes": [
     "Memoir & Biography",
     "Politics & Power",
@@ -9718,9 +9453,7 @@
     "13588356",
     "37570546",
     "580305"
-   ],
-   "slug": "coming-up-short",
-   "public": true
+   ]
   },
   {
    "id": "37976541",
@@ -9732,6 +9465,7 @@
    "dateRead": "2026/03/11",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "bad-blood",
    "themes": [
     "Tech & Future"
    ],
@@ -9753,9 +9487,7 @@
     "123276708",
     "53746013",
     "38743564"
-   ],
-   "slug": "bad-blood",
-   "public": true
+   ]
   },
   {
    "id": "221226864",
@@ -9767,6 +9499,7 @@
    "dateRead": "2026/03/11",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "butler",
    "themes": [
     "Politics & Power"
    ],
@@ -9784,9 +9517,7 @@
     "34014218",
     "188437148",
     "230169785"
-   ],
-   "slug": "butler",
-   "public": true
+   ]
   },
   {
    "id": "231198166",
@@ -9798,6 +9529,7 @@
    "dateRead": "2026/04/04",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "hated-by-all-the-right-people",
    "themes": [
     "Politics & Power"
    ],
@@ -9815,9 +9547,7 @@
     "50486810",
     "211003831",
     "199461393"
-   ],
-   "slug": "hated-by-all-the-right-people",
-   "public": true
+   ]
   },
   {
    "id": "235629746",
@@ -9829,6 +9559,7 @@
    "dateRead": "2026/04/14",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "end-of-days",
    "themes": [
     "Crime & Justice",
     "History & Foreign Affairs",
@@ -9848,9 +9579,7 @@
     "199798602",
     "61423989",
     "195790601"
-   ],
-   "slug": "end-of-days",
-   "public": true
+   ]
   },
   {
    "id": "44034135",
@@ -9862,6 +9591,7 @@
    "dateRead": "2026/04/25",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "kochland",
    "themes": [
     "Business & Finance"
    ],
@@ -9880,10 +9610,9 @@
     "59366216",
     "58485511",
     "211003831",
+    "25817264",
     "17707481"
-   ],
-   "slug": "kochland",
-   "public": true
+   ]
   },
   {
    "id": "241471051",
@@ -9895,6 +9624,7 @@
    "dateRead": "2026/04/26",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "a-world-appears",
    "themes": [
     "Psychology & Mind"
    ],
@@ -9912,9 +9642,7 @@
     "18693771",
     "157981712",
     "204927599"
-   ],
-   "slug": "a-world-appears",
-   "public": true
+   ]
   },
   {
    "id": "58485511",
@@ -9926,6 +9654,7 @@
    "dateRead": "2026/05/10",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "the-lords-of-easy-money",
    "themes": [
     "Business & Finance"
    ],
@@ -9945,9 +9674,7 @@
     "44034135",
     "41881472",
     "43889703"
-   ],
-   "slug": "the-lords-of-easy-money",
-   "public": true
+   ]
   },
   {
    "id": "54897158",
@@ -9959,6 +9686,7 @@
    "dateRead": "2026/05/16",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "donald-trump-v-the-united-states",
    "themes": [
     "Politics & Power"
    ],
@@ -9976,9 +9704,7 @@
     "239511576",
     "41012533",
     "60387898"
-   ],
-   "slug": "donald-trump-v-the-united-states",
-   "public": true
+   ]
   },
   {
    "id": "38743564",
@@ -9990,6 +9716,7 @@
    "dateRead": "2026/06/02",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "billion-dollar-whale",
    "themes": [
     "Crime & Justice"
    ],
@@ -10009,10 +9736,9 @@
     "43868109",
     "216247552",
     "60462182",
-    "45730424"
-   ],
-   "slug": "billion-dollar-whale",
-   "public": true
+    "45730424",
+    "52038578"
+   ]
   },
   {
    "id": "52836282",
@@ -10024,6 +9750,7 @@
    "dateRead": "2026/06/07",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "true-crimes-and-misdemeanors",
    "themes": [
     "Politics & Power",
     "Crime & Justice"
@@ -10044,9 +9771,7 @@
     "40588302",
     "60461917",
     "62919402"
-   ],
-   "slug": "true-crimes-and-misdemeanors",
-   "public": true
+   ]
   },
   {
    "id": "280412",
@@ -10058,6 +9783,7 @@
    "dateRead": "2026/06/13",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "the-run-of-his-life",
    "themes": [
     "Crime & Justice",
     "Society & Culture"
@@ -10076,9 +9802,7 @@
     "210454076",
     "203040700",
     "209786389"
-   ],
-   "slug": "the-run-of-his-life",
-   "public": true
+   ]
   },
   {
    "id": "13331179",
@@ -10090,6 +9814,7 @@
    "dateRead": "2026/06/17",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "the-oath",
    "themes": [
     "Politics & Power",
     "History & Foreign Affairs"
@@ -10108,9 +9833,7 @@
     "55361205",
     "60399106",
     "214325852"
-   ],
-   "slug": "the-oath",
-   "public": true
+   ]
   },
   {
    "id": "56026907",
@@ -10122,6 +9845,7 @@
    "dateRead": "2026/06/21",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "nightmare-scenario",
    "themes": [
     "Politics & Power",
     "Society & Culture"
@@ -10142,9 +9866,7 @@
     "58395041",
     "63029353",
     "243319478"
-   ],
-   "slug": "nightmare-scenario",
-   "public": true
+   ]
   },
   {
    "id": "220341389",
@@ -10156,6 +9878,7 @@
    "dateRead": "2026/06/27",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "everything-is-tuberculosis",
    "themes": [
     "Society & Culture",
     "History & Foreign Affairs"
@@ -10174,9 +9897,7 @@
     "43868109",
     "23692271",
     "12158480"
-   ],
-   "slug": "everything-is-tuberculosis",
-   "public": true
+   ]
   },
   {
    "id": "280410",
@@ -10188,6 +9909,7 @@
    "dateRead": "2026/06/28",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "the-nine",
    "themes": [
     "Politics & Power",
     "History & Foreign Affairs"
@@ -10206,9 +9928,7 @@
     "214325852",
     "40588302",
     "55361205"
-   ],
-   "slug": "the-nine",
-   "public": true
+   ]
   },
   {
    "id": "113576",
@@ -10220,6 +9940,7 @@
    "dateRead": "2026/07/05",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "the-smartest-guys-in-the-room",
    "themes": [
     "Business & Finance",
     "Crime & Justice"
@@ -10238,10 +9959,9 @@
     "6691186",
     "59366216",
     "7495395",
-    "43889703"
-   ],
-   "slug": "the-smartest-guys-in-the-room",
-   "public": true
+    "43889703",
+    "25817264"
+   ]
   },
   {
    "id": "250673180",
@@ -10253,6 +9973,7 @@
    "dateRead": "2026/07/11",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "regime-change",
    "themes": [
     "Politics & Power",
     "History & Foreign Affairs"
@@ -10271,9 +9992,7 @@
     "233334472",
     "223854728",
     "50487024"
-   ],
-   "slug": "regime-change",
-   "public": true
+   ]
   },
   {
    "id": "43889703",
@@ -10285,6 +10004,7 @@
    "dateRead": "2026/07/13",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "the-man-who-solved-the-market",
    "themes": [
     "Business & Finance",
     "Memoir & Biography"
@@ -10302,10 +10022,9 @@
     "123276708",
     "113576",
     "58485511",
+    "25817264",
     "17707481"
-   ],
-   "slug": "the-man-who-solved-the-market",
-   "public": true
+   ]
   },
   {
    "id": "242488944",
@@ -10317,6 +10036,7 @@
    "dateRead": "2026/07/18",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "the-day-after",
    "themes": [
     "Politics & Power"
    ],
@@ -10335,9 +10055,7 @@
     "90590139",
     "33917107",
     "204901666"
-   ],
-   "slug": "the-day-after",
-   "public": true
+   ]
   },
   {
    "id": "17707481",
@@ -10349,6 +10067,7 @@
    "dateRead": "2026/07/25",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "the-frackers",
    "themes": [
     "Business & Finance",
     "History & Foreign Affairs"
@@ -10361,12 +10080,11 @@
     "The book holds the paradox without resolving it: the same revolution that delivered energy independence and brought OPEC to its knees also triggered a global environmental controversy over fracking — a world-changing achievement and a lasting source of ecological conflict at once."
    ],
    "conn": [
+    "52038578",
     "45897523",
     "43889703",
     "44034135"
-   ],
-   "slug": "the-frackers",
-   "public": true
+   ]
   },
   {
    "id": "56898213",
@@ -10378,6 +10096,7 @@
    "dateRead": "2026/07/27",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "the-afghanistan-papers",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -10396,9 +10115,7 @@
     "205495275",
     "12143200",
     "55429560"
-   ],
-   "slug": "the-afghanistan-papers",
-   "public": true
+   ]
   },
   {
    "id": "243319478",
@@ -10410,6 +10127,7 @@
    "dateRead": "2026/07/31",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "biological-war",
    "themes": [
     "History & Foreign Affairs",
     "Tech & Future"
@@ -10428,9 +10146,7 @@
     "17333289",
     "40538681",
     "90590134"
-   ],
-   "slug": "biological-war",
-   "public": true
+   ]
   },
   {
    "id": "204901666",
@@ -10442,6 +10158,7 @@
    "dateRead": "2026/08/03",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "shameless",
    "themes": [
     "Politics & Power"
    ],
@@ -10459,9 +10176,7 @@
     "90590139",
     "199461393",
     "33917107"
-   ],
-   "slug": "shameless",
-   "public": true
+   ]
   },
   {
    "id": "222376657",
@@ -10473,11 +10188,12 @@
    "dateRead": "2026/08/08",
    "yearRead": "2026",
    "shelf": "read",
+   "slug": "the-history-of-money",
    "themes": [
     "Business & Finance",
     "History & Foreign Affairs"
    ],
-   "tags": "",
+   "tags": "financial history, cultural history, political economy",
    "summary": "Irish economist David McWilliams's sweeping global history of money — from clay tablets in Mesopotamia and ancient Babylon through the Silk Road to Wall Street and cryptocurrency — arguing that money is humanity's most consequential invention and that its history is really a history of power, creativity, and civilization. Foreword by Michael Lewis.",
    "core": [
     "McWilliams's framing claim is that the story of humanity is inextricable from the story of money — no innovation has shaped human evolution and the planet's history so thoroughly — yet despite its primacy most people don't truly understand it, and the book sets out to demystify money by narrating it rather than theorizing it.",
@@ -10491,9 +10207,38 @@
     "41881472",
     "210084984",
     "123276708"
+   ]
+  },
+  {
+   "id": "25817264",
+   "title": "Dear Chairman: Boardroom Battles and the Rise of Shareholder Activism",
+   "author": "Jeff Gramm",
+   "isbn": "9780062369833",
+   "pages": "320",
+   "yearPub": "2016",
+   "dateRead": "2026/08/09",
+   "yearRead": "2026",
+   "shelf": "read",
+   "slug": "dear-chairman",
+   "themes": [
+    "Business & Finance",
+    "History & Foreign Affairs"
    ],
-   "slug": "the-history-of-money",
-   "public": true
+   "tags": "financial history, business strategy, corporate decline",
+   "summary": "Hedge fund manager and Columbia professor Jeff Gramm's history of shareholder activism, told through eight case studies built around original letters from Benjamin Graham, Warren Buffett, Ross Perot, Carl Icahn, and Daniel Loeb — tracing a century of boardroom conflict over who really controls a public company, and refusing to cast activists as either heroes or villains.",
+   "core": [
+    "Gramm's structural insight is that the conflict between owners and managers is not a modern excess but capitalism's oldest running tension — traced from Benjamin Graham's 1926 confrontation with Northern Pipeline (which was sitting on $90/share in bonds while trading at $65) straight through to today's Ackmans and Loebs, with the same agency problem recurring in every era.",
+    "The method is the argument: eight original investor letters — Graham, Buffett, Perot, Icahn, Loeb — used as primary documents, showing how activists actually think about target companies, how they talk to power, and how the register shifts from Graham's politeness to the modern aggressive public attack.",
+    "Writing as a hedge fund manager himself, Gramm refuses the easy verdict: he defends activism's function as a check on entrenched, unaccountable management, but exposes its worst form — hedge funds engineering \"stealthy land-grabs\" that strip long-term value — leaving the question of who should really control a public company genuinely open."
+   ],
+   "conn": [
+    "59366216",
+    "113576",
+    "218671853",
+    "44034135",
+    "55994102",
+    "43889703"
+   ]
   },
   {
    "id": "13622997",
@@ -10505,6 +10250,7 @@
    "dateRead": "",
    "yearRead": "",
    "shelf": "read",
+   "slug": "it-is-even-worse-than-it-looks",
    "themes": [
     "Politics & Power"
    ],
@@ -10522,9 +10268,38 @@
     "101025305",
     "48806578",
     "90590139"
+   ]
+  },
+  {
+   "id": "18730589",
+   "title": "1177 B.C.: The Year Civilization Collapsed",
+   "author": "Eric H. Cline",
+   "isbn": "9780691208015",
+   "pages": "304",
+   "yearPub": "2021",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "currently-reading",
+   "slug": "1177-b-c",
+   "themes": [
+    "History & Foreign Affairs",
+    "Society & Culture"
    ],
-   "slug": "it-is-even-worse-than-it-looks",
-   "public": true
+   "tags": "cultural history, historical parallel, structural critique",
+   "summary": "Archaeologist Eric Cline's account of the Late Bronze Age collapse — when the interconnected civilizations of the eastern Mediterranean, from Mycenae to Egypt to Babylon, fell within decades — arguing against the single-cause \"Sea Peoples\" explanation in favor of a cascade of interlocking failures, and showing that the era's very globalized interdependence is what made its collapse so total.",
+   "core": [
+    "Cline's core revision is against single-cause history: the Sea Peoples alone could not have toppled the Bronze Age world. The collapse came from a \"perfect storm\" of interconnected failures — invasion, internal revolt, earthquakes, drought and famine, and the severing of international trade routes — arriving together on a system with no slack.",
+    "The deeper thesis is that interdependence itself was the vulnerability: the Late Bronze Age was genuinely globalized — Minoans, Mycenaeans, Hittites, Egyptians, Babylonians bound by trade, diplomacy, and shared technology — and that very interconnection is what let kingdoms fall \"like dominoes\" within decades, taking writing systems, technology, and monumental architecture with them.",
+    "The implied argument is a warning by analogy: a complex, prosperous, globally-networked civilization can unravel in a generation, ushering in a centuries-long dark age — Cline's \"First Dark Ages\" — and the fragility scales with the sophistication of the network."
+   ],
+   "conn": [
+    "23692271",
+    "62926960",
+    "210084984",
+    "12158480",
+    "40538681",
+    "31125556"
+   ]
   },
   {
    "id": "22571554",
@@ -10536,6 +10311,7 @@
    "dateRead": "",
    "yearRead": "",
    "shelf": "read",
+   "slug": "stand-out",
    "themes": [
     "Personal Growth & Leadership"
    ],
@@ -10557,9 +10333,39 @@
     "38644312",
     "368593",
     "18325440"
+   ]
+  },
+  {
+   "id": "52038578",
+   "title": "Blood and Oil: Mohammed bin Salman's Ruthless Quest for Global Power",
+   "author": "Bradley Hope, Justin Scheck",
+   "isbn": "9780306846663",
+   "pages": "346",
+   "yearPub": "2020",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "currently-reading",
+   "slug": "blood-and-oil",
+   "themes": [
+    "History & Foreign Affairs",
+    "Politics & Power"
    ],
-   "slug": "stand-out",
-   "public": true
+   "tags": "authoritarianism, oligarchy, investigative journalism",
+   "summary": "Wall Street Journal reporters Bradley Hope and Justin Scheck's investigation into Mohammed bin Salman's rise — from unremarkable prince to de facto ruler of Saudi Arabia — tracing the succession struggle, the Ritz-Carlton purge, the Khashoggi murder, and the network of Western bankers, consultants, and politicians who helped burnish a ruler as ruthless as he is reformist.",
+   "core": [
+    "The central portrait is of a reformer and an autocrat as the same man: MBS genuinely lifted the driving ban, opened the workforce to women, and courted Silicon Valley — while running a campaign of consolidation that included the Ritz-Carlton detention of rival royals, the crushing of dissent, and the Khashoggi murder. Hope and Scheck refuse to resolve the contradiction, because it isn't one.",
+    "The Western enablement is the story's spine: bankers, Hollywood figures, consultants (McKinsey), and politicians flew to Riyadh and came away convinced — the polish was manufactured by hired expertise, and MBS's rise depended on a network of allies eager to be charmed, with Jared Kushner the crucial channel to the Trump White House.",
+    "MBS's ascent coincides with the fraying of the 80-year US-Saudi bargain — oil in exchange for military protection — and the authors argue the stakes are binary: if his transformation bid fails, Saudi Arabia risks becoming an unstable failed state; if it succeeds even partly, the reverberations are global."
+   ],
+   "conn": [
+    "38743564",
+    "52717403",
+    "183932735",
+    "45897523",
+    "16130157",
+    "56898187",
+    "17707481"
+   ]
   },
   {
    "id": "53345186",
@@ -10571,6 +10377,7 @@
    "dateRead": "",
    "yearRead": "",
    "shelf": "read",
+   "slug": "hoax",
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -10590,41 +10397,69 @@
     "35276688",
     "203579090",
     "231198166"
-   ],
-   "slug": "hoax",
-   "public": true
+   ]
   },
   {
-   "id": "25817264",
-   "title": "Dear Chairman: Boardroom Battles and the Rise of Shareholder Activism",
-   "author": "Jeff Gramm",
-   "isbn": "9780062369833",
-   "pages": "320",
-   "yearPub": "2016",
-   "dateRead": "2026/08/09",
-   "yearRead": "2026",
-   "shelf": "read",
+   "id": "218319936",
+   "title": "The Nvidia Way: Jensen Huang and the Making of a Tech Giant",
+   "author": "Tae Kim",
+   "isbn": "9781324086710",
+   "pages": "304",
+   "yearPub": "2024",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "currently-reading",
+   "slug": "the-nvidia-way",
    "themes": [
-    "Business & Finance",
-    "History & Foreign Affairs"
+    "Tech & Future",
+    "Business & Finance"
    ],
-   "tags": "financial history, business strategy, corporate decline",
-   "summary": "Hedge fund manager and Columbia professor Jeff Gramm's history of shareholder activism, told through eight case studies built around original letters from Benjamin Graham, Warren Buffett, Ross Perot, Carl Icahn, and Daniel Loeb — tracing a century of boardroom conflict over who really controls a public company, and refusing to cast activists as either heroes or villains.",
+   "tags": "technology, business strategy, biography",
+   "summary": "Barron's writer Tae Kim's deeply reported history of Nvidia — from its 1993 founding in a Denny's to its emergence as one of the world's most valuable companies — drawn from 100+ interviews and arguing that CEO Jensen Huang's distinctive, politics-averse, speed-obsessed culture, and his willingness to make unrewarded long-term bets, is the true source of the company's AI-era dominance.",
    "core": [
-    "Gramm's structural insight is that the conflict between owners and managers is not a modern excess but capitalism's oldest running tension — traced from Benjamin Graham's 1926 confrontation with Northern Pipeline (which was sitting on $90/share in bonds while trading at $65) straight through to today's Ackmans and Loebs, with the same agency problem recurring in every era.",
-    "The method is the argument: eight original investor letters — Graham, Buffett, Perot, Icahn, Loeb — used as primary documents, showing how activists actually think about target companies, how they talk to power, and how the register shifts from Graham's politeness to the modern aggressive public attack.",
-    "Writing as a hedge fund manager himself, Gramm refuses the easy verdict: he defends activism's function as a check on entrenched, unaccountable management, but exposes its worst form — hedge funds engineering \"stealthy land-grabs\" that strip long-term value — leaving the question of who should really control a public company genuinely open."
+    "Kim's central argument is that Nvidia's dominance is cultural before it is technical: Jensen Huang built a deliberately flat, speed-obsessed organization that suppresses internal politics, bureaucracy, and complacency — 'the mission is the boss' — and that culture, more than any single chip, is the durable moat.",
+    "The book is a deeply reported origin history: founded in a San Jose Denny's in 1993, Nvidia spent years as a niche gaming-graphics company making repeated bet-the-company gambles (notably the long, unrewarded investment in CUDA/GPU computing) that the market didn't appreciate until the AI era made those bets look like foresight.",
+    "Huang himself is the throughline — the longest-serving CEO in a brutally cyclical industry — and Kim's portrait, drawn from 100+ interviews, leans admiring (critics note a 'Steve-Jobs-ification'): his demanding leadership style, tolerance for pain and failure, and refusal of complacency are framed as the engine of the most remarkable business story of the era."
    ],
    "conn": [
-    "59366216",
-    "113576",
-    "218671853",
-    "44034135",
-    "55994102",
-    "43889703"
+    "211399783",
+    "60321447",
+    "122765395",
+    "90590134",
+    "25602451",
+    "204236707"
+   ]
+  },
+  {
+   "id": "220160840",
+   "title": "Separation of Church and Hate: A Sane Person's Guide to Taking Back the Bible from Fundamentalists, Fascists, and Flock-Fleecing Frauds",
+   "author": "John Fugelsang",
+   "isbn": "9781668066898",
+   "pages": "0",
+   "yearPub": "2025",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "currently-reading",
+   "slug": "separation-of-church-and-hate",
+   "themes": [
+    "Religion & Faith",
+    "Politics & Power"
    ],
-   "slug": "dear-chairman",
-   "public": true
+   "tags": "evangelicalism, religious nationalism, political theology",
+   "summary": "Comedian and broadcaster John Fugelsang's debut — an irreverent, scripture-based takedown of far-right Christian nationalism, arguing that fundamentalists who weaponize the Bible for political power betray the actual teachings of Jesus, and equipping readers to rebut their talking points on abortion, immigration, and LGBTQ rights using the Bible itself.",
+   "core": [
+    "Fugelsang's central claim is a reclamation: the extremists who weaponize the Bible for earthly power aren't actually on the side of Jesus and historically never have been — so the fight isn't religion vs. secularism but authentic Gospel values (love, mercy, welcoming the stranger) against those exploiting faith as, in his framing, a cloaking device for hate.",
+    "The book is built as a practical debate manual: it walks through common fundamentalist talking points — abortion, immigration, LGBTQ rights, guns — and equips the reader to counter each using chapter and verse, turning the fundamentalists' own claimed authority (scripture) back against their politics.",
+    "The method is deliberately comedic and irreverent — pitched \"in the spirit of George Carlin and Christopher Hitchens\" but from inside a Christian frame (the son of a nun and a monk) — arguing that humor and biblical literacy together are the most effective tools for anyone who has to deal with a Christian nationalist."
+   ],
+   "conn": [
+    "58783229",
+    "44453035",
+    "53121662",
+    "112975131",
+    "211003831",
+    "60393585"
+   ]
   }
  ],
  "edges": [
@@ -10670,7 +10505,7 @@
   ],
   [
    2,
-   318
+   320
   ],
   [
    2,
@@ -10834,7 +10669,7 @@
   ],
   [
    8,
-   318
+   320
   ],
   [
    8,
@@ -10850,7 +10685,7 @@
   ],
   [
    9,
-   318
+   320
   ],
   [
    9,
@@ -11135,6 +10970,10 @@
   [
    16,
    195
+  ],
+  [
+   16,
+   319
   ],
   [
    16,
@@ -11262,7 +11101,7 @@
   ],
   [
    20,
-   318
+   320
   ],
   [
    21,
@@ -11702,7 +11541,7 @@
   ],
   [
    35,
-   318
+   320
   ],
   [
    36,
@@ -11842,7 +11681,7 @@
   ],
   [
    40,
-   318
+   320
   ],
   [
    41,
@@ -11970,7 +11809,7 @@
   ],
   [
    46,
-   318
+   320
   ],
   [
    46,
@@ -12118,7 +11957,7 @@
   ],
   [
    52,
-   319
+   322
   ],
   [
    52,
@@ -12346,7 +12185,7 @@
   ],
   [
    57,
-   317
+   318
   ],
   [
    58,
@@ -12633,6 +12472,10 @@
    235
   ],
   [
+   66,
+   324
+  ],
+  [
    67,
    259
   ],
@@ -12667,6 +12510,10 @@
   [
    68,
    189
+  ],
+  [
+   68,
+   321
   ],
   [
    68,
@@ -12707,6 +12554,10 @@
   [
    69,
    246
+  ],
+  [
+   69,
+   323
   ],
   [
    70,
@@ -12830,7 +12681,7 @@
   ],
   [
    74,
-   318
+   320
   ],
   [
    75,
@@ -12946,7 +12797,7 @@
   ],
   [
    79,
-   318
+   320
   ],
   [
    80,
@@ -13014,7 +12865,7 @@
   ],
   [
    82,
-   317
+   318
   ],
   [
    82,
@@ -13067,6 +12918,10 @@
   [
    83,
    235
+  ],
+  [
+   83,
+   324
   ],
   [
    84,
@@ -13127,6 +12982,10 @@
   [
    85,
    243
+  ],
+  [
+   85,
+   323
   ],
   [
    86,
@@ -13573,6 +13432,10 @@
    42
   ],
   [
+   100,
+   321
+  ],
+  [
    101,
    26
   ],
@@ -13655,6 +13518,10 @@
   [
    103,
    221
+  ],
+  [
+   103,
+   324
   ],
   [
    104,
@@ -13830,7 +13697,7 @@
   ],
   [
    110,
-   317
+   318
   ],
   [
    111,
@@ -13911,6 +13778,10 @@
   [
    113,
    215
+  ],
+  [
+   113,
+   319
   ],
   [
    114,
@@ -14197,6 +14068,10 @@
    256
   ],
   [
+   123,
+   323
+  ],
+  [
    124,
    7
   ],
@@ -14362,7 +14237,7 @@
   ],
   [
    129,
-   317
+   318
   ],
   [
    130,
@@ -14659,6 +14534,10 @@
   [
    138,
    198
+  ],
+  [
+   138,
+   324
   ],
   [
    139,
@@ -15062,7 +14941,7 @@
   ],
   [
    148,
-   318
+   320
   ],
   [
    148,
@@ -15514,7 +15393,7 @@
   ],
   [
    161,
-   319
+   322
   ],
   [
    161,
@@ -15826,7 +15705,7 @@
   ],
   [
    169,
-   317
+   318
   ],
   [
    169,
@@ -16205,6 +16084,10 @@
    286
   ],
   [
+   180,
+   321
+  ],
+  [
    181,
    114
   ],
@@ -16326,7 +16209,7 @@
   ],
   [
    184,
-   319
+   322
   ],
   [
    184,
@@ -16753,6 +16636,10 @@
    275
   ],
   [
+   195,
+   319
+  ],
+  [
    196,
    118
   ],
@@ -16906,6 +16793,10 @@
   ],
   [
    202,
+   319
+  ],
+  [
+   202,
    314
   ],
   [
@@ -16999,6 +16890,10 @@
   [
    205,
    250
+  ],
+  [
+   205,
+   317
   ],
   [
    206,
@@ -17126,7 +17021,7 @@
   ],
   [
    209,
-   319
+   322
   ],
   [
    209,
@@ -17211,6 +17106,10 @@
   [
    211,
    233
+  ],
+  [
+   211,
+   321
   ],
   [
    212,
@@ -17310,7 +17209,7 @@
   ],
   [
    216,
-   317
+   318
   ],
   [
    217,
@@ -17379,6 +17278,10 @@
   [
    218,
    266
+  ],
+  [
+   218,
+   321
   ],
   [
    219,
@@ -17641,6 +17544,10 @@
    310
   ],
   [
+   227,
+   323
+  ],
+  [
    228,
    33
   ],
@@ -17709,6 +17616,10 @@
    232
   ],
   [
+   229,
+   324
+  ],
+  [
    230,
    83
   ],
@@ -17743,6 +17654,10 @@
   [
    230,
    297
+  ],
+  [
+   230,
+   324
   ],
   [
    231,
@@ -18105,6 +18020,10 @@
    314
   ],
   [
+   243,
+   323
+  ],
+  [
    244,
    109
   ],
@@ -18131,6 +18050,10 @@
   [
    244,
    258
+  ],
+  [
+   244,
+   319
   ],
   [
    244,
@@ -18191,6 +18114,10 @@
   [
    246,
    297
+  ],
+  [
+   246,
+   317
   ],
   [
    247,
@@ -18325,6 +18252,10 @@
    276
   ],
   [
+   250,
+   317
+  ],
+  [
    251,
    268
   ],
@@ -18379,6 +18310,10 @@
   [
    252,
    195
+  ],
+  [
+   252,
+   319
   ],
   [
    253,
@@ -18657,6 +18592,10 @@
    277
   ],
   [
+   262,
+   323
+  ],
+  [
    263,
    132
   ],
@@ -18894,7 +18833,7 @@
   ],
   [
    269,
-   319
+   322
   ],
   [
    269,
@@ -19530,7 +19469,7 @@
   ],
   [
    290,
-   319
+   322
   ],
   [
    290,
@@ -19682,7 +19621,7 @@
   ],
   [
    295,
-   319
+   322
   ],
   [
    295,
@@ -19747,6 +19686,10 @@
   [
    297,
    230
+  ],
+  [
+   297,
+   317
   ],
   [
    297,
@@ -19863,6 +19806,10 @@
   [
    301,
    284
+  ],
+  [
+   301,
+   321
   ],
   [
    302,
@@ -20053,6 +20000,10 @@
    310
   ],
   [
+   308,
+   317
+  ],
+  [
    309,
    190
   ],
@@ -20098,6 +20049,10 @@
   ],
   [
    310,
+   317
+  ],
+  [
+   310,
    312
   ],
   [
@@ -20127,6 +20082,10 @@
   [
    311,
    315
+  ],
+  [
+   312,
+   321
   ],
   [
    312,
@@ -20238,119 +20197,219 @@
   ],
   [
    317,
-   82
-  ],
-  [
-   317,
-   216
-  ],
-  [
-   317,
-   57
-  ],
-  [
-   317,
-   129
-  ],
-  [
-   317,
-   110
-  ],
-  [
-   317,
-   169
-  ],
-  [
-   318,
-   9
-  ],
-  [
-   318,
-   8
-  ],
-  [
-   318,
-   79
-  ],
-  [
-   318,
-   46
-  ],
-  [
-   318,
-   2
-  ],
-  [
-   318,
-   74
-  ],
-  [
-   318,
-   148
-  ],
-  [
-   318,
-   20
-  ],
-  [
-   318,
-   35
-  ],
-  [
-   318,
-   40
-  ],
-  [
-   319,
-   52
-  ],
-  [
-   319,
-   161
-  ],
-  [
-   319,
-   184
-  ],
-  [
-   319,
-   209
-  ],
-  [
-   319,
-   269
-  ],
-  [
-   319,
-   290
-  ],
-  [
-   319,
-   295
-  ],
-  [
-   320,
    246
   ],
   [
-   320,
+   317,
    308
   ],
   [
-   320,
+   317,
    250
   ],
   [
-   320,
+   317,
    297
   ],
   [
-   320,
+   317,
    205
   ],
   [
-   320,
+   317,
    310
+  ],
+  [
+   318,
+   82
+  ],
+  [
+   318,
+   216
+  ],
+  [
+   318,
+   57
+  ],
+  [
+   318,
+   129
+  ],
+  [
+   318,
+   110
+  ],
+  [
+   318,
+   169
+  ],
+  [
+   319,
+   16
+  ],
+  [
+   319,
+   113
+  ],
+  [
+   319,
+   244
+  ],
+  [
+   319,
+   195
+  ],
+  [
+   319,
+   202
+  ],
+  [
+   319,
+   252
+  ],
+  [
+   320,
+   9
+  ],
+  [
+   320,
+   8
+  ],
+  [
+   320,
+   79
+  ],
+  [
+   320,
+   46
+  ],
+  [
+   320,
+   2
+  ],
+  [
+   320,
+   74
+  ],
+  [
+   320,
+   148
+  ],
+  [
+   320,
+   20
+  ],
+  [
+   320,
+   35
+  ],
+  [
+   320,
+   40
+  ],
+  [
+   321,
+   301
+  ],
+  [
+   321,
+   180
+  ],
+  [
+   321,
+   218
+  ],
+  [
+   321,
+   68
+  ],
+  [
+   321,
+   211
+  ],
+  [
+   321,
+   100
+  ],
+  [
+   321,
+   312
+  ],
+  [
+   322,
+   52
+  ],
+  [
+   322,
+   161
+  ],
+  [
+   322,
+   184
+  ],
+  [
+   322,
+   209
+  ],
+  [
+   322,
+   269
+  ],
+  [
+   322,
+   290
+  ],
+  [
+   322,
+   295
+  ],
+  [
+   323,
+   262
+  ],
+  [
+   323,
+   85
+  ],
+  [
+   323,
+   123
+  ],
+  [
+   323,
+   243
+  ],
+  [
+   323,
+   69
+  ],
+  [
+   323,
+   227
+  ],
+  [
+   324,
+   83
+  ],
+  [
+   324,
+   229
+  ],
+  [
+   324,
+   66
+  ],
+  [
+   324,
+   138
+  ],
+  [
+   324,
+   230
+  ],
+  [
+   324,
+   103
   ]
  ]
 }
