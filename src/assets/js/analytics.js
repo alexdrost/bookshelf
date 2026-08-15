@@ -60,7 +60,8 @@ function renderMonthTrend(){
     // label from the true monthly totals, not the fractional theme-split sum
     const rawBooks=ymB[k]||0, rawPages=ymP[k]||0;
     const label=rawBooks>0?(usePages?(rawPages/1000).toFixed(1)+"k":String(Math.round(rawBooks))):"";
-    return `<div class="mt-col ${tot===0?'zero':''} ${m==='01'?'jan':''}" data-k="${k}"><span class="mt-n">${label}</span><div class="mt-bar" style="height:${h}%">${segs}</div></div>`;
+    const tag=rawBooks>0?'a':'div', href=rawBooks>0?` href="/${y}#m-${m}"`:'';
+    return `<${tag}${href} class="mt-col ${tot===0?'zero':''} ${m==='01'?'jan':''}" data-k="${k}"><span class="mt-n">${label}</span><div class="mt-bar" style="height:${h}%">${segs}</div></${tag}>`;
   }).join("");
   // year axis labels positioned by first month of each year present in span
   const years=[...new Set(span.map(k=>k.split("/")[0]))];

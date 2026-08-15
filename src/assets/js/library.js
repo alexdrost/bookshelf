@@ -73,10 +73,37 @@ on("#emptyReset","click",()=>{$("#q").value="";activeTheme="";yearFilter="";dril
 on("#themeChips","click",e=>{const c=e.target.closest(".chip");if(!c)return;activeTheme=c.dataset.t;yearFilter="";drill=null;$("#q").value="";renderChips();renderBrowse();writeState();});
 var activeTheme="", yearFilter="", drill=null, sortMode="dateRead";
 
-/* Retired with the SPA hash router and the cover probe. Stubbed so the extracted
-   bodies stay verbatim: /library has a real URL, and covers are plain <img> now. */
+/* Retired with the SPA hash router: /library has a real URL now. */
 function writeState(){}
-function observeCovers(){}
+
+/* THE COVER LOADER. This was stubbed to an empty function during the JS extraction,
+   which meant every client-rendered card — anything produced by sorting, filtering,
+   searching or "Load more" — got `<div class="cover" data-ph="...">` with no <img>
+   inside it and never filled in. Server-rendered cards were fine, so the library
+   looked correct until you touched a control.
+
+   `.book:hover .cover` applies a transform, which forces a repaint; that is why a
+   missing cover appeared to "load on hover".
+
+   Covers are plain local files, so there is no probe and no third-party lookup: insert
+   the <img>, and fall back to the stored gradient placeholder if the file is absent. */
+function observeCovers(root){
+  const scope = (root && root.querySelectorAll) ? root : document;
+  scope.querySelectorAll('.cover[data-i]').forEach((el) => {
+    if (el.dataset.filled) return;
+    el.dataset.filled = '1';
+    const b = BOOKS[+el.dataset.i];
+    const ph = () => { el.innerHTML = el.dataset.ph || ''; };
+    if (!b || !b.id) return ph();
+    const img = new Image();
+    img.width = 132; img.height = 198;
+    img.alt = (b.title || '') + (b.author ? ' by ' + b.author : '');
+    img.loading = 'lazy';
+    img.onerror = ph;
+    img.src = '/covers/' + b.id + '.jpg';
+    el.appendChild(img);
+  });
+}
 
 /* ============================================================================
    SESSION 2 Step 2 — progressive enhancement for /library.

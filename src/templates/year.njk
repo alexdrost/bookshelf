@@ -3,10 +3,39 @@
     <div class="page-head">
       <div class="kicker">{{ year }}</div>
       <h1>What I read in {{ year }}</h1>
-      <p class="standfirst">{{ books.length }} books, {{ pagesRead | num }} pages. Newest first.</p>
+      <p class="standfirst">{{ books.length }} books, {{ pagesRead | num }} pages{% if months.length %} across {{ months.length }} month{{ "s" if months.length != 1 }}{% endif %}. Newest first.</p>
     </div>
-    <div class="cardlist">
-      {% for book in books %}{% include "_partials/book-card.njk" %}{% endfor %}
-    </div>
+
+    {# Jump strip. Only months with a finish appear, so a thin year shows three chips
+       rather than nine empty ones. #}
+    {% if months.length > 1 %}
+    <nav class="monthjump" aria-label="Months in {{ year }}">
+      {% for m in months %}<a href="#m-{{ m.mm }}">{{ m.short }} <span>{{ m.books.length }}</span></a>{% endfor %}
+    </nav>
+    {% endif %}
+
+    {# Grouped by month, newest first. Months with nothing finished are skipped entirely —
+       an empty August is not information, it is a gap in the layout. #}
+    {% for m in months %}
+    <section class="pagesec monthsec" id="m-{{ m.mm }}">
+      <div class="section-head">
+        <h2>{{ m.name }}</h2>
+        <span class="sub">{{ m.books.length }} book{{ "s" if m.books.length != 1 }} &middot; {{ m.pages | num }} pages</span>
+      </div>
+      <div class="cardlist">
+        {% for book in m.books %}{% include "_partials/book-card.njk" %}{% endfor %}
+      </div>
+    </section>
+    {% endfor %}
+
+    {% if undatedInYear.length %}
+    <section class="pagesec monthsec" id="m-00">
+      <div class="section-head"><h2>No recorded month</h2><span class="sub">{{ undatedInYear.length }}</span></div>
+      <div class="cardlist">
+        {% for book in undatedInYear %}{% include "_partials/book-card.njk" %}{% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
     <p class="pagesec-intro" style="margin-top:26px"><a href="/timeline">All years</a> &middot; <a href="/library">the full library</a></p>
 {% endblock %}

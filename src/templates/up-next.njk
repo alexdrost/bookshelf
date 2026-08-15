@@ -9,37 +9,16 @@
 {{ copy.html | safe }}
     </div>
 
+    {# One list, one source: every public book whose Shelf is `currently-reading`.
+       No derived buckets — Notion has no property that could ever fill them. #}
     <section class="pagesec">
-      <div class="section-head"><h2>Currently reading</h2><span class="sub">{{ currentlyReading.length }}</span></div>
+      <div class="section-head"><h2>On the desk right now</h2><span class="sub">{{ currentlyReading.length }}</span></div>
       {% if currentlyReading.length %}
         <div class="cardlist">
           {% for book in currentlyReading %}{% set teaser = book.teaser %}{% include "_partials/book-card.njk" %}{% endfor %}
         </div>
       {% else %}
-        <p class="emptynote">Nothing open at the moment.</p>
-      {% endif %}
-    </section>
-
-    <section class="pagesec">
-      <div class="section-head"><h2>Set aside</h2><span class="sub">{{ paused.length }}</span></div>
-      <p class="pagesec-intro">Started, put down, not written off.</p>
-      {% if paused.length %}
-        <div class="cardlist">
-          {% for book in paused %}{% set teaser = book.teaser %}{% include "_partials/book-card.njk" %}{% endfor %}
-        </div>
-      {% else %}
-        <p class="emptynote">Nothing set aside right now.</p>
-      {% endif %}
-    </section>
-
-    <section class="pagesec">
-      <div class="section-head"><h2>Next up</h2><span class="sub">{{ nextUp.length }}</span></div>
-      {% if nextUp.length %}
-        <div class="cardlist">
-          {% for book in nextUp %}{% set teaser = book.teaser %}{% include "_partials/book-card.njk" %}{% endfor %}
-        </div>
-      {% else %}
-        <p class="emptynote">The queue is not published yet.</p>
+        <p class="emptynote">Nothing open at the moment &mdash; everything finished is in <a href="/library">the library</a>.</p>
       {% endif %}
     </section>
 {% endblock %}

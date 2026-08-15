@@ -18,7 +18,6 @@ const DIST = path.join(ROOT, 'dist');
 const ORIGIN = 'https://bookshelf.drost.us';
 const PER_PAGE = 24;            // SESSION 2 Step 2 — divides by 2, 3, 4 and 6. Do not change.
 const YEAR_FLOOR = 2020;        // SESSION 2 Step 4 — floor fixed, ceiling computed.
-const UP_NEXT_CAP = 12;
 
 const read = (p) => fs.readFileSync(p, 'utf8');
 const readJson = (p) => JSON.parse(read(p));
@@ -150,10 +149,11 @@ const v = validate({ books, themes: themesCfg, ledger });
 const byId = new Map(books.map((b) => [b.id, b]));
 const publicBooks = books.filter((b) => b.public);
 const readBooks = publicBooks.filter((b) => b.shelf === 'read');
-const currentlyReading = publicBooks.filter((b) => b.shelf === 'currently-reading');
-const paused = publicBooks.filter((b) => b.shelf === 'paused');
-const nextUp = publicBooks.filter((b) => b.shelf === 'want-to-read')
-  .sort((a, b) => String(b.id).localeCompare(String(a.id), 'en', { numeric: true })).slice(0, UP_NEXT_CAP);
+// /up-next is exactly one thing: every public book on the currently-reading shelf.
+// Notion's Shelf property only offers `read` and `currently-reading`, so inventing
+// "set aside" and "next up" buckets gave the page two sections that could never fill.
+const currentlyReading = publicBooks.filter((b) => b.shelf === 'currently-reading')
+  .sort((a, b) => a.title.localeCompare(b.title, 'en'));
 
 // Canonical catalog order: dateRead desc, undated last, Goodreads ID as tiebreaker.
 const catalogDesc = (a, b) => {
@@ -170,6 +170,9 @@ const cmap = connectionMap(books);
 const pairs = uniquePairs(cmap);
 const themeNames = themesCfg.map((t) => t.source);
 const matrix = themeMatrix(books, cmap, themeNames);
+// Peak off-diagonal value, so the heat shading in the matrix is scaled to real data
+// rather than a hardcoded ceiling that goes wrong as the shelf grows.
+const matrixMax = Math.max(1, ...matrix.flatMap((row, i) => row.filter((_, j) => i !== j)));
 const crossPairs = matrixPairs(matrix, themeNames);
 const bridges = bridgeBooks(books, cmap, 12);
 const featured = featuredPairs(books, cmap, 18);
@@ -298,7 +301,7 @@ const NAV = [
   { label: 'Analytics', path: '/analytics' },
   { label: 'Picks', path: '/picks' },
   { label: 'Reading', path: '/reading' },
-  { label: 'Up Next', path: '/up-next' },
+  { label: 'Reading Now', path: '/up-next' },
   { label: 'About', path: '/about' },
 ];
 const GENERATED = (name) => `<!-- GENERATED — DO NOT EDIT. Source: src/templates/${name} -->\n`;
@@ -363,7 +366,7 @@ for (const [route, tpl, file, schema, prio] of [
     person: route === '/about' ? PERSON_ABOUT : PERSON,
   };
   if (schema === 'article') page.extraJson = articleSchema(page);
-  emit(route, tpl, { page, copy, picks, picksMode, picksYears, clusters, currentlyReading, paused, nextUp }, { priority: prio });
+  emit(route, tpl, { page, copy, picks, picksMode, picksYears, clusters, currentlyReading }, { priority: prio });
 }
 
 // ---- /library + pagination ---------------------------------------------
@@ -434,7 +437,28 @@ for (const y of yearIndex) {
     trail: [{ name: 'Bookshelf', path: '/' }, { name: 'Timeline', path: '/timeline' }, { name: y.year, path: route }],
   };
   page.extraJson = collectionSchema(page, y.books);
-  emit(route, 'year.njk', { page, year: y.year, books: y.books, pagesRead }, { priority: 0.7 });
+
+  // Group into months, newest first, skipping months with no finish. The /timeline month
+  // bars link to /{year}#m-{MM}, so these ids are the landing points for that chart.
+  const MONTHS_LONG = ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'];
+  const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const buckets = new Map();
+  const undatedInYear = [];
+  for (const b of y.books) {
+    const mm = (b.dateRead || '').split('/')[1];
+    if (!mm || !MONTHS_LONG[+mm - 1]) { undatedInYear.push(b); continue; }
+    if (!buckets.has(mm)) buckets.set(mm, []);
+    buckets.get(mm).push(b);
+  }
+  const months = [...buckets.entries()]
+    .sort((a, b) => b[0].localeCompare(a[0]))
+    .map(([mm, list]) => ({
+      mm, name: `${MONTHS_LONG[+mm - 1]} ${y.year}`, short: MONTHS_SHORT[+mm - 1],
+      books: list, pages: list.reduce((n, b) => n + (b.pagesNum || 0), 0),
+    }));
+
+  emit(route, 'year.njk', { page, year: y.year, books: y.books, pagesRead, months, undatedInYear }, { priority: 0.7 });
 }
 
 // ---- /connections -------------------------------------------------------
@@ -447,7 +471,7 @@ for (const y of yearIndex) {
   };
   page.extraJson = articleSchema(page);
   emit('/connections', 'connections.njk', {
-    page, featured, bridges, matrix, themeNames, themesCfg, crossPairs: crossPairs.slice(0, 12),
+    page, featured, matrix, matrixMax, themeNames, themesCfg, crossPairs: crossPairs.slice(0, 12),
     featuredProvisional: true,
   }, { priority: 0.8 });
 }
@@ -536,7 +560,7 @@ const line = (s = '') => console.log(s);
 line();
 line(B('BUILD REPORT — bookshelf.drost.us, SESSIONS 1–3'));
 line('='.repeat(74));
-line(`books ............... ${books.length} total · ${readBooks.length} read · ${currentlyReading.length} currently-reading · ${paused.length} paused`);
+line(`books ............... ${books.length} total · ${readBooks.length} read · ${currentlyReading.length} currently-reading`);
 line(`connections ......... ${pairs.size} unique undirected pairs (public + read)`);
 line(`titles recovered .... ${recovered}${recovered ? '  <-- bridge file, not books.json' : ''}`);
 line(`routes .............. ${writtenRoutes.length}  (${libraryPages} library · ${themeIndex.length} theme · ${yearIndex.length} year · ${orderedRead.length} book) + /404`);

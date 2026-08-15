@@ -160,3 +160,24 @@ a.browse-all{display:inline-block;text-decoration:none}
 @media(max-width:640px){.graph-wrap{display:none}}
 .pickcard.nolink{cursor:default}
 .pickcard.nolink:hover{border-color:var(--line);box-shadow:var(--shadow)}
+
+/* ---- theme matrix heat -------------------------------------------------
+   --heat is set per cell by the template as n / matrixMax. Density you can see
+   at a glance was the whole point of the table; the numbers alone read as noise. */
+.matrix td[style*="--heat"]{background:rgba(58,110,165,calc(var(--heat) * .62));}
+.matrix td[style*="--heat"]{color:var(--ink)}
+.matrix tbody tr:hover td{outline:1px solid var(--blue-lt);outline-offset:-1px}
+
+/* ---- year page: month sections + jump strip ---------------------------- */
+.monthjump{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px}
+.monthjump a{display:inline-flex;align-items:center;gap:7px;padding:6px 13px;border:1px solid var(--line);
+  border-radius:999px;background:var(--card);font-family:"Archivo",system-ui,sans-serif;font-weight:600;
+  font-size:.82rem;color:var(--ink2);text-decoration:none;transition:border-color .15s,color .15s}
+.monthjump a:hover{border-color:var(--blue-lt);color:var(--blue-d)}
+.monthjump a span{font-size:.72rem;color:var(--muted);font-weight:500}
+.monthsec{scroll-margin-top:86px}
+.monthsec .section-head h2{font-size:1.12rem}
+
+/* ---- clickable month bars on /timeline --------------------------------- */
+a.mt-col{text-decoration:none;color:inherit;cursor:pointer}
+a.mt-col:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:3px}

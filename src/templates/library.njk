@@ -30,7 +30,7 @@
       <a class="book" href="{{ b.href }}">
         <div class="covwrap">
           <div class="cover">
-            {% if b.hasCover %}<img src="/covers/{{ b.id }}.jpg" width="132" height="198" alt="{{ b.title }} by {{ b.author }}" loading="lazy" decoding="async">
+            {% if b.hasCover %}<img src="/covers/{{ b.id }}.jpg" width="132" height="198" alt="{{ b.title }} by {{ b.author }}" loading="lazy">
             {% else %}<div class="ph"><div class="t">{{ b.title }}</div><div class="a">{{ b.author }}</div></div>{% endif %}
           </div>
         </div>

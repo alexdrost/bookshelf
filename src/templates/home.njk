@@ -16,7 +16,7 @@
     <div class="feature">
       <a class="ft-cover" href="{{ featuredBook.href }}">
         <div class="cover">
-          {% if featuredBook.hasCover %}<img src="/covers/{{ featuredBook.id }}.jpg" width="200" height="300" alt="{{ featuredBook.title }} by {{ featuredBook.author }}" loading="eager" decoding="async">
+          {% if featuredBook.hasCover %}<img src="/covers/{{ featuredBook.id }}.jpg" width="200" height="300" alt="{{ featuredBook.title }} by {{ featuredBook.author }}" loading="eager" fetchpriority="high">
           {% else %}<div class="ph"><div class="t">{{ featuredBook.title }}</div><div class="a">{{ featuredBook.author }}</div></div>{% endif %}
         </div>
       </a>
@@ -47,7 +47,7 @@
       <a class="book" href="{{ b.href }}">
         <div class="covwrap">
           <div class="cover">
-            {% if b.hasCover %}<img src="/covers/{{ b.id }}.jpg" width="132" height="198" alt="{{ b.title }} by {{ b.author }}" loading="lazy" decoding="async">
+            {% if b.hasCover %}<img src="/covers/{{ b.id }}.jpg" width="132" height="198" alt="{{ b.title }} by {{ b.author }}" loading="lazy">
             {% else %}<div class="ph"><div class="t">{{ b.title }}</div><div class="a">{{ b.author }}</div></div>{% endif %}
           </div>
         </div>

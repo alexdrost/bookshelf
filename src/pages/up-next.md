@@ -1,10 +1,12 @@
 ---
-title: What I'm Reading Next — Alex Drost's Bookshelf
-description: What is open on the desk right now, what got set aside, and what is queued up next on a {{COUNT}}-book shelf.
-kicker: Up Next
-h1: What I&rsquo;m reading next
-standfirst: Open right now, honestly set aside, and queued up — the part of the shelf that has not been written about yet.
-crumb: Up Next
+title: What I'm Reading Now — Alex Drost's Bookshelf
+description: The books open on the desk right now, alongside a shelf of {{COUNT}} finished ones. Updated whenever something starts or finishes.
+kicker: Reading Now
+h1: What I&rsquo;m reading right now
+standfirst: Open on the desk, unfinished, and not yet written up.
+crumb: Reading Now
 ---
 
-Books on this page have no summary and no core ideas yet, because I have not finished them. They get written up when they land.
+These are the books currently on the go. They have no summary and no core ideas yet, because I have not finished them — those get written when a book lands, not while it is still arguing with me.
+
+When one finishes it moves into [the library](/library), picks up its connections, and gets a page of its own.

@@ -6,16 +6,6 @@
       <p class="standfirst">Books finished each year since {{ yearIndex[0].year }}. Longest run: {{ streaks.longestStreak }} consecutive months with a finish.</p>
     </div>
 
-    <div class="pagesec">
-      {% for y in yearIndex %}
-      <a class="yearrow" href="/{{ y.year }}">
-        <span class="yearrow-y">{{ y.year }}</span>
-        <span class="yearrow-bar"><i style="width:{{ (y.books.length / 70 * 100) | round }}%"></i></span>
-        <span class="yearrow-n">{{ y.books.length }} books</span>
-      </a>
-      {% endfor %}
-    </div>
-    <p class="pagesec-intro">Year pages start at {{ yearIndex[0].year }}. The {{ preFloor }} books read before then and the {{ undated }} with no recorded date are still in <a href="/library">the library</a>, on their theme pages, and in the <a href="/connections">connection map</a>.</p>
 
     <div class="panel">
       <div class="panel-head"><h3>Trend by month</h3>
@@ -25,6 +15,8 @@
       <div class="mt-wrap"><div class="mt-bars" id="mtBars"></div><div class="mt-axis" id="mtAxis"></div></div>
       <div class="tlegend" id="mtLegend"></div>
     </div>
+
+    <p class="pagesec-intro">Every month links through to that month on its year page. The {{ preFloor }} books read before {{ yearIndex[0].year }} and the {{ undated }} with no recorded date are still in <a href="/library">the library</a>, on their theme pages, and in the <a href="/connections">connection map</a>.</p>
 
     <div class="panel">
       <div class="panel-head"><h3>Trend by year</h3>
