@@ -52,7 +52,8 @@
    "conn": [
     "13588356",
     "6596",
-    "4865"
+    "4865",
+    "27485"
    ]
   },
   {
@@ -339,7 +340,8 @@
     "32714199",
     "44595007",
     "55723020",
-    "157095669"
+    "157095669",
+    "34962304"
    ]
   },
   {
@@ -386,7 +388,8 @@
     "30197119",
     "30307982",
     "10009377",
-    "39901314"
+    "39901314",
+    "34962304"
    ]
   },
   {
@@ -449,7 +452,9 @@
     "58446721",
     "221754271",
     "58330567",
-    "34565022"
+    "34565022",
+    "112974860",
+    "27485"
    ]
   },
   {
@@ -479,7 +484,9 @@
     "58330567",
     "34565022",
     "40109367",
-    "18693771"
+    "18693771",
+    "112974860",
+    "25066556"
    ]
   },
   {
@@ -513,7 +520,9 @@
     "34565022",
     "23500254",
     "36072",
-    "29939161"
+    "60018618",
+    "29939161",
+    "33517721"
    ]
   },
   {
@@ -545,7 +554,9 @@
     "6617037",
     "12158480",
     "18730589",
-    "222376657"
+    "222376657",
+    "31670196",
+    "53398908"
    ]
   },
   {
@@ -583,7 +594,11 @@
     "34014215",
     "53642699",
     "157095669",
-    "221754271"
+    "221754271",
+    "112974860",
+    "25066556",
+    "27485",
+    "33517721"
    ]
   },
   {
@@ -614,7 +629,8 @@
     "40109367",
     "23500254",
     "6596",
-    "37570546"
+    "37570546",
+    "112974860"
    ]
   },
   {
@@ -645,7 +661,8 @@
     "43708708",
     "48589165",
     "40265832",
-    "34014218"
+    "34014218",
+    "213870084"
    ]
   },
   {
@@ -827,7 +844,8 @@
     "32191706",
     "34758210",
     "90590139",
-    "27209433"
+    "27209433",
+    "40121985"
    ]
   },
   {
@@ -863,7 +881,8 @@
     "32895535",
     "56863374",
     "157981712",
-    "56688463"
+    "56688463",
+    "48890486"
    ]
   },
   {
@@ -894,7 +913,8 @@
     "40265832",
     "35099718",
     "48589165",
-    "43708708"
+    "43708708",
+    "213870084"
    ]
   },
   {
@@ -1018,7 +1038,8 @@
     "18668059",
     "38390751",
     "36072",
-    "29939161"
+    "29939161",
+    "33517721"
    ]
   },
   {
@@ -1121,7 +1142,9 @@
     "4865",
     "30197119",
     "18325440",
-    "29939161"
+    "60018618",
+    "29939161",
+    "33517721"
    ]
   },
   {
@@ -1252,7 +1275,8 @@
     "241471051",
     "58330567",
     "23500254",
-    "139360"
+    "139360",
+    "48890486"
    ]
   },
   {
@@ -1340,7 +1364,8 @@
     "53238858",
     "50997029",
     "20556323",
-    "139360"
+    "139360",
+    "48890486"
    ]
   },
   {
@@ -1401,7 +1426,10 @@
     "34565022",
     "23500254",
     "37570546",
-    "18693771"
+    "18693771",
+    "112974860",
+    "25066556",
+    "27485"
    ]
   },
   {
@@ -1647,7 +1675,8 @@
     "6596",
     "40121378",
     "36072",
-    "38714388"
+    "38714388",
+    "25066556"
    ]
   },
   {
@@ -1917,7 +1946,9 @@
     "32895535",
     "36613747",
     "18144590",
-    "139360"
+    "139360",
+    "46205669",
+    "53398908"
    ]
   },
   {
@@ -2242,7 +2273,9 @@
     "213034913",
     "55994102",
     "59366216",
-    "218319936"
+    "218319936",
+    "57005158",
+    "414096"
    ]
   },
   {
@@ -2301,7 +2334,8 @@
     "41721428",
     "59088361",
     "36072",
-    "38714388"
+    "38714388",
+    "34962304"
    ]
   },
   {
@@ -2395,7 +2429,8 @@
     "3754705",
     "16130157",
     "22573915",
-    "22571554"
+    "22571554",
+    "60018618"
    ]
   },
   {
@@ -2576,7 +2611,8 @@
    "conn": [
     "38740751",
     "55180251",
-    "41215667"
+    "41215667",
+    "60018618"
    ]
   },
   {
@@ -2709,7 +2745,8 @@
     "20556323",
     "53642699",
     "4271372",
-    "56124858"
+    "56124858",
+    "27485"
    ]
   },
   {
@@ -2743,7 +2780,8 @@
     "31125556",
     "24396871",
     "90590134",
-    "218319936"
+    "218319936",
+    "241434373"
    ]
   },
   {
@@ -3121,7 +3159,8 @@
     "32714199",
     "36613747",
     "241471051",
-    "55723020"
+    "55723020",
+    "46205669"
    ]
   },
   {
@@ -3254,7 +3293,9 @@
     "18693771",
     "32895535",
     "30841980",
-    "177152"
+    "177152",
+    "46205669",
+    "48890486"
    ]
   },
   {
@@ -3287,7 +3328,9 @@
     "17333289",
     "11305364",
     "24396871",
-    "55429560"
+    "55429560",
+    "222292403",
+    "970488"
    ]
   },
   {
@@ -3627,7 +3670,8 @@
     "31850779",
     "195790601",
     "216857785",
-    "18730589"
+    "18730589",
+    "31670196"
    ]
   },
   {
@@ -3724,7 +3768,8 @@
     "11305364",
     "24396871",
     "182733784",
-    "199798785"
+    "199798785",
+    "222376666"
    ]
   },
   {
@@ -3944,7 +3989,8 @@
     "207567968",
     "37976541",
     "213034913",
-    "218319936"
+    "218319936",
+    "57005158"
    ]
   },
   {
@@ -4008,7 +4054,9 @@
     "56863374",
     "241471051",
     "18144590",
-    "139360"
+    "139360",
+    "46205669",
+    "48890486"
    ]
   },
   {
@@ -4733,7 +4781,8 @@
     "199798602",
     "61423989",
     "235629746",
-    "195790601"
+    "195790601",
+    "52168046"
    ]
   },
   {
@@ -4770,7 +4819,8 @@
     "10009377",
     "56688463",
     "22571554",
-    "368593"
+    "368593",
+    "34962304"
    ]
   },
   {
@@ -4834,6 +4884,7 @@
     "113934",
     "29342515",
     "10009377",
+    "60018618",
     "29939161"
    ]
   },
@@ -4944,7 +4995,8 @@
     "199798785",
     "50716468",
     "210963085",
-    "243319478"
+    "243319478",
+    "222376666"
    ]
   },
   {
@@ -5041,7 +5093,9 @@
     "50716468",
     "199798602",
     "220458600",
-    "211003730"
+    "211003730",
+    "222292403",
+    "970488"
    ]
   },
   {
@@ -5107,7 +5161,10 @@
     "41716921",
     "11305364",
     "40538681",
-    "243319478"
+    "243319478",
+    "222376666",
+    "222292403",
+    "970488"
    ]
   },
   {
@@ -5243,7 +5300,9 @@
     "157981712",
     "213034913",
     "12609433",
-    "29939161"
+    "29939161",
+    "25066556",
+    "33517721"
    ]
   },
   {
@@ -5312,7 +5371,8 @@
     "207689829",
     "209786389",
     "199797519",
-    "218671853"
+    "218671853",
+    "51022071"
    ]
   },
   {
@@ -5648,7 +5708,8 @@
     "203579090",
     "35276688",
     "40226205",
-    "60387898"
+    "60387898",
+    "52168046"
    ]
   },
   {
@@ -5848,7 +5909,8 @@
     "54916250",
     "224003226",
     "53746013",
-    "52038578"
+    "52038578",
+    "231246952"
    ]
   },
   {
@@ -6223,7 +6285,8 @@
     "54114950",
     "45730424",
     "54916250",
-    "224003226"
+    "224003226",
+    "231246952"
    ]
   },
   {
@@ -6257,7 +6320,9 @@
     "199461393",
     "150065063",
     "63251778",
-    "241471051"
+    "241471051",
+    "241434373",
+    "53398908"
    ]
   },
   {
@@ -6289,7 +6354,8 @@
     "37506133",
     "44453035",
     "183932735",
-    "231198166"
+    "231198166",
+    "52168046"
    ]
   },
   {
@@ -6357,7 +6423,8 @@
     "205495275",
     "31125556",
     "176444106",
-    "18730589"
+    "18730589",
+    "31670196"
    ]
   },
   {
@@ -6540,7 +6607,8 @@
     "55994102",
     "23258873",
     "37976541",
-    "24396871"
+    "24396871",
+    "222376666"
    ]
   },
   {
@@ -6570,7 +6638,8 @@
     "55994102",
     "17333289",
     "18730589",
-    "243319478"
+    "243319478",
+    "222376666"
    ]
   },
   {
@@ -6928,7 +6997,8 @@
     "3228917",
     "11324722",
     "40121378",
-    "41215667"
+    "41215667",
+    "31670196"
    ]
   },
   {
@@ -7239,7 +7309,8 @@
     "40121378",
     "197773418",
     "38714388",
-    "3228917"
+    "3228917",
+    "34962304"
    ]
   },
   {
@@ -7406,7 +7477,8 @@
     "61423989",
     "34014218",
     "34758210",
-    "132913"
+    "132913",
+    "40121985"
    ]
   },
   {
@@ -7572,7 +7644,8 @@
     "211399783",
     "16130157",
     "59366216",
-    "220161058"
+    "220161058",
+    "414096"
    ]
   },
   {
@@ -7601,7 +7674,8 @@
     "38820046",
     "204927599",
     "90590134",
-    "195820877"
+    "195820877",
+    "241434373"
    ]
   },
   {
@@ -7882,7 +7956,9 @@
     "182733784",
     "211399783",
     "243319478",
-    "218319936"
+    "218319936",
+    "241434373",
+    "53398908"
    ]
   },
   {
@@ -7978,7 +8054,9 @@
     "25602451",
     "218671853",
     "44034135",
-    "25817264"
+    "25817264",
+    "57005158",
+    "414096"
    ]
   },
   {
@@ -8047,7 +8125,9 @@
     "35108805",
     "86615",
     "27507",
-    "27506"
+    "27506",
+    "222292403",
+    "970488"
    ]
   },
   {
@@ -8077,7 +8157,8 @@
     "32714199",
     "157095669",
     "57933306",
-    "241471051"
+    "241471051",
+    "53398908"
    ]
   },
   {
@@ -8141,7 +8222,9 @@
     "12158480",
     "55749283",
     "12143200",
-    "56898213"
+    "56898213",
+    "213870084",
+    "40121985"
    ]
   },
   {
@@ -8173,7 +8256,8 @@
     "223736214",
     "221972207",
     "12158480",
-    "18730589"
+    "18730589",
+    "40121985"
    ]
   },
   {
@@ -8487,7 +8571,9 @@
     "213034913",
     "90590134",
     "223736214",
-    "218319936"
+    "218319936",
+    "241434373",
+    "57005158"
    ]
   },
   {
@@ -8614,7 +8700,8 @@
     "90590139",
     "12143200",
     "27506",
-    "55361205"
+    "55361205",
+    "213870084"
    ]
   },
   {
@@ -8685,7 +8772,9 @@
     "50716468",
     "86615",
     "27507",
-    "27506"
+    "27506",
+    "222292403",
+    "970488"
    ]
   },
   {
@@ -8718,7 +8807,8 @@
     "60387898",
     "53345186",
     "231198166",
-    "55776895"
+    "55776895",
+    "52168046"
    ]
   },
   {
@@ -8948,7 +9038,8 @@
     "52717403",
     "208930976",
     "204236707",
-    "218671853"
+    "218671853",
+    "231246952"
    ]
   },
   {
@@ -8980,7 +9071,8 @@
     "31125556",
     "176444106",
     "211399783",
-    "61796680"
+    "61796680",
+    "31670196"
    ]
   },
   {
@@ -9075,7 +9167,8 @@
     "230169785",
     "233334472",
     "242488944",
-    "204901666"
+    "204901666",
+    "52168046"
    ]
   },
   {
@@ -9167,7 +9260,8 @@
     "200342444",
     "199461393",
     "150065063",
-    "27833494"
+    "27833494",
+    "51022071"
    ]
   },
   {
@@ -9259,7 +9353,9 @@
     "60461917",
     "199797519",
     "52717403",
-    "37976541"
+    "37976541",
+    "231246952",
+    "51022071"
    ]
   },
   {
@@ -9291,7 +9387,8 @@
     "222292401",
     "203579090",
     "55776895",
-    "60387898"
+    "60387898",
+    "231246952"
    ]
   },
   {
@@ -9491,7 +9588,8 @@
     "216247552",
     "123276708",
     "53746013",
-    "38743564"
+    "38743564",
+    "51022071"
    ]
   },
   {
@@ -9646,7 +9744,8 @@
     "32895535",
     "18693771",
     "157981712",
-    "204927599"
+    "204927599",
+    "46205669"
    ]
   },
   {
@@ -9965,7 +10064,8 @@
     "59366216",
     "7495395",
     "43889703",
-    "25817264"
+    "25817264",
+    "414096"
    ]
   },
   {
@@ -10119,7 +10219,9 @@
     "27507",
     "205495275",
     "12143200",
-    "55429560"
+    "55429560",
+    "213870084",
+    "40121985"
    ]
   },
   {
@@ -10242,7 +10344,99 @@
     "218671853",
     "44034135",
     "55994102",
-    "43889703"
+    "43889703",
+    "57005158",
+    "414096"
+   ]
+  },
+  {
+   "id": "27485",
+   "title": "Mating in Captivity: Reconciling the Erotic and the Domestic",
+   "author": "Esther Perel",
+   "isbn": "9780060753641",
+   "pages": "272",
+   "yearPub": "2006",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "mating-in-captivity",
+   "themes": [
+    "Psychology & Mind",
+    "Society & Culture"
+   ],
+   "tags": "applied psychology, sociology, gender, vulnerability",
+   "summary": "Perel argues that modern couples ask a single relationship to supply both security and adventure, and that the domestic intimacy which produces the first tends to extinguish the second. Desire needs distance, mystery and separateness — precisely the things committed partnership is organised to eliminate.",
+   "core": [
+    "Love wants closeness and desire wants distance, so the tension is structural rather than a symptom of a failing relationship",
+    "Making a partner fully knowable removes the otherness that erotic attention depends on",
+    "Treating desire as something to be scheduled misses that it runs on imagination, not availability"
+   ],
+   "conn": [
+    "23878688",
+    "58330567",
+    "37570546",
+    "13588356",
+    "50997029"
+   ]
+  },
+  {
+   "id": "414096",
+   "title": "DisneyWar",
+   "author": "James B. Stewart",
+   "isbn": "9780684809939",
+   "pages": "592",
+   "yearPub": "2005",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "disneywar",
+   "themes": [
+    "Business & Finance",
+    "Society & Culture"
+   ],
+   "tags": "corporate decline, business strategy, investigative journalism, narrative nonfiction, leadership",
+   "summary": "Stewart's account of Michael Eisner's twenty years running Disney, from the turnaround that saved the company to the boardroom collapse that ended in a shareholder revolt and Roy Disney's Save Disney campaign. It is a study of how a successful executive's need for control corrodes succession, and then the board itself.",
+   "core": [
+    "A chief executive who cannot tolerate a credible successor guarantees a succession crisis",
+    "Creative businesses run on relationships, and relationship failures surface on the balance sheet years later",
+    "Boards captured by management stop functioning as a check long before anyone will admit it"
+   ],
+   "conn": [
+    "59366216",
+    "207567968",
+    "25817264",
+    "25602451",
+    "113576"
+   ]
+  },
+  {
+   "id": "970488",
+   "title": "Legacy of Ashes: The History of the CIA",
+   "author": "Tim Weiner",
+   "isbn": "9780385514453",
+   "pages": "702",
+   "yearPub": "2007",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "legacy-of-ashes",
+   "themes": [
+    "History & Foreign Affairs",
+    "Politics & Power"
+   ],
+   "tags": "CIA, intelligence history, Cold War history, US foreign policy, investigative journalism",
+   "summary": "Weiner's National Book Award history of the CIA from 1947 onward, built almost entirely from declassified documents and on-the-record interviews rather than anonymous sourcing. The verdict is unsparing: an agency that repeatedly failed at its core task of analysis, compensated with covert action, and was rewarded for both.",
+   "core": [
+    "The agency's institutional record is one of intelligence failure papered over by covert operations that generated their own blowback",
+    "Presidents asked for outcomes rather than assessments, and the agency delivered what was asked",
+    "Documenting an intelligence service only on the record produces a harsher account than anonymous sourcing ever does"
+   ],
+   "conn": [
+    "221972207",
+    "41716921",
+    "25716725",
+    "61336679",
+    "17333289"
    ]
   },
   {
@@ -10341,6 +10535,36 @@
    ]
   },
   {
+   "id": "25066556",
+   "title": "Presence: Bringing Your Boldest Self to Your Biggest Challenges",
+   "author": "Amy Cuddy",
+   "isbn": "9780316256575",
+   "pages": "352",
+   "yearPub": "2015",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "presence",
+   "themes": [
+    "Psychology & Mind",
+    "Personal Growth & Leadership"
+   ],
+   "tags": "applied psychology, self-help, contested, behavior change",
+   "summary": "Cuddy argues that people underperform in high-stakes moments not from lack of ability but from self-doubt that leaks into posture, voice and attention, and that the body can be used to change the mind rather than only the reverse. Worth reading alongside the fact that the power-posing research at its centre became a landmark case in psychology's replication crisis.",
+   "core": [
+    "Presence is alignment between what you believe and what your body signals, not confidence performed on demand",
+    "Posture and physiology feed back into psychological state, so behaviour can be an input rather than only an output",
+    "The impostor experience is near-universal among high performers, which makes it evidence of stakes rather than of inadequacy"
+   ],
+   "conn": [
+    "13588356",
+    "58330567",
+    "23500254",
+    "157095669",
+    "18668059"
+   ]
+  },
+  {
    "id": "29939161",
    "title": "Radical Candor: Be a Kick-Ass Boss Without Losing Your Humanity",
    "author": "Kim Scott",
@@ -10368,6 +10592,216 @@
     "38714388",
     "157095669",
     "13586928"
+   ]
+  },
+  {
+   "id": "31670196",
+   "title": "Scale: The Universal Laws of Growth, Innovation, Sustainability, and the Pace of Life in Organisms, Cities, Economies, and Companies",
+   "author": "Geoffrey West",
+   "isbn": "9781594205583",
+   "pages": "496",
+   "yearPub": "2017",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "scale",
+   "themes": [
+    "Tech & Future",
+    "Society & Culture"
+   ],
+   "tags": "structural analysis, intellectual history, sociology, applied research",
+   "summary": "West takes the quarter-power scaling laws observed across biology and applies them to cities and companies, arguing that organisms and firms both scale sublinearly and eventually die, while cities scale superlinearly and almost never do. The difference is that cities generate ideas faster than they consume resources — which is also why continued growth demands innovation cycles that keep getting shorter.",
+   "core": [
+    "Metabolic scaling laws hold across fifteen orders of magnitude, which implies networks rather than biology are doing the explanatory work",
+    "Cities get more productive per capita as they grow while companies get less, which is why firms die and cities almost never do",
+    "Superlinear growth requires innovations arriving at ever-shorter intervals, a treadmill with no obvious stable state"
+   ],
+   "conn": [
+    "23692271",
+    "12158480",
+    "62926960",
+    "2612",
+    "223736214"
+   ]
+  },
+  {
+   "id": "33517721",
+   "title": "The Culture Code: The Secrets of Highly Successful Groups",
+   "author": "Daniel Coyle",
+   "isbn": "9780804176989",
+   "pages": "304",
+   "yearPub": "2018",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "the-culture-code",
+   "themes": [
+    "Personal Growth & Leadership",
+    "Psychology & Mind"
+   ],
+   "tags": "organizational psychology, leadership, applied research, narrative nonfiction",
+   "summary": "Coyle studies unusually effective groups — SEAL teams, IDEO, the San Antonio Spurs, a crew of jewel thieves — and argues that culture is not a set of stated values but a set of repeated behaviours producing three things: safety, vulnerability and shared purpose. Most of the book is about the small physical signals that generate the first.",
+   "core": [
+    "Belonging is transmitted constantly through micro-behaviours, and groups read those far more closely than they read stated values",
+    "Vulnerability has to be shown by the highest-status person first, or nobody below them will risk it",
+    "Purpose is built by relentless, almost embarrassing repetition of a few priorities rather than by eloquent statement"
+   ],
+   "conn": [
+    "40109367",
+    "29342515",
+    "157095669",
+    "38714388",
+    "13588356"
+   ]
+  },
+  {
+   "id": "34962304",
+   "title": "The Motivation Myth: How High Achievers Really Set Themselves Up to Win",
+   "author": "Jeff Haden",
+   "isbn": "9780399563768",
+   "pages": "256",
+   "yearPub": "2018",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "the-motivation-myth",
+   "themes": [
+    "Personal Growth & Leadership",
+    "Psychology & Mind"
+   ],
+   "tags": "behavior change, productivity, self-help, applied psychology",
+   "summary": "Haden inverts the usual sequence: motivation is not the precondition for action but the by-product of small completed successes. The practical consequence is that goals matter far less than a repeatable daily process, and that the process should be designed so early wins arrive fast enough to compound.",
+   "core": [
+    "Motivation follows achievement rather than causing it, so the fix for feeling unmotivated is a smaller first step",
+    "Goals are useful only for deriving a process; after that they become a distraction",
+    "Consistency beats intensity because the reward loop needs frequent visible progress to stay closed"
+   ],
+   "conn": [
+    "40121378",
+    "12609433",
+    "60018575",
+    "25744928",
+    "41721428"
+   ]
+  },
+  {
+   "id": "40121985",
+   "title": "How to Hide an Empire: A History of the Greater United States",
+   "author": "Daniel Immerwahr",
+   "isbn": "9780374172145",
+   "pages": "528",
+   "yearPub": "2019",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "how-to-hide-an-empire",
+   "themes": [
+    "History & Foreign Affairs",
+    "Politics & Power"
+   ],
+   "tags": "American history, US foreign policy, structural analysis, political history",
+   "summary": "Immerwahr retells United States history with the territories put back in frame — Puerto Rico, the Philippines, Guam, the guano islands, and the hundreds of overseas bases that replaced formal colonies. His argument is that America did not avoid empire; it built one, then developed the technologies and habits of mind that made it invisible from the mainland.",
+   "core": [
+    "The logo map of the contiguous states is a recent invention that erased millions of American subjects",
+    "Standardisation, synthetics and airpower let the United States trade territorial control for a base network with the same reach",
+    "Colonial subjects were used as test populations, and the resulting medical and military knowledge came home as national achievement"
+   ],
+   "conn": [
+    "205495275",
+    "31125556",
+    "56898213",
+    "27209433",
+    "132913"
+   ]
+  },
+  {
+   "id": "46205669",
+   "title": "Recapture the Rapture: Rethinking God, Sex, and Death in a World That's Lost Its Mind",
+   "author": "Jamie Wheal",
+   "isbn": "9780062905048",
+   "pages": "400",
+   "yearPub": "2021",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "recapture-the-rapture",
+   "themes": [
+    "Religion & Faith",
+    "Psychology & Mind"
+   ],
+   "tags": "spirituality, psychedelics, meditation, contested",
+   "summary": "Wheal argues that the collapse of organised religion has left a meaning crisis that neither politics nor consumption can fill, and proposes rebuilding ecstatic and communal experience from first principles — breathwork, psychedelics, sexuality, embodiment — as an open-source substitute for inherited faith. Part cultural diagnosis, part protocol manual, and considerably more confident than the evidence supports in places.",
+   "core": [
+    "Meaning is manufactured by embodied practice rather than by belief, which means it can be engineered without doctrine",
+    "The institutions that once produced transcendence collapsed faster than replacements could be built, leaving the demand unmet",
+    "Peak experience without an ethical container reliably produces cults, so designing the container is the actual problem"
+   ],
+   "conn": [
+    "36613747",
+    "241471051",
+    "32895535",
+    "177152",
+    "51660"
+   ]
+  },
+  {
+   "id": "48890486",
+   "title": "Breath: The New Science of a Lost Art",
+   "author": "James Nestor",
+   "isbn": "9780735213616",
+   "pages": "304",
+   "yearPub": "2020",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "breath",
+   "themes": [
+    "Psychology & Mind",
+    "Society & Culture"
+   ],
+   "tags": "applied research, narrative nonfiction, self-help, neuroscience",
+   "summary": "Nestor combines self-experimentation, medical history and anthropology to argue that industrialised humans have become chronically poor breathers — mouth-breathing, over-breathing, and carrying shrunken jaws — with measurable consequences for sleep, blood pressure and anxiety. He tests it by having his nose surgically plugged for ten days and recording what happens.",
+   "core": [
+    "How you breathe matters more than how much, and the nose performs work the mouth simply cannot",
+    "Softer processed diets narrowed human airways within a few generations, making this an industrial problem rather than a genetic one",
+    "Slowing to roughly six breaths a minute reliably shifts the autonomic nervous system, which is why the same technique recurs across unrelated traditions"
+   ],
+   "conn": [
+    "18693771",
+    "4271372",
+    "32895535",
+    "32714199",
+    "36613747"
+   ]
+  },
+  {
+   "id": "51022071",
+   "title": "Catch and Kill: Lies, Spies, and a Conspiracy to Protect Predators",
+   "author": "Ronan Farrow",
+   "isbn": "9780316486637",
+   "pages": "464",
+   "yearPub": "2019",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "catch-and-kill",
+   "themes": [
+    "Crime & Justice",
+    "Society & Culture"
+   ],
+   "tags": "investigative journalism, journalism, gender, insider critique",
+   "summary": "Farrow narrates his own reporting on Harvey Weinstein and the machinery that nearly buried it: NBC's retreat from the story, the National Enquirer's catch-and-kill arrangements, and the Black Cube operatives hired to surveil him and the women he was interviewing. It is as much a book about how institutions suppress reporting as about what the reporting found.",
+   "core": [
+    "Catch-and-kill is a purchasable service, which makes silence an ordinary line item rather than a conspiracy",
+    "Newsroom self-interest kills stories more reliably than legal threats do",
+    "Sources bear the risk that reporters take credit for, and the reporting only holds if they are believed"
+   ],
+   "conn": [
+    "53746013",
+    "214325852",
+    "43868109",
+    "53345186",
+    "37976541"
    ]
   },
   {
@@ -10403,6 +10837,36 @@
    ]
   },
   {
+   "id": "52168046",
+   "title": "Hatemonger: Stephen Miller, Donald Trump, and the White Nationalist Agenda",
+   "author": "Jean Guerrero",
+   "isbn": "9780062867728",
+   "pages": "352",
+   "yearPub": "2020",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "hatemonger",
+   "themes": [
+    "Politics & Power",
+    "Memoir & Biography"
+   ],
+   "tags": "Trump era, biography, domestic extremism, political journalism, Trump White House",
+   "summary": "Guerrero traces Stephen Miller from a liberal Santa Monica upbringing through Duke and Jeff Sessions's Senate office to the architecture of family separation and the travel ban. Her argument is that Miller, not Trump, supplied the ideological continuity, drawing on a specific lineage of restrictionist thinkers rather than improvising.",
+   "core": [
+    "The immigration agenda was a coherent decades-old project that found a vehicle rather than a policy invented in 2016",
+    "Miller's influence came from writing the language, and whoever supplies the words ends up setting the policy",
+    "Carefully cultivated personal grievance narratives do more political work in immigration debates than data does"
+   ],
+   "conn": [
+    "35276688",
+    "50486810",
+    "223854728",
+    "36595101",
+    "62919402"
+   ]
+  },
+  {
    "id": "53345186",
    "title": "Hoax: Donald Trump, Fox News, and the Dangerous Distortion of Truth",
    "author": "Brian Stelter",
@@ -10431,7 +10895,158 @@
     "199461393",
     "35276688",
     "203579090",
-    "231198166"
+    "231198166",
+    "51022071"
+   ]
+  },
+  {
+   "id": "53398908",
+   "title": "Fundamentals: Ten Keys to Reality",
+   "author": "Frank Wilczek",
+   "isbn": "9780735223790",
+   "pages": "272",
+   "yearPub": "2021",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "fundamentals",
+   "themes": [
+    "Tech & Future",
+    "Society & Culture"
+   ],
+   "tags": "intellectual history, applied research, foundational",
+   "summary": "Wilczek sets out ten propositions he takes to be the settled foundations of physical reality — the size and age of the universe, the small number of ingredients and laws, the abundance of matter and energy, and the narrowness of what humans can perceive. He writes them less as facts to memorise than as an argument for a disposition: that the universe is comprehensible, strange, and far larger than intuition allows.",
+   "core": [
+    "A handful of laws and particles generate everything, which makes complexity emergent rather than fundamental",
+    "Human perception samples a vanishingly thin slice of what exists, and instruments are the only way to widen it",
+    "Taking the physical facts seriously is itself a form of spiritual practice rather than a substitute for one"
+   ],
+   "conn": [
+    "23692271",
+    "177152",
+    "204927599",
+    "157981712",
+    "90590134"
+   ]
+  },
+  {
+   "id": "57005158",
+   "title": "Play Nice But Win: A CEO's Journey from Founder to Leader",
+   "author": "Michael Dell",
+   "isbn": "9780593087732",
+   "pages": "320",
+   "yearPub": "2021",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "play-nice-but-win",
+   "themes": [
+    "Business & Finance",
+    "Memoir & Biography"
+   ],
+   "tags": "memoir, business strategy, entrepreneurship, leadership",
+   "summary": "Dell's account of taking Dell Technologies private in 2013 over Carl Icahn's public campaign against him, then executing the EMC acquisition — the largest deal in tech history — before returning to the market. It doubles as a founder memoir about running a company whose quarterly obligations had stopped matching its strategy.",
+   "core": [
+    "Public markets price the next quarter, so a transformation that takes five years has to happen off the exchange",
+    "An activist investor's real leverage is narrative, which means the defence is a credible alternative story rather than a better spreadsheet",
+    "Founder control is worth paying a premium for when the change required is structural rather than operational"
+   ],
+   "conn": [
+    "25817264",
+    "59366216",
+    "25602451",
+    "211399783",
+    "122765395"
+   ]
+  },
+  {
+   "id": "60018618",
+   "title": "Unreasonable Hospitality: The Remarkable Power of Giving People More Than They Expect",
+   "author": "Will Guidara",
+   "isbn": "9780593418574",
+   "pages": "288",
+   "yearPub": "2022",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "unreasonable-hospitality",
+   "themes": [
+    "Business & Finance",
+    "Personal Growth & Leadership"
+   ],
+   "tags": "leadership, business strategy, memoir, organizational psychology",
+   "summary": "Guidara tells how he and Daniel Humm took Eleven Madison Park from a struggling brasserie to the best restaurant in the world, and argues the lever was not the food but deliberately excessive hospitality. Service is executing the transaction competently; hospitality is what the transaction makes someone feel — and unlike charm, it can be systematized, budgeted and taught.",
+   "core": [
+    "Hospitality is a discipline with a process behind it, not a personality trait certain staff happen to have",
+    "Unreasonable gestures are cheap relative to the loyalty they buy, so the binding constraint is attention rather than budget",
+    "Any business can choose to compete on how it treats people, because almost none of its rivals are seriously trying"
+   ],
+   "conn": [
+    "38740751",
+    "35863927",
+    "40109367",
+    "29342515",
+    "13586928"
+   ]
+  },
+  {
+   "id": "112974860",
+   "title": "How to Know a Person: The Art of Seeing Others Deeply and Being Deeply Seen",
+   "author": "David Brooks",
+   "isbn": "9780593230060",
+   "pages": "320",
+   "yearPub": "2023",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "how-to-know-a-person",
+   "themes": [
+    "Psychology & Mind",
+    "Society & Culture"
+   ],
+   "tags": "applied psychology, sociology, vulnerability, self-help",
+   "summary": "Brooks argues that the central social skill — making another person feel seen — has atrophied, and that the resulting blindness underwrites much of the loneliness and political cruelty around us. He distinguishes diminishers, who reduce people to types, from illuminators, and treats attention as a moral practice that can be deliberately trained.",
+   "core": [
+    "Being deeply seen is a basic human need whose absence explains more social pathology than ideology does",
+    "Understanding someone requires treating them as an unfolding story rather than a fixed set of traits",
+    "The skills of attention are teachable, which makes social blindness a training failure rather than a character flaw"
+   ],
+   "conn": [
+    "58330567",
+    "13588356",
+    "37570546",
+    "23500254",
+    "34565022"
+   ]
+  },
+  {
+   "id": "213870084",
+   "title": "One Day, Everyone Will Have Always Been Against This",
+   "author": "Omar El Akkad",
+   "isbn": "9780593804148",
+   "pages": "208",
+   "yearPub": "2025",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "one-day-everyone-will-have-always-been-against-this",
+   "themes": [
+    "Society & Culture",
+    "Politics & Power"
+   ],
+   "tags": "polemic, US foreign policy, memoir, structural critique",
+   "summary": "Writing as a former war correspondent and immigrant, El Akkad argues that Western liberalism's stated values proved conditional on who was being harmed — a conclusion he reached watching the response to Gaza. The book is an essay of disillusionment whose title is also its thesis: moral consensus arrives only once holding it costs nothing.",
+   "core": [
+    "Liberal moral commitments are revealed by whose deaths get treated as unavoidable",
+    "Retrospective consensus is cheap, and the people supplying it were usually silent when it mattered",
+    "Language does much of the work of making violence acceptable, which is why the passive voice is not a stylistic choice"
+   ],
+   "conn": [
+    "205495275",
+    "25489625",
+    "55749283",
+    "56898213",
+    "35099718"
    ]
   },
   {
@@ -10495,6 +11110,126 @@
     "211003831",
     "60393585"
    ]
+  },
+  {
+   "id": "222292403",
+   "title": "The CIA Book Club: The Secret Mission to Win the Cold War with Forbidden Literature",
+   "author": "Charlie English",
+   "isbn": "",
+   "pages": "",
+   "yearPub": "2025",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "the-cia-book-club",
+   "themes": [
+    "History & Foreign Affairs",
+    "Society & Culture"
+   ],
+   "tags": "CIA, Cold War history, intelligence history, narrative nonfiction",
+   "summary": "English tells the story of the CIA's decades-long operation to move banned Western books into the Soviet bloc — on the order of ten million of them — and the Polish printers, couriers and émigrés who ran the pipeline. The claim is that literature worked as a weapon precisely because it was not one, and that the program outlasted more conventional covert efforts.",
+   "core": [
+    "A regime that must control what people read has already conceded that ideas travel faster than force",
+    "The pipeline held because it was carried by people who believed in the books rather than in the agency funding them",
+    "Soft-power operations resist evaluation, which is how they survive institutionally long after their sponsors stop understanding them"
+   ],
+   "conn": [
+    "221972207",
+    "61336679",
+    "41716921",
+    "25716725",
+    "17333289"
+   ]
+  },
+  {
+   "id": "222376666",
+   "title": "Gemini: Stepping Stone to the Moon, The Untold Story",
+   "author": "Jeffrey Kluger",
+   "isbn": "",
+   "pages": "",
+   "yearPub": "2025",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "gemini",
+   "themes": [
+    "History & Foreign Affairs",
+    "Tech & Future"
+   ],
+   "tags": "narrative nonfiction, American history, technology, Cold War history",
+   "summary": "Kluger recovers Project Gemini, the ten-flight program between Mercury and Apollo that usually gets skipped in the telling, and argues it is where the Moon landing was actually made possible — rendezvous, docking, spacewalking and long-duration flight all had to be invented under a political deadline. The drama is engineering against a clock nobody could move.",
+   "core": [
+    "Apollo could not have flown without techniques Gemini invented from nothing in under four years",
+    "The unglamorous middle program is where the real risk was absorbed, which is exactly why it is forgotten",
+    "Political deadlines rather than technical readiness set the pace, and that determined which failures were survivable"
+   ],
+   "conn": [
+    "199798785",
+    "40538681",
+    "24396871",
+    "17333289",
+    "23258873"
+   ]
+  },
+  {
+   "id": "231246952",
+   "title": "Entitled: The Rise and Fall of the House of York",
+   "author": "Andrew Lownie",
+   "isbn": "9780008775452",
+   "pages": "448",
+   "yearPub": "2025",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "entitled",
+   "themes": [
+    "Memoir & Biography",
+    "Society & Culture"
+   ],
+   "tags": "biography, investigative journalism, oligarchy, cultural history",
+   "summary": "An unauthorised dual biography of Prince Andrew and Sarah Ferguson, built from four years of research, Freedom of Information requests and more than a hundred interviews. Lownie treats the couple less as a scandal than as a case study in what happens when unaccountable inherited status meets modern money — trade-envoy roles, Epstein, and an institution that shielded them until it no longer could.",
+   "core": [
+    "Inherited privilege without a defined job creates a market for influence-selling, which is what the York finances actually document",
+    "The palace's instinct to manage rather than investigate converted a personal failing into an institutional one",
+    "Freedom-of-information records outlast reputation management, which is why the paper trail rather than the press cycle broke the story"
+   ],
+   "conn": [
+    "53746013",
+    "208930976",
+    "224003226",
+    "52717403",
+    "59808061"
+   ]
+  },
+  {
+   "id": "241434373",
+   "title": "The Infinity Machine: Demis Hassabis, DeepMind, and the Quest for Superintelligence",
+   "author": "Sebastian Mallaby",
+   "isbn": "9780593831847",
+   "pages": "",
+   "yearPub": "2026",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "the-infinity-machine",
+   "themes": [
+    "Tech & Future",
+    "Memoir & Biography"
+   ],
+   "tags": "technology, biography, narrative nonfiction, intellectual history",
+   "summary": "Drawing on more than thirty hours with Demis Hassabis, Mallaby traces DeepMind from a chess prodigy's obsession to the lab that produced AlphaGo and AlphaFold, then found itself inside Google in an arms race it did not choose. His argument is that Hassabis's refusal to optimise for milestones — insisting on solving the problem rather than winning the benchmark — explains both DeepMind's scientific wins and its slowness to see large language models coming.",
+   "core": [
+    "DeepMind pursued intelligence as a science problem while its rivals pursued it as a product race, which produced very different blind spots",
+    "Betting against large language models cost DeepMind the ChatGPT moment but broadened its research front",
+    "Founders believe they steer their technology; acquisition, capital and competition end up steering it for them"
+   ],
+   "conn": [
+    "211399783",
+    "90590134",
+    "60321447",
+    "204927599",
+    "56620811"
+   ]
   }
  ],
  "edges": [
@@ -10519,6 +11254,10 @@
    2
   ],
   [
+   1,
+   318
+  ],
+  [
    2,
    1
   ],
@@ -10540,7 +11279,7 @@
   ],
   [
    2,
-   320
+   323
   ],
   [
    2,
@@ -10704,7 +11443,7 @@
   ],
   [
    8,
-   320
+   323
   ],
   [
    8,
@@ -10720,7 +11459,7 @@
   ],
   [
    9,
-   320
+   323
   ],
   [
    9,
@@ -10785,6 +11524,10 @@
   [
    10,
    162
+  ],
+  [
+   10,
+   328
   ],
   [
    11,
@@ -10873,6 +11616,10 @@
   [
    11,
    21
+  ],
+  [
+   11,
+   328
   ],
   [
    12,
@@ -10931,6 +11678,14 @@
    18
   ],
   [
+   13,
+   339
+  ],
+  [
+   13,
+   318
+  ],
+  [
    14,
    17
   ],
@@ -10953,6 +11708,14 @@
   [
    14,
    38
+  ],
+  [
+   14,
+   339
+  ],
+  [
+   14,
+   324
   ],
   [
    15,
@@ -10988,7 +11751,15 @@
   ],
   [
    15,
-   321
+   338
+  ],
+  [
+   15,
+   325
+  ],
+  [
+   15,
+   327
   ],
   [
    16,
@@ -11012,11 +11783,19 @@
   ],
   [
    16,
-   319
+   322
   ],
   [
    16,
    316
+  ],
+  [
+   16,
+   326
+  ],
+  [
+   16,
+   336
   ],
   [
    17,
@@ -11071,6 +11850,22 @@
    292
   ],
   [
+   17,
+   339
+  ],
+  [
+   17,
+   324
+  ],
+  [
+   17,
+   318
+  ],
+  [
+   17,
+   327
+  ],
+  [
    18,
    17
   ],
@@ -11093,6 +11888,10 @@
   [
    18,
    13
+  ],
+  [
+   18,
+   339
   ],
   [
    19,
@@ -11123,6 +11922,10 @@
    28
   ],
   [
+   19,
+   340
+  ],
+  [
    20,
    9
   ],
@@ -11140,7 +11943,7 @@
   ],
   [
    20,
-   320
+   323
   ],
   [
    21,
@@ -11263,6 +12066,10 @@
    228
   ],
   [
+   25,
+   329
+  ],
+  [
    26,
    11
   ],
@@ -11307,6 +12114,10 @@
    32
   ],
   [
+   26,
+   331
+  ],
+  [
    27,
    55
   ],
@@ -11329,6 +12140,10 @@
   [
    27,
    23
+  ],
+  [
+   27,
+   340
   ],
   [
    28,
@@ -11440,7 +12255,11 @@
   ],
   [
    31,
-   321
+   325
+  ],
+  [
+   31,
+   327
   ],
   [
    32,
@@ -11556,7 +12375,15 @@
   ],
   [
    34,
-   321
+   338
+  ],
+  [
+   34,
+   325
+  ],
+  [
+   34,
+   327
   ],
   [
    35,
@@ -11588,7 +12415,7 @@
   ],
   [
    35,
-   320
+   323
   ],
   [
    36,
@@ -11691,6 +12518,10 @@
    39
   ],
   [
+   38,
+   331
+  ],
+  [
    39,
    24
   ],
@@ -11728,7 +12559,7 @@
   ],
   [
    40,
-   320
+   323
   ],
   [
    41,
@@ -11749,6 +12580,10 @@
   [
    41,
    39
+  ],
+  [
+   41,
+   331
   ],
   [
    42,
@@ -11793,6 +12628,18 @@
   [
    43,
    38
+  ],
+  [
+   43,
+   339
+  ],
+  [
+   43,
+   324
+  ],
+  [
+   43,
+   318
   ],
   [
    44,
@@ -11856,7 +12703,7 @@
   ],
   [
    46,
-   320
+   323
   ],
   [
    46,
@@ -11995,6 +12842,10 @@
    31
   ],
   [
+   51,
+   324
+  ],
+  [
    52,
    56
   ],
@@ -12004,7 +12855,7 @@
   ],
   [
    52,
-   323
+   335
   ],
   [
    52,
@@ -12232,7 +13083,7 @@
   ],
   [
    57,
-   318
+   321
   ],
   [
    58,
@@ -12289,6 +13140,14 @@
   [
    59,
    39
+  ],
+  [
+   59,
+   330
+  ],
+  [
+   59,
+   336
   ],
   [
    60,
@@ -12520,7 +13379,7 @@
   ],
   [
    66,
-   325
+   342
   ],
   [
    67,
@@ -12560,7 +13419,7 @@
   ],
   [
    68,
-   322
+   333
   ],
   [
    68,
@@ -12604,7 +13463,15 @@
   ],
   [
    69,
-   324
+   341
+  ],
+  [
+   69,
+   337
+  ],
+  [
+   69,
+   319
   ],
   [
    70,
@@ -12649,6 +13516,10 @@
   [
    71,
    31
+  ],
+  [
+   71,
+   328
   ],
   [
    72,
@@ -12728,7 +13599,11 @@
   ],
   [
    74,
-   320
+   323
+  ],
+  [
+   74,
+   338
   ],
   [
    75,
@@ -12844,7 +13719,7 @@
   ],
   [
    79,
-   320
+   323
   ],
   [
    80,
@@ -12857,6 +13732,10 @@
   [
    80,
    9
+  ],
+  [
+   80,
+   338
   ],
   [
    81,
@@ -12912,7 +13791,7 @@
   ],
   [
    82,
-   318
+   321
   ],
   [
    82,
@@ -12968,7 +13847,7 @@
   ],
   [
    83,
-   325
+   342
   ],
   [
    84,
@@ -12997,6 +13876,10 @@
   [
    84,
    187
+  ],
+  [
+   84,
+   318
   ],
   [
    85,
@@ -13032,7 +13915,11 @@
   ],
   [
    85,
-   324
+   341
+  ],
+  [
+   85,
+   346
   ],
   [
    86,
@@ -13375,6 +14262,10 @@
    144
   ],
   [
+   97,
+   330
+  ],
+  [
    98,
    12
   ],
@@ -13480,7 +14371,7 @@
   ],
   [
    100,
-   322
+   333
   ],
   [
    101,
@@ -13515,6 +14406,14 @@
    59
   ],
   [
+   101,
+   330
+  ],
+  [
+   101,
+   331
+  ],
+  [
    102,
    149
   ],
@@ -13547,6 +14446,14 @@
    159
   ],
   [
+   102,
+   343
+  ],
+  [
+   102,
+   320
+  ],
+  [
    103,
    90
   ],
@@ -13568,7 +14475,7 @@
   ],
   [
    103,
-   325
+   342
   ],
   [
    104,
@@ -13744,7 +14651,7 @@
   ],
   [
    110,
-   318
+   321
   ],
   [
    111,
@@ -13828,7 +14735,11 @@
   ],
   [
    113,
-   319
+   322
+  ],
+  [
+   113,
+   326
   ],
   [
    114,
@@ -13917,6 +14828,10 @@
   [
    116,
    201
+  ],
+  [
+   116,
+   344
   ],
   [
    117,
@@ -14116,7 +15031,11 @@
   ],
   [
    123,
-   324
+   341
+  ],
+  [
+   123,
+   337
   ],
   [
    124,
@@ -14177,6 +15096,14 @@
   [
    125,
    39
+  ],
+  [
+   125,
+   330
+  ],
+  [
+   125,
+   331
   ],
   [
    126,
@@ -14284,7 +15211,7 @@
   ],
   [
    129,
-   318
+   321
   ],
   [
    130,
@@ -14584,7 +15511,7 @@
   ],
   [
    138,
-   325
+   342
   ],
   [
    139,
@@ -14943,6 +15870,10 @@
    166
   ],
   [
+   147,
+   334
+  ],
+  [
    148,
    11
   ],
@@ -14988,11 +15919,15 @@
   ],
   [
    148,
-   320
+   323
   ],
   [
    148,
    35
+  ],
+  [
+   148,
+   328
   ],
   [
    149,
@@ -15056,7 +15991,11 @@
   ],
   [
    150,
-   321
+   338
+  ],
+  [
+   150,
+   325
   ],
   [
    151,
@@ -15203,6 +16142,10 @@
    314
   ],
   [
+   153,
+   344
+  ],
+  [
    154,
    153
   ],
@@ -15299,6 +16242,14 @@
    267
   ],
   [
+   156,
+   343
+  ],
+  [
+   156,
+   320
+  ],
+  [
    157,
    102
   ],
@@ -15365,6 +16316,18 @@
   [
    158,
    314
+  ],
+  [
+   158,
+   344
+  ],
+  [
+   158,
+   343
+  ],
+  [
+   158,
+   320
   ],
   [
    159,
@@ -15444,7 +16407,7 @@
   ],
   [
    161,
-   323
+   335
   ],
   [
    161,
@@ -15504,7 +16467,15 @@
   ],
   [
    162,
-   321
+   325
+  ],
+  [
+   162,
+   324
+  ],
+  [
+   162,
+   327
   ],
   [
    163,
@@ -15585,6 +16556,10 @@
   [
    164,
    250
+  ],
+  [
+   164,
+   332
   ],
   [
    165,
@@ -15760,7 +16735,7 @@
   ],
   [
    169,
-   318
+   321
   ],
   [
    169,
@@ -15937,6 +16912,10 @@
   [
    174,
    190
+  ],
+  [
+   174,
+   334
   ],
   [
    175,
@@ -16140,7 +17119,11 @@
   ],
   [
    180,
-   322
+   333
+  ],
+  [
+   180,
+   345
   ],
   [
    181,
@@ -16264,7 +17247,7 @@
   ],
   [
    184,
-   323
+   335
   ],
   [
    184,
@@ -16551,6 +17534,10 @@
    276
   ],
   [
+   191,
+   345
+  ],
+  [
    192,
    47
   ],
@@ -16587,6 +17574,14 @@
    298
   ],
   [
+   192,
+   346
+  ],
+  [
+   192,
+   336
+  ],
+  [
    193,
    269
   ],
@@ -16613,6 +17608,10 @@
   [
    193,
    295
+  ],
+  [
+   193,
+   334
   ],
   [
    194,
@@ -16692,7 +17691,11 @@
   ],
   [
    195,
-   319
+   322
+  ],
+  [
+   195,
+   326
   ],
   [
    196,
@@ -16831,6 +17834,10 @@
    153
   ],
   [
+   201,
+   344
+  ],
+  [
    202,
    152
   ],
@@ -16848,11 +17855,15 @@
   ],
   [
    202,
-   319
+   322
   ],
   [
    202,
    314
+  ],
+  [
+   202,
+   344
   ],
   [
    203,
@@ -17076,7 +18087,7 @@
   ],
   [
    209,
-   323
+   335
   ],
   [
    209,
@@ -17164,7 +18175,7 @@
   ],
   [
    211,
-   322
+   333
   ],
   [
    212,
@@ -17205,6 +18216,10 @@
   [
    213,
    9
+  ],
+  [
+   213,
+   326
   ],
   [
    214,
@@ -17264,7 +18279,7 @@
   ],
   [
    216,
-   318
+   321
   ],
   [
    217,
@@ -17336,7 +18351,7 @@
   ],
   [
    218,
-   322
+   333
   ],
   [
    219,
@@ -17465,6 +18480,10 @@
   [
    223,
    5
+  ],
+  [
+   223,
+   328
   ],
   [
    224,
@@ -17600,7 +18619,7 @@
   ],
   [
    227,
-   324
+   341
   ],
   [
    228,
@@ -17639,6 +18658,10 @@
    25
   ],
   [
+   228,
+   329
+  ],
+  [
    229,
    66
   ],
@@ -17672,7 +18695,7 @@
   ],
   [
    229,
-   325
+   342
   ],
   [
    230,
@@ -17712,7 +18735,7 @@
   ],
   [
    230,
-   325
+   342
   ],
   [
    231,
@@ -17815,6 +18838,10 @@
    242
   ],
   [
+   233,
+   319
+  ],
+  [
    234,
    47
   ],
@@ -17833,6 +18860,10 @@
   [
    234,
    160
+  ],
+  [
+   234,
+   346
   ],
   [
    235,
@@ -18076,7 +19107,15 @@
   ],
   [
    243,
-   324
+   341
+  ],
+  [
+   243,
+   346
+  ],
+  [
+   243,
+   336
   ],
   [
    244,
@@ -18108,7 +19147,7 @@
   ],
   [
    244,
-   319
+   322
   ],
   [
    244,
@@ -18173,6 +19212,14 @@
   [
    246,
    317
+  ],
+  [
+   246,
+   337
+  ],
+  [
+   246,
+   319
   ],
   [
    247,
@@ -18251,6 +19298,14 @@
    281
   ],
   [
+   248,
+   343
+  ],
+  [
+   248,
+   320
+  ],
+  [
    249,
    60
   ],
@@ -18273,6 +19328,10 @@
   [
    249,
    298
+  ],
+  [
+   249,
+   336
   ],
   [
    250,
@@ -18339,6 +19398,14 @@
    313
   ],
   [
+   251,
+   340
+  ],
+  [
+   251,
+   329
+  ],
+  [
    252,
    85
   ],
@@ -18368,7 +19435,11 @@
   ],
   [
    252,
-   319
+   322
+  ],
+  [
+   252,
+   329
   ],
   [
    253,
@@ -18648,7 +19719,15 @@
   ],
   [
    262,
-   324
+   341
+  ],
+  [
+   262,
+   346
+  ],
+  [
+   262,
+   337
   ],
   [
    263,
@@ -18771,6 +19850,10 @@
    36
   ],
   [
+   266,
+   340
+  ],
+  [
    267,
    86
   ],
@@ -18863,6 +19946,14 @@
    281
   ],
   [
+   268,
+   343
+  ],
+  [
+   268,
+   320
+  ],
+  [
    269,
    58
   ],
@@ -18888,7 +19979,7 @@
   ],
   [
    269,
-   323
+   335
   ],
   [
    269,
@@ -18897,6 +19988,10 @@
   [
    269,
    49
+  ],
+  [
+   269,
+   334
   ],
   [
    270,
@@ -19131,6 +20226,10 @@
    250
   ],
   [
+   276,
+   345
+  ],
+  [
    277,
    85
   ],
@@ -19157,6 +20256,10 @@
   [
    277,
    127
+  ],
+  [
+   277,
+   326
   ],
   [
    278,
@@ -19251,6 +20354,10 @@
    315
   ],
   [
+   280,
+   334
+  ],
+  [
    281,
    63
   ],
@@ -19325,6 +20432,10 @@
   [
    283,
    232
+  ],
+  [
+   283,
+   332
   ],
   [
    284,
@@ -19403,6 +20514,14 @@
    293
   ],
   [
+   286,
+   345
+  ],
+  [
+   286,
+   332
+  ],
+  [
    287,
    174
   ],
@@ -19429,6 +20548,10 @@
   [
    287,
    190
+  ],
+  [
+   287,
+   345
   ],
   [
    288,
@@ -19524,7 +20647,7 @@
   ],
   [
    290,
-   323
+   335
   ],
   [
    290,
@@ -19643,6 +20766,10 @@
    301
   ],
   [
+   293,
+   332
+  ],
+  [
    294,
    171
   ],
@@ -19676,7 +20803,7 @@
   ],
   [
    295,
-   323
+   335
   ],
   [
    295,
@@ -19775,6 +20902,10 @@
    192
   ],
   [
+   298,
+   330
+  ],
+  [
    299,
    92
   ],
@@ -19864,7 +20995,7 @@
   ],
   [
    301,
-   322
+   333
   ],
   [
    302,
@@ -20059,6 +21190,10 @@
    317
   ],
   [
+   308,
+   319
+  ],
+  [
    309,
    190
   ],
@@ -20140,7 +21275,7 @@
   ],
   [
    312,
-   322
+   333
   ],
   [
    312,
@@ -20177,6 +21312,14 @@
   [
    313,
    159
+  ],
+  [
+   313,
+   340
+  ],
+  [
+   313,
+   329
   ],
   [
    314,
@@ -20275,216 +21418,648 @@
    310
   ],
   [
-   318,
-   82
+   317,
+   337
+  ],
+  [
+   317,
+   319
   ],
   [
    318,
-   216
+   1
   ],
   [
    318,
-   57
+   43
   ],
   [
    318,
-   129
+   13
   ],
   [
    318,
-   110
+   17
   ],
   [
    318,
-   169
+   84
   ],
   [
    319,
-   16
+   246
   ],
   [
    319,
-   113
+   233
   ],
   [
    319,
-   244
+   317
   ],
   [
    319,
-   195
-  ],
-  [
-   319,
-   202
-  ],
-  [
-   319,
-   252
-  ],
-  [
-   320,
-   9
-  ],
-  [
-   320,
-   8
-  ],
-  [
-   320,
-   79
-  ],
-  [
-   320,
-   46
-  ],
-  [
-   320,
-   2
-  ],
-  [
-   320,
-   74
-  ],
-  [
-   320,
-   148
-  ],
-  [
-   320,
-   20
-  ],
-  [
-   320,
-   35
-  ],
-  [
-   320,
-   40
-  ],
-  [
-   321,
-   15
-  ],
-  [
-   321,
-   34
-  ],
-  [
-   321,
-   31
-  ],
-  [
-   321,
-   162
-  ],
-  [
-   321,
-   150
-  ],
-  [
-   322,
-   301
-  ],
-  [
-   322,
-   180
-  ],
-  [
-   322,
-   218
-  ],
-  [
-   322,
-   68
-  ],
-  [
-   322,
-   211
-  ],
-  [
-   322,
-   100
-  ],
-  [
-   322,
-   312
-  ],
-  [
-   323,
-   52
-  ],
-  [
-   323,
-   161
-  ],
-  [
-   323,
-   184
-  ],
-  [
-   323,
-   209
-  ],
-  [
-   323,
-   269
-  ],
-  [
-   323,
-   290
-  ],
-  [
-   323,
-   295
-  ],
-  [
-   324,
-   262
-  ],
-  [
-   324,
-   85
-  ],
-  [
-   324,
-   123
-  ],
-  [
-   324,
-   243
-  ],
-  [
-   324,
    69
   ],
   [
+   319,
+   308
+  ],
+  [
+   320,
+   268
+  ],
+  [
+   320,
+   156
+  ],
+  [
+   320,
+   248
+  ],
+  [
+   320,
+   102
+  ],
+  [
+   320,
+   158
+  ],
+  [
+   321,
+   82
+  ],
+  [
+   321,
+   216
+  ],
+  [
+   321,
+   57
+  ],
+  [
+   321,
+   129
+  ],
+  [
+   321,
+   110
+  ],
+  [
+   321,
+   169
+  ],
+  [
+   322,
+   16
+  ],
+  [
+   322,
+   113
+  ],
+  [
+   322,
+   244
+  ],
+  [
+   322,
+   195
+  ],
+  [
+   322,
+   202
+  ],
+  [
+   322,
+   252
+  ],
+  [
+   323,
+   9
+  ],
+  [
+   323,
+   8
+  ],
+  [
+   323,
+   79
+  ],
+  [
+   323,
+   46
+  ],
+  [
+   323,
+   2
+  ],
+  [
+   323,
+   74
+  ],
+  [
+   323,
+   148
+  ],
+  [
+   323,
+   20
+  ],
+  [
+   323,
+   35
+  ],
+  [
+   323,
+   40
+  ],
+  [
    324,
+   17
+  ],
+  [
+   324,
+   43
+  ],
+  [
+   324,
+   14
+  ],
+  [
+   324,
+   162
+  ],
+  [
+   324,
+   51
+  ],
+  [
+   325,
+   15
+  ],
+  [
+   325,
+   34
+  ],
+  [
+   325,
+   31
+  ],
+  [
+   325,
+   162
+  ],
+  [
+   325,
+   150
+  ],
+  [
+   326,
+   16
+  ],
+  [
+   326,
+   195
+  ],
+  [
+   326,
+   113
+  ],
+  [
+   326,
+   213
+  ],
+  [
+   326,
+   277
+  ],
+  [
+   327,
+   15
+  ],
+  [
+   327,
+   34
+  ],
+  [
+   327,
+   162
+  ],
+  [
+   327,
+   31
+  ],
+  [
+   327,
+   17
+  ],
+  [
+   328,
+   11
+  ],
+  [
+   328,
+   10
+  ],
+  [
+   328,
+   71
+  ],
+  [
+   328,
+   148
+  ],
+  [
+   328,
+   223
+  ],
+  [
+   329,
+   251
+  ],
+  [
+   329,
+   252
+  ],
+  [
+   329,
+   313
+  ],
+  [
+   329,
+   228
+  ],
+  [
+   329,
+   25
+  ],
+  [
+   330,
+   101
+  ],
+  [
+   330,
+   298
+  ],
+  [
+   330,
+   125
+  ],
+  [
+   330,
+   59
+  ],
+  [
+   330,
+   97
+  ],
+  [
+   331,
+   38
+  ],
+  [
+   331,
+   41
+  ],
+  [
+   331,
+   125
+  ],
+  [
+   331,
+   26
+  ],
+  [
+   331,
+   101
+  ],
+  [
+   332,
+   286
+  ],
+  [
+   332,
+   283
+  ],
+  [
+   332,
+   164
+  ],
+  [
+   332,
+   335
+  ],
+  [
+   332,
+   293
+  ],
+  [
+   333,
+   301
+  ],
+  [
+   333,
+   180
+  ],
+  [
+   333,
+   218
+  ],
+  [
+   333,
+   68
+  ],
+  [
+   333,
+   211
+  ],
+  [
+   333,
+   100
+  ],
+  [
+   333,
+   312
+  ],
+  [
+   334,
+   269
+  ],
+  [
+   334,
+   193
+  ],
+  [
+   334,
+   280
+  ],
+  [
+   334,
+   174
+  ],
+  [
+   334,
+   147
+  ],
+  [
+   335,
+   52
+  ],
+  [
+   335,
+   161
+  ],
+  [
+   335,
+   184
+  ],
+  [
+   335,
+   209
+  ],
+  [
+   335,
+   269
+  ],
+  [
+   335,
+   290
+  ],
+  [
+   335,
+   295
+  ],
+  [
+   335,
+   332
+  ],
+  [
+   336,
+   16
+  ],
+  [
+   336,
+   59
+  ],
+  [
+   336,
+   192
+  ],
+  [
+   336,
+   249
+  ],
+  [
+   336,
+   243
+  ],
+  [
+   337,
+   317
+  ],
+  [
+   337,
+   246
+  ],
+  [
+   337,
+   69
+  ],
+  [
+   337,
+   262
+  ],
+  [
+   337,
+   123
+  ],
+  [
+   338,
+   74
+  ],
+  [
+   338,
+   80
+  ],
+  [
+   338,
+   15
+  ],
+  [
+   338,
+   34
+  ],
+  [
+   338,
+   150
+  ],
+  [
+   339,
+   43
+  ],
+  [
+   339,
+   17
+  ],
+  [
+   339,
+   13
+  ],
+  [
+   339,
+   14
+  ],
+  [
+   339,
+   18
+  ],
+  [
+   340,
+   251
+  ],
+  [
+   340,
+   27
+  ],
+  [
+   340,
+   266
+  ],
+  [
+   340,
+   313
+  ],
+  [
+   340,
+   19
+  ],
+  [
+   341,
+   262
+  ],
+  [
+   341,
+   85
+  ],
+  [
+   341,
+   123
+  ],
+  [
+   341,
+   243
+  ],
+  [
+   341,
+   69
+  ],
+  [
+   341,
    227
   ],
   [
-   325,
+   342,
    83
   ],
   [
-   325,
+   342,
    229
   ],
   [
-   325,
+   342,
    66
   ],
   [
-   325,
+   342,
    138
   ],
   [
-   325,
+   342,
    230
   ],
   [
-   325,
+   342,
    103
+  ],
+  [
+   343,
+   268
+  ],
+  [
+   343,
+   102
+  ],
+  [
+   343,
+   156
+  ],
+  [
+   343,
+   248
+  ],
+  [
+   343,
+   158
+  ],
+  [
+   344,
+   201
+  ],
+  [
+   344,
+   202
+  ],
+  [
+   344,
+   153
+  ],
+  [
+   344,
+   158
+  ],
+  [
+   344,
+   116
+  ],
+  [
+   345,
+   286
+  ],
+  [
+   345,
+   191
+  ],
+  [
+   345,
+   276
+  ],
+  [
+   345,
+   180
+  ],
+  [
+   345,
+   287
+  ],
+  [
+   346,
+   262
+  ],
+  [
+   346,
+   243
+  ],
+  [
+   346,
+   85
+  ],
+  [
+   346,
+   192
+  ],
+  [
+   346,
+   234
   ]
  ]
 }
