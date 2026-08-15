@@ -1,0 +1,150 @@
+{% extends "_layout.njk" %}
+{% block content %}
+    <div class="page-head">
+      <div class="kicker">Analytics</div>
+      <h1>Reading analytics</h1>
+      <p class="standfirst">{{ site.readCount }} books and {{ site.totalPages | num }} pages, and what the numbers say about how the reading has changed.</p>
+    </div>
+
+    {# Indexable prose so the page is not purely numbers. #}
+    <div class="prose">
+      <p>The clearest thing in this data is drift. The early years lean on personal growth and business; the recent ones are dominated by politics, history, and the institutions that hold both. That shift is gradual and unplanned &mdash; nobody decides to become a politics reader &mdash; but across {{ yearCount or '' }} the stacked area below makes it hard to miss.</p>
+      <p>Two other patterns hold up. The median book here was published {{ lag.median }} years before it was read, and {{ lag.withinTwo }} of {{ lag.total }} were read within two years of publication &mdash; this is a shelf that follows the present rather than the canon. And the pace is remarkably steady: the longest run without a finished book is {{ streaks.longestGap }} months, against a streak of {{ streaks.longestStreak }} consecutive months with at least one.</p>
+    </div>
+
+    <div class="lensbar">
+      <span class="ll">Year</span>
+      <select id="lensYear"><option value="">All years</option></select>
+      <span class="lens-scope" id="lensScope"></span>
+      <button class="lreset" id="lensReset">Reset</button>
+    </div>
+
+    {# HERO CHART — theme drift, promoted to the top per SESSION 2 Step 6. #}
+    <div class="panel">
+      <h3>How the reading has drifted</h3>
+      <p class="cap">Each theme&rsquo;s share of the shelf, year by year. This is the visual proof of the argument in <a href="/reading">why I track the connections</a>.</p>
+      <div class="stack-layout">
+        <div><div class="stack-wrap" id="themeStack"></div><div class="tlegend" id="stackLegend"></div></div>
+        <div class="sd" id="stackDetail">
+          <div class="sd-head"><span class="sd-dot" id="sdDot"></span><span class="sd-title" id="sdTitle">Recent reads</span></div>
+          <div class="sd-sub" id="sdSub">Hover a segment to see its books</div>
+          <div class="sd-list" id="sdList"></div>
+        </div>
+      </div>
+      <div class="seg-toggle" id="tyToggle" style="margin-top:12px"><button class="on" data-m="books">Books</button><button data-m="pages">Pages</button></div>
+    </div>
+
+    <div class="profile" id="profile"><h3>My reading profile</h3><div class="traits" id="traits"></div></div>
+    <div class="stat-grid" id="statCards"></div>
+
+    <div class="panel">
+      <h3>Records &amp; superlatives</h3>
+      <p class="cap">The edges of the shelf.</p>
+      <div class="records" id="records"></div>
+    </div>
+
+    {# NEW — publication lag #}
+    <div class="two-col">
+      <div class="panel">
+        <h3>Publication lag</h3>
+        <p class="cap">How old a book was when I read it. Median {{ lag.median }} years; {{ lag.withinTwo }} of {{ lag.total }} within two.</p>
+        <div class="minibars" id="lagBars"></div>
+      </div>
+      <div class="panel">
+        <h3>Streaks &amp; gaps</h3>
+        <p class="cap">Consecutive months with at least one book finished.</p>
+        <div class="records">
+          <div class="rec"><div class="rl">Longest streak</div><div class="rv">{{ streaks.longestStreak }} months</div><div class="rt">{{ streaks.streakFrom }} &rarr; {{ streaks.streakTo }}</div></div>
+          <div class="rec"><div class="rl">Longest drought</div><div class="rv">{{ streaks.longestGap }} months</div><div class="rt">{{ streaks.gapFrom }} &rarr; {{ streaks.gapTo }}</div></div>
+          <div class="rec"><div class="rl">Total pages</div><div class="rv">{{ cumPages.total | num }}</div><div class="rt">across {{ site.readCount }} books</div></div>
+        </div>
+      </div>
+    </div>
+
+    {# NEW — cumulative pages #}
+    <div class="panel">
+      <h3>Cumulative pages</h3>
+      <p class="cap">Every page finished, accumulating over time &mdash; {{ cumPages.total | num }} in total.</p>
+      <svg class="linechart" id="cumChart" viewBox="0 0 800 220" preserveAspectRatio="none"></svg>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h3>Reading pace</h3>
+        <div class="seg-toggle" id="paceToggle"><button class="on" data-m="books">Books</button><button data-m="pages">Pages</button></div>
+      </div>
+      <p class="cap">Books finished per month since 2022, with a 3-month trend line.</p>
+      <svg class="linechart" id="paceChart" viewBox="0 0 800 220" preserveAspectRatio="none"></svg>
+    </div>
+
+    <div class="panel">
+      <h3>Compare two periods</h3>
+      <p class="cap">Pick any two years to see what changed.</p>
+      <div class="cmp"><select id="cmpA"></select><span class="vs">vs</span><select id="cmpB"></select></div>
+      <table class="cmptable"><tbody id="cmpBody"></tbody></table>
+    </div>
+
+    <div class="panel">
+      <h3>What&rsquo;s rising &amp; falling</h3>
+      <p class="cap" id="dynCap">Each theme&rsquo;s share of my reading across the years.</p>
+      <div class="dyn" id="themeDyn"></div>
+      <p class="legend" id="diversityNote"></p>
+    </div>
+
+    {# NEW — theme-to-theme matrix, same computation as /connections #}
+    <div class="panel">
+      <h3>Which themes connect to which</h3>
+      <p class="cap">The same matrix that drives <a href="/connections">the connection map</a>, computed at build time.</p>
+      <ul class="matrix-top">
+        {% for p in crossPairs %}<li><strong>{{ p.n }}</strong> {{ p.a }} &harr; {{ p.b }}</li>{% endfor %}
+      </ul>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <h3>Reading rhythm by month</h3>
+        <p class="cap">Books finished by calendar month.<span id="monthBarsYr" class="lens-tag"></span></p>
+        <div class="minibars" id="monthBars"></div>
+      </div>
+      <div class="panel">
+        <h3>Which day I finish</h3>
+        <p class="cap">Day of week a book gets finished.<span id="weekHeatYr" class="lens-tag"></span></p>
+        <div class="weekbars" id="weekHeat"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Reading calendar</h3>
+      <p class="cap" id="heatCap">Books finished over time &mdash; darker means more.</p>
+      <div class="heatgrid" id="heatGrid"></div>
+      <div class="heatscale" id="heatScale"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Themes by length &amp; freshness</h3>
+      <p class="cap">Median page count and how new each kind of book is when I read it.</p>
+      <div class="cthead"><span>Theme</span><span>Median pages</span><span>Read within (yrs of pub)</span></div>
+      <div id="crosstab"></div>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <h3>Book length distribution</h3>
+        <p class="cap">How long my books run.</p>
+        <div class="minibars" id="lenBars"></div>
+      </div>
+      <div class="panel">
+        <h3>When my books were published</h3>
+        <p class="cap">By publication decade.</p>
+        <div class="minibars" id="decadeBars"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>How fresh are the books I read?</h3>
+      <p class="cap">Gap between publication and when I read it.</p>
+      <div class="freshbar" id="freshBar"></div>
+      <div class="fresh-legend" id="freshLegend"></div>
+    </div>
+{% endblock %}
+{% block scripts %}<script src="/assets/js/analytics.js" defer></script>
+<script defer>window.addEventListener('load',function(){loadBooks().then(function(){buildLensOptions();renderAnalytics();renderYearStack();stackDetailDefault();renderExtras();});});</script>{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "_layout.njk" %}
+{% block content %}
+    <div class="page-head">
+      <div class="kicker">{{ copy.kicker }}</div>
+      <h1>{{ copy.h1 | safe }}</h1>
+      <p class="standfirst">{{ copy.standfirst | safe }}</p>
+    </div>
+    <div class="prose">
+{{ copy.html | safe }}
+    </div>
+{% endblock %}

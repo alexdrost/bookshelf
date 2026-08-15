@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% include "_partials/head.njk" %}
+</head>
+<body>
+<div id="tip"><span class="tt"></span><span class="ts"></span></div>
+<div id="listpop"></div>
+<div id="bookpop"></div>
+{% include "_partials/nav.njk" %}
+<div class="wrap">
+  <section class="view active">
+    {# A <div>, not a <nav>: site.css styles the bare `nav` element as the sticky
+       site header. A semantic <nav> here would inherit it and paint a stray bar. #}
+    <div class="crumbs" role="navigation" aria-label="Breadcrumb">
+      {% for c in page.trail or [{'name':'Bookshelf','path':'/'},{'name':page.crumb,'path':page.path}] %}
+        {%- if not loop.last %}<a href="{{ c.path }}">{{ c.name }}</a> <span>/</span> {% else %}{{ c.name }}{% endif -%}
+      {% endfor %}
+    </div>
+{% block content %}{% endblock %}
+  </section>
+</div>
+{% include "_partials/search.njk" %}
+{% include "_partials/recommend.njk" %}
+{% include "_partials/footer.njk" %}
+<script src="/assets/js/app.js" defer></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

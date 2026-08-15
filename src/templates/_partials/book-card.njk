@@ -1,0 +1,17 @@
+{# Hub-level book card. GUARDRAIL 5: cover, title, author, year, and ONE teaser
+   line only. The full summary and core ideas live on exactly one URL — the book page. #}
+{% if book.href %}<a class="pickcard" href="{{ book.href }}">{% else %}<div class="pickcard nolink">{% endif %}
+  <span class="pc-cover">
+    {%- if book.hasCover -%}
+      <img src="/covers/{{ book.id }}.jpg" width="76" height="114" alt="{{ book.title }} by {{ book.author }}" loading="lazy" decoding="async">
+    {%- else -%}
+      <span class="pc-ph" role="img" aria-label="{{ book.title }} by {{ book.author }}"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M6 4h11a2 2 0 0 1 2 2v14l-3-2-3 2-3-2-3 2V6a2 2 0 0 1 2-2z"/></svg></span>
+    {%- endif -%}
+  </span>
+  <span class="pc-body">
+    <span class="pc-t">{{ book.title }}</span>
+    <span class="pc-a">{{ book.author }}{% if book.yearPub %} &middot; {{ book.yearPub }}{% endif %}{% if book.dateRead %} &middot; read {{ book.dateRead | date }}{% endif %}</span>
+    {%- set line = teaser if teaser else book.teaser -%}
+    {%- if line %}<span class="pc-note">{{ line }}</span>{% endif -%}
+  </span>
+{% if book.href %}</a>{% else %}</div>{% endif %}

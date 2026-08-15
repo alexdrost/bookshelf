@@ -1,0 +1,15 @@
+{% extends "_layout.njk" %}
+{% block content %}
+    <div class="page-head">
+      <div class="kicker">Theme</div>
+      <h1>{{ theme.name }}</h1>
+      <p class="standfirst">{{ theme.intro }}</p>
+    </div>
+    {# No pagination on theme pages: one complete index is more useful than five
+       fragments, and it makes this page a strong internal-linking hub. #}
+    <div class="section-head"><h2>{{ books.length }} books</h2><span class="sub">newest read first</span></div>
+    <div class="cardlist">
+      {% for book in books %}{% include "_partials/book-card.njk" %}{% endfor %}
+    </div>
+    <p class="pagesec-intro" style="margin-top:26px"><a href="/themes">All {{ site.themeCount }} themes</a> &middot; <a href="/library">the full library</a></p>
+{% endblock %}

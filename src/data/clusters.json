@@ -1,0 +1,29 @@
+{
+  "_comment": "Hand-maintained. Drives /picks. A book joins a cluster via standouts.json (id -> {cluster, note}). BUILD CONTEXT §19 open item 1: cluster names and membership are PENDING ALEX'S SIGN-OFF. Until `standouts.json` has entries, /picks renders the fallback list defined in src/pages/picks.md and the build reports that the data-driven path is untested.",
+  "clusters": [
+    {
+      "id": "power-up-close",
+      "order": 1,
+      "name": "Power, Up Close",
+      "intro": "Books written by people who were in the room, or by reporters who got the people who were in the room to talk."
+    },
+    {
+      "id": "how-money-actually-moves",
+      "order": 2,
+      "name": "How Money Actually Moves",
+      "intro": "Finance explained through failure — the collapses, frauds, and quiet mechanics that textbooks skip."
+    },
+    {
+      "id": "the-machinery-of-belief",
+      "order": 3,
+      "name": "The Machinery of Belief",
+      "intro": "Why people hold the convictions they hold, and what happens when those convictions organize."
+    },
+    {
+      "id": "systems-that-fail-people",
+      "order": 4,
+      "name": "Systems That Fail People",
+      "intro": "Housing, health, courts, and care — institutions examined at the point where they stop working."
+    }
+  ]
+}

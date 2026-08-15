@@ -1,0 +1,57 @@
+{% extends "_layout.njk" %}
+{% block content %}
+    <div class="page-head">
+      <div class="kicker">Library</div>
+      <h1>The full library</h1>
+      <p class="standfirst">All {{ total }} books, newest read first. {{ site.uniqueConnections | num }} connections run between them.</p>
+    </div>
+    {# renderBrowse() writes the active-filter summary here. The extracted body expects
+       this element to exist; without it the whole render throws partway through. #}
+    <div class="section-head"><h2 class="visually-hidden">Books</h2><span class="sub" id="browseSub">the full collection</span></div>
+
+    <div class="controls">
+      <input id="q" type="search" placeholder="Search titles, authors, themes, ideas&hellip;" autocomplete="off">
+      <button class="ctl-btn" id="browseReset" title="Clear search &amp; filters">Reset</button>
+      <span class="count" id="count">{{ books.length }} of {{ total }}</span>
+    </div>
+    <div class="sortrow">
+      <span class="sortlab">Sort</span>
+      <div class="seg-toggle" id="sortBtns">
+        <button class="on" data-s="dateRead">Recently read</button><button data-s="title">Title</button><button data-s="author">Author</button><button data-s="yearPub">Pub year</button><button data-s="pages">Pages</button><button data-s="random">Shuffle &#8635;</button>
+      </div>
+    </div>
+    <div class="chips" id="themeChips">
+      <a class="chip on" href="/library">All themes</a>{% for t in themeIndex %}<a class="chip" href="/themes/{{ t.slug }}">{{ t.name }}<span class="c">{{ t.books.length }}</span></a>{% endfor %}
+    </div>
+    <div class="active-filters" id="activeFilters"></div>
+
+    <div class="grid" id="grid">
+      {% for b in books %}
+      <a class="book" href="{{ b.href }}">
+        <div class="covwrap">
+          <div class="cover">
+            {% if b.hasCover %}<img src="/covers/{{ b.id }}.jpg" width="132" height="198" alt="{{ b.title }} by {{ b.author }}" loading="lazy" decoding="async">
+            {% else %}<div class="ph"><div class="t">{{ b.title }}</div><div class="a">{{ b.author }}</div></div>{% endif %}
+          </div>
+        </div>
+        <div class="meta"><div class="t">{{ b.shortTitle }}</div><div class="a">{{ b.author }}</div></div>
+      </a>
+      {% endfor %}
+    </div>
+    <div class="empty" id="empty" style="display:none">
+      <div class="empty-msg">Nothing on this shelf matches the current filters.</div>
+      <button class="ctl-btn" id="emptyReset">Clear filters &amp; show everything</button>
+    </div>
+
+    {# SESSION 2 Step 2. These anchors are in the SERVED HTML, not injected at runtime —
+       that is the whole point. Crawlers follow them and index all {{ totalPages }} pages;
+       library.js intercepts them, appends the next batch, and pushState's the URL. The
+       "Load more" button is the visible no-JS fallback. #}
+    <nav class="pager" aria-label="Library pagination" data-total="{{ totalPages }}" data-page="{{ pageNum }}" data-count="{{ total }}">
+      {% if page.prev %}<a class="pager-btn" rel="prev" href="{{ page.prev }}">&larr; Previous</a>{% endif %}
+      <span class="pager-now">Page {{ pageNum }} of {{ totalPages }}</span>
+      {% if page.next %}<a class="pager-btn pager-next" rel="next" href="{{ page.next }}">Next &rarr;</a>{% endif %}
+    </nav>
+    {% if page.next %}<div class="pager-more"><a class="browse-all" id="loadMore" href="{{ page.next }}">Load more books</a></div>{% endif %}
+{% endblock %}
+{% block scripts %}<script src="/assets/js/library.js" defer></script>{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "_layout.njk" %}
+{% block content %}
+    <div class="hero">
+      <div class="kicker">Alex Drost &middot; books I&rsquo;ve read</div>
+      <h1>Alex Drost&rsquo;s bookshelf &mdash; <em>{{ site.publicCount }}</em> books, annotated and connected.</h1>
+      <p>Years of reading in one place &mdash; and {{ site.uniqueConnections | num }} hand-made connections between the books.</p>
+      <div class="lead-stats">
+        <a class="s" href="/library" style="text-decoration:none"><span class="n">{{ site.readCount }}</span><span class="l">Books read</span></a>
+        <a class="s" href="/connections" style="text-decoration:none"><span class="n">{{ site.uniqueConnections | num }}</span><span class="l">Connections</span></a>
+        <a class="s" href="/themes" style="text-decoration:none"><span class="n">{{ site.themeCount }}</span><span class="l">Themes</span></a>
+        <a class="s" href="/analytics" style="text-decoration:none"><span class="n">{{ site.totalPages | num }}</span><span class="l">Pages</span></a>
+      </div>
+    </div>
+
+    <div class="section-head"><h2>Most recent read</h2><a class="more" href="/library">Browse all &rarr;</a></div>
+    <div class="feature">
+      <a class="ft-cover" href="{{ featuredBook.href }}">
+        <div class="cover">
+          {% if featuredBook.hasCover %}<img src="/covers/{{ featuredBook.id }}.jpg" width="200" height="300" alt="{{ featuredBook.title }} by {{ featuredBook.author }}" loading="eager" decoding="async">
+          {% else %}<div class="ph"><div class="t">{{ featuredBook.title }}</div><div class="a">{{ featuredBook.author }}</div></div>{% endif %}
+        </div>
+      </a>
+      <div class="ft-body">
+        <div class="ft-themes">{% for t in featuredBook.themes %}<span class="ft-th">{{ t }}</span>{% endfor %}</div>
+        <h3 class="ft-title"><a href="{{ featuredBook.href }}" style="text-decoration:none;color:inherit">{{ featuredBook.title }}</a></h3>
+        <div class="ft-author">{{ featuredBook.author }}{% if featuredBook.dateRead %} &middot; completed {{ featuredBook.dateRead | date }}{% endif %}</div>
+        {# Guardrail 5: the full summary and core ideas live on exactly one URL.
+           The feature block keeps its visual treatment but teases rather than republishes. #}
+        {% if featuredBook.teaser %}<p class="ft-sum">{{ featuredBook.teaser }}</p>{% endif %}
+        <a class="ft-open" href="{{ featuredBook.href }}">Read more about it &rarr;</a>
+      </div>
+    </div>
+
+    {% if picks.length %}
+    <div class="feat-panel">
+      <div class="section-head"><h2>Standout reads</h2><a class="more" href="/picks">All picks &rarr;</a></div>
+      <div class="cardlist">
+        {% for book in picks %}{% include "_partials/book-card.njk" %}{% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="home-divider"><span></span></div>
+    <div class="section-head section-head-c"><h2>More from my library</h2></div>
+    <div class="shelf" id="randomShelf">
+      {% for b in recent %}
+      <a class="book" href="{{ b.href }}">
+        <div class="covwrap">
+          <div class="cover">
+            {% if b.hasCover %}<img src="/covers/{{ b.id }}.jpg" width="132" height="198" alt="{{ b.title }} by {{ b.author }}" loading="lazy" decoding="async">
+            {% else %}<div class="ph"><div class="t">{{ b.title }}</div><div class="a">{{ b.author }}</div></div>{% endif %}
+          </div>
+        </div>
+        <div class="meta"><div class="t">{{ b.shortTitle }}</div><div class="a">{{ b.author }}</div></div>
+      </a>
+      {% endfor %}
+    </div>
+    <div class="home-cta"><a class="browse-all" href="/library">See the full {{ site.readCount }}-book library &rarr;</a></div>
+{% endblock %}

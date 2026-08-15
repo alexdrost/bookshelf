@@ -1,0 +1,52 @@
+{% extends "_layout.njk" %}
+{% block content %}
+    <div class="page-head">
+      <div class="kicker">Timeline</div>
+      <h1>Reading over time</h1>
+      <p class="standfirst">Books finished each year since {{ yearIndex[0].year }}. Longest run: {{ streaks.longestStreak }} consecutive months with a finish.</p>
+    </div>
+
+    <div class="pagesec">
+      {% for y in yearIndex %}
+      <a class="yearrow" href="/{{ y.year }}">
+        <span class="yearrow-y">{{ y.year }}</span>
+        <span class="yearrow-bar"><i style="width:{{ (y.books.length / 70 * 100) | round }}%"></i></span>
+        <span class="yearrow-n">{{ y.books.length }} books</span>
+      </a>
+      {% endfor %}
+    </div>
+    <p class="pagesec-intro">Year pages start at {{ yearIndex[0].year }}. The {{ preFloor }} books read before then and the {{ undated }} with no recorded date are still in <a href="/library">the library</a>, on their theme pages, and in the <a href="/connections">connection map</a>.</p>
+
+    <div class="panel">
+      <div class="panel-head"><h3>Trend by month</h3>
+        <div class="seg-toggle" id="mtToggle"><button class="on" data-m="books">Books</button><button data-m="pages">Pages</button></div>
+      </div>
+      <p class="cap">Every month from 2022 on, gaps included &mdash; the real cadence, coloured by theme. <span class="hint">Hover a month for its breakdown.</span></p>
+      <div class="mt-wrap"><div class="mt-bars" id="mtBars"></div><div class="mt-axis" id="mtAxis"></div></div>
+      <div class="tlegend" id="mtLegend"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h3>Trend by year</h3>
+        <div class="seg-toggle" id="tyToggle"><button class="on" data-m="books">Books</button><button data-m="pages">Pages</button></div>
+      </div>
+      <p class="cap">How the mix shifts year to year. <span class="hint">Hover any segment to see those books.</span></p>
+      <div class="stack-layout">
+        <div><div class="stack-wrap" id="themeStack"></div><div class="tlegend" id="stackLegend"></div></div>
+        <div class="sd" id="stackDetail">
+          <div class="sd-head"><span class="sd-dot" id="sdDot"></span><span class="sd-title" id="sdTitle">Recent reads</span></div>
+          <div class="sd-sub" id="sdSub">Hover the chart to explore a theme &amp; year</div>
+          <div class="sd-list" id="sdList"></div>
+        </div>
+      </div>
+      <p class="cap" style="margin:14px 0 0"><span id="undatedNote"></span></p>
+    </div>
+
+    <div class="panel">
+      <h3>Years in review</h3>
+      <p class="cap">A snapshot of each full year &mdash; headline numbers, the themes that defined it, and the books that stood out.</p>
+      <div class="yir-wrap" id="yearReview"></div>
+    </div>
+{% endblock %}
+{% block scripts %}<script src="/assets/js/analytics.js" defer></script>
+<script defer>window.addEventListener('load',function(){loadBooks().then(function(){renderTime();renderMonthTrend();});});</script>{% endblock %}

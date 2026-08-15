@@ -1,0 +1,27 @@
+{# SESSION 2 Step 8 — the nav now points at real routes. The SPA hash links
+   (/#v=browse etc.) are gone, and the Authors tab is removed entirely: author
+   pages are not being built, and author browsing folds into /library as a filter. #}
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="/" title="Back to the shelf" style="text-decoration:none">
+      <svg class="logo" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="8" y="9" width="9" height="23" rx="1.5" fill="#2e6fb5"/>
+        <rect x="17.5" y="11" width="8" height="21" rx="1.5" fill="#5b97d4"/>
+        <rect x="25" y="8" width="8" height="24" rx="1.5" transform="rotate(7 29 20)" fill="#2f9e6b"/>
+      </svg><span class="bt">Alex&rsquo;s Bookshelf</span>
+    </a>
+    {% for item in nav %}<a class="tab{% if item.path == page.path or (page.path | startsWith(item.path + '/')) %} here{% endif %}" href="{{ item.path }}">{{ item.label }}</a>{% endfor %}
+    <button class="searchbtn" id="searchBtn" aria-label="Search the library" onclick="openSearch()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Search</span></button>
+    <button class="navtoggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navMenu">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="navmenu" id="navMenu">
+    <a class="navlink" href="/">Home</a>
+    {% for item in nav %}<a class="navlink{% if item.path == page.path %} active{% endif %}" href="{{ item.path }}">{{ item.label }}</a>{% endfor %}
+    <div class="navmenu-sep"></div>
+    <button class="navsocial" type="button" onclick="openRec()">Recommend a book</button>
+    <a class="navsocial" href="https://www.goodreads.com/alex-drost" rel="noopener">Follow Alex on Goodreads</a>
+    <a class="navsocial" href="https://www.linkedin.com/in/adrost/" rel="noopener">Connect with Alex on LinkedIn</a>
+  </div>
+</nav>

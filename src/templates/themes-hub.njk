@@ -1,0 +1,20 @@
+{% extends "_layout.njk" %}
+{% block content %}
+    <div class="page-head">
+      <div class="kicker">Themes</div>
+      <h1>What the library is about</h1>
+      <p class="standfirst">{{ site.themeCount }} themes drawn from the enrichment notes. Most books sit under one or two, so the counts add up to more than {{ site.readCount }}.</p>
+    </div>
+    {# Editorial order from themes.json — deliberately NOT by count. #}
+    <div class="pagesec">
+      {% for t in themeIndex %}
+      <a class="themerow" href="/themes/{{ t.slug }}">
+        <span class="themerow-head">
+          <span class="themerow-name">{{ t.name }}</span>
+          <span class="themerow-count">{{ t.books.length }} books</span>
+        </span>
+        <span class="themerow-intro">{{ t.intro }}</span>
+      </a>
+      {% endfor %}
+    </div>
+{% endblock %}

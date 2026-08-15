@@ -1,0 +1,17 @@
+{
+  "name": "bookshelf-drost-us",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Static site generator for bookshelf.drost.us",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "qa": "node tools/qa.mjs"
+  },
+  "dependencies": {
+    "nunjucks": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

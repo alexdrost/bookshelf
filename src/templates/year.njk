@@ -1,0 +1,12 @@
+{% extends "_layout.njk" %}
+{% block content %}
+    <div class="page-head">
+      <div class="kicker">{{ year }}</div>
+      <h1>What I read in {{ year }}</h1>
+      <p class="standfirst">{{ books.length }} books, {{ pagesRead | num }} pages. Newest first.</p>
+    </div>
+    <div class="cardlist">
+      {% for book in books %}{% include "_partials/book-card.njk" %}{% endfor %}
+    </div>
+    <p class="pagesec-intro" style="margin-top:26px"><a href="/timeline">All years</a> &middot; <a href="/library">the full library</a></p>
+{% endblock %}

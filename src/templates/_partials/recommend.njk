@@ -1,0 +1,25 @@
+{# SESSION 2 Step 7 — retained unchanged, including the Formspree endpoint. #}
+<div class="modal" id="recModal">
+  <div class="sheet rec-sheet" role="dialog" aria-modal="true" aria-labelledby="recTitle">
+    <button class="rec-close" aria-label="Close" onclick="closeRec()">&times;</button>
+    <div class="rec-head">
+      <h2 id="recTitle">Recommend a book</h2>
+      <p class="rec-sub">Read something I&rsquo;d love? Send it my way &mdash; I&rsquo;m always adding to the stack.</p>
+    </div>
+    <form id="recForm" novalidate>
+      <div class="rec-grid">
+        <label class="rec-field"><span>Your name</span><input type="text" name="name" autocomplete="name" required></label>
+        <label class="rec-field"><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
+      </div>
+      <div class="rec-grid">
+        <label class="rec-field"><span>Book title</span><input type="text" name="book_title" required></label>
+        <label class="rec-field"><span>Author</span><input type="text" name="author"></label>
+      </div>
+      <label class="rec-field"><span>Why this one? <em>(optional)</em></span><textarea name="comments" rows="3"></textarea></label>
+      <div class="rec-foot">
+        <span class="rec-status" id="recStatus" role="status" aria-live="polite"></span>
+        <button type="submit" class="rec-submit" id="recSubmit">Send recommendation</button>
+      </div>
+    </form>
+  </div>
+</div>

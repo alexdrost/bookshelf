@@ -1,0 +1,45 @@
+{% extends "_layout.njk" %}
+{% block content %}
+    <div class="page-head">
+      <div class="kicker">{{ copy.kicker }}</div>
+      <h1>{{ copy.h1 | safe }}</h1>
+      <p class="standfirst">{{ copy.standfirst | safe }}</p>
+    </div>
+    <div class="prose">
+{{ copy.html | safe }}
+    </div>
+
+    <section class="pagesec">
+      <div class="section-head"><h2>Currently reading</h2><span class="sub">{{ currentlyReading.length }}</span></div>
+      {% if currentlyReading.length %}
+        <div class="cardlist">
+          {% for book in currentlyReading %}{% set teaser = book.teaser %}{% include "_partials/book-card.njk" %}{% endfor %}
+        </div>
+      {% else %}
+        <p class="emptynote">Nothing open at the moment.</p>
+      {% endif %}
+    </section>
+
+    <section class="pagesec">
+      <div class="section-head"><h2>Set aside</h2><span class="sub">{{ paused.length }}</span></div>
+      <p class="pagesec-intro">Started, put down, not written off.</p>
+      {% if paused.length %}
+        <div class="cardlist">
+          {% for book in paused %}{% set teaser = book.teaser %}{% include "_partials/book-card.njk" %}{% endfor %}
+        </div>
+      {% else %}
+        <p class="emptynote">Nothing set aside right now.</p>
+      {% endif %}
+    </section>
+
+    <section class="pagesec">
+      <div class="section-head"><h2>Next up</h2><span class="sub">{{ nextUp.length }}</span></div>
+      {% if nextUp.length %}
+        <div class="cardlist">
+          {% for book in nextUp %}{% set teaser = book.teaser %}{% include "_partials/book-card.njk" %}{% endfor %}
+        </div>
+      {% else %}
+        <p class="emptynote">The queue is not published yet.</p>
+      {% endif %}
+    </section>
+{% endblock %}

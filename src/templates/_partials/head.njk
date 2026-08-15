@@ -1,0 +1,36 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.title }}</title>
+
+<meta name="description" content="{{ page.description }}">
+<link rel="canonical" href="{{ site.origin }}{{ page.path }}">
+{% if page.noindex %}<meta name="robots" content="noindex,follow">{% endif %}
+
+<meta property="og:title" content="{{ page.ogTitle or page.title }}">
+<meta property="og:description" content="{{ page.description }}">
+<meta property="og:image" content="{{ site.origin }}/share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Alex Drost&rsquo;s Bookshelf &mdash; recent reads visualized as a constellation of connected books.">
+<meta property="og:url" content="{{ site.origin }}{{ page.path }}">
+<meta property="og:type" content="{{ page.ogType or 'website' }}">
+<meta property="og:site_name" content="Alex Drost&rsquo;s Bookshelf">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page.ogTitle or page.title }}">
+<meta name="twitter:description" content="{{ page.description }}">
+<meta name="twitter:image" content="{{ site.origin }}/share.png">
+<meta name="twitter:image:alt" content="Alex Drost&rsquo;s Bookshelf &mdash; recent reads visualized as a constellation of connected books.">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='8' y='9' width='9' height='23' rx='1.5' fill='%233a6ea5'/%3E%3Crect x='17.5' y='11' width='8' height='21' rx='1.5' fill='%236b9bc8'/%3E%3Crect x='25' y='8' width='8' height='24' rx='1.5' transform='rotate(7 29 20)' fill='%232f9e6b'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/styles/tokens.css">
+<link rel="stylesheet" href="/styles/site.css">
+<link rel="stylesheet" href="/styles/pages.css">
+
+{% include "_partials/schema-person.njk" %}
+<script type="application/ld+json">
+{{ page.breadcrumbJson | safe }}
+</script>
+{% if page.extraJson %}<script type="application/ld+json">
+{{ page.extraJson | safe }}
+</script>{% endif %}
