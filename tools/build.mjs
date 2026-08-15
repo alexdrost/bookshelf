@@ -9,7 +9,7 @@ import { assignSlugs } from './slugify.mjs';
 import { validate, proseWords, LAUNCH_THRESHOLD, TARGET_THRESHOLD } from './validate.mjs';
 import {
   connectionMap, uniquePairs, bridgeBooks, themeMatrix, matrixPairs,
-  featuredPairs, publicationLag, streaksAndGaps, cumulativePages,
+  publicationLag, streaksAndGaps, cumulativePages,
 } from './derive.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -186,15 +186,6 @@ const matrix = themeMatrix(books, cmap, matrixThemes);
 const matrixMax = Math.max(1, ...matrix.flatMap((row, i) => row.filter((_, j) => i !== j)));
 const crossPairs = matrixPairs(matrix, matrixThemes);
 const bridges = bridgeBooks(books, cmap, 12);
-// PAIRS. src/data/pairs.json is the editor: order, membership and the hand-written
-// `note` all come from there. Anything listed but not resolvable (a book that is no
-// longer public, a typo'd id) is dropped rather than rendered half-built.
-const pairsCfg = exists(path.join(SRC, 'data/pairs.json')) ? readJson(path.join(SRC, 'data/pairs.json')).pairs : [];
-const featured = pairsCfg
-  .map((p) => ({ a: byId.get(String(p.a)), b: byId.get(String(p.b)), note: (p.note || '').trim() }))
-  .filter((p) => p.a && p.b && p.a.public && p.b.public);
-const pairsMissing = pairsCfg.length - featured.length;
-const featuredNoted = featured.filter((p) => p.note).length;
 const lag = publicationLag(readBooks);
 const streaks = streaksAndGaps(readBooks);
 const cumPages = cumulativePages(readBooks);
@@ -439,8 +430,8 @@ for (let n = 1; n <= libraryPages; n++) {
       ? `The Full Library — ${orderedRead.length} Books | Alex Drost’s Bookshelf`
       : `The Full Library, Page ${n} of ${libraryPages} | Alex Drost’s Bookshelf`,
     description: n === 1
-      ? describe(`Every one of the ${orderedRead.length} books on the shelf, newest first — summaries, themes, and the connections between them.`)
-      : describe(`Page ${n} of ${libraryPages} of the full library: books ${(n - 1) * PER_PAGE + 1}–${Math.min(n * PER_PAGE, orderedRead.length)} of ${orderedRead.length}, newest read first.`),
+      ? describe(`Every one of the ${orderedRead.length} books on the shelf, most recent read first — summaries, themes, and the connections between them.`)
+      : describe(`Page ${n} of ${libraryPages} of the full library: books ${(n - 1) * PER_PAGE + 1}–${Math.min(n * PER_PAGE, orderedRead.length)} of ${orderedRead.length}, most recent read first.`),
     h1Plain: 'The full library',
     trail: [{ name: 'Bookshelf', path: '/' }, { name: 'Library', path: '/library' }].concat(n === 1 ? [] : [{ name: `Page ${n}`, path: route }]),
     prev: n === 2 ? '/library' : n > 2 ? `/library/${n - 1}` : null,
@@ -491,7 +482,7 @@ for (const y of yearIndex) {
   const pagesRead = y.books.reduce((n, b) => n + (b.pagesNum || 0), 0);
   const page = {
     path: route, crumb: y.year, title: `What I Read in ${y.year} — Alex Drost’s Bookshelf`,
-    description: describe(`The ${y.books.length} books finished in ${y.year} — ${pagesRead.toLocaleString('en-US')} pages, newest first, with themes and connections.`),
+    description: describe(`The ${y.books.length} books finished in ${y.year} — ${pagesRead.toLocaleString('en-US')} pages, most recent read first, with themes and connections.`),
     h1Plain: `What I read in ${y.year}`,
     trail: [{ name: 'Bookshelf', path: '/' }, { name: 'Timeline', path: '/timeline' }, { name: y.year, path: route }],
   };
@@ -530,8 +521,7 @@ for (const y of yearIndex) {
   };
   page.extraJson = articleSchema(page);
   emit('/connections', 'connections.njk', {
-    page, featured, matrix, matrixMax, themeNames, themesCfg: matrixThemesCfg, crossPairs: crossPairs.slice(0, 12),
-    featuredProvisional: featuredNoted < featured.length,
+    page, matrix, matrixMax, themeNames, themesCfg: matrixThemesCfg, crossPairs: crossPairs.slice(0, 12),
   }, { priority: 0.8 });
 }
 
@@ -586,7 +576,22 @@ function copyDir(from, to) {
 copyDir(path.join(SRC, 'styles'), path.join(DIST, 'styles'));
 copyDir(path.join(SRC, 'assets'), path.join(DIST, 'assets'));
 const coverCount = copyDir(path.join(SRC, 'covers'), path.join(DIST, 'covers'));
-fs.copyFileSync(path.join(SRC, 'data/books.json'), path.join(DIST, 'books.json'));
+// The published books.json is a FILTERED copy, not a straight passthrough. A book can be
+// fully enriched in Notion — summary, core ideas, tags, connections — while still sitting on
+// the reading or TBR shelf. None of that renders anywhere until it is `read`, and it should
+// not be downloadable either: dist/books.json is a public URL. Unread books keep only what
+// /up-next actually shows.
+{
+  const published = {
+    ...data,
+    books: data.books.map((b) => {
+      if (b.shelf === 'read') return b;
+      const { summary, core, conn, tags, ...rest } = b;
+      return { ...rest, summary: '', core: [], conn: [], tags: '' };
+    }),
+  };
+  fs.writeFileSync(path.join(DIST, 'books.json'), JSON.stringify(published, null, 1) + '\n');
+}
 fs.mkdirSync(path.join(DIST, 'data'), { recursive: true });
 // id -> slug, so client-side modules can link to book pages without duplicating books.json
 fs.writeFileSync(path.join(DIST, 'data/slugs.json'), JSON.stringify(Object.fromEntries(readBooks.map((b) => [b.id, b.slug]))));
@@ -655,7 +660,6 @@ line();
 line(B('CONNECTIONS'));
 line(`  theme matrix top: ${crossPairs.slice(0, 3).map((p) => `${p.a.split(' ')[0]}↔${p.b.split(' ')[0]} ${p.n}`).join(' · ')}`);
 line(`  bridge books: ${bridges.slice(0, 5).map((r) => `${r.book.author.split(' ').slice(-1)[0]} (${r.themeCount})`).join(', ')}`);
-line(`  featured pairs: ${featured.length} ${picksMode === 'clusters' ? '' : '(computed — Alex’s hand-written pairs are §19 open item 3)'}`);
 line(`  books with fewer than 3 connections: ${thinlyConnected.length}${thinlyConnected.length ? '  [' + thinlyConnected.map((b) => b.shortTitle.slice(0, 24)).join(' | ') + ']' : ''}`);
 line();
 line(B('ASSETS'));

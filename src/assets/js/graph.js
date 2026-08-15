@@ -371,10 +371,12 @@ if (document.getElementById('graphCanvas') || document.getElementById('egoPanel'
   const listEl = document.getElementById('mxdList');
   const closeEl = document.getElementById('mxdClose');
 
-  const linkFor = (b) => {
+  const side = (b) => {
     const slug = (typeof SLUGS !== 'undefined' && SLUGS) ? SLUGS[b.id] : null;
-    const name = b.shortTitle || String(b.title || '').split(':')[0];
-    return slug ? `<a href="/book/${slug}">${esc(name)}</a>` : esc(name);
+    const name = esc(b.shortTitle || String(b.title || '').split(':')[0]);
+    const inner = `<span class="mxp-cov"><img src="/covers/${b.id}.jpg" alt="" loading="lazy"></span>`
+      + `<span class="mxp-txt"><span class="mxp-t">${name}</span><span class="mxp-a">${esc(b.author || '')}</span></span>`;
+    return slug ? `<a class="mxp-side" href="/book/${slug}">${inner}</a>` : `<span class="mxp-side">${inner}</span>`;
   };
 
   function pairsFor(a, b) {
@@ -403,8 +405,10 @@ if (document.getElementById('graphCanvas') || document.getElementById('egoPanel'
     td.classList.add('sel');
     titleEl.textContent = `${a} ↔ ${b} — ${td.dataset.n} links`;
     listEl.innerHTML = found.length
-      ? found.slice(0, 60).map(([x, y]) => `<div class="mxd-pair">${linkFor(x)}<span class="x">↔</span>${linkFor(y)}</div>`).join('')
-      : '<div class="mxd-pair">Links counted across theme overlap; the individual pairs are on the book pages.</div>';
+      ? found.slice(0, 60).map(([x, y]) =>
+          `<div class="mxd-pair">${side(x)}<span class="mxp-x" aria-hidden="true">↔</span>${side(y)}</div>`).join('')
+        + (found.length > 60 ? `<p class="mxd-more">Showing 60 of ${found.length}.</p>` : '')
+      : '<div class="mxd-empty">Counted across theme overlap; the individual links live on the book pages.</div>';
     panel.hidden = false;
     panel.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }

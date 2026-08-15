@@ -7,7 +7,7 @@
     </div>
     {# No pagination on theme pages: one complete index is more useful than five
        fragments, and it makes this page a strong internal-linking hub. #}
-    <div class="section-head"><h2>{{ books.length }} books</h2><span class="sub">newest read first</span></div>
+    <div class="section-head"><h2>{{ books.length }} books</h2><span class="sub">most recent read first</span></div>
     <div class="cardlist">
       {% for book in books %}{% include "_partials/book-card.njk" %}{% endfor %}
     </div>

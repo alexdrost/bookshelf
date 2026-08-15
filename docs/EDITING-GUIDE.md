@@ -5,30 +5,18 @@ different places on purpose. This is the map.
 
 ---
 
-## 1. Pairs worth reading together → `src/data/pairs.json`
+## 1. Pairs worth reading together — REMOVED
 
-**A file in the repo, not Notion.** A pair is a *relationship between two books* plus a sentence
-you write. Notion has no property shaped like that, and adding one would mean a new relation table
-for eighteen rows.
+This section is off the site. It was showing computed pairs with no explanation of why any
+two books belonged together, which read as arbitrary — and the honest version needs a written
+sentence per pair, which is work you have not chosen to do yet.
 
-```json
-{
-  "pairs": [
-    { "a": "59366216", "b": "113576",
-      "_a": "Dear Chairman", "_b": "The Smartest Guys in the Room",
-      "note": "Gramm's boardroom letters are the polite version of the fight; Enron is what happens when nobody sends one." }
-  ]
-}
-```
+`src/data/pairs.json` is deleted along with it. If it comes back, the shape was: a list of
+`{a, b, note}` objects keyed on Goodreads IDs, order in the file being order on the page.
 
-- `a` and `b` are **Goodreads IDs** — the same join key as everywhere else
-- `_a` / `_b` are ignored by the build. They exist so the file is readable by a human
-- `note` is your sentence. Leave it empty and the pair renders without one
-- **Order in the file is order on the page.** Delete a pair to drop it; add an object to add one
-- A pair naming a book that isn't public is skipped rather than half-rendered
-
-I seeded it with the 18 computed pairs and left every `note` blank, so you can rewrite the list
-without starting from nothing.
+What survives is better: **click any number in the theme matrix** and you get the real pairs
+behind it — cover, title, author, both linked. Computed, but self-explaining, because the
+number you clicked is the reason they are grouped.
 
 ## 2. Recommendations → `src/data/standouts.json`
 
@@ -85,7 +73,6 @@ says "this is a thing" without promising a click that doesn't exist.
 | Slug | Notion | Frozen once live — changing it moves a URL |
 | Cover | Notion `Cover Image` | Any filename; lands as `{Goodreads ID}.jpg` |
 | Public on the site | Notion `Public?` | The only visibility gate |
-| Pairs on /connections | `src/data/pairs.json` | Order = page order |
 | Recommendations | `src/data/standouts.json` | Plus `clusters.json` for groupings |
 | Theme names, order, intro copy | `src/data/themes.json` | The 11 are locked |
 | Page copy (about, up-next, recommendations) | `src/pages/*.md` | Markdown + front matter |

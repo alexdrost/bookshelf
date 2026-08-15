@@ -14,28 +14,7 @@
       <p>About seventy-five of the pairs here point one way only. That is deliberate: a later book often comments on an earlier one that has nothing to say in return. Both pages show the link; only one of them claims it. There is more on the method on the <a href="/about">about page</a>.</p>
     </div>
 
-    {# 5c/5d/5e — INTERACTIVE LAYER. Everything above works without it. #}
-    <section class="pagesec">
-      <div class="section-head"><h2>Explore the map</h2></div>
-      {# Focus mode (5c). Rendered by graph.js; on a phone this is the default view
-         and the canvas is never built at all. #}
-      <div class="ego" id="egoPanel"></div>
-
-      <div class="graph-wrap">
-        <div class="graph-tools">
-          <input id="gsearch" class="gsearch" type="search" placeholder="Focus on a book&hellip;" autocomplete="off" aria-label="Focus the map on one book">
-          <button class="lreset" id="graphReset" type="button">Reshuffle &#8635;</button>
-          <button class="lreset" id="egoBack" type="button" style="display:none">&larr; Whole map</button>
-          <span class="ghint">Search a title to focus it &middot; hover to reveal threads &middot; click to open &middot; scroll to zoom</span>
-        </div>
-        <canvas id="graphCanvas"></canvas>
-        <div class="glegend" id="graphLegend"></div>
-        <div class="gnodecard" id="gcard"></div>
-      </div>
-      <p class="pagesec-intro" style="margin-top:14px">On a phone this opens in focus mode &mdash; one book, its connections, and theirs &mdash; which is readable where a {{ site.readCount }}-node graph is not. Tap any neighbour to travel to it.</p>
-    </section>
-
-{# 5b — THEME MATRIX. Ten nodes instead of {{ site.readCount }}. Computed at build
+    {# 5b — THEME MATRIX. Ten nodes instead of {{ site.readCount }}. Computed at build
        time, rendered as a real table so it is legible on a phone and to a crawler. #}
     <section class="pagesec">
       <div class="section-head"><h2>Where the shelf connects to itself</h2></div>
@@ -70,32 +49,28 @@
       </ul>
     </section>
 
-{# 5a — FEATURED PAIRS. Alex's hand-written pairs are §19 open item 3. Until those
-       land these are the pairs with the strongest shared footing, computed at build time. #}
+{# 5c/5d/5e — INTERACTIVE LAYER. Everything above works without it. #}
     <section class="pagesec">
-      <div class="section-head"><h2>Pairs worth reading together</h2><span class="sub">{{ featured.length }} pairs</span></div>
-      {% if featuredProvisional %}<p class="pagesec-intro">Selected by the data &mdash; the pairs that share the most themes and tags. The hand-written notes on why each pair talks to each other are still to come.</p>{% endif %}
-      <div class="pairlist">
-        {% for p in featured %}
-        <div class="pair">
-          <div class="pair-covs">
-            <a class="pair-side" href="{{ p.a.href }}">
-              <span class="pair-cov">{% if p.a.hasCover %}<img src="/covers/{{ p.a.id }}.jpg" width="88" height="132" alt="{{ p.a.title }}" loading="lazy">{% endif %}</span>
-              <span class="pair-t">{{ p.a.shortTitle }}</span><span class="pair-a">{{ p.a.author }}</span>
-            </a>
-            <span class="pair-link" aria-hidden="true">&harr;</span>
-            <a class="pair-side" href="{{ p.b.href }}">
-              <span class="pair-cov">{% if p.b.hasCover %}<img src="/covers/{{ p.b.id }}.jpg" width="88" height="132" alt="{{ p.b.title }}" loading="lazy">{% endif %}</span>
-              <span class="pair-t">{{ p.b.shortTitle }}</span><span class="pair-a">{{ p.b.author }}</span>
-            </a>
-          </div>
-          {# p.note comes from src/data/pairs.json — hand-written and editable. #}
-          {% if p.note %}<p class="pair-why">{{ p.note }}</p>{% endif %}
+      <div class="section-head"><h2>Explore the map</h2></div>
+      {# Focus mode (5c). Rendered by graph.js; on a phone this is the default view
+         and the canvas is never built at all. #}
+      <div class="ego" id="egoPanel"></div>
+
+      <div class="graph-wrap">
+        <div class="graph-tools">
+          <input id="gsearch" class="gsearch" type="search" placeholder="Focus on a book&hellip;" autocomplete="off" aria-label="Focus the map on one book">
+          <button class="lreset" id="graphReset" type="button">Reshuffle &#8635;</button>
+          <button class="lreset" id="egoBack" type="button" style="display:none">&larr; Whole map</button>
+          <span class="ghint">Search a title to focus it &middot; hover to reveal threads &middot; click to open &middot; scroll to zoom</span>
         </div>
-        {% endfor %}
+        <canvas id="graphCanvas"></canvas>
+        <div class="glegend" id="graphLegend"></div>
+        <div class="gnodecard" id="gcard"></div>
       </div>
+      <p class="pagesec-intro" style="margin-top:14px">On a phone this opens in focus mode &mdash; one book, its connections, and theirs &mdash; which is readable where a {{ site.readCount }}-node graph is not. Tap any neighbour to travel to it.</p>
     </section>
-    <section class="pagesec">
+
+<section class="pagesec">
       <div class="section-head"><h2>How two books connect</h2><span class="sub">the shortest chain between any pair</span></div>
       <p class="pagesec-intro">Pick a book at each end and the map walks the links between them &mdash; usually three or four hops, sometimes none at all.</p>
       <div class="pathfinder">
@@ -105,5 +80,6 @@
       </div>
       <div class="pf-result" id="pfResult"></div>
     </section>
+
 {% endblock %}
 {% block scripts %}<script src="/assets/js/graph.js" defer></script>{% endblock %}

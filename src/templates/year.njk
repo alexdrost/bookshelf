@@ -3,7 +3,7 @@
     <div class="page-head">
       <div class="kicker">{{ year }}</div>
       <h1>What I read in {{ year }}</h1>
-      <p class="standfirst">{{ books.length }} books, {{ pagesRead | num }} pages{% if months.length %} across {{ months.length }} month{{ "s" if months.length != 1 }}{% endif %}. Newest first.</p>
+      <p class="standfirst">{{ books.length }} books, {{ pagesRead | num }} pages{% if months.length %} across {{ months.length }} month{{ "s" if months.length != 1 }}{% endif %}. Most recent read first.</p>
     </div>
 
     {# Jump strip. Only months with a finish appear, so a thin year shows three chips
