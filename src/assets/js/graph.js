@@ -180,11 +180,14 @@ function initGraph(){
 
   G={raf:null,moved:false};
   if(!window._graphResizeBound){window._graphResizeBound=1;let _rt;window.addEventListener("resize",()=>{clearTimeout(_rt);_rt=setTimeout(()=>{if(G){size();draw();}},180);});}
-  // Brief synchronous warm-up so the first frame isn't chaotic, then let the animated
-  // loop finish settling. Avoids the ~0.5s main-thread freeze a full 260-tick sync settle
-  // caused on mobile. alpha decays in loop() until the field is calm.
-  for(let s=0;s<60;s++){tick();}
-  alpha=0.9; draw(); G.raf=requestAnimationFrame(loop);
+  // Warm up off-screen, then paint something close to the final layout. At 60 ticks
+  // the first frame was still a hairball and the next ~90 animated frames re-formed it
+  // in front of you, which is the "jumping around" — nodes moved under the cursor for
+  // a second and a half before anything was clickable. 120 ticks lands the layout
+  // essentially settled; the small remaining alpha just takes the twitch off the edges.
+  // Only desktop reaches here (initGraph is skipped on mobile), so the sync cost is fine.
+  for(let s=0;s<120;s++){tick();}
+  alpha=0.35; draw(); G.raf=requestAnimationFrame(loop);
 }
 
 /* ============================================================================
@@ -239,6 +242,16 @@ function shortestPath(fromId, toId) {
 }
 
 // ---------------------------------------------------------------- ego view
+/* A connection row carries a cover and the author, nothing else. It used to append
+   the themes the two books share, which printed the same two or three words on every
+   row in the list and said nothing about why the link was made by hand. */
+function egoRow(bk) {
+  if (!bk) return '';
+  return `<a class="ego-item" href="${bookHref(bk.id)}" data-ego="${bk.id}">` +
+    `<span class="ego-cov"><img src="/covers/${bk.id}.jpg" width="40" height="60" alt="" loading="lazy" onerror="this.style.visibility='hidden'"></span>` +
+    `<span class="ego-txt"><span class="ego-t">${esc(String(bk.title || '').split(':')[0])}</span>` +
+    `<span class="ego-a">${esc(bk.author || '')}</span></span></a>`;
+}
 function egoHTML(id) {
   const adj = buildAdj();
   const b = BOOKS[ID2I[id]];
@@ -246,27 +259,40 @@ function egoHTML(id) {
   const direct = [...(adj.get(id) || [])].map((x) => BOOKS[ID2I[x]]).filter(Boolean);
   const second = new Set();
   for (const n of direct) for (const x of adj.get(n.id) || []) if (x !== id && !adj.get(id).has(x)) second.add(x);
-  const row = (bk, why) => `<a class="ego-item" href="${bookHref(bk.id)}" data-ego="${bk.id}">` +
-    `<span class="ego-t">${esc(bk.title.split(':')[0])}</span>` +
-    `<span class="ego-a">${esc(bk.author)}${why ? ' · ' + esc(why) : ''}</span></a>`;
-  const shared = (o) => (b.themes || []).filter((t) => (o.themes || []).includes(t)).join(', ');
+  // The focused book gets its cover too. Arriving from a book page, the first
+  // question this panel has to answer is "is this still the book I clicked from?"
   return `<div class="ego-head">
-      <div class="ego-kick">Focused on</div>
-      <h3 class="ego-title"><a href="${bookHref(b.id)}">${esc(b.title)}</a></h3>
-      <div class="ego-sub">${esc(b.author)} · ${direct.length} direct connections · ${second.size} two hops away</div>
+      <div class="ego-focus">
+        <span class="ego-focus-cov"><img src="/covers/${b.id}.jpg" width="72" height="108" alt="" loading="lazy" onerror="this.style.visibility='hidden'"></span>
+        <span class="ego-focus-txt">
+          <span class="ego-kick">Focused on</span>
+          <h3 class="ego-title"><a href="${bookHref(b.id)}">${esc(b.title)}</a></h3>
+          <span class="ego-sub">${esc(b.author)} · ${direct.length} direct connections · ${second.size} two hops away</span>
+        </span>
+      </div>
     </div>
     <div class="ego-sec">Directly connected</div>
-    <div class="ego-grid">${direct.map((d) => row(d, shared(d))).join('')}</div>
-    ${second.size ? `<div class="ego-sec">Two hops away</div><div class="ego-grid">${[...second].slice(0, 24).map((x) => row(BOOKS[ID2I[x]], '')).join('')}</div>` : ''}`;
+    <div class="ego-grid">${direct.map(egoRow).join('')}</div>
+    ${second.size ? `<div class="ego-sec">Two hops away</div><div class="ego-grid">${[...second].slice(0, 24).map((x) => egoRow(BOOKS[ID2I[x]])).join('')}</div>` : ''}`;
+}
+
+/* The idle state is server-rendered inside #egoPanel so the section is never a blank
+   rectangle. Stash it on first use and put it back when focus is cleared. */
+let _egoIdle = null;
+function egoIdleHTML() {
+  const panel = $('#egoPanel');
+  if (_egoIdle === null && panel) _egoIdle = panel.innerHTML;
+  return _egoIdle || '';
 }
 
 let egoCurrent = null;
 function showEgo(id) {
   const panel = $('#egoPanel');
   if (!panel) return;
+  egoIdleHTML();                 // capture the placeholder before overwriting it
   egoCurrent = id;
   panel.innerHTML = egoHTML(id);
-  panel.classList.add('open');
+  panel.classList.add('open', 'focused');
   const back = $('#egoBack');
   if (back) back.style.display = '';
   // Tap-to-traverse: move focus rather than navigating, on mobile.
@@ -282,7 +308,9 @@ function showEgo(id) {
 }
 function hideEgo() {
   const panel = $('#egoPanel');
-  if (panel) { panel.classList.remove('open'); panel.innerHTML = ''; }
+  // Back to the placeholder, not to nothing — collapsing the panel to zero height
+  // yanked the whole page up under the cursor every time focus was cleared.
+  if (panel) { panel.classList.remove('focused'); panel.innerHTML = egoIdleHTML(); }
   const back = $('#egoBack');
   if (back) back.style.display = 'none';
   egoCurrent = null;
@@ -342,6 +370,18 @@ function initConnections() {
     const m = /(?:^|[#&])book=(\d+)/.exec(location.hash);
     if (m && BOOKS[ID2I[m[1]]]) {
       showEgo(m[1]);
+      /* Arriving from a book page's "See the connection map" link. The panel is a
+         third of the way down a long page, so landing at the top means the thing
+         that was actually asked for is off-screen. Scroll to it — after a frame,
+         because the panel has just been written and has no height yet. */
+      const panel = $('#egoPanel');
+      // Scroll to the SECTION, not the panel — landing on the panel alone put its
+      // "Explore the map" heading under the sticky nav, so you arrived with no label
+      // on what you were looking at.
+      const target = (panel && panel.closest('.pagesec')) || panel;
+      if (target) requestAnimationFrame(() => {
+        requestAnimationFrame(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+      });
     } else if (MOBILE()) {
       // Mobile default is the ego view, not a shrunk-down hairball. Start on the
       // most-connected book so the page opens on something worth reading.

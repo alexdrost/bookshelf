@@ -4,6 +4,9 @@ function phHTML(b){const _c=THEME_COLORS[(b.themes&&b.themes[0])||"Other"]||"#2e
 function bookCard(b,delay,isLatest){return `<a class="book${isLatest?' is-latest':''}" href="${bookHref(b.id)}" data-i="${ID2I[b.id]}" style="animation-delay:${delay||0}ms"><div class="covwrap">${isLatest?'<span class="latest-cue">Latest</span>':''}${STANDOUT_OF[b.id]?`<span class="standout-cue" title="Standout read of ${STANDOUT_OF[b.id]}"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.06 6.6.78-4.9 4.5 1.3 6.56L12 17.9 6.1 20.9l1.3-6.56-4.9-4.5 6.6-.78z"/></svg>${STANDOUT_OF[b.id]}</span>`:''}<div class="cover" data-i="${ID2I[b.id]}" data-ph="${esc(phHTML(b))}"></div></div><div class="meta"><div class="t">${esc(b.title)}</div><div class="a">${esc(b.author)}</div></div></a>`;}
 const CHIP_HIDE=new Set(["Religion & Faith"]);
 function renderChips(){
+  // The pill row was removed from /library — theme browsing lives on /themes. Every
+  // control still calls this, so it no-ops rather than throwing on a missing node.
+  if(!$("#themeChips"))return;
   const counts={};BOOKS.forEach(b=>b.themes.forEach(t=>counts[t]=(counts[t]||0)+1));
   const sorted=Object.entries(counts).filter(([t])=>!CHIP_HIDE.has(t)).sort((a,b)=>b[1]-a[1]);
   $("#themeChips").innerHTML=`<span class="chip ${activeTheme===''?'on':''}" data-t="">All themes</span>`+sorted.map(([t,c])=>`<span class="chip ${activeTheme===t?'on':''}" data-t="${esc(t)}" style="--dot:${THEME_COLORS[t]||'#8a8f98'}">${esc(t)}<span class="c">${c}</span></span>`).join("");
@@ -119,16 +122,12 @@ function observeCovers(root){
 let _libReady = false;
 let _libLoading = null;
 
-/** Load once, then narrow to shelf:"read" — /library is a read-only index. */
+/** Load once. The shelf:"read" narrowing that used to happen here now happens in
+    loadBooks() for every page, so this is just the ready latch. */
 function libraryData() {
   if (_libReady) return Promise.resolve();
   if (_libLoading) return _libLoading;
-  _libLoading = loadBooks().then(() => {
-    BOOKS = BOOKS.filter((b) => b.shelf === 'read');
-    ID2I = {};
-    BOOKS.forEach((b, i) => { ID2I[b.id] = i; });
-    _libReady = true;
-  });
+  _libLoading = loadBooks().then(() => { _libReady = true; });
   return _libLoading;
 }
 

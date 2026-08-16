@@ -5,7 +5,10 @@
   <div class="ft-in">
     <div class="ft-left">
       <span class="ft-name">Alex Drost&rsquo;s Bookshelf</span>
-      <span class="ft-sub">A personal snapshot of my reading &middot; {{ site.publicCount }} books, annotated and connected</span>
+      {# readCount, not publicCount. publicCount also counts the reading and TBR
+         shelves, so the footer said 348 while the home stat bar said 322 — two true
+         numbers under one label. Every count the site shows is the read shelf. #}
+      <span class="ft-sub">A personal snapshot of my reading &middot; {{ site.readCount }} books, annotated and connected</span>
     </div>
     {# Every link here leaves the site, so every one opens in a new tab —
        nobody should lose their place on the shelf to a side trip. #}

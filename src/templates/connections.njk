@@ -49,12 +49,32 @@
       </ul>
     </section>
 
-{# 5c/5d/5e — INTERACTIVE LAYER. Everything above works without it. #}
+{# 5c/5d/5e — INTERACTIVE LAYER. Everything above works without it.
+   Order changed: the pathfinder is a question anyone can answer from a standing
+   start ("do these two touch?"), so it comes first. The force graph is the thing
+   you play with once you already care, so it goes last. #}
     <section class="pagesec">
+      <div class="section-head"><h2>How two books connect</h2><span class="sub">the shortest chain between any pair</span></div>
+      <p class="pagesec-intro">Pick a book at each end and the map walks the links between them &mdash; usually three or four hops, sometimes none at all.</p>
+      <div class="pathfinder">
+        <label class="pf-field"><span>Start with</span><input id="pfA" type="search" autocomplete="off" placeholder="A book you have read&hellip;"><ul class="pf-list" id="pfListA"></ul></label>
+        <label class="pf-field"><span>End with</span><input id="pfB" type="search" autocomplete="off" placeholder="&hellip;and one that seems unrelated"><ul class="pf-list" id="pfListB"></ul></label>
+        <button class="ctl-btn" id="pfGo">Find the chain</button>
+      </div>
+      <div class="pf-result" id="pfResult"></div>
+    </section>
+
+    <section class="pagesec mapsec">
       <div class="section-head"><h2>Explore the map</h2></div>
       {# Focus mode (5c). Rendered by graph.js; on a phone this is the default view
-         and the canvas is never built at all. #}
-      <div class="ego" id="egoPanel"></div>
+         and the canvas is never built at all. The placeholder inside is server-rendered
+         so the panel is never a blank rectangle with no explanation of what goes in it. #}
+      <div class="ego" id="egoPanel">
+        <div class="ego-idle">
+          <div class="ego-idle-k">Focus on one book</div>
+          <p>Search a title below, or click any node on the map, and this panel fills with that book&rsquo;s direct connections and everything two hops out. Every book page links straight here.</p>
+        </div>
+      </div>
 
       <div class="graph-wrap">
         <div class="graph-tools">
@@ -68,17 +88,6 @@
         <div class="gnodecard" id="gcard"></div>
       </div>
       <p class="pagesec-intro" style="margin-top:14px">On a phone this opens in focus mode &mdash; one book, its connections, and theirs &mdash; which is readable where a {{ site.readCount }}-node graph is not. Tap any neighbour to travel to it.</p>
-    </section>
-
-<section class="pagesec">
-      <div class="section-head"><h2>How two books connect</h2><span class="sub">the shortest chain between any pair</span></div>
-      <p class="pagesec-intro">Pick a book at each end and the map walks the links between them &mdash; usually three or four hops, sometimes none at all.</p>
-      <div class="pathfinder">
-        <label class="pf-field"><span>Start with</span><input id="pfA" type="search" autocomplete="off" placeholder="A book you have read&hellip;"><ul class="pf-list" id="pfListA"></ul></label>
-        <label class="pf-field"><span>End with</span><input id="pfB" type="search" autocomplete="off" placeholder="&hellip;and one that seems unrelated"><ul class="pf-list" id="pfListB"></ul></label>
-        <button class="ctl-btn" id="pfGo">Find the chain</button>
-      </div>
-      <div class="pf-result" id="pfResult"></div>
     </section>
 
 {% endblock %}

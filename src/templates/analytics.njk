@@ -6,12 +6,10 @@
       <p class="standfirst">{{ site.readCount }} books and {{ site.totalPages | num }} pages, and what the numbers say about how the reading has changed.</p>
     </div>
 
-    {# Indexable prose so the page is not purely numbers. #}
-    <div class="prose">
-      <p>The clearest thing in this data is drift. The early years lean on personal growth and business; the recent ones are dominated by politics, history, and the institutions that hold both. That shift is gradual and unplanned &mdash; nobody decides to become a politics reader &mdash; but across {{ yearCount or '' }} the stacked area below makes it hard to miss.</p>
-      <p>Two other patterns hold up. The median book here was published {{ lag.median }} years before it was read, and {{ lag.withinTwo }} of {{ lag.total }} were read within two years of publication &mdash; this is a shelf that follows the present rather than the canon. And the pace is remarkably steady: the longest run without a finished book is {{ streaks.longestGap }} months, against a streak of {{ streaks.longestStreak }} consecutive months with at least one.</p>
-    </div>
-
+    {# The two-paragraph essay that used to sit here pushed the first chart below the
+       fold and mostly restated what the chart shows. Its one claim worth keeping —
+       the drift — is now the hero chart's own caption, so the lens bar is the first
+       thing under the head and the page starts where the data starts. #}
     <div class="lensbar">
       <span class="ll">Year</span>
       <select id="lensYear"><option value="">All years</option></select>
@@ -22,15 +20,9 @@
     {# HERO CHART — theme drift, promoted to the top per SESSION 2 Step 6. #}
     <div class="panel">
       <h3>How the reading has drifted</h3>
-      <p class="cap">Each theme&rsquo;s share of the shelf, year by year. Each band is a theme; the width is its share of that year.</p>
-      <div class="stack-layout">
-        <div><div class="stack-wrap" id="themeStack"></div><div class="tlegend" id="stackLegend"></div></div>
-        <div class="sd" id="stackDetail">
-          <div class="sd-head"><span class="sd-dot" id="sdDot"></span><span class="sd-title" id="sdTitle">Recent reads</span></div>
-          <div class="sd-sub" id="sdSub">Hover a segment to see its books</div>
-          <div class="sd-list" id="sdList"></div>
-        </div>
-      </div>
+      <p class="cap">Each theme&rsquo;s share of the shelf, year by year. The early years lean on personal growth and business; the recent ones are dominated by politics, history, and the institutions that hold both. <span class="hint">Hover any band for the books behind it &mdash; click one to open it.</span></p>
+      <div class="stack-wrap" id="themeStack"></div>
+      <div class="tlegend" id="stackLegend"></div>
       <div class="seg-toggle" id="tyToggle" style="margin-top:12px"><button class="on" data-m="books">Books</button><button data-m="pages">Pages</button></div>
     </div>
 

@@ -382,7 +382,10 @@ function emit(routePath, templateName, ctx, { indexable = true, priority = 0.5 }
   writtenRoutes.push({ path: routePath, file: rel, indexable: indexable && !page.noindex, priority });
 }
 
-const tokens = { '{{COUNT}}': String(site.publicCount), '{{READ}}': String(site.readCount), '{{CONNECTIONS}}': site.uniqueConnections.toLocaleString('en-US'), '{{PICKCOUNT}}': String(picks.length), '{{THEMES}}': String(site.themeCount) };
+// {{COUNT}} is the READ shelf, not the public one. publicCount also counts `reading`
+// and `TBR`, which is why the footer said 348 against the home page's 322. Every
+// number the site says out loud is the number of books finished.
+const tokens = { '{{COUNT}}': String(site.readCount), '{{READ}}': String(site.readCount), '{{CONNECTIONS}}': site.uniqueConnections.toLocaleString('en-US'), '{{PICKCOUNT}}': String(picks.length), '{{THEMES}}': String(site.themeCount) };
 const fill = (s) => Object.entries(tokens).reduce((acc, [k, val]) => acc.split(k).join(val), String(s ?? ''));
 const confirmMarkers = [];
 const scanMarkers = (where, text) => { for (const m of String(text).matchAll(/\[CONFIRM[^\]]*\]/g)) confirmMarkers.push({ where, marker: m[0] }); };
@@ -415,8 +418,8 @@ function copyPage(file) {
   const recent = orderedRead.slice(0, 24);
   const page = {
     path: '/', crumb: 'Home',
-    title: `Alex Drost’s Bookshelf — ${site.publicCount} Books, Annotated and Connected`,
-    description: describe(`A personal library of ${site.publicCount} books — each with a summary, core ideas, and ${site.uniqueConnections.toLocaleString('en-US')} hand-made links between them.`),
+    title: `Alex Drost’s Bookshelf — ${site.readCount} Books, Annotated and Connected`,
+    description: describe(`A personal library of ${site.readCount} books — each with a summary, core ideas, and ${site.uniqueConnections.toLocaleString('en-US')} hand-made links between them.`),
     trail: [{ name: 'Bookshelf', path: '/' }],
   };
   page.extraJson = collectionSchema({ ...page, h1Plain: 'Alex Drost’s bookshelf' }, recent);

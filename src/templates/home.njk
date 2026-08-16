@@ -1,9 +1,11 @@
 {% extends "_layout.njk" %}
 {% block content %}
-    {# The heading was saying what the stat bar shows better. h1 kept for SEO and
-       screen readers, visually hidden — a page still needs exactly one. #}
-    <div class="hero bare">
-      <h1 class="visually-hidden">Alex Drost&rsquo;s bookshelf &mdash; {{ site.publicCount }} books, annotated and connected</h1>
+    {# The h1 was hidden for a while and the page opened cold on four numbers with
+       nothing saying whose they were. It is visible again — the name above, the line
+       that explains the premise below, then the counts as evidence for it. #}
+    <div class="hero">
+      <h1 class="hero-h1">Alex Drost&rsquo;s Bookshelf</h1>
+      <p class="hero-sub">{{ site.readCount }} books read, each one summarised and linked by hand to the others it argues with.</p>
       <div class="lead-stats">
         <a class="s" href="/library" style="text-decoration:none"><span class="n">{{ site.readCount }}</span><span class="l">Books read</span></a>
         <a class="s" href="/connections" style="text-decoration:none"><span class="n">{{ site.uniqueConnections | num }}</span><span class="l">Connections</span></a>

@@ -24,8 +24,25 @@ function loadBooks() {
     fetch('/data/slugs.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => ({})),
     fetch('/data/titles.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => ({})),
   ]).then(([data, slugs, titles]) => {
-    BOOKS = data.books || [];
-    EDGES = data.edges || [];
+    /* SHELF GATE — books.json carries every Public? row, which is `read` plus the
+       `reading` and `TBR` shelves that /up-next renders server-side. Nothing that
+       runs client-side may count or surface those: they have no book page, no date
+       read, and no business inflating an analytics total or a search result.
+       Narrowing here, once, is the only place this has to be right.
+
+       EDGES is POSITIONAL into the unfiltered array, so it is remapped in the same
+       pass — otherwise the graph draws links between the wrong books. */
+    const all = data.books || [];
+    const remap = new Array(all.length).fill(-1);
+    BOOKS = [];
+    all.forEach((b, i) => {
+      if (b.shelf !== 'read') return;
+      remap[i] = BOOKS.length;
+      BOOKS.push(b);
+    });
+    EDGES = (data.edges || [])
+      .map(([a, b]) => [remap[a], remap[b]])
+      .filter(([a, b]) => a >= 0 && b >= 0);
     SLUGS = slugs || {};
     ID2I = {};
     BOOKS.forEach((b, i) => {
@@ -83,7 +100,41 @@ function showListPop(e,title,sub,books){
   lp.classList.add("show");moveListPop(e);
 }
 function moveListPop(e){const lp=$("#listpop"); if(!lp)return;const w=lp.offsetWidth||260,h=lp.offsetHeight||160;let x=e.clientX+14,y=e.clientY+14;if(x+w>innerWidth-10)x=e.clientX-w-14;if(y+h>innerHeight-10)y=e.clientY-h-14;lp.style.left=x+"px";lp.style.top=y+"px";}
-function hideListPop(){const lp=$("#listpop"); if(lp)lp.classList.remove("show");}
+function hideListPop(){const lp=$("#listpop"); if(lp){lp.classList.remove("show");lp.classList.remove("pick");}}
+
+/* ---------------------------------------------------------------- anchored popovers
+   A popover that chases the cursor across a forty-column bar chart reads as chatter:
+   it re-lays-out on every mousemove, never sits still, and can never be clicked. The
+   charts now ANCHOR it to the hovered column instead, which turns it into a label for
+   that column — steady, obviously attached to one bar, and safe to move the pointer
+   into. `hideListPopSoon` gives a grace period so crossing the gap doesn't close it. */
+function anchorPop(el, gap) {
+  const lp = $("#listpop"); if (!lp || !el) return;
+  const r = el.getBoundingClientRect();
+  const w = lp.offsetWidth || 310, h = lp.offsetHeight || 200, g = gap == null ? 12 : gap;
+  let x = Math.round(r.left + r.width / 2 - w / 2);
+  x = Math.max(10, Math.min(x, innerWidth - w - 10));
+  /* Above the column by preference — that is where the eye already is, and it leaves
+     the rest of the chart uncovered. If it does not fit, slide it up to the top of the
+     viewport as long as that still clears the column; only drop below when even that
+     will not fit, which is the one case where covering what is underneath is the
+     lesser evil. */
+  let y = Math.round(r.top - h - g);
+  if (y < 10) y = (h + 10 <= r.top) ? 10
+    : Math.max(10, Math.min(innerHeight - h - 10, Math.round(r.bottom + g)));
+  lp.style.left = x + "px";
+  lp.style.top = y + "px";
+}
+let _lpT = null;
+function keepListPop() { clearTimeout(_lpT); _lpT = null; }
+function hideListPopSoon() { clearTimeout(_lpT); _lpT = setTimeout(hideListPop, 180); }
+(function () {
+  const lp = document.getElementById("listpop");
+  if (!lp) return;
+  lp.addEventListener("mouseenter", keepListPop);
+  lp.addEventListener("mouseleave", hideListPop);
+})();
+
 function showBookPop(e,bi){const b=BOOKS[bi];if(!b)return;const bp=$("#bookpop"); if(!bp)return;
   const sum=b.summary?(b.summary.length>200?b.summary.slice(0,200).replace(/\s+\S*$/,"")+"\u2026":b.summary):"";
   bp.innerHTML=`<img class="bpcov" src="/covers/${b.id}.jpg" width="52" height="78" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`+

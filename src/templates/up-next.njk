@@ -33,6 +33,10 @@
       {% endif %}
     </section>
 
+    {# The two shelves are different kinds of thing — one open, one queued — and ran
+       straight into each other. Same rule the home page uses to separate its sections. #}
+    <div class="home-divider"><span></span></div>
+
     {# TBR — no page to click through to, so these deliberately do not look clickable:
        no link, no colour change on the title, just the card lifting its border. #}
     {% if tbr.length %}
@@ -51,4 +55,17 @@
       </div>
     </section>
     {% endif %}
+
+    {# This is the page where someone has just read a list of what is queued and is
+       most likely to have a view about what should be on it. Same form as /recommendations
+       and the nav button — openRec() opens the modal in book-recommendation mode. #}
+    <section class="pagesec">
+      <div class="ctabox">
+        <div class="ctabox-body">
+          <h2>Something that belongs on this list?</h2>
+          <p>If you have read something that fits alongside these &mdash; or that argues with them &mdash; send it over. That is how a good chunk of this shelf got here.</p>
+        </div>
+        <button class="ctabtn" type="button" onclick="openRec()">Recommend a book</button>
+      </div>
+    </section>
 {% endblock %}

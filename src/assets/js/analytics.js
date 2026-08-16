@@ -30,10 +30,66 @@ function renderYearStack(){
     return `<div class="stackcol"><span class="stot">${fmtTot(colTotals[idx])}</span><div class="stackbar" style="height:${colH}px">${segs}</div><span class="yr">${y}</span></div>`;
   }).join("");
   $("#stackLegend").innerHTML=THEME_ORDER.map(t=>`<div class="it"><span class="sw" style="background:${THEME_COLORS[t]}"></span>${esc(t)}</div>`).join("");
-  // hover detail only — no navigation off the chart
+  /* The chart used to feed a 300px panel pinned to its right, which cost the stack a
+     third of its width and left the panel empty until you hovered. The books now come
+     to the cursor instead, in the same anchored popover the month chart uses — same
+     interaction on both charts, and the stack gets the full column width back. */
   $$("#themeStack .seg").forEach(el=>{
-    el.addEventListener("mouseenter",()=>stackDetail(el.dataset.t,el.dataset.y));
+    const t=el.dataset.t, y=el.dataset.y, col=el.closest(".stackcol");
+    const list=BOOKS.filter(b=>ybucket(b.yearRead)===y&&(b.themes||[]).includes(t))
+      .sort((a,b)=>(b.dateRead||"").localeCompare(a.dateRead||""));
+    // "Pre-2020" is a bucket, not a route; only real years have a page to send people to.
+    const more=/^\d{4}$/.test(y)?"/"+y:"";
+    el.addEventListener("mouseenter",()=>{
+      keepListPop();
+      markHot(col,"#themeStack .stackcol");
+      el.classList.add("seg-hot");
+      // Anchor to the whole column, not the band. Anchoring to a band put the card
+      // halfway up the chart for a low segment and made it read as unattached.
+      showBookListPop(col||el,`${t}`,`${y} · ${list.length} book${list.length===1?"":"s"}`,list,THEME_COLORS[t],more);
+    });
+    el.addEventListener("mouseleave",()=>{
+      el.classList.remove("seg-hot");
+      if(col)col.classList.remove("col-hot");   // or the band stays lit behind you
+      hideListPopSoon();
+    });
   });
+}
+
+/* ---------------------------------------------------------------- shared chart popover
+   One renderer for both charts. Rows are real anchors — Alex asked for the books in
+   these charts to be reachable, and a popover you can put the pointer inside is the
+   only way that works. #listpop gets `pick`, which turns pointer-events back on. */
+function popRows(books,max,moreHref){
+  const MAX=max||6;
+  const rows=books.slice(0,MAX).map(b=>{
+    const tc=(b.themes&&b.themes.length&&THEME_COLORS[b.themes[0]])||"#9aa0a6";
+    return `<a class="mbk-row" href="${bookHref(b.id)}">`+
+      `<img class="mbk-cov" loading="lazy" src="/covers/${b.id}.jpg" data-s="0" data-isbn="${b.isbn||''}" data-tc="${tc}" onerror="mtImgErr(this)">`+
+      `<span class="mbk-meta"><span class="mbk-t">${esc(b.title.split(":")[0])}</span><span class="mbk-a">${esc(b.author)}</span></span>`+
+    `</a>`;
+  }).join("");
+  if(books.length<=MAX)return rows;
+  const n=books.length-MAX;
+  // A dead "+31 more" is a dead end. Where there is a page holding the rest, link it.
+  return rows+(moreHref
+    ? `<a class="lpmore lpmore-link" href="${moreHref}">+${n} more \u2014 see them all \u2192</a>`
+    : `<div class="lpmore">+${n} more</div>`);
+}
+function showBookListPop(el,title,sub,books,dot,moreHref){
+  const lp=$("#listpop"); if(!lp)return;
+  lp.classList.add("mtpop","pick");
+  lp.innerHTML=`<div class="lph">${dot?`<span class="lpdot" style="background:${dot}"></span>`:""}${esc(title)}</div>`+
+    `<div class="lpsub">${esc(sub)}</div>`+
+    `<div class="mbk-rows">${books.length?popRows(books,6,moreHref):`<div class="sd-empty">No books here.</div>`}</div>`;
+  lp.classList.add("show");
+  anchorPop(el);
+}
+/* Highlight the column the pointer is actually on. Without it the popover floats
+   above a wall of identical bars with nothing saying which one it belongs to. */
+function markHot(col,scope){
+  $$(scope).forEach(c=>c.classList.remove("col-hot"));
+  if(col)col.classList.add("col-hot");
 }
 
 /* THEMES */
@@ -81,30 +137,26 @@ function renderMonthTrend(){
   });
 }
 function bindMonthPop(el,label,nb,pages,books){
-  el.addEventListener("mouseenter",e=>showMonthPop(e,label,nb,pages,books));
-  el.addEventListener("mousemove",moveListPop);
-  el.addEventListener("mouseleave",hideListPop);
+  // Anchored, not cursor-tracked: see anchorPop() in app.js. The popover stops
+  // skittering, the column it belongs to lights up, and its rows can be clicked.
+  el.addEventListener("mouseenter",()=>{
+    keepListPop();
+    markHot(el,"#mtBars .mt-col");
+    showMonthPop(el,label,nb,pages,books);
+  });
+  el.addEventListener("mouseleave",()=>{el.classList.remove("col-hot");hideListPopSoon();});
 }
-function showMonthPop(e,label,nb,pages,books){
-  const lp=$("#listpop");
-  lp.classList.add("mtpop"); // fixed-width mode: no resize as you sweep across months
+function showMonthPop(el,label,nb,pages,books){
+  const lp=$("#listpop"); if(!lp)return;
+  lp.classList.add("mtpop","pick"); // fixed-width mode: no resize as you sweep across months
   if(nb===0){
-    lp.innerHTML=`<div class="lph">${esc(label)}</div><div class="lpsub">no books finished</div><div class="mbk-rows"></div>`;
-    lp.classList.add("show");moveListPop(e);return;
+    lp.innerHTML=`<div class="lph">${esc(label)}</div><div class="lpsub">no books finished</div>`;
+    lp.classList.add("show");anchorPop(el);return;
   }
-  const MAX=6;
-  const rows=books.slice(0,MAX).map(b=>{
-    const tc=(b.themes&&b.themes.length&&THEME_COLORS[b.themes[0]])||"#9aa0a6";
-    return `<div class="mbk-row">`+
-      `<img class="mbk-cov" loading="lazy" src="/covers/${b.id}.jpg" data-s="0" data-isbn="${b.isbn||''}" data-tc="${tc}" onerror="mtImgErr(this)">`+
-      `<span class="mbk-meta"><span class="mbk-t">${esc(b.title.split(":")[0])}</span><span class="mbk-a">${esc(b.author)}</span></span>`+
-    `</div>`;
-  }).join("");
-  const more=books.length>MAX?`<div class="lpmore">+${books.length-MAX} more</div>`:"";
   lp.innerHTML=`<div class="lph">${esc(label)}</div>`+
     `<div class="mp-tot"><span><b>${nb}</b> book${nb===1?"":"s"}</span><span><b>${pages.toLocaleString()}</b> pages</span></div>`+
-    `<div class="mbk-rows">${rows}</div>${more}`;
-  lp.classList.add("show");moveListPop(e);
+    `<div class="mbk-rows">${popRows(books,6,el.getAttribute&&el.getAttribute("href")||"")}</div>`;
+  lp.classList.add("show");anchorPop(el);
 }
 on("#mtToggle","click",e=>{const b=e.target.closest("button");if(!b)return;mtMetric=b.dataset.m;$$("#mtToggle button").forEach(x=>x.classList.toggle("on",x===b));renderMonthTrend();});
 on("#tyToggle","click",e=>{const b=e.target.closest("button");if(!b)return;tyMetric=b.dataset.m;$$("#tyToggle button").forEach(x=>x.classList.toggle("on",x===b));renderYearStack();});
@@ -197,7 +249,11 @@ function sdRows(list){
   if(!list.length)return `<div class="sd-empty">No books here.</div>`;
   return list.map(b=>`<a class="sd-item" href="${bookHref(b.id)}"><span class="si-t">${esc(b.title.split(":")[0])}</span><span class="si-a">${esc((b.author||"").split(" ").slice(-1)[0])}</span></a>`).join("");
 }
+/* The stacked charts no longer ship a side panel — the hover popover replaced it, so
+   the stack can run full width. These two are kept, guarded, because the page-boot
+   scripts still call them and a hard throw there would kill the rest of the render. */
 function stackDetail(theme,year){
+  if(!$("#stackDetail"))return;
   const full=BOOKS.filter(b=>ybucket(b.yearRead)===year&&b.themes.includes(theme)).sort((a,b)=>(b.dateRead||"").localeCompare(a.dateRead||""));
   const list=full.slice(0,8);
   $("#sdDot").style.background=THEME_COLORS[theme]||"#8a8f98";
@@ -206,6 +262,7 @@ function stackDetail(theme,year){
   $("#sdList").innerHTML=sdRows(list);
 }
 function stackDetailDefault(){
+  if(!$("#stackDetail"))return;
   const recent=BOOKS.filter(b=>b.dateRead).sort((a,b)=>(b.dateRead||"").localeCompare(a.dateRead||"")).slice(0,8);
   $("#sdDot").style.background="var(--blue)";
   $("#sdTitle").textContent="Recent reads";

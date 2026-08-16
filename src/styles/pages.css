@@ -340,3 +340,87 @@ a.mxp-side:hover .mxp-t{color:var(--blue-d)}
 .mxd-more{grid-column:1/-1;margin:4px 0 0;font-size:.8rem;color:var(--muted)}
 .mxd-empty{font-size:.87rem;color:var(--ink2)}
 
+
+/* ============================================================================
+   SESSION 5 — video-feedback round.
+   ========================================================================== */
+
+/* ---- home: the heading is visible again ------------------------------- */
+/* The page used to open on four bare numbers with nothing saying whose they
+   were. Name, then the premise, then the counts as evidence for it. */
+.hero h1.hero-h1{font-size:clamp(1.9rem,4.4vw,2.9rem);font-weight:800;line-height:1.04;margin:0 0 10px}
+.hero p.hero-sub{color:var(--ink2);max-width:56ch;margin:0;font-size:1.02rem;line-height:1.5}
+@media(max-width:560px){.hero h1.hero-h1{font-size:1.75rem}.hero p.hero-sub{font-size:.95rem}}
+/* Breathing room between the last row of covers and the button under it. */
+.home-cta{margin-top:46px}
+
+/* ---- chart popover: anchored, and its rows are links ------------------ */
+/* pointer-events are off by default so a cursor-tracked popover can't eat its
+   own trigger. `pick` turns them back on for the two charts that anchor it. */
+#listpop.pick{pointer-events:auto}
+#listpop .lpdot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:baseline}
+#listpop a.mbk-row{text-decoration:none;color:inherit;padding:3px 4px;margin:0 -4px;border-radius:7px;transition:background .12s}
+#listpop a.mbk-row:hover{background:var(--paper2)}
+#listpop a.mbk-row:hover .mbk-t{color:var(--blue-d)}
+#listpop .sd-empty{margin:0}
+
+/* ---- charts: say which column the popover belongs to ------------------ */
+/* A month column is eight pixels wide, so a ring around the bar is invisible at a
+   glance. A full-height band behind the column reads instantly and is the thing that
+   makes the floating card feel attached to something rather than just floating. */
+.mt-col.col-hot::after,.stackcol.col-hot::after{content:"";position:absolute;
+  left:-3px;right:-3px;top:0;bottom:0;background:var(--blue-tint);border:1px solid var(--blue-lt);
+  border-radius:5px;pointer-events:none;z-index:0}
+.mt-col.col-hot>*,.stackcol.col-hot>*{position:relative;z-index:1}
+.stackcol{position:relative}
+.mt-col.col-hot .mt-bar{filter:brightness(1.14)}
+.mt-col.col-hot .mt-n{color:var(--blue-d);font-weight:700}
+.stackcol.col-hot .yr,.stackcol.col-hot .stot{color:var(--blue-d);font-weight:700}
+.seg.seg-hot{opacity:1;outline:2px solid rgba(255,255,255,.9);outline-offset:-2px}
+
+/* ---- connections: the focus panel ------------------------------------- */
+/* Always rendered, never display:none — collapsing it to zero height yanked the
+   page up under the cursor every time focus was cleared. */
+.ego{display:block}
+/* deep links land here; clear the sticky nav and keep the section heading visible */
+.mapsec{scroll-margin-top:74px}
+.ego.open{display:block}
+.ego-idle{color:var(--muted)}
+.ego-idle-k{font-family:"Archivo",system-ui,sans-serif;text-transform:uppercase;letter-spacing:.16em;
+  font-weight:600;font-size:.62rem;color:var(--blue);margin-bottom:8px}
+.ego-idle p{margin:0;font-size:.92rem;line-height:1.55;color:var(--ink2);max-width:62ch}
+.ego-focus{display:flex;gap:16px;align-items:flex-start}
+.ego-focus-cov{flex:none;width:72px;border-radius:5px;overflow:hidden;box-shadow:0 3px 10px rgba(31,37,48,.2);background:var(--paper2)}
+.ego-focus-cov img{display:block;width:72px;height:108px;object-fit:cover}
+.ego-focus-txt{display:block;min-width:0}
+.ego-focus-txt .ego-kick{display:block}
+.ego-focus-txt .ego-sub{display:block;margin-bottom:0}
+.ego.focused .ego-head{margin-bottom:4px}
+/* Rows: cover, title, author. No shared-theme tail — it printed the same two or
+   three words on every row and never explained why the link was made. */
+.ego-item{display:flex;gap:10px;align-items:center}
+.ego-cov{flex:none;width:40px;height:60px;border-radius:3px;overflow:hidden;background:var(--paper2);
+  box-shadow:0 1px 4px rgba(31,37,48,.18)}
+.ego-cov img{display:block;width:40px;height:60px;object-fit:cover}
+.ego-txt{display:block;min-width:0}
+.ego-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:4px 12px}
+@media(max-width:560px){.ego-focus-cov,.ego-focus-cov img{width:56px}.ego-focus-cov img{height:84px}}
+#listpop a.lpmore-link{display:block;margin-top:8px;font-style:normal;font-size:.76rem;
+  color:var(--blue-d);text-decoration:none;font-weight:600}
+#listpop a.lpmore-link:hover{text-decoration:underline}
+
+/* ---- analytics: close the gap in "What's rising & falling" ------------- */
+/* Each row was a flex line stretched to the full half-panel, so the theme name sat
+   hard left and its sparkline hard right with ~300px of nothing between them. Cap the
+   column width and left-justify: the sparkline comes back beside the label it belongs
+   to, and the sparklines still line up with each other down the column. */
+.dyn{grid-template-columns:repeat(2,minmax(0,430px));justify-content:start;gap:6px 40px}
+.dynrow{gap:12px}
+.dynrow .dn{flex:1;min-width:0}
+@media(max-width:900px){.dyn{grid-template-columns:minmax(0,430px)}}
+
+/* The pair list wrapped its label under its own count. Keep the number in its own
+   column so long theme pairs indent under themselves instead of under the digits. */
+.matrix-top{grid-template-columns:repeat(auto-fill,minmax(330px,1fr))}
+.matrix-top li{display:flex;gap:10px;align-items:baseline}
+.matrix-top strong{flex:none;min-width:38px;text-align:right}

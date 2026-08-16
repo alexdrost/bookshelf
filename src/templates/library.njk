@@ -3,7 +3,7 @@
     <div class="page-head">
       <div class="kicker">Library</div>
       <h1>The full library</h1>
-      <p class="standfirst">All {{ total }} books, newest read first. {{ site.uniqueConnections | num }} connections run between them.</p>
+      <p class="standfirst">All {{ total }} books, most recently read first.</p>
     </div>
     {# renderBrowse() writes the active-filter summary here. The extracted body expects
        this element to exist; without it the whole render throws partway through. #}
@@ -20,9 +20,10 @@
         <button class="on" data-s="dateRead">Recently read</button><button data-s="title">Title</button><button data-s="author">Author</button><button data-s="yearPub">Pub year</button><button data-s="pages">Pages</button><button data-s="random">Shuffle &#8635;</button>
       </div>
     </div>
-    <div class="chips" id="themeChips">
-      <a class="chip on" href="/library">All themes</a>{% for t in themeIndex %}<a class="chip" href="/themes/{{ t.slug }}">{{ t.name }}<span class="c">{{ t.books.length }}</span></a>{% endfor %}
-    </div>
+    {# The theme pills were a second, worse copy of /themes — same eleven links, no
+       intros, no covers, and they pushed the grid down a full row on every screen.
+       Removed. Search and the sort control stay; theme browsing lives on /themes.
+       #activeFilters must survive: renderBrowse() writes into it unconditionally. #}
     <div class="active-filters" id="activeFilters"></div>
 
     <div class="grid" id="grid">
