@@ -9971,6 +9971,36 @@
    ]
   },
   {
+   "id": "2606779",
+   "title": "One Minute to Midnight: Kennedy, Khrushchev, and Castro on the Brink of Nuclear War",
+   "author": "Michael Dobbs",
+   "isbn": "9781400043583",
+   "pages": "448",
+   "yearPub": "2008",
+   "dateRead": "2026/09/10",
+   "yearRead": "2026",
+   "shelf": "read",
+   "slug": "one-minute-to-midnight",
+   "themes": [
+    "History & Foreign Affairs",
+    "Politics & Power"
+   ],
+   "tags": "Cold War history, US foreign policy, narrative nonfiction, investigative journalism",
+   "summary": "Dobbs reconstructs Black Saturday — 27 October 1962 — hour by hour, using American, Soviet and Cuban archives that had not been worked before. The argument that emerges is that the crisis nearly ended in nuclear war not through any decision either leader made, but through the things neither of them knew: a U-2 lost over Siberia, warheads being trucked around Cuba, an F-106 landing with a live weapon aboard.",
+   "core": [
+    "The leaders had far less control than either side believed — the near-misses came from junior officers and lost pilots, not from decisions made in Washington or Moscow",
+    "Castro was pushing for a first strike while Kennedy and Khrushchev were both searching for an exit, which makes the third party the most dangerous actor in the room",
+    "Hour-by-hour reconstruction dismantles the tidy lesson of resolute brinkmanship that the crisis was later used to teach"
+   ],
+   "conn": [
+    "182733784",
+    "24396871",
+    "970488",
+    "10888",
+    "31125556"
+   ]
+  },
+  {
    "id": "10669",
    "title": "When Genius Failed: The Rise and Fall of Long-Term Capital Management",
    "author": "Roger Lowenstein",
@@ -10150,36 +10180,6 @@
     "17333289",
     "10888",
     "2606779"
-   ]
-  },
-  {
-   "id": "2606779",
-   "title": "One Minute to Midnight: Kennedy, Khrushchev, and Castro on the Brink of Nuclear War",
-   "author": "Michael Dobbs",
-   "isbn": "9781400043583",
-   "pages": "448",
-   "yearPub": "2008",
-   "dateRead": "",
-   "yearRead": "",
-   "shelf": "reading",
-   "slug": "one-minute-to-midnight",
-   "themes": [
-    "History & Foreign Affairs",
-    "Politics & Power"
-   ],
-   "tags": "Cold War history, US foreign policy, narrative nonfiction, investigative journalism",
-   "summary": "Dobbs reconstructs Black Saturday — 27 October 1962 — hour by hour, using American, Soviet and Cuban archives that had not been worked before. The argument that emerges is that the crisis nearly ended in nuclear war not through any decision either leader made, but through the things neither of them knew: a U-2 lost over Siberia, warheads being trucked around Cuba, an F-106 landing with a live weapon aboard.",
-   "core": [
-    "The leaders had far less control than either side believed — the near-misses came from junior officers and lost pilots, not from decisions made in Washington or Moscow",
-    "Castro was pushing for a first strike while Kennedy and Khrushchev were both searching for an exit, which makes the third party the most dangerous actor in the room",
-    "Hour-by-hour reconstruction dismantles the tidy lesson of resolute brinkmanship that the crisis was later used to teach"
-   ],
-   "conn": [
-    "182733784",
-    "24396871",
-    "970488",
-    "10888",
-    "31125556"
    ]
   },
   {
@@ -11139,7 +11139,7 @@
   ],
   [
    1,
-   324
+   325
   ],
   [
    2,
@@ -11495,7 +11495,7 @@
   ],
   [
    13,
-   324
+   325
   ],
   [
    14,
@@ -11671,7 +11671,7 @@
   ],
   [
    17,
-   324
+   325
   ],
   [
    17,
@@ -12383,7 +12383,7 @@
   ],
   [
    43,
-   324
+   325
   ],
   [
    44,
@@ -13363,7 +13363,7 @@
   ],
   [
    84,
-   324
+   325
   ],
   [
    85,
@@ -13843,7 +13843,7 @@
   ],
   [
    102,
-   326
+   327
   ],
   [
    103,
@@ -14179,7 +14179,7 @@
   ],
   [
    116,
-   322
+   323
   ],
   [
    116,
@@ -14375,7 +14375,7 @@
   ],
   [
    123,
-   322
+   323
   ],
   [
    123,
@@ -15099,7 +15099,7 @@
   ],
   [
    146,
-   321
+   322
   ],
   [
    147,
@@ -15267,7 +15267,7 @@
   ],
   [
    152,
-   327
+   321
   ],
   [
    153,
@@ -15303,7 +15303,7 @@
   ],
   [
    153,
-   327
+   321
   ],
   [
    154,
@@ -15379,7 +15379,7 @@
   ],
   [
    156,
-   326
+   327
   ],
   [
    157,
@@ -15435,15 +15435,15 @@
   ],
   [
    158,
-   326
+   327
+  ],
+  [
+   158,
+   324
   ],
   [
    158,
    323
-  ],
-  [
-   158,
-   322
   ],
   [
    159,
@@ -15551,7 +15551,7 @@
   ],
   [
    162,
-   322
+   323
   ],
   [
    162,
@@ -15591,7 +15591,7 @@
   ],
   [
    164,
-   325
+   326
   ],
   [
    165,
@@ -17211,7 +17211,7 @@
   ],
   [
    227,
-   321
+   322
   ],
   [
    227,
@@ -17755,7 +17755,7 @@
   ],
   [
    248,
-   326
+   327
   ],
   [
    249,
@@ -17835,7 +17835,7 @@
   ],
   [
    251,
-   323
+   324
   ],
   [
    252,
@@ -17867,11 +17867,11 @@
   ],
   [
    252,
-   323
+   324
   ],
   [
    252,
-   327
+   321
   ],
   [
    253,
@@ -18211,7 +18211,7 @@
   ],
   [
    266,
-   323
+   324
   ],
   [
    267,
@@ -18263,7 +18263,7 @@
   ],
   [
    268,
-   326
+   327
   ],
   [
    269,
@@ -18511,7 +18511,7 @@
   ],
   [
    278,
-   321
+   322
   ],
   [
    279,
@@ -18907,7 +18907,7 @@
   ],
   [
    293,
-   325
+   326
   ],
   [
    293,
@@ -19235,7 +19235,7 @@
   ],
   [
    308,
-   325
+   326
   ],
   [
    308,
@@ -19287,7 +19287,7 @@
   ],
   [
    310,
-   321
+   322
   ],
   [
    311,
@@ -19431,7 +19431,7 @@
   ],
   [
    317,
-   325
+   326
   ],
   [
    318,
@@ -19483,7 +19483,7 @@
   ],
   [
    320,
-   325
+   326
   ],
   [
    320,
@@ -19495,151 +19495,151 @@
   ],
   [
    321,
-   278
-  ],
-  [
-   321,
-   310
-  ],
-  [
-   321,
-   146
-  ],
-  [
-   321,
-   227
-  ],
-  [
-   322,
-   348
-  ],
-  [
-   322,
-   116
-  ],
-  [
-   322,
-   158
-  ],
-  [
-   322,
-   123
-  ],
-  [
-   322,
-   162
-  ],
-  [
-   323,
-   252
-  ],
-  [
-   323,
-   251
-  ],
-  [
-   323,
-   266
-  ],
-  [
-   323,
-   326
-  ],
-  [
-   323,
-   158
-  ],
-  [
-   323,
-   327
-  ],
-  [
-   324,
-   1
-  ],
-  [
-   324,
-   43
-  ],
-  [
-   324,
-   13
-  ],
-  [
-   324,
-   17
-  ],
-  [
-   324,
-   84
-  ],
-  [
-   325,
-   320
-  ],
-  [
-   325,
-   308
-  ],
-  [
-   325,
-   317
-  ],
-  [
-   325,
-   164
-  ],
-  [
-   325,
-   293
-  ],
-  [
-   326,
-   268
-  ],
-  [
-   326,
-   156
-  ],
-  [
-   326,
-   248
-  ],
-  [
-   326,
-   102
-  ],
-  [
-   326,
-   158
-  ],
-  [
-   326,
-   323
-  ],
-  [
-   326,
-   327
-  ],
-  [
-   327,
    152
   ],
   [
-   327,
+   321,
    153
   ],
   [
-   327,
-   326
+   321,
+   327
   ],
   [
-   327,
-   323
+   321,
+   324
   ],
   [
-   327,
+   321,
    252
+  ],
+  [
+   322,
+   278
+  ],
+  [
+   322,
+   310
+  ],
+  [
+   322,
+   146
+  ],
+  [
+   322,
+   227
+  ],
+  [
+   323,
+   348
+  ],
+  [
+   323,
+   116
+  ],
+  [
+   323,
+   158
+  ],
+  [
+   323,
+   123
+  ],
+  [
+   323,
+   162
+  ],
+  [
+   324,
+   252
+  ],
+  [
+   324,
+   251
+  ],
+  [
+   324,
+   266
+  ],
+  [
+   324,
+   327
+  ],
+  [
+   324,
+   158
+  ],
+  [
+   324,
+   321
+  ],
+  [
+   325,
+   1
+  ],
+  [
+   325,
+   43
+  ],
+  [
+   325,
+   13
+  ],
+  [
+   325,
+   17
+  ],
+  [
+   325,
+   84
+  ],
+  [
+   326,
+   320
+  ],
+  [
+   326,
+   308
+  ],
+  [
+   326,
+   317
+  ],
+  [
+   326,
+   164
+  ],
+  [
+   326,
+   293
+  ],
+  [
+   327,
+   268
+  ],
+  [
+   327,
+   156
+  ],
+  [
+   327,
+   248
+  ],
+  [
+   327,
+   102
+  ],
+  [
+   327,
+   158
+  ],
+  [
+   327,
+   324
+  ],
+  [
+   327,
+   321
   ],
   [
    328,
@@ -20079,7 +20079,7 @@
   ],
   [
    348,
-   322
+   323
   ],
   [
    348,
