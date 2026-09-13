@@ -10076,6 +10076,36 @@
    ]
   },
   {
+   "id": "38059",
+   "title": "Den of Thieves",
+   "author": "James B. Stewart",
+   "isbn": "9780671792275",
+   "pages": "592",
+   "yearPub": "1991",
+   "dateRead": "2026/09/13",
+   "yearRead": "2026",
+   "shelf": "read",
+   "slug": "den-of-thieves",
+   "themes": [
+    "Business & Finance",
+    "Crime & Justice"
+   ],
+   "tags": "investigative journalism, financial history, narrative nonfiction, true crime",
+   "summary": "Stewart's Pulitzer-backed account of the 1980s insider-trading scandal that took down Michael Milken, Ivan Boesky, Martin Siegel and Dennis Levine. He traces how the junk-bond boom and the arbitrage desks were wired together by illicit information flow, and how the case was built by flipping each man against the next.",
+   "core": [
+    "The 1980s takeover boom ran on stolen information, which means the returns were not skill and were never risk-adjusted",
+    "Insider trading is a conspiracy problem before it is a securities problem, so it unravels through informants rather than through market data",
+    "Prosecuting finance requires turning insiders against each other, and that dependence shapes which cases get brought"
+   ],
+   "conn": [
+    "414096",
+    "113576",
+    "25817264",
+    "43868109",
+    "37976541"
+   ]
+  },
+  {
    "id": "10669",
    "title": "When Genius Failed: The Rise and Fall of Long-Term Capital Management",
    "author": "Roger Lowenstein",
@@ -10194,36 +10224,6 @@
     "37570546",
     "13588356",
     "50997029"
-   ]
-  },
-  {
-   "id": "38059",
-   "title": "Den of Thieves",
-   "author": "James B. Stewart",
-   "isbn": "9780671792275",
-   "pages": "592",
-   "yearPub": "1991",
-   "dateRead": "",
-   "yearRead": "",
-   "shelf": "reading",
-   "slug": "den-of-thieves",
-   "themes": [
-    "Business & Finance",
-    "Crime & Justice"
-   ],
-   "tags": "investigative journalism, financial history, narrative nonfiction, true crime",
-   "summary": "Stewart's Pulitzer-backed account of the 1980s insider-trading scandal that took down Michael Milken, Ivan Boesky, Martin Siegel and Dennis Levine. He traces how the junk-bond boom and the arbitrage desks were wired together by illicit information flow, and how the case was built by flipping each man against the next.",
-   "core": [
-    "The 1980s takeover boom ran on stolen information, which means the returns were not skill and were never risk-adjusted",
-    "Insider trading is a conspiracy problem before it is a securities problem, so it unravels through informants rather than through market data",
-    "Prosecuting finance requires turning insiders against each other, and that dependence shapes which cases get brought"
-   ],
-   "conn": [
-    "414096",
-    "113576",
-    "25817264",
-    "43868109",
-    "37976541"
    ]
   },
   {
@@ -11491,7 +11491,7 @@
   ],
   [
    1,
-   326
+   327
   ],
   [
    2,
@@ -11855,7 +11855,7 @@
   ],
   [
    13,
-   326
+   327
   ],
   [
    14,
@@ -12031,7 +12031,7 @@
   ],
   [
    17,
-   326
+   327
   ],
   [
    17,
@@ -12747,7 +12747,7 @@
   ],
   [
    43,
-   326
+   327
   ],
   [
    44,
@@ -13739,7 +13739,7 @@
   ],
   [
    84,
-   326
+   327
   ],
   [
    85,
@@ -14591,7 +14591,7 @@
   ],
   [
    116,
-   324
+   325
   ],
   [
    116,
@@ -14787,7 +14787,7 @@
   ],
   [
    123,
-   324
+   325
   ],
   [
    123,
@@ -15523,7 +15523,7 @@
   ],
   [
    146,
-   323
+   324
   ],
   [
    147,
@@ -15875,11 +15875,11 @@
   ],
   [
    158,
-   325
+   326
   ],
   [
    158,
-   324
+   325
   ],
   [
    159,
@@ -15987,7 +15987,7 @@
   ],
   [
    162,
-   324
+   325
   ],
   [
    162,
@@ -16031,7 +16031,7 @@
   ],
   [
    164,
-   327
+   323
   ],
   [
    165,
@@ -17683,7 +17683,7 @@
   ],
   [
    227,
-   323
+   324
   ],
   [
    227,
@@ -18311,7 +18311,7 @@
   ],
   [
    251,
-   325
+   326
   ],
   [
    251,
@@ -18347,7 +18347,7 @@
   ],
   [
    252,
-   325
+   326
   ],
   [
    252,
@@ -18691,7 +18691,7 @@
   ],
   [
    266,
-   325
+   326
   ],
   [
    267,
@@ -19011,7 +19011,7 @@
   ],
   [
    278,
-   323
+   324
   ],
   [
    279,
@@ -19439,7 +19439,7 @@
   ],
   [
    293,
-   327
+   323
   ],
   [
    293,
@@ -19771,7 +19771,7 @@
   ],
   [
    308,
-   327
+   323
   ],
   [
    308,
@@ -19823,7 +19823,7 @@
   ],
   [
    310,
-   323
+   324
   ],
   [
    311,
@@ -19975,7 +19975,7 @@
   ],
   [
    317,
-   327
+   323
   ],
   [
    318,
@@ -20027,7 +20027,7 @@
   ],
   [
    320,
-   327
+   323
   ],
   [
    320,
@@ -20051,7 +20051,7 @@
   ],
   [
    321,
-   325
+   326
   ],
   [
    321,
@@ -20067,107 +20067,107 @@
   ],
   [
    323,
-   278
-  ],
-  [
-   323,
-   310
-  ],
-  [
-   323,
-   146
-  ],
-  [
-   323,
-   331
-  ],
-  [
-   323,
-   227
-  ],
-  [
-   324,
-   352
-  ],
-  [
-   324,
-   116
-  ],
-  [
-   324,
-   158
-  ],
-  [
-   324,
-   123
-  ],
-  [
-   324,
-   162
-  ],
-  [
-   325,
-   252
-  ],
-  [
-   325,
-   251
-  ],
-  [
-   325,
-   266
-  ],
-  [
-   325,
-   328
-  ],
-  [
-   325,
-   158
-  ],
-  [
-   325,
-   321
-  ],
-  [
-   326,
-   1
-  ],
-  [
-   326,
-   43
-  ],
-  [
-   326,
-   13
-  ],
-  [
-   326,
-   17
-  ],
-  [
-   326,
-   84
-  ],
-  [
-   327,
    320
   ],
   [
-   327,
+   323,
    308
   ],
   [
-   327,
+   323,
    317
   ],
   [
-   327,
+   323,
    164
   ],
   [
-   327,
+   323,
    293
+  ],
+  [
+   324,
+   278
+  ],
+  [
+   324,
+   310
+  ],
+  [
+   324,
+   146
+  ],
+  [
+   324,
+   331
+  ],
+  [
+   324,
+   227
+  ],
+  [
+   325,
+   352
+  ],
+  [
+   325,
+   116
+  ],
+  [
+   325,
+   158
+  ],
+  [
+   325,
+   123
+  ],
+  [
+   325,
+   162
+  ],
+  [
+   326,
+   252
+  ],
+  [
+   326,
+   251
+  ],
+  [
+   326,
+   266
+  ],
+  [
+   326,
+   328
+  ],
+  [
+   326,
+   158
+  ],
+  [
+   326,
+   321
+  ],
+  [
+   327,
+   1
+  ],
+  [
+   327,
+   43
+  ],
+  [
+   327,
+   13
+  ],
+  [
+   327,
+   17
+  ],
+  [
+   327,
+   84
   ],
   [
    328,
@@ -20191,7 +20191,7 @@
   ],
   [
    328,
-   325
+   326
   ],
   [
    328,
@@ -20263,7 +20263,7 @@
   ],
   [
    331,
-   323
+   324
   ],
   [
    332,
@@ -20707,7 +20707,7 @@
   ],
   [
    352,
-   324
+   325
   ],
   [
    352,
