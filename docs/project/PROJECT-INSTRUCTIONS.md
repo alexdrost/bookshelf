@@ -66,6 +66,14 @@ system-of-record for *what was read and when*. Git holds generated output only.
 - Worker: `bookshelf-notion-sync.drost.workers.dev`
 - Form endpoint: `https://formspree.io/f/mbderepk`
 
+**OG images.** Generated at build time by `tools/og/` (Satori → resvg → sharp): one card per
+read book at `/og/book/{slug}.jpg`, one per section page, and `/share.png` for home — 354 in
+all, about 145 s and 20 MB per build. URLs carry `?v={hash}` of the card's inputs, so a changed
+title or cover refreshes social previews automatically while the path stays stable forever.
+Bump `OG_TEMPLATE_VERSION` in `tools/og/lib.mjs` when the design changes. `src/share.png` is no
+longer committed and `tools/make-og.mjs` is retired — the home card lives in
+`tools/og/cards/home.mjs`.
+
 **Notion API version 2025-09-03.** Use `/data_sources/{id}/query`, not `/databases/{id}/query`.
 
 **Notion SQL mode works.** `notion-query-data-sources` with a `SELECT` against
@@ -247,4 +255,4 @@ Routine work — adding a few books, a copy tweak, a layout change — does **no
   prints them, ascending, every run.
 - **Pairs section** was removed from `/connections`; it needs a written sentence per pair to
   come back. The theme matrix does the job better.
-- Deferred: per-book OG images (needs edge rendering), author headshots, Phase F secret editor.
+- Deferred: author headshots, Phase F secret editor.

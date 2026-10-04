@@ -31,6 +31,13 @@
 /share.png
   Cache-Control: public, max-age=2592000
 
+# OG cards are generated per page and their URLs carry a ?v= of everything that affects
+# the pixels, so a changed title or cover produces a new URL and social platforms re-fetch.
+# The PATH is stable forever, which is what keeps old shares resolving — so this matches
+# /covers/*: long, but replaceable rather than immutable.
+/og/*
+  Cache-Control: public, max-age=2592000
+
 /assets/img/*
   Cache-Control: public, max-age=2592000
 

@@ -120,6 +120,16 @@ async function buildBooksJson(env) {
       title: readProp(P['Title']),                 // <- the fix
       author: readProp(P['Author']),
       isbn: readProp(P['ISBN']),
+      // The two ASINs, not the two "... link" formulas. Same choice the site already
+      // makes for Goodreads: sync the ID and derive the URL at build time. Formulas are
+      // read-only and would couple the site's links to a Notion expression that can be
+      // edited out from under it; an ASIN is just data.
+      // Amazon ASIN is an OVERRIDE and is usually blank — the Amazon URL normally comes
+      // from the ISBN above. Audible ASIN is the only source for an Audible link, so a
+      // blank one simply means no link, which is the intended behaviour while Alex is
+      // still filling them in.
+      amazonAsin: readProp(P['Amazon ASIN']),
+      audibleAsin: readProp(P['Audible ASIN']),
       pages: readProp(P['Pages']),
       yearPub: readProp(P['Year Published']),
       dateRead,

@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { assignSlugs } from './slugify.mjs';
 import { proseWords, LAUNCH_THRESHOLD } from './validate.mjs';
 import { connectionMap, uniquePairs } from './derive.mjs';
+import { storeLinks, isbn13to10, amazonUrl, isAmazonSearch } from './store-links.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = path.join(ROOT, 'dist');
@@ -84,9 +85,25 @@ check(pages.find((p) => p.route === '/library').html.includes('id="loadMore"'), 
 check(themePages.length === themesCfg.length, `${themesCfg.length} theme pages`, `found ${themePages.length}`);
 const hubOrder = [...pages.find((p) => p.route === '/themes').html.matchAll(/href="\/themes\/([a-z-]+)"/g)].map((m) => m[1]);
 check(JSON.stringify(hubOrder) === JSON.stringify(themesCfg.map((t) => t.slug)), 'themes hub is in editorial order, not by count', hubOrder.join(','));
-const yearsInData = [...new Set(readBooks.map((b) => b.yearRead).filter((y) => y && +y >= 2020))].sort();
-check(yearPages.length === yearsInData.length, `${yearsInData.length} year pages`, `found ${yearPages.length}`);
-check(!pages.some((p) => p.route === '/2019'), 'no year page for 2019');
+// The floor is read out of build.mjs rather than restated, so this check cannot
+// quietly disagree with the generator the way a hardcoded 2020 just did.
+const YEAR_FLOOR = (() => {
+  const m = /const YEAR_FLOOR = (\d{4});/.exec(read(path.join(ROOT, 'tools/build.mjs')));
+  if (!m) throw new Error('qa: could not read YEAR_FLOOR out of tools/build.mjs');
+  return +m[1];
+})();
+const yearsInData = [...new Set(readBooks.map((b) => b.yearRead).filter((y) => y && +y >= YEAR_FLOOR))].sort();
+check(yearPages.length === yearsInData.length, `${yearsInData.length} year pages (floor ${YEAR_FLOOR})`, `found ${yearPages.length}`);
+// Stronger than the old "no page for 2019": no year page may exist BELOW the floor,
+// whatever the floor is set to, and no book below it may lose its library entry.
+const belowFloor = yearPages.filter((p) => +p.route.slice(1) < YEAR_FLOOR).map((p) => p.route);
+check(belowFloor.length === 0, `no year page below ${YEAR_FLOOR}`, belowFloor.join(', '));
+const preFloorBooks = readBooks.filter((b) => b.yearRead && +b.yearRead < YEAR_FLOOR);
+const libraryHtml = pages.filter((p) => p.route === '/library' || /^\/library\/\d+$/.test(p.route)).map((p) => p.html).join('');
+const strandedPreFloor = preFloorBooks.filter((b) => !libraryHtml.includes(`/book/${b.slug}`)).map((b) => b.slug);
+check(strandedPreFloor.length === 0,
+  `all ${preFloorBooks.length} pre-${YEAR_FLOOR} books still reachable in the library`,
+  strandedPreFloor.slice(0, 5).join(', '));
 check(!themePages.some((p) => /class="pickcard"/.test(p.html) === false), 'no empty theme page emitted');
 check(!yearPages.some((p) => /class="pickcard"/.test(p.html) === false), 'no empty year page emitted');
 check(!pages.some((p) => p.html.includes('/#v=')), 'no SPA hash routes remain in the nav');
@@ -253,6 +270,195 @@ passes.push('no probeImg and no third-party cover fallback in any module');
 const preload = pages.filter((p) => /<script[^>]*src="[^"]*"(?![^>]*defer)/.test(p.html));
 check(preload.length === 0, 'every script tag is deferred — nothing blocks first paint', preload.slice(0, 3).map((p) => p.route).join(', '));
 check(!pages.some((p) => /fetch\(['"]\/books\.json/.test(p.html)), 'no page fetches books.json inline before paint');
+
+// ---------------------------------------------------------------- OG IMAGES
+// Every one of these exists because the failure is silent: a card that 404s, a stale
+// tag, or a page quietly sharing the wrong image all look fine until someone posts a
+// link and the preview is wrong.
+{
+  const attr = (html, re) => [...html.matchAll(re)].map((m) => m[1]);
+  const ogImg = (h) => attr(h, /<meta property="og:image" content="([^"]*)"/g);
+  const twImg = (h) => attr(h, /<meta name="twitter:image" content="([^"]*)"/g);
+  const stripV = (u) => u.split('?')[0];
+  const toFile = (u) => path.join(DIST, stripV(u).replace(ORIGIN + '/', '').replace(/^https?:\/\/[^/]+\//, ''));
+
+  const multi = pages.filter((p) => ogImg(p.html).length !== 1 || twImg(p.html).length !== 1);
+  check(multi.length === 0, `exactly one og:image and one twitter:image on all ${pages.length} pages`,
+    multi.slice(0, 3).map((p) => p.route).join(', '));
+
+  const mismatch = pages.filter((p) => ogImg(p.html)[0] !== twImg(p.html)[0]);
+  check(mismatch.length === 0, 'og:image and twitter:image agree on every page',
+    mismatch.slice(0, 3).map((p) => p.route).join(', '));
+
+  const urls = pages.map((p) => ogImg(p.html)[0]).filter(Boolean);
+  const offOrigin = urls.filter((u) => !u.startsWith(ORIGIN + '/'));
+  check(offOrigin.length === 0, `every image URL is on ${ORIGIN}`, offOrigin.slice(0, 2).join(', '));
+
+  // No third-party host may appear in ANY og:/twitter: tag — zero third-party requests
+  // is a design principle of this site and a social card is an easy place to lose it.
+  const foreign = pages.flatMap((p) => attr(p.html, /<meta (?:property|name)="(?:og|twitter):[^"]*" content="(https?:\/\/[^"]*)"/g))
+    .filter((u) => !u.startsWith(ORIGIN + '/'));
+  check(foreign.length === 0, 'no third-party host in any og: or twitter: tag', [...new Set(foreign)].slice(0, 2).join(', '));
+
+  const versioned = urls.filter((u) => /\?v=[0-9a-f]{10}$/.test(u));
+  check(versioned.length === urls.length, 'every image URL carries a 10-hex ?v= cache key',
+    `${urls.length - versioned.length} without`);
+
+  const missing = [...new Set(urls)].filter((u) => !fs.existsSync(toFile(u)));
+  check(missing.length === 0, `every referenced image exists in dist/ (${new Set(urls).size} distinct)`,
+    missing.slice(0, 3).map(stripV).join(', '));
+
+  // Dimensions and format, read from the files rather than trusted from the tags.
+  const dim = (buf) => {
+    if (buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) {          // JPEG: walk the markers
+      let i = 2;
+      while (i < buf.length) {
+        if (buf[i] !== 0xff) { i++; continue; }
+        const m = buf[i + 1];
+        if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) {
+          return { fmt: 'jpeg', h: buf.readUInt16BE(i + 5), w: buf.readUInt16BE(i + 7) };
+        }
+        i += 2 + buf.readUInt16BE(i + 2);
+      }
+      return { fmt: 'jpeg', w: 0, h: 0 };
+    }
+    if (buf.slice(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) {
+      return { fmt: 'png', w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) };
+    }
+    return { fmt: 'other', w: 0, h: 0 };
+  };
+  const badDim = [], tooBig = [];
+  for (const u of new Set(urls)) {
+    const f = toFile(u);
+    if (!fs.existsSync(f)) continue;
+    const buf = fs.readFileSync(f);
+    const d = dim(buf);
+    const isShare = f.endsWith('share.png');
+    if (isShare ? (d.fmt !== 'png' || d.w !== 2400 || d.h !== 1260) : (d.fmt !== 'jpeg' || d.w !== 1200 || d.h !== 630)) {
+      badDim.push(`${path.relative(DIST, f)} ${d.fmt} ${d.w}x${d.h}`);
+    }
+    if (buf.length > 300 * 1024) tooBig.push(`${path.relative(DIST, f)} ${(buf.length / 1024).toFixed(0)}kB`);
+  }
+  check(badDim.length === 0, 'every card is 1200x630 JPEG (share.png 2400x1260 PNG), read from the file', badDim.slice(0, 3).join(', '));
+  check(tooBig.length === 0, 'every image is under 300 kB', tooBig.slice(0, 3).join(', '));
+
+  const noAlt = pages.filter((p) => {
+    const a = attr(p.html, /<meta property="og:image:alt" content="([^"]*)"/g)[0];
+    const b = attr(p.html, /<meta name="twitter:image:alt" content="([^"]*)"/g)[0];
+    return !a || !b || !a.trim() || !b.trim();
+  });
+  check(noAlt.length === 0, 'og:image:alt and twitter:image:alt are present and non-empty everywhere',
+    noAlt.slice(0, 3).map((p) => p.route).join(', '));
+
+  const noCard = pages.filter((p) => !/<meta name="twitter:card" content="summary_large_image">/.test(p.html));
+  check(noCard.length === 0, 'twitter:card is summary_large_image on every page', noCard.slice(0, 3).map((p) => p.route).join(', '));
+
+  // One image per book page, and no card for a book that has no page.
+  const ogBookDir = path.join(DIST, 'og/book');
+  const ogBookFiles = fs.existsSync(ogBookDir) ? fs.readdirSync(ogBookDir).filter((f) => f.endsWith('.jpg')) : [];
+  check(ogBookFiles.length === bookPages.length && bookPages.length === readBooks.length,
+    `${ogBookFiles.length} book cards = ${bookPages.length} book pages = ${readBooks.length} read books`);
+  const readSlugs = new Set(readBooks.map((b) => ledger[b.id]));
+  const orphan = ogBookFiles.map((f) => f.replace(/\.jpg$/, '')).filter((slug) => !readSlugs.has(slug));
+  check(orphan.length === 0, 'no OG card exists for a book that is not on the read shelf', orphan.slice(0, 3).join(', '));
+
+  // Every paginated library page advertises the same card — they differ only by offset.
+  const libUrls = new Set(libraryPagesArr.map((p) => ogImg(p.html)[0]));
+  check(libUrls.size === 1, `all ${libraryPagesArr.length} /library pages share one image`, [...libUrls].slice(0, 2).join(' vs '));
+
+  // /404 has no card of its own and borrows the home image.
+  if (notFound) {
+    check(ogImg(notFound.html)[0] === ogImg(pages.find((p) => p.route === '/').html)[0],
+      '/404 falls back to the home image rather than a card of its own');
+  }
+
+  // The card palette is a hand-copy of the generator's. Assert it has not drifted.
+  const litColors = (src) => {
+    const m = /const THEME_COLORS = \{([\s\S]*?)\};/.exec(src);
+    return m ? [...m[1].matchAll(/'([^']+)':\s*'(#[0-9a-f]{6})'/g)].map((x) => `${x[1]}=${x[2]}`).sort().join(',') : '';
+  };
+  const a = litColors(read(path.join(ROOT, 'tools/build.mjs')));
+  const b = litColors(read(path.join(ROOT, 'tools/og/lib.mjs')));
+  check(a !== '' && a === b, 'THEME_COLORS in tools/og/lib.mjs matches tools/build.mjs');
+
+  // The year floor exists twice — once for the generated pages, once for the
+  // client-side charts. They are in different languages and cannot import each
+  // other, so the only thing keeping them honest is this check.
+  const clientFloor = /const YEAR_FLOOR="(\d{4})";/.exec(read(path.join(SRC, 'assets/js/app.js')));
+  check(!!clientFloor && +clientFloor[1] === YEAR_FLOOR,
+    `YEAR_FLOOR in src/assets/js/app.js matches tools/build.mjs (${YEAR_FLOOR})`,
+    clientFloor ? clientFloor[1] : 'not found');
+}
+
+// ---------------------------------------------------------------- store links
+{
+  // The conversion itself, against ISBN pairs published on the books' own copyright
+  // pages. A silent off-by-one in the check digit would send every Amazon link on the
+  // site to a real but WRONG product, which no amount of HTML inspection would catch.
+  const pairs = [
+    ['9780735211292', '0735211299'], ['9780374533557', '0374533555'],
+    ['9780062316097', '0062316095'], ['9781455586691', '1455586692'],
+    ['9780374286675', '0374286671'],
+  ];
+  const wrong = pairs.filter(([a, b]) => isbn13to10(a) !== b).map(([a]) => a);
+  check(wrong.length === 0, `ISBN-13 to ISBN-10 is correct on ${pairs.length} known editions`, wrong.join(', '));
+  check(isbn13to10('9791234567896') === '', 'a 979 ISBN yields no ISBN-10');
+  check(amazonUrl({ amazonAsin: 'B00ABCDEFG', isbn: '9780735211292' }) === 'https://www.amazon.com/dp/B00ABCDEFG',
+    'an Amazon ASIN override beats the ISBN');
+  check(amazonUrl({ amazonAsin: 'nope' }) === '', 'a malformed ASIN override yields no link, never a guess');
+
+  // Every link on every page must be one the data actually supports. This is the check
+  // that matters: it compares the rendered HTML against the links recomputed from
+  // books.json, so a template that hardcoded a URL, or rendered one for a book with no
+  // data, fails here.
+  const bookPages = pages.filter((p) => p.route.startsWith('/book/'));
+  const bySlug = new Map(readBooks.map((b) => [b.slug, b]));
+  // An href in HTML is entity-encoded, so the exact-ISBN search URLs come back with
+  // &amp; where the data has &. Decode before comparing — the HTML is right and a naive
+  // string compare is what is wrong.
+  const unescape = (u) => u.replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/&quot;/g, '"');
+  const hrefsIn = (html, host) =>
+    [...html.matchAll(new RegExp(`href="(https://www\\.${host}[^"]*)"`, 'g'))].map((m) => unescape(m[1]));
+
+  let mismatch = [], orphan = [], missing = [];
+  for (const p of bookPages) {
+    const b = bySlug.get(p.route.replace('/book/', ''));
+    if (!b) continue;
+    const want = storeLinks(b).links;
+    const row = /<div class="blinks">([\s\S]*?)<\/div>/.exec(p.html);
+    const rowHtml = row ? row[1] : '';
+    for (const [key, host] of [['goodreads', 'goodreads\\.com'], ['amazon', 'amazon\\.com'], ['audible', 'audible\\.com']]) {
+      const got = hrefsIn(rowHtml, host);
+      if (want[key] && got.length === 0) missing.push(`${b.slug}:${key}`);
+      if (!want[key] && got.length > 0) orphan.push(`${b.slug}:${key}`);
+      if (want[key] && got.length && got[0] !== want[key]) mismatch.push(`${b.slug}:${key}`);
+    }
+  }
+  check(missing.length === 0, 'every store link the data supports is rendered', missing.slice(0, 5).join(', '));
+  check(orphan.length === 0, 'no store link is rendered for a book without the data', orphan.slice(0, 5).join(', '));
+  check(mismatch.length === 0, 'every rendered store link matches the one the data produces', mismatch.slice(0, 5).join(', '));
+
+  // Nothing may render an empty or placeholder href.
+  const emptyHref = bookPages.filter((p) => /<div class="blinks">[\s\S]*?href=""/.test(p.html)).map((p) => p.route);
+  check(emptyHref.length === 0, 'no empty href in a store-link row', emptyHref.slice(0, 5).join(', '));
+
+  // Outbound commercial links get nofollow; Goodreads is a reference link and does not.
+  const noFollowBad = bookPages.filter((p) => {
+    const row = /<div class="blinks">([\s\S]*?)<\/div>/.exec(p.html);
+    if (!row) return false;
+    return [...row[1].matchAll(/<a[^>]*href="(https:\/\/www\.(?:amazon|audible)\.com[^"]*)"[^>]*>/g)]
+      .some((m) => !/rel="[^"]*nofollow/.test(m[0]));
+  }).map((p) => p.route);
+  check(noFollowBad.length === 0, 'Amazon and Audible links carry rel=nofollow', noFollowBad.slice(0, 3).join(', '));
+
+  // An unread book has no page at all, so it must never carry a store link anywhere.
+  const unreadLeak = pages.filter((p) => /audible\.com\/pd\//.test(p.html) && !p.route.startsWith('/book/')).map((p) => p.route);
+  check(unreadLeak.length === 0, 'no Audible product link outside a book page', unreadLeak.slice(0, 3).join(', '));
+
+  const n = (k) => readBooks.filter((b) => storeLinks(b).links[k]).length;
+  const searches = readBooks.filter((b) => isAmazonSearch(storeLinks(b).links.amazon)).length;
+  notes.push(`store links: goodreads ${n('goodreads')} · amazon ${n('amazon')} (${searches} exact-ISBN search) · audible ${n('audible')} of ${readBooks.length}`);
+}
 
 // ---------------------------------------------------------------- OUT
 console.log(`\n${passes.length} checks passed`);

@@ -82,8 +82,18 @@ function closeMenu(){const m=$("#navMenu");if(m&&m.classList.contains("open")){m
 
 
 /* ===== deep-link state ===== */
-const YEAR_ORDER=["Pre-2020","2020","2021","2022","2023","2024","2025","2026"];
-function ybucket(yr){return (yr&&yr>="2020")?yr:"Pre-2020";}
+// The first year broken out on its own. Anything earlier is grouped into one
+// bucket. Server-side twin: YEAR_FLOOR in tools/build.mjs — change both together.
+const YEAR_FLOOR="2021";
+const PRE_LABEL="Pre-"+YEAR_FLOOR;
+// Derived from the DATA, never from the clock: a viewer with a slow clock would
+// otherwise lose the current year, and one running fast would gain an empty one.
+// A function rather than a const because BOOKS is populated asynchronously.
+function yearOrder(){
+  const ys=[...new Set(BOOKS.map(b=>b.yearRead).filter(y=>y&&y>=YEAR_FLOOR))].sort();
+  return [PRE_LABEL,...ys];
+}
+function ybucket(yr){return (yr&&yr>=YEAR_FLOOR)?yr:PRE_LABEL;}
 /* tooltip */
 const TIP=$("#tip"),TIPT=TIP&&TIP.querySelector(".tt"),TIPS=TIP&&TIP.querySelector(".ts");
 function tipShow(e,title,sub){if(!TIP)return;TIPT.textContent=title;TIPS.textContent=sub||"";TIP.classList.add("show");tipMove(e);}

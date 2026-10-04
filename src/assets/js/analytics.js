@@ -3,14 +3,14 @@
 let tyMetric="books";
 function renderTime(){
   renderYearStack();
-  const pre=BOOKS.filter(b=>b.yearRead&&b.yearRead<"2020").length;
-  $("#undatedNote").textContent=`Pre-2020 is grouped \u2014 ${pre} books. Years are broken out from 2020 on, though my Goodreads use only got consistent in 2023. ${BOOKS.filter(b=>!b.dateRead).length} undated reads aren\u2019t shown.`;
+  const pre=BOOKS.filter(b=>b.yearRead&&b.yearRead<YEAR_FLOOR).length;
+  $("#undatedNote").textContent=`${PRE_LABEL} is grouped \u2014 ${pre} books. Years are broken out from ${YEAR_FLOOR} on, though my Goodreads use only got consistent in 2023. ${BOOKS.filter(b=>!b.dateRead).length} undated reads aren\u2019t shown.`;
   renderYearReview();
   stackDetailDefault();
 }
 function renderYearStack(){
   const counts={};BOOKS.forEach(b=>{if(b.yearRead)counts[ybucket(b.yearRead)]=(counts[ybucket(b.yearRead)]||0)+1;});
-  const years=YEAR_ORDER.filter(y=>counts[y]);
+  const years=yearOrder().filter(y=>counts[y]);
   const usePages=tyMetric==="pages";
   // theme totals per year, by chosen metric.
   // Each book is split fractionally across its themes (weight / themeCount) so the
@@ -38,7 +38,7 @@ function renderYearStack(){
     const t=el.dataset.t, y=el.dataset.y, col=el.closest(".stackcol");
     const list=BOOKS.filter(b=>ybucket(b.yearRead)===y&&(b.themes||[]).includes(t))
       .sort((a,b)=>(b.dateRead||"").localeCompare(a.dateRead||""));
-    // "Pre-2020" is a bucket, not a route; only real years have a page to send people to.
+    // The pre-floor bucket is a bucket, not a route; only real years have a page to send people to.
     const more=/^\d{4}$/.test(y)?"/"+y:"";
     el.addEventListener("mouseenter",()=>{
       keepListPop();
@@ -97,7 +97,7 @@ let mtMetric="books";
 function renderMonthTrend(){
   const usePages=mtMetric==="pages";
   const ymB={},ymP={},ymT={},ymTc={},ymBk={}; // ymT[k][theme]=metric value (fractional); ymTc[k][theme]=book count; ymBk[k]=book objects
-  BOOKS.forEach(b=>{const m=/^(\d{4})\/(\d{2})/.exec(b.dateRead);if(!m)return;const k=m[1]+"/"+m[2];if(k<"2022/01")return;
+  BOOKS.forEach(b=>{const m=/^(\d{4})\/(\d{2})/.exec(b.dateRead);if(!m)return;const k=m[1]+"/"+m[2];if(k<YEAR_FLOOR+"/01")return;
     ymB[k]=(ymB[k]||0)+1;ymP[k]=(ymP[k]||0)+num(b);(ymBk[k]=ymBk[k]||[]).push(b);
     const nthemes=(b.themes&&b.themes.length)||0;ymT[k]=ymT[k]||{};ymTc[k]=ymTc[k]||{};if(nthemes){const w=(usePages?num(b):1)/nthemes;b.themes.forEach(t=>{ymT[k][t]=(ymT[k][t]||0)+w;ymTc[k][t]=(ymTc[k][t]||0)+1;});}});
   const keys=Object.keys(ymB).sort();
@@ -162,7 +162,10 @@ on("#mtToggle","click",e=>{const b=e.target.closest("button");if(!b)return;mtMet
 on("#tyToggle","click",e=>{const b=e.target.closest("button");if(!b)return;tyMetric=b.dataset.m;$$("#tyToggle button").forEach(x=>x.classList.toggle("on",x===b));renderYearStack();});
 
 function renderYearReview(){
-  const years=["2025","2024","2023","2022"].filter(y=>BOOKS.some(b=>b.yearRead===y));
+  // Was a hardcoded ["2025","2024","2023","2022"], which had already gone stale —
+  // it never showed 2026 and never showed 2021. Derived from the data now, newest
+  // first, from the year floor up, so it cannot drift again.
+  const years=[...new Set(BOOKS.map(b=>b.yearRead).filter(y=>y&&y>=YEAR_FLOOR))].sort().reverse();
   const MNF=["January","February","March","April","May","June","July","August","September","October","November","December"];
   const html=years.map(y=>{
     const list=BOOKS.filter(b=>b.yearRead===y);
@@ -295,7 +298,7 @@ function renderProfile(L){
   const full=["2023","2024","2025"].filter(y=>yc[y]);
   if(full.length>=2){const avg=Math.round(full.reduce((a,y)=>a+yc[y],0)/full.length);
     traits.push(["A steady ~"+avg+"-a-year habit",`Across the full years 2023\u201325 that's roughly ${avg} books a year \u2014 about one every ${Math.round(365/avg)} days.`]);}
-  else if(LENS.year && LENS.year!=="Pre-2020" && yc[LENS.year]){traits.push([`${L.length} books in ${LENS.year}`,`That's about one every ${Math.round(365/L.length)} days through the year.`]);}
+  else if(LENS.year && LENS.year!==PRE_LABEL && yc[LENS.year]){traits.push([`${L.length} books in ${LENS.year}`,`That's about one every ${Math.round(365/L.length)} days through the year.`]);}
   // length
   const pages=L.map(num).filter(n=>n>0);
   if(pages.length){const avgp=Math.round(pages.reduce((a,b)=>a+b,0)/pages.length);const med=Math.round(median(pages));
@@ -318,7 +321,7 @@ const FRESH_COLORS={"same year":"#245a96","within 1 yr":"#2e6fb5","2\u20133 yrs"
 let paceMetric="books";
 let LENS={year:"",theme:"",author:""};
 function lensList(){return BOOKS.filter(b=>{
-  if(LENS.year){ if(LENS.year==="Pre-2020"){if(!(b.yearRead&&b.yearRead<"2020"))return false;} else if(ybucket(b.yearRead)!==LENS.year)return false; }
+  if(LENS.year){ if(LENS.year===PRE_LABEL){if(!(b.yearRead&&b.yearRead<YEAR_FLOOR))return false;} else if(ybucket(b.yearRead)!==LENS.year)return false; }
   if(LENS.theme && !b.themes.includes(LENS.theme))return false;
   if(LENS.author && b.author!==LENS.author)return false;
   return true;
@@ -414,11 +417,11 @@ function lensAuthorCounts(L){const m={};L.forEach(b=>{if(!b.author)return;(m[b.a
 let lensBuilt=false;
 function buildLensOptions(){
   if(lensBuilt)return;lensBuilt=true;
-  const ys=YEAR_ORDER.filter(y=>BOOKS.some(b=>ybucket(b.yearRead)===y));
+  const ys=yearOrder().filter(y=>BOOKS.some(b=>ybucket(b.yearRead)===y));
   $("#lensYear").innerHTML='<option value="">All years</option>'+ys.map(y=>`<option value="${y}">${y}</option>`).join("");
   
   
-  const cmpYears=ys.filter(y=>y!=="Pre-2020");
+  const cmpYears=ys.filter(y=>y!==PRE_LABEL);
   const opts=cmpYears.map(y=>`<option value="${y}">${y}</option>`).join("");
   $("#cmpA").innerHTML=opts;$("#cmpB").innerHTML=opts;
   if(cmpYears.length>=2){$("#cmpA").value=cmpYears[cmpYears.length-2];$("#cmpB").value=cmpYears[cmpYears.length-1];}
@@ -453,7 +456,7 @@ function renderThemeDyn(){
   const allYears=["2023","2024","2025","2026"].filter(y=>periodBooks(y).length);
   const cap=$("#dynCap");
 
-  if(LENS.year && LENS.year!=="Pre-2020"){
+  if(LENS.year && LENS.year!==PRE_LABEL){
     // Year-lens focus: this year vs the prior year
     const yi=allYears.indexOf(LENS.year);
     const prev=yi>0?allYears[yi-1]:null;
@@ -609,13 +612,13 @@ function renderPace(){
   let labels=[], vals=[], clickKeys=[], trend=null;
   if(paceGran==="year"){
     const yrB={},yrP={};_src.forEach(b=>{if(!b.yearRead)return;const yk=ybucket(b.yearRead);yrB[yk]=(yrB[yk]||0)+1;yrP[yk]=(yrP[yk]||0)+num(b);});
-    labels=YEAR_ORDER.filter(y=>yrB[y]);
+    labels=yearOrder().filter(y=>yrB[y]);
     vals=labels.map(y=>paceMetric==="books"?yrB[y]:Math.round(yrP[y]));
     clickKeys=labels.slice();
     
   } else {
     // monthly, 2022+
-    const mB={},mP={};_src.forEach(b=>{const m=/^(\d{4})\/(\d{2})/.exec(b.dateRead);if(!m||m[0]<"2022/01")return;const k=m[1]+"/"+m[2];mB[k]=(mB[k]||0)+1;mP[k]=(mP[k]||0)+num(b);});
+    const mB={},mP={};_src.forEach(b=>{const m=/^(\d{4})\/(\d{2})/.exec(b.dateRead);if(!m||m[0]<YEAR_FLOOR+"/01")return;const k=m[1]+"/"+m[2];mB[k]=(mB[k]||0)+1;mP[k]=(mP[k]||0)+num(b);});
     const keys=Object.keys(mB).sort();
     if(keys.length){const [y0,m0]=keys[0].split("/").map(Number),[y1,m1]=keys[keys.length-1].split("/").map(Number);labels=[];for(let y=y0,mo=m0;y<y1||(y===y1&&mo<=m1);){labels.push(y+"/"+String(mo).padStart(2,"0"));mo++;if(mo>12){mo=1;y++;}}}
     vals=labels.map(k=>paceMetric==="books"?(mB[k]||0):Math.round(mP[k]||0));

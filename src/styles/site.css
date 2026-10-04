@@ -332,7 +332,10 @@ input:focus,select:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .rrow{display:flex;font-size:.88rem;padding:6px 0;border-top:1px solid var(--line)}
 .rrow .k{color:var(--muted);width:108px;flex-shrink:0}
 .mtags{font-size:.8rem;color:var(--muted);margin-top:12px;line-height:1.6}
-.glink{display:inline-flex;align-items:center;gap:5px;margin:0 0 16px;font-family:"Archivo";font-size:.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .15s}
+/* Goodreads / Amazon / Audible. The row wraps on a narrow screen rather than
+   squeezing, and carries the bottom margin the single .glink used to own. */
+.blinks{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;margin:0 0 16px}
+.glink{display:inline-flex;align-items:center;gap:5px;margin:0;font-family:"Archivo";font-size:.8rem;color:var(--muted);text-decoration:none;font-weight:600;transition:color .15s}
 .glink svg{opacity:.7;transition:opacity .15s}
 .glink:hover{color:var(--blue)}
 .glink:hover svg{opacity:1}

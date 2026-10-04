@@ -9,7 +9,10 @@
     "qa": "node tools/qa.mjs"
   },
   "dependencies": {
-    "nunjucks": "^3.2.4"
+    "@resvg/resvg-js": "^2.6.2",
+    "nunjucks": "^3.2.4",
+    "satori": "^0.33.4",
+    "sharp": "^0.35.4"
   },
   "engines": {
     "node": ">=18"

@@ -11,13 +11,22 @@ import {
   connectionMap, uniquePairs, bridgeBooks, themeMatrix, matrixPairs,
   publicationLag, streaksAndGaps, cumulativePages,
 } from './derive.mjs';
+import { storeLinks } from './store-links.mjs';
+import { buildOgManifest, renderOgImages } from './og/og.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(ROOT, 'src');
 const DIST = path.join(ROOT, 'dist');
 const ORIGIN = 'https://bookshelf.drost.us';
 const PER_PAGE = 24;            // SESSION 2 Step 2 — divides by 2, 3, 4 and 6. Do not change.
-const YEAR_FLOOR = 2020;        // SESSION 2 Step 4 — floor fixed, ceiling computed.
+const YEAR_FLOOR = 2021;        // Floor fixed, ceiling computed. Raised from 2020 to 2021
+                                // on 17 Sep 2026: Goodreads use before then was patchy and
+                                // Alex is unsharing some of the older reads. Books below the
+                                // floor keep their library entry, theme pages and connection
+                                // map edges — they just stop getting a year page of their own,
+                                // and the timeline reports them as one grouped count.
+                                // The client-side twin of this number is YEAR_FLOOR in
+                                // src/assets/js/app.js. Change both together.
 
 const read = (p) => fs.readFileSync(p, 'utf8');
 const readJson = (p) => JSON.parse(read(p));
@@ -117,6 +126,11 @@ const books = data.books.map((b) => {
   book.teaser = teaserOf(book);
   book.shortTitle = String(book.title).split(':')[0];
   book.prose = proseWords(book);
+  // Goodreads / Amazon / Audible. Any link that cannot be built from real data is
+  // omitted rather than guessed; `storeNotes` carries the reason to the build report.
+  const sl = storeLinks(book);
+  book.links = sl.links;
+  book.storeNotes = sl.notes;
   book.pagesNum = (() => { const n = parseInt(book.pages, 10); return isFinite(n) && n > 0 ? n : null; })();
   const s = standoutsCfg[book.id];
   if (s) { book.standout = true; book.cluster = s.cluster; book.standoutNote = s.note; }
@@ -372,6 +386,9 @@ const writtenRoutes = [];
 function emit(routePath, templateName, ctx, { indexable = true, priority = 0.5 } = {}) {
   const page = ctx.page;
   page.breadcrumbJson = breadcrumb(page.trail || [{ name: 'Bookshelf', path: '/' }, { name: page.crumb, path: page.path }]);
+  // Every route gets its own card. Falling back to the home card means a route added
+  // later still ships a valid og:image rather than none at all.
+  page.og = OG.get(routePath) || OG.get('/');
   const html = GENERATED(templateName) + env.render(templateName, {
     site, nav: NAV, personJson: J(identityGraph(page.person || PERSON)), ...ctx,
   });
@@ -399,6 +416,15 @@ function copyPage(file) {
   };
 }
 
+// ================================================================ OG IMAGES
+// Built here, rendered at the very end. Describing every card up front is what lets
+// emit() hang `page.og` off each route as the HTML is written, so the meta tags and the
+// files that back them can never disagree about a path or a ?v=.
+const OG = buildOgManifest({
+  origin: ORIGIN, orderedRead, themeIndex, yearIndex, currentlyReading, tbr, site, picks,
+  libraryPages: Math.max(1, Math.ceil(orderedRead.length / PER_PAGE)),
+});
+
 // ================================================================ ROUTES
 // ---- / -----------------------------------------------------------------
 {
@@ -408,9 +434,20 @@ function copyPage(file) {
   {
     const full = plain(featuredBook.summary || '').trim();
     const cut = (t, max) => (t.length > max ? t.slice(0, max).replace(/\s+\S*$/, '') + '\u2026' : t);
-    let two = full, hits = 0;
-    for (const mm of full.matchAll(/[.!?](\s|$)/g)) { hits++; if (hits === 2) { two = full.slice(0, mm.index + 1); break; } }
-    featuredBook.leadIn = fmtText(cut(two, 340));
+    // GUARDRAIL 5, THE HARD PART: the lead-in must be STRICTLY SHORTER than the summary.
+    // Two sentences capped at 340 characters is not enough on its own — a summary that is
+    // itself two sentences and under 340 comes back unchanged, and the home page then
+    // carries the complete prose that is supposed to live on exactly one URL. Not
+    // hypothetical: it went live on 13 September 2026 when Den of Thieves (319 characters,
+    // two sentences) became the newest read, and `npm run qa` caught it. So try two
+    // sentences, then one, then a forced truncation — first one that actually shortens.
+    const ends = [...full.matchAll(/[.!?](\s|$)/g)].map((m) => m.index + 1);
+    let lead = '';
+    for (const n of [2, 1]) {
+      if (ends.length >= n && ends[n - 1] < full.length) { lead = full.slice(0, ends[n - 1]); break; }
+    }
+    if (!lead) lead = cut(full, Math.max(1, Math.min(200, full.length - 1)));
+    featuredBook.leadIn = fmtText(cut(lead, 340));
     featuredBook.coreLead = fmtText(cut(plain((featuredBook.core || [])[0] || ''), 190));
   }
   // 24 — three full rows of eight on desktop, and it divides by 2, 3, 4 and 6, so no
@@ -585,6 +622,9 @@ for (const b of orderedRead) {
 {
   const page = { path: '/404', crumb: 'Not found', noindex: true, title: 'Page not found — Alex Drost’s Bookshelf', description: 'That page is not on the shelf. Browse the library, the standout reads, or the connection map instead.', h1Plain: 'Not found' };
   page.breadcrumbJson = breadcrumb([{ name: 'Bookshelf', path: '/' }]);
+  // 404 writes its file directly instead of going through emit(), so it has to pick up
+  // its og entry by hand. It borrows the home card rather than earning one of its own.
+  page.og = OG.get('/404');
   fs.writeFileSync(path.join(DIST, '404.html'), GENERATED('404.njk') + env.render('404.njk', { site, nav: NAV, page, personJson: J(identityGraph(PERSON)) }));
 }
 
@@ -628,7 +668,9 @@ fs.writeFileSync(path.join(DIST, 'data/slugs.json'), JSON.stringify(Object.fromE
 fs.writeFileSync(path.join(DIST, 'data/titles.json'),
   JSON.stringify(Object.fromEntries(books.filter((b) => !String(data.books.find((x) => x.id === b.id).title || '').trim()).map((b) => [b.id, b.title]))));
 // _headers is read by Cloudflare Pages from the deploy root — caching and security headers.
-for (const extra of ['share.png', '_headers']) { const p = path.join(SRC, extra); if (exists(p)) fs.copyFileSync(p, path.join(DIST, extra)); }
+// share.png is NOT copied any more: the OG layer renders it from live data, to the same
+// path and the same PNG format, so links shared before this change keep resolving.
+for (const extra of ['_headers']) { const p = path.join(SRC, extra); if (exists(p)) fs.copyFileSync(p, path.join(DIST, extra)); }
 
 // ---------------------------------------------------------------- robots + sitemap
 fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`);
@@ -644,6 +686,12 @@ const sitemapMismatch = sitemapRoutes.filter((r) => !exists(path.join(DIST, r.fi
 // ---------------------------------------------------------------- slug ledger
 fs.writeFileSync(path.join(SRC, 'data/slugs.json'),
   JSON.stringify({ _comment: slugFile._comment, slugs: Object.fromEntries(Object.entries(ledger).sort((a, b) => a[1].localeCompare(b[1]))) }, null, 2) + '\n');
+
+// ---------------------------------------------------------------- OG images
+// Last, because it is the slowest step and everything it needs is already on disk. A
+// single bad cover warns and the build continues; a missing font throws, because that
+// would silently ruin every card.
+const ogResult = await renderOgImages(OG, DIST);
 
 // ---------------------------------------------------------------- report
 const B = (s) => `\x1b[1m${s}\x1b[0m`;
@@ -695,6 +743,39 @@ line(`  covers copied ....... ${coverCount}`);
 line(`  missing covers ...... ${books.filter((b) => !b.hasCover).length}${coversStaged ? '' : ' (expected: not staged here)'}`);
 line(`  missing ISBN ........ ${v.missingIsbn.length}`);
 line(`  pages "0" ........... ${v.zeroPages.length}`);
+line();
+
+// ---------------------------------------------------------------- store links
+// Coverage, not just a count: an Audible link that silently never appears because the
+// ASIN was never filled in should be visible here, otherwise "it's working" and
+// "nobody has filled it in" look identical from the outside.
+{
+  const rb = orderedRead;
+  const n = (k) => rb.filter((b) => b.links && b.links[k]).length;
+  line(B('STORE LINKS'));
+  line(`  Goodreads ........... ${n('goodreads')} of ${rb.length}`);
+  line(`  Amazon .............. ${n('amazon')} of ${rb.length}`);
+  line(`  Audible ............. ${n('audible')} of ${rb.length}`);
+  const flagged = rb.filter((b) => (b.storeNotes || []).some((t) => t.includes('malformed') || t.includes('looks like')));
+  if (flagged.length) {
+    line(B(`  !! ${flagged.length} ASIN(S) LOOK WRONG — a bad id links to someone else's book`));
+    for (const b of flagged.slice(0, 10)) line(`     ${b.title.slice(0, 54).padEnd(54)} ${b.storeNotes.join(' · ')}`);
+  }
+  const noAmazon = rb.filter((b) => !b.links.amazon);
+  if (noAmazon.length) {
+    line(`  no Amazon link: ${noAmazon.length} — fill Amazon ASIN on these`);
+    for (const b of noAmazon.slice(0, 8)) line(`     ${b.title.slice(0, 54).padEnd(54)} ${(b.storeNotes[0] || '').replace('no amazon link: ', '')}`);
+    if (noAmazon.length > 8) line(`     … and ${noAmazon.length - 8} more`);
+  }
+  line();
+}
+line(B('OG IMAGES'));
+line(`  cards rendered ...... ${ogResult.count}   (${OG.jobs.length - 1} jpeg + share.png)`);
+line(`  render time ......... ${ogResult.seconds.toFixed(1)}s`);
+line(`  total size .......... ${(ogResult.bytes / 1e6).toFixed(1)} MB   (largest ${(ogResult.largest.size / 1024).toFixed(0)} kB: /${ogResult.largest.file})`);
+line(`  image origin ........ ${OG.origin}${OG.origin === ORIGIN ? '' : '  (Pages preview build)'}`);
+line(`  warnings ............ ${ogResult.warnings.length}`);
+for (const w of ogResult.warnings) line(`    ! ${w}`);
 line();
 line(B(`[CONFIRM] MARKERS (${confirmMarkers.length})`));
 for (const c of confirmMarkers) line(`  ${c.where}  ${c.marker}`);

@@ -70,12 +70,14 @@ src/
   pages/              about.md · up-next.md · recommendations.md
   index.html          the original SPA; still a build input for the home page
 tools/                build.mjs · validate.mjs · derive.mjs · slugify.mjs · qa.mjs
-                      + dev-only: visual-check · make-og · md-to-pdf · extract-js
+                      og/ — build-time OG cards (satori + resvg + sharp, static TTFs in og/fonts)
+                      + dev-only: visual-check · md-to-pdf · extract-js
 docs/                 runbooks and reports
 dist/                 generated, gitignored — Pages builds it
 ```
 
-`npm run build` then `npm run qa` (87 checks). Both must pass before anything is delivered.
+`npm run build` then `npm run qa` (103 checks). Both must pass before anything is delivered.
+The build also renders 354 OG images into `dist/og/` and `dist/share.png`.
 
 **The published `books.json` is a filtered copy**, not a passthrough: books that are not `read`
 have their summary, core ideas, tags and connections stripped, because `dist/books.json` is a
