@@ -3,6 +3,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import nunjucks from 'nunjucks';
 import { assignSlugs } from './slugify.mjs';
@@ -366,6 +367,30 @@ env.addFilter('date', (s) => fmtDate(s));
 env.addFilter('num', (n) => Number(n).toLocaleString('en-US'));
 env.addFilter('take', (a, n) => (Array.isArray(a) ? a.slice(0, n) : a));
 env.addFilter('startsWith', (s2, p2) => String(s2 ?? '').startsWith(p2));
+
+// ---------------------------------------------------------------- asset()
+// Content-hashed URLs for the JS and CSS.
+//
+// WHY: these filenames carry no hash, and _headers caches them for a day. A deploy that
+// changes two of them can therefore hand one visitor the new file and the old one of its
+// partner, straight from cache. That is not hypothetical — it happened on 11 Oct 2026:
+// app.js gained yearOrder() and analytics.js started calling it, and every browser with a
+// day-old app.js got `ReferenceError: yearOrder is not defined` on /timeline and
+// /analytics while the rest of the site looked fine.
+//
+// Appending a hash of the file's own bytes makes a changed file a different URL, so the
+// pair can never be mixed. Same mechanism as the ?v= on the OG cards.
+const _assetHash = new Map();
+function assetUrl(p2) {
+  const rel = String(p2).replace(/^\//, '');
+  if (!_assetHash.has(rel)) {
+    const f = path.join(SRC, rel);
+    if (!exists(f)) throw new Error(`asset() called for a file that does not exist: ${rel}`);
+    _assetHash.set(rel, crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex').slice(0, 10));
+  }
+  return `/${rel}?v=${_assetHash.get(rel)}`;
+}
+env.addGlobal('asset', assetUrl);
 
 const NAV = [
   { label: 'Library', path: '/library' },

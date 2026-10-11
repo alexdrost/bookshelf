@@ -47,13 +47,17 @@
   Cache-Control: public, max-age=31536000, immutable
   Access-Control-Allow-Origin: *
 
-# CSS and JS have no content hash in their names, so they cannot be immutable — a deploy
-# must be able to change them. One day plus revalidation is the honest setting.
+# CSS and JS are referenced with a ?v= of the file's own bytes (see asset() in
+# tools/build.mjs), so a changed file is a changed URL and a cached copy can never be
+# paired with a newer partner. That is what makes a long cache safe here — it was NOT
+# safe before: at one day with no hash, a deploy served some visitors a new app.js
+# alongside a cached analytics.js, and /timeline and /analytics threw on every load.
+# The HTML is always revalidated, so a new deploy's ?v= reaches everyone immediately.
 /styles/*
-  Cache-Control: public, max-age=86400, must-revalidate
+  Cache-Control: public, max-age=31536000, immutable
 
 /assets/js/*
-  Cache-Control: public, max-age=86400, must-revalidate
+  Cache-Control: public, max-age=31536000, immutable
 
 /sitemap.xml
   Cache-Control: public, max-age=3600

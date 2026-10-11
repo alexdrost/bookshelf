@@ -2,6 +2,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { assignSlugs } from './slugify.mjs';
 import { proseWords, LAUNCH_THRESHOLD } from './validate.mjs';
@@ -458,6 +459,39 @@ check(!pages.some((p) => /fetch\(['"]\/books\.json/.test(p.html)), 'no page fetc
   const n = (k) => readBooks.filter((b) => storeLinks(b).links[k]).length;
   const searches = readBooks.filter((b) => isAmazonSearch(storeLinks(b).links.amazon)).length;
   notes.push(`store links: goodreads ${n('goodreads')} · amazon ${n('amazon')} (${searches} exact-ISBN search) · audible ${n('audible')} of ${readBooks.length}`);
+}
+
+// ---------------------------------------------------------------- asset versioning
+{
+  // Every local JS and CSS reference must carry a ?v= that matches the file's own bytes.
+  // Without it a deploy can serve one visitor a new app.js and a cached old analytics.js,
+  // which is exactly how /timeline and /analytics broke on 11 Oct 2026.
+  const hashOf = (rel) => {
+    const f = path.join(SRC, rel.replace(/^\//, ''));
+    if (!fs.existsSync(f)) return null;
+    return crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex').slice(0, 10);
+  };
+  const bare = [], wrong = [];
+  for (const p2 of pages) {
+    for (const m of p2.html.matchAll(/(?:src|href)="(\/(?:assets\/js|styles)\/[^"]+)"/g)) {
+      const [url, qs] = m[1].split('?');
+      const want = hashOf(url);
+      if (!qs || !qs.startsWith('v=')) { bare.push(`${p2.route} ${url}`); continue; }
+      if (want && qs.slice(2) !== want) wrong.push(`${p2.route} ${url} has ${qs.slice(2)}, file is ${want}`);
+    }
+  }
+  check(bare.length === 0, 'every local JS/CSS reference is content-versioned', [...new Set(bare)].slice(0, 4).join(' · '));
+  check(wrong.length === 0, 'every ?v= matches the file it points at', [...new Set(wrong)].slice(0, 3).join(' · '));
+
+  // The coupling that caused the outage, asserted directly: analytics.js uses symbols that
+  // only app.js defines, so any page loading one must load the other.
+  const appJs = read(path.join(SRC, 'assets/js/app.js'));
+  const anaJs = read(path.join(SRC, 'assets/js/analytics.js'));
+  const needed = ['yearOrder', 'YEAR_FLOOR', 'PRE_LABEL'].filter((sym) => anaJs.includes(sym));
+  const undef = needed.filter((sym) => !new RegExp(`(?:function|const|let|var)\\s+${sym}\\b`).test(appJs));
+  check(undef.length === 0, `analytics.js's shared symbols are all defined in app.js (${needed.join(', ')})`, undef.join(', '));
+  const pairBroken = pages.filter((p2) => /assets\/js\/analytics\.js/.test(p2.html) && !/assets\/js\/app\.js/.test(p2.html)).map((p2) => p2.route);
+  check(pairBroken.length === 0, 'every page loading analytics.js also loads app.js', pairBroken.join(', '));
 }
 
 // ---------------------------------------------------------------- OUT

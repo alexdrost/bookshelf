@@ -37,5 +37,5 @@
       <div class="yir-wrap" id="yearReview"></div>
     </div>
 {% endblock %}
-{% block scripts %}<script src="/assets/js/analytics.js" defer></script>
+{% block scripts %}<script src="{{ asset('/assets/js/analytics.js') }}" defer></script>
 <script defer>window.addEventListener('load',function(){loadBooks().then(function(){renderTime();renderMonthTrend();});});</script>{% endblock %}

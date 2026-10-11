@@ -55,4 +55,4 @@
     </nav>
     {% if page.next %}<div class="pager-more"><a class="browse-all" id="loadMore" href="{{ page.next }}">Load more books</a></div>{% endif %}
 {% endblock %}
-{% block scripts %}<script src="/assets/js/library.js" defer></script>{% endblock %}
+{% block scripts %}<script src="{{ asset('/assets/js/library.js') }}" defer></script>{% endblock %}

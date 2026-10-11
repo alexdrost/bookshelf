@@ -138,5 +138,5 @@
       <div class="fresh-legend" id="freshLegend"></div>
     </div>
 {% endblock %}
-{% block scripts %}<script src="/assets/js/analytics.js" defer></script>
+{% block scripts %}<script src="{{ asset('/assets/js/analytics.js') }}" defer></script>
 <script defer>window.addEventListener('load',function(){loadBooks().then(function(){buildLensOptions();renderAnalytics();renderYearStack();stackDetailDefault();renderExtras();});});</script>{% endblock %}
