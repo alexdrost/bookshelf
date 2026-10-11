@@ -1,0 +1,4 @@
+{
+  "_comment": "Hand-maintained companion to clusters.json. Maps Goodreads ID -> cluster membership + the 100-140 word standout note that renders on /picks AND on the book page. Kept OUT of books.json because the sync Worker rewrites books.json wholesale from Notion and would erase anything not in the Notion allowlist. Add entries here to switch /picks from its static fallback to the data-driven path.",
+  "standouts": {}
+}

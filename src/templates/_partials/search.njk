@@ -1,0 +1,13 @@
+{# Client-side search. GUARDRAIL 7: no indexable URL — this never writes to the
+   address bar and there is no /search route. Data is fetched on open, after paint. #}
+<div class="searchmodal" id="searchModal">
+  <div class="search-panel" role="dialog" aria-modal="true" aria-label="Search the library">
+    <div class="search-bar">
+      <svg class="search-ico" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="searchInput" type="search" autocomplete="off" placeholder="Search titles, authors, themes, tags, descriptions&hellip;">
+      <button class="search-x" aria-label="Close" onclick="closeSearch()">&times;</button>
+    </div>
+    <div class="search-meta" id="searchMeta"></div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>

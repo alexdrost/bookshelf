@@ -1,0 +1,75 @@
+{
+  "_comment": "Hand-maintained. `source` is the value stored on books (Notion display name). `name` is what the site shows. `slug` is the URL segment and must never change once a theme page ships. Order is EDITORIAL, not by count.",
+  "themes": [
+    {
+      "source": "Business & Finance",
+      "name": "Business & Finance",
+      "slug": "business-and-finance",
+      "order": 1,
+      "intro": "Markets, money, and the institutions that move both — told mostly through the people who built, broke, or bet against them."
+    },
+    {
+      "source": "Personal Growth & Leadership",
+      "name": "Personal Growth & Leadership",
+      "slug": "personal-growth-and-leadership",
+      "order": 2,
+      "intro": "How people get better at hard things, and how they get others to follow. Practical more often than inspirational."
+    },
+    {
+      "source": "Psychology & Mind",
+      "name": "Psychology & Mind",
+      "slug": "psychology-and-mind",
+      "order": 3,
+      "intro": "Attention, memory, trauma, habit, and belief — the machinery underneath the decisions people think they reasoned their way to."
+    },
+    {
+      "source": "Tech & Future",
+      "name": "Tech & Future",
+      "slug": "tech-and-future",
+      "order": 4,
+      "intro": "Silicon, software, and the companies steering both — plus the harder question of what happens next."
+    },
+    {
+      "source": "History & Foreign Affairs",
+      "name": "History & Foreign Affairs",
+      "slug": "history-and-foreign-affairs",
+      "order": 5,
+      "intro": "How the current arrangement of the world got made, and the wars, treaties, and intelligence failures that shaped it."
+    },
+    {
+      "source": "Society & Culture",
+      "name": "Society & Culture",
+      "slug": "society-and-culture",
+      "order": 6,
+      "intro": "Class, race, place, and the slow-moving forces that decide who gets what in America."
+    },
+    {
+      "source": "Memoir & Biography",
+      "name": "Memoir & Biography",
+      "slug": "memoir-and-biography",
+      "order": 7,
+      "intro": "One life at a time — usually someone close enough to power to describe how it actually operates."
+    },
+    {
+      "source": "Crime & Justice",
+      "name": "Crime & Justice",
+      "slug": "crime-and-justice",
+      "order": 8,
+      "intro": "Courts, cartels, cons, and the long gap between what the law says and what it does."
+    },
+    {
+      "source": "Politics & Power",
+      "name": "Politics & Power",
+      "slug": "politics-and-power",
+      "order": 9,
+      "intro": "The largest shelf here by a wide margin — how power is won, held, abused, and occasionally checked."
+    },
+    {
+      "source": "Religion & Faith",
+      "name": "Theology & Faith",
+      "slug": "theology-and-faith",
+      "order": 10,
+      "intro": "Belief as a personal question and as a political one, and the places those two stop being separable."
+    }
+  ]
+}

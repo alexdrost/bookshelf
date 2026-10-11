@@ -1,0 +1,80 @@
+/* Self-hosted webfonts — replaces the Google Fonts <link>. Latin subset, WOFF2, font-display:swap. */
+@font-face{
+  font-family:"Archivo";
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+  src:url("/assets/fonts/archivo-latin-400-normal.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Archivo";
+  font-style:normal;
+  font-weight:500;
+  font-display:swap;
+  src:url("/assets/fonts/archivo-latin-500-normal.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Archivo";
+  font-style:normal;
+  font-weight:600;
+  font-display:swap;
+  src:url("/assets/fonts/archivo-latin-600-normal.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Archivo";
+  font-style:normal;
+  font-weight:700;
+  font-display:swap;
+  src:url("/assets/fonts/archivo-latin-700-normal.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Archivo";
+  font-style:normal;
+  font-weight:800;
+  font-display:swap;
+  src:url("/assets/fonts/archivo-latin-800-normal.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Inter";
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+  src:url("/assets/fonts/inter-latin-400-normal.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Inter";
+  font-style:normal;
+  font-weight:500;
+  font-display:swap;
+  src:url("/assets/fonts/inter-latin-500-normal.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Inter";
+  font-style:normal;
+  font-weight:600;
+  font-display:swap;
+  src:url("/assets/fonts/inter-latin-600-normal.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* Design tokens — copied verbatim from index.html. Do not reformat. */
+:root{
+  /* blue-led primary (Notion-restrained) */
+  --blue-d:#2c5680; --blue:#3a6ea5; --blue-br:#6b9bc8; --blue-lt:#aecbe2; --blue-tint:#e9f0f7;
+  /* green retained as secondary accent */
+  --green-d:#2f7d6e; --green:#2f9e6b; --green-br:#5cb98c; --green-lt:#a9dcc1;
+  --amber:#d98c1f; --amber-lt:#f0b850;
+  /* Notion-cool neutrals */
+  --paper:#f6f5f1; --paper2:#ecebe4; --card:#ffffff;
+  --ink:#1f2530; --ink2:#3d4654; --muted:#6b7480; --faint:#a3abb5;
+  --line:#e6e3da; --line-g:rgba(46,111,181,.16);
+  --shadow:0 1px 2px rgba(31,37,48,.05),0 10px 30px rgba(31,37,48,.07);
+  --shadow-g:0 8px 28px rgba(46,111,181,.18);
+}
