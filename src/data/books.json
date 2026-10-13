@@ -736,7 +736,8 @@
     "25489625",
     "43708708",
     "48589165",
-    "35099718"
+    "35099718",
+    "249337124"
    ]
   },
   {
@@ -899,7 +900,8 @@
     "48589165",
     "43708708",
     "213870084",
-    "247255488"
+    "247255488",
+    "249337124"
    ]
   },
   {
@@ -3124,7 +3126,8 @@
     "27833494",
     "208930976",
     "53746013",
-    "239511576"
+    "239511576",
+    "251922235"
    ]
   },
   {
@@ -3693,7 +3696,8 @@
     "90590139",
     "74892462",
     "242488944",
-    "204901666"
+    "204901666",
+    "251922235"
    ]
   },
   {
@@ -3882,7 +3886,8 @@
     "21856367",
     "11084145",
     "34684622",
-    "27220736"
+    "27220736",
+    "209543060"
    ]
   },
   {
@@ -4068,7 +4073,8 @@
     "134115745",
     "148365315",
     "122769179",
-    "13622997"
+    "13622997",
+    "251922235"
    ]
   },
   {
@@ -6631,7 +6637,8 @@
     "203579090",
     "231198166",
     "204901666",
-    "65211803"
+    "65211803",
+    "209543060"
    ]
   },
   {
@@ -8683,7 +8690,8 @@
     "218671853",
     "231246952",
     "55447207",
-    "56269283"
+    "56269283",
+    "209543060"
    ]
   },
   {
@@ -8967,7 +8975,8 @@
     "150065063",
     "37976541",
     "75293505",
-    "243105542"
+    "243105542",
+    "209543060"
    ]
   },
   {
@@ -9523,7 +9532,8 @@
    ],
    "conn": [
     "210454076",
-    "209786389"
+    "209786389",
+    "249337124"
    ]
   },
   {
@@ -9551,7 +9561,8 @@
    "conn": [
     "200342444",
     "40588302",
-    "55361205"
+    "55361205",
+    "251922235"
    ]
   },
   {
@@ -10218,7 +10229,8 @@
     "53345186",
     "199461393",
     "59808061",
-    "36595101"
+    "36595101",
+    "251922235"
    ]
   },
   {
@@ -11470,6 +11482,35 @@
    ]
   },
   {
+   "id": "209543060",
+   "title": "Character Limit: How Elon Musk Destroyed Twitter",
+   "author": "Kate Conger, Ryan Mac",
+   "isbn": "9780593656136",
+   "pages": "480",
+   "yearPub": "2024",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "reading",
+   "slug": "character-limit",
+   "themes": [
+    "Tech & Future",
+    "Business & Finance"
+   ],
+   "tags": "technology, investigative journalism, corporate decline, disinformation, oligarchy",
+   "summary": "Musk bought Twitter for $44 billion in 2022, tried to back out, and was sued into closing. New York Times reporters Kate Conger and Ryan Mac reconstruct the deal and the year after it from inside sources: the purge of staff, the dismantling of trust and safety, and a platform remade around one owner's grievances and politics.",
+   "core": [
+    "Twitter was vulnerable before Musk arrived: a drifting board and leadership more focused on extracting a price than on the company's future effectively invited the takeover.",
+    "Musk's free-speech absolutism was selective, protecting his own speech and allies while punishing critics, journalists and employees who crossed him.",
+    "Gutting trust and safety and most of the staff destroyed the platform's real asset, a credible shared information space advertisers would pay to sit next to, and converted it into a political instrument."
+   ],
+   "conn": [
+    "122765395",
+    "223436601",
+    "199461393",
+    "224003226"
+   ]
+  },
+  {
    "id": "213870084",
    "title": "One Day, Everyone Will Have Always Been Against This",
    "author": "Omar El Akkad",
@@ -11645,6 +11686,63 @@
     "250673180",
     "62926960",
     "43261495"
+   ]
+  },
+  {
+   "id": "249337124",
+   "title": "The Perilous Fight",
+   "author": "Colin Kaepernick",
+   "isbn": "9781538777879",
+   "pages": "288",
+   "yearPub": "2026",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "reading",
+   "slug": "the-perilous-fight",
+   "themes": [
+    "Memoir & Biography",
+    "Society & Culture"
+   ],
+   "tags": "memoir, race in America, structural critique",
+   "summary": "Ten years after he took a knee during the national anthem, Kaepernick explains why. He traces the protest to growing up as a Black child adopted into a white family in Turlock, California, to what he saw of owner power inside the NFL, and to unpunished police killings, and argues the league's blackballing proved his point.",
+   "core": [
+    "The kneel was not an impulse but the end point of years spent defending an identity the world around him resisted, with sports as the one arena where his talent could not be discounted.",
+    "The NFL sells a staged patriotism while owners hold near-total control over players, and his exclusion from the league demonstrated the power structure he was protesting.",
+    "Unpunished police violence against Black Americans is not someone else's fight; it is a shared, unfinished struggle over who the country protects."
+   ],
+   "conn": [
+    "25489625",
+    "280412",
+    "40265832"
+   ]
+  },
+  {
+   "id": "251922235",
+   "title": "Profiles in Cowardice: A Study of Collaboration in the Trump Era",
+   "author": "Jacob Weisberg",
+   "isbn": "9798217062591",
+   "pages": "288",
+   "yearPub": "2026",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "reading",
+   "slug": "profiles-in-cowardice",
+   "themes": [
+    "Politics & Power"
+   ],
+   "tags": "Trump era, democratic backsliding, authoritarianism, GOP capture, oligarchy",
+   "summary": "Kennedy's Profiles in Courage told of eight senators who paid for doing the right thing. Weisberg inverts it with eight powerful people, among them Mitch McConnell, John Roberts, Jeff Bezos and Paul, Weiss's Brad Karp, who saw the danger in Trump's second term, could have refused him, and didn't.",
+   "core": [
+    "Cowardice rarely announces itself; it wears the disguises of pragmatism, realism, caution and institutional loyalty.",
+    "Authoritarianism advances less by overthrowing institutions than by bullying the people who run them into complying before they are forced to.",
+    "The ones who failed were not Trump loyalists but people with the standing to say no, who had shown flashes of integrity before and knew better."
+   ],
+   "conn": [
+    "33917107",
+    "60461917",
+    "65211803",
+    "101025305",
+    "13331179"
    ]
   }
  ],
@@ -12283,7 +12381,7 @@
   ],
   [
    19,
-   368
+   369
   ],
   [
    20,
@@ -12348,6 +12446,10 @@
   [
    22,
    19
+  ],
+  [
+   22,
+   375
   ],
   [
    23,
@@ -12499,11 +12601,15 @@
   ],
   [
    27,
-   368
+   369
   ],
   [
    27,
    331
+  ],
+  [
+   27,
+   375
   ],
   [
    28,
@@ -13967,7 +14073,7 @@
   ],
   [
    85,
-   369
+   370
   ],
   [
    85,
@@ -14346,6 +14452,10 @@
    291
   ],
   [
+   99,
+   376
+  ],
+  [
    100,
    65
   ],
@@ -14439,7 +14549,7 @@
   ],
   [
    102,
-   370
+   371
   ],
   [
    102,
@@ -14715,7 +14825,7 @@
   ],
   [
    113,
-   373
+   374
   ],
   [
    114,
@@ -14852,6 +14962,10 @@
   [
    117,
    315
+  ],
+  [
+   117,
+   376
   ],
   [
    118,
@@ -14999,7 +15113,7 @@
   ],
   [
    123,
-   369
+   370
   ],
   [
    123,
@@ -15024,6 +15138,10 @@
   [
    123,
    345
+  ],
+  [
+   123,
+   368
   ],
   [
    124,
@@ -15180,6 +15298,10 @@
   [
    129,
    340
+  ],
+  [
+   129,
+   376
   ],
   [
    130,
@@ -16035,7 +16157,7 @@
   ],
   [
    156,
-   370
+   371
   ],
   [
    156,
@@ -16091,7 +16213,7 @@
   ],
   [
    158,
-   370
+   371
   ],
   [
    158,
@@ -17123,7 +17245,7 @@
   ],
   [
    192,
-   372
+   373
   ],
   [
    192,
@@ -17562,6 +17684,10 @@
    326
   ],
   [
+   209,
+   368
+  ],
+  [
    210,
    189
   ],
@@ -17923,7 +18049,7 @@
   ],
   [
    227,
-   369
+   370
   ],
   [
    227,
@@ -18147,7 +18273,7 @@
   ],
   [
    234,
-   372
+   373
   ],
   [
    234,
@@ -18263,7 +18389,7 @@
   ],
   [
    239,
-   373
+   374
   ],
   [
    240,
@@ -18343,11 +18469,11 @@
   ],
   [
    243,
-   369
+   370
   ],
   [
    243,
-   372
+   373
   ],
   [
    243,
@@ -18487,7 +18613,7 @@
   ],
   [
    248,
-   370
+   371
   ],
   [
    248,
@@ -18563,7 +18689,7 @@
   ],
   [
    251,
-   368
+   369
   ],
   [
    251,
@@ -18847,11 +18973,11 @@
   ],
   [
    262,
-   369
+   370
   ],
   [
    262,
-   372
+   373
   ],
   [
    262,
@@ -18907,7 +19033,7 @@
   ],
   [
    263,
-   373
+   374
   ],
   [
    264,
@@ -18959,7 +19085,7 @@
   ],
   [
    266,
-   368
+   369
   ],
   [
    266,
@@ -19011,7 +19137,7 @@
   ],
   [
    268,
-   370
+   371
   ],
   [
    268,
@@ -19215,7 +19341,7 @@
   ],
   [
    276,
-   371
+   372
   ],
   [
    276,
@@ -19224,6 +19350,10 @@
   [
    276,
    327
+  ],
+  [
+   276,
+   368
   ],
   [
    277,
@@ -19486,6 +19616,10 @@
    329
   ],
   [
+   285,
+   368
+  ],
+  [
    286,
    99
   ],
@@ -19495,7 +19629,7 @@
   ],
   [
    286,
-   371
+   372
   ],
   [
    286,
@@ -19531,7 +19665,7 @@
   ],
   [
    287,
-   371
+   372
   ],
   [
    287,
@@ -19615,7 +19749,7 @@
   ],
   [
    289,
-   373
+   374
   ],
   [
    290,
@@ -19950,6 +20084,10 @@
    217
   ],
   [
+   303,
+   375
+  ],
+  [
    304,
    135
   ],
@@ -19960,6 +20098,10 @@
   [
    304,
    36
+  ],
+  [
+   304,
+   376
   ],
   [
    305,
@@ -20087,7 +20229,7 @@
   ],
   [
    309,
-   373
+   374
   ],
   [
    310,
@@ -20179,7 +20321,7 @@
   ],
   [
    313,
-   368
+   369
   ],
   [
    313,
@@ -20438,6 +20580,10 @@
    174
   ],
   [
+   326,
+   376
+  ],
+  [
    327,
    276
   ],
@@ -20527,7 +20673,7 @@
   ],
   [
    330,
-   373
+   374
   ],
   [
    331,
@@ -20787,7 +20933,7 @@
   ],
   [
    342,
-   372
+   373
   ],
   [
    342,
@@ -21339,119 +21485,167 @@
   ],
   [
    368,
-   251
-  ],
-  [
-   368,
-   27
-  ],
-  [
-   368,
-   266
-  ],
-  [
-   368,
-   313
-  ],
-  [
-   368,
-   19
-  ],
-  [
-   369,
-   262
-  ],
-  [
-   369,
-   85
-  ],
-  [
-   369,
    123
   ],
   [
-   369,
-   243
+   368,
+   285
   ],
   [
-   369,
-   227
+   368,
+   209
   ],
   [
-   370,
-   268
-  ],
-  [
-   370,
-   102
-  ],
-  [
-   370,
-   156
-  ],
-  [
-   370,
-   248
-  ],
-  [
-   370,
-   158
-  ],
-  [
-   371,
-   286
-  ],
-  [
-   371,
+   368,
    276
   ],
   [
-   371,
-   287
+   369,
+   251
   ],
   [
-   372,
+   369,
+   27
+  ],
+  [
+   369,
+   266
+  ],
+  [
+   369,
+   313
+  ],
+  [
+   369,
+   19
+  ],
+  [
+   370,
    262
   ],
   [
-   372,
+   370,
+   85
+  ],
+  [
+   370,
+   123
+  ],
+  [
+   370,
    243
   ],
   [
+   370,
+   227
+  ],
+  [
+   371,
+   268
+  ],
+  [
+   371,
+   102
+  ],
+  [
+   371,
+   156
+  ],
+  [
+   371,
+   248
+  ],
+  [
+   371,
+   158
+  ],
+  [
    372,
+   286
+  ],
+  [
+   372,
+   276
+  ],
+  [
+   372,
+   287
+  ],
+  [
+   373,
+   262
+  ],
+  [
+   373,
+   243
+  ],
+  [
+   373,
    192
   ],
   [
-   372,
+   373,
    234
   ],
   [
-   372,
+   373,
    342
   ],
   [
-   373,
+   374,
    263
   ],
   [
-   373,
+   374,
    289
   ],
   [
-   373,
+   374,
    239
   ],
   [
-   373,
+   374,
    309
   ],
   [
-   373,
+   374,
    113
   ],
   [
-   373,
+   374,
    330
+  ],
+  [
+   375,
+   27
+  ],
+  [
+   375,
+   303
+  ],
+  [
+   375,
+   22
+  ],
+  [
+   376,
+   117
+  ],
+  [
+   376,
+   99
+  ],
+  [
+   376,
+   326
+  ],
+  [
+   376,
+   129
+  ],
+  [
+   376,
+   304
   ]
  ]
 }
