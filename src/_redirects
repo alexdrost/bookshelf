@@ -1,0 +1,10 @@
+# Cloudflare Pages reads this from the root of the deployed directory. One rule per line:
+#   <from>  <to>  <status>
+# This file is for REDIRECTS only; caching and security headers live in _headers.
+
+# /2020 was a live year page until the year floor moved to 2021 on 17 Sep 2026. Those
+# books are still on the site — in the library, on their theme pages and in the
+# connection map — they simply no longer get a year page of their own. Send the old URL
+# to the timeline rather than let a formerly-indexed page 404.
+/2020      /timeline  301
+/2020/*    /timeline  301

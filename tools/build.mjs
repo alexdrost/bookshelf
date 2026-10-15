@@ -714,7 +714,7 @@ fs.writeFileSync(path.join(DIST, 'data/titles.json'),
 // _headers is read by Cloudflare Pages from the deploy root — caching and security headers.
 // share.png is NOT copied any more: the OG layer renders it from live data, to the same
 // path and the same PNG format, so links shared before this change keep resolving.
-for (const extra of ['_headers']) { const p = path.join(SRC, extra); if (exists(p)) fs.copyFileSync(p, path.join(DIST, extra)); }
+for (const extra of ['_headers', '_redirects']) { const p = path.join(SRC, extra); if (exists(p)) fs.copyFileSync(p, path.join(DIST, extra)); }
 
 // ---------------------------------------------------------------- robots + sitemap
 fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`);

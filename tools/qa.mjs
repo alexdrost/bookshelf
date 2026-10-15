@@ -524,6 +524,26 @@ check(!pages.some((p) => /fetch\(['"]\/books\.json/.test(p.html)), 'no page fetc
   }
 }
 
+// ---------------------------------------------------------------- redirects
+{
+  // /2020 stopped existing when the year floor moved to 2021. It had been a live,
+  // indexable URL, so it must redirect rather than 404 — and the rule has to live in
+  // _redirects, because Cloudflare Pages only reads redirects from that file. I put it
+  // in _headers first, where it would have been silently ignored.
+  const rd = path.join(DIST, '_redirects');
+  check(fs.existsSync(rd), '_redirects is deployed to the site root');
+  if (fs.existsSync(rd)) {
+    const txt = read(rd);
+    check(/^\/2020\s+\/timeline\s+301\s*$/m.test(txt), '/2020 redirects to /timeline with a 301');
+    const yearRoutes = pages.filter((p2) => /^\/\d{4}$/.test(p2.route)).map((p2) => p2.route);
+    check(!yearRoutes.includes('/2020'), 'and /2020 is not also emitted as a page', yearRoutes.join(', '));
+    const targets = [...txt.matchAll(/^\S+\s+(\/\S*)\s+\d{3}\s*$/gm)].map((m) => m[1]);
+    const dead = targets.filter((t) => !t.includes('*') && !pages.some((p2) => p2.route === t.replace(/\/$/, '')));
+    check(dead.length === 0, `every redirect target is a page the build emits (${targets.length} rule(s))`, dead.join(', '));
+  }
+  check(!/\s301\s*$/m.test(read(path.join(DIST, '_headers'))), 'no redirect rules stranded in _headers, where Pages ignores them');
+}
+
 // ---------------------------------------------------------------- OUT
 console.log(`\n${passes.length} checks passed`);
 for (const n of notes) console.log(`  · ${n}`);

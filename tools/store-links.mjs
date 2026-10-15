@@ -99,10 +99,12 @@ export function storeLinks(book) {
   const asin = String(book.audibleAsin || '').trim();
   const amz = String(book.amazonAsin || '').trim();
   if (asin && !looksLikeAsin(asin)) notes.push(`audible ASIN is malformed: ${asin}`);
-  // Audible ASINs are product ids and nearly always start with B0. A 10-digit numeric
-  // is the shape of a print ISBN-10, which is the easiest wrong thing to paste into
-  // that field — worth naming, because it would link to a real page for another edition.
-  else if (asin && /^\d{10}$/.test(asin)) notes.push(`audible ASIN looks like an ISBN-10, not a B0 product id: ${asin}`);
+  // NOT flagged: an ASIN that looks like an ISBN-10. I had this warning in, on the
+  // reasoning that a 10-digit numeric is the shape of a print ISBN and the easiest wrong
+  // thing to paste here. The completed backfill disproves it — 95 of 335 read books have
+  // a non-B0 ASIN, because Penguin Random House Audio and others issue ISBN-based ASINs
+  // on audible.com. The check would have cried wolf on nearly a third of the shelf every
+  // build and buried the malformed ones that actually matter.
   if (amz && !looksLikeAsin(amz)) notes.push(`amazon ASIN override is malformed: ${amz}`);
   if (!links.amazon && !amz) {
     const d = String(book.isbn || '').replace(/[^0-9Xx]/g, '');
