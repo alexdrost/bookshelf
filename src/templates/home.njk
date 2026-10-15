@@ -34,11 +34,15 @@
       </div>
     </div>
 
-    {% if picks.length %}
+    {# Two of what is open on the desk, in place of the old standout picks. Still
+       .feat-panel, so it stays desktop-only exactly as that block did. These books have
+       no page of their own — book-card.njk renders them unlinked when href is absent,
+       which is the same treatment /up-next gives them. #}
+    {% if readingPicks.length %}
     <div class="feat-panel">
-      <div class="section-head"><h2>Standout reads</h2><a class="more" href="/recommendations">All recommendations &rarr;</a></div>
+      <div class="section-head"><h2>Currently reading</h2><a class="more" href="/up-next">What&rsquo;s up next &rarr;</a></div>
       <div class="cardlist">
-        {% for book in picks %}{% include "_partials/book-card.njk" %}{% endfor %}
+        {% for book in readingPicks %}{% include "_partials/book-card.njk" %}{% endfor %}
       </div>
     </div>
     {% endif %}

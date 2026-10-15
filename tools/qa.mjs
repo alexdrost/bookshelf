@@ -494,6 +494,36 @@ check(!pages.some((p) => /fetch\(['"]\/books\.json/.test(p.html)), 'no page fetc
   check(pairBroken.length === 0, 'every page loading analytics.js also loads app.js', pairBroken.join(', '));
 }
 
+// ---------------------------------------------------------------- home + book page UX
+{
+  // The book page borrows .sheet from the /recommendations MODAL, which carries
+  // max-height and overflow:auto. On a page that nests the whole article in its own
+  // scroller — the page scrolls, hits the box, then scrolls inside it, which on a phone
+  // is most of the article. .booksheet must keep opting out.
+  const pagesCss = read(path.join(SRC, 'styles/pages.css'));
+  const rule = /\.booksheet\{([^}]*)\}/.exec(pagesCss);
+  check(!!rule && /max-height:\s*none/.test(rule[1]) && /overflow:\s*visible/.test(rule[1]),
+    '.booksheet opts out of the modal scroll box (max-height:none; overflow:visible)',
+    rule ? rule[1].slice(0, 80) : 'no .booksheet rule');
+
+  // The home panel shows currently-reading books, which have no page of their own.
+  // They must render unlinked — a link would 404 and would also trip the unread guardrail.
+  const home = pages.find((p2) => p2.route === '/');
+  const panel = /<div class="feat-panel">([\s\S]*?)<\/div>\s*<div class="home-divider">/.exec(home.html);
+  check(!!panel, 'the home page still has its feature panel');
+  if (panel) {
+    const linked = [...panel[1].matchAll(/<a class="pickcard"/g)].length;
+    check(linked === 0, 'home currently-reading cards are unlinked, because those books have no page', `${linked} linked`);
+    const titles = [...panel[1].matchAll(/<span class="pc-t">([^<]+)<\/span>/g)].map((m) => m[1]);
+    const readingTitles = new Set(enriched.filter((b) => b.shelf === 'reading' || b.shelf === 'currently-reading')
+      .map((b) => String(b.title).replace(/&/g, '&amp;')));
+    const notReading = titles.filter((t) => !readingTitles.has(t));
+    check(titles.length > 0 && notReading.length === 0,
+      `the home panel shows ${titles.length} book(s), all on the reading shelf`, notReading.join(' | '));
+    check(titles.length <= 2, 'the home panel shows at most two', `${titles.length}`);
+  }
+}
+
 // ---------------------------------------------------------------- OUT
 console.log(`\n${passes.length} checks passed`);
 for (const n of notes) console.log(`  · ${n}`);

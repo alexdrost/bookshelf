@@ -121,7 +121,12 @@ a.browse-all{display:inline-block;text-decoration:none}
 .pf-note{font-size:.85rem;color:var(--muted);margin:8px 0 0}
 
 /* book page */
-.booksheet{max-width:none;box-shadow:var(--shadow);border-radius:16px;padding:28px}
+/* .booksheet borrows .sheet, which is still the MODAL used by /recommendations — so it
+   arrives with max-height:88vh (92vh on mobile) and overflow:auto. On a real page that
+   traps the whole article in its own scroller: you scroll the page, hit the box, and
+   then scroll inside it. On a phone, where the content is tall and the cap is a share
+   of the viewport, that is most of the page. Opt out of both — the page scrolls. */
+.booksheet{max-width:none;max-height:none;overflow:visible;box-shadow:var(--shadow);border-radius:16px;padding:28px}
 .booksheet h1{font-family:"Archivo",system-ui,sans-serif;font-size:clamp(1.5rem,3.2vw,2.05rem);font-weight:800;line-height:1.12;margin:0 0 8px;letter-spacing:-.02em}
 .booksheet .mcov{width:170px}
 .booksheet .mcov img{width:100%;height:auto;display:block}

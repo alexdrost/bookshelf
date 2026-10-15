@@ -171,6 +171,25 @@ const isReading = (b) => b.shelf === 'reading' || b.shelf === 'currently-reading
 const isTBR = (b) => String(b.shelf || '').toLowerCase() === 'tbr';
 const currentlyReading = publicBooks.filter(isReading)
   .sort((a, b) => a.title.localeCompare(b.title, 'en'));
+
+/**
+ * The two currently-reading books the home page shows, in place of the old standout picks.
+ *
+ * DETERMINISTIC, not random. The site rebuilds on every Notion sync — several times a day —
+ * and a Math.random() pick would reshuffle the home page on each one, for no reader benefit.
+ * This seeds off the SET of books on the shelf instead: the same shelf always yields the same
+ * two, and starting or finishing a book re-rolls it. So it changes when the reading actually
+ * changes, which is the thing worth reflecting.
+ *
+ * There is no "date added" to sort by — Notion has a Created time but the Worker does not
+ * sync it — so a true most-recent-first order would need a Worker change first.
+ */
+const readingPicks = (() => {
+  if (currentlyReading.length <= 2) return currentlyReading;
+  const seed = crypto.createHash('sha256').update(currentlyReading.map((b) => b.id).join(',')).digest();
+  const start = seed.readUInt32BE(0) % currentlyReading.length;
+  return [currentlyReading[start], currentlyReading[(start + 1) % currentlyReading.length]];
+})();
 // To-be-read: no page, no connections, no summary — a cover, a title and a year.
 const tbr = publicBooks.filter(isTBR)
   .sort((a, b) => a.title.localeCompare(b.title, 'en'));
@@ -485,7 +504,7 @@ const OG = buildOgManifest({
     trail: [{ name: 'Bookshelf', path: '/' }],
   };
   page.extraJson = collectionSchema({ ...page, h1Plain: 'Alex Drost’s bookshelf' }, recent);
-  emit('/', 'home.njk', { page, featuredBook, recent, picks: picks.slice(0, 6), themeIndex }, { priority: 1.0 });
+  emit('/', 'home.njk', { page, featuredBook, recent, picks: picks.slice(0, 6), readingPicks, themeIndex }, { priority: 1.0 });
 }
 
 // ---- /about /recommendations /up-next ----------------------------------

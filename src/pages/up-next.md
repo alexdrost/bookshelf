@@ -7,6 +7,4 @@ standfirst: Open on the desk, unfinished, and not yet written up.
 crumb: Up Next
 ---
 
-These are the books currently on the go. They have no summary and no core ideas yet, because I have not finished them — those get written when a book lands, not while it is still arguing with me.
-
-When one finishes it moves into [the library](/library), picks up its connections, and gets a page of its own.
+When one finishes it moves into [the library](/library) and gets a page of its own.
