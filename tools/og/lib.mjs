@@ -36,11 +36,17 @@ export const C = {
 // this is a deliberate duplicate because build.mjs is a script with side effects and
 // cannot be imported. tools/qa.mjs asserts the two stay identical.
 export const THEME_COLORS = {
-  'Politics & Power': '#3a6ea5', 'Business & Finance': '#c6913f',
-  'History & Foreign Affairs': '#9c7b57', 'Personal Growth & Leadership': '#88a04a',
-  'Memoir & Biography': '#8268a6', 'Psychology & Mind': '#3a8fb0',
-  'Society & Culture': '#b06a93', 'Religion & Faith': '#b3864c',
-  'Tech & Future': '#5a66ad', 'Crime & Justice': '#b3564c', 'Other': '#9aa0a6',
+  'Politics & Power': '#2f6db3',
+  'Religion & Faith': '#d9582c',
+  'Tech & Future': '#0f8fb8',
+  'History & Foreign Affairs': '#9a5b22',
+  'Psychology & Mind': '#c24f97',
+  'Personal Growth & Leadership': '#7d9a12',
+  'Crime & Justice': '#b92d58',
+  'Business & Finance': '#c38a0e',
+  'Memoir & Biography': '#9254c9',
+  'Society & Culture': '#00927a',
+  'Other': '#9aa0a6',
 };
 
 /** The site's own shade(), from src/assets/js/app.js — used so a placeholder cover here

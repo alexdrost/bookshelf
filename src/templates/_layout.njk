@@ -10,13 +10,17 @@
 {% include "_partials/nav.njk" %}
 <div class="wrap">
   <section class="view active">
-    {# A <div>, not a <nav>: site.css styles the bare `nav` element as the sticky
-       site header. A semantic <nav> here would inherit it and paint a stray bar. #}
+    {# Visible breadcrumbs only where the hierarchy is real: book, year and individual
+       theme pages (page.showCrumbs, set in build.mjs). Everywhere else a crumb repeated
+       the active nav item. The BreadcrumbList JSON-LD still ships on every route.
+       A <div>, not a <nav>: site.css styles the bare `nav` element as the sticky header. #}
+    {% if page.showCrumbs %}
     <div class="crumbs" role="navigation" aria-label="Breadcrumb">
       {% for c in page.trail or [{'name':'Bookshelf','path':'/'},{'name':page.crumb,'path':page.path}] %}
         {%- if not loop.last %}<a href="{{ c.path }}">{{ c.name }}</a> <span>/</span> {% else %}{{ c.name }}{% endif -%}
       {% endfor %}
     </div>
+    {% endif %}
 {% block content %}{% endblock %}
   </section>
 </div>

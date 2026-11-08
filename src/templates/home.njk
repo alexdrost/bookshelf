@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div class="section-head"><h2>Most recent read</h2><a class="more" href="/library">Browse all &rarr;</a></div>
+    <div class="section-head"><h2>Most recent read</h2><a class="more" href="/library">Browse all <span class="arr" aria-hidden="true">&rarr;</span></a></div>
     <div class="feature">
       <a class="ft-cover" href="{{ featuredBook.href }}">
         <div class="cover">
@@ -23,7 +23,7 @@
         </div>
       </a>
       <div class="ft-body">
-        <div class="ft-themes">{% for t in featuredBook.themes %}<span class="ft-th">{{ t }}</span>{% endfor %}</div>
+        <div class="ft-themes">{% for t in featuredBook.themes %}<span class="ft-th">{{ t | themeName }}</span>{% endfor %}</div>
         <h3 class="ft-title"><a href="{{ featuredBook.href }}" style="text-decoration:none;color:inherit">{{ featuredBook.title }}</a></h3>
         <div class="ft-author">{{ featuredBook.author }}{% if featuredBook.dateRead %} &middot; completed {{ featuredBook.dateRead | date }}{% endif %}</div>
         {# Guardrail 5: the full summary and core ideas live on exactly one URL.
@@ -40,7 +40,7 @@
        which is the same treatment /up-next gives them. #}
     {% if readingPicks.length %}
     <div class="feat-panel">
-      <div class="section-head"><h2>Currently reading</h2><a class="more" href="/up-next">What&rsquo;s up next &rarr;</a></div>
+      <div class="section-head"><h2>Currently reading</h2><a class="more" href="/up-next">What&rsquo;s up next <span class="arr" aria-hidden="true">&rarr;</span></a></div>
       <div class="cardlist">
         {% for book in readingPicks %}{% include "_partials/book-card.njk" %}{% endfor %}
       </div>
@@ -62,5 +62,6 @@
       </a>
       {% endfor %}
     </div>
-    <div class="home-cta"><a class="browse-all" href="/library">See the full {{ site.readCount }}-book library &rarr;</a></div>
+    <div class="home-cta"><a class="browse-all" href="/library">See the full {{ site.readCount }}-book library <span class="arr" aria-hidden="true">&rarr;</span></a></div>
+    <p class="home-also">Or start with <a href="/recommendations">the standout reads, year by year</a>.</p>
 {% endblock %}

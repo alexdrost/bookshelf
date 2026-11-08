@@ -1,5 +1,11 @@
 # Covers from Notion — what changed, and how to deploy it
 
+> **Updated 8 Nov 2026.** This doc is the Aug 2026 history of the `/covers` route. What changed
+> since: covers now normally ride `/all` (sync → covers → Notion icons, on one subrequest meter),
+> the cron runs exactly `/all`, and every successful cover also queues its Notion page icon.
+> `COVERS_PATH` is `src/covers` (the new site is live). Current deploy steps, routes and errors:
+> **`WORKER-DEPLOY.md`**. Sections 1, 2, 6 and 7 below are still accurate.
+
 **Time: about 10 minutes.** Two new variables and a re-paste of the Worker. `/sync` is untouched —
 same code, same behaviour, re-tested — so the risk here is confined to a route that didn't exist
 before.
@@ -50,14 +56,14 @@ Note the current version under **Deployments** first — that's your rollback.
 
 **Settings** → **Variables and Secrets** → **Add** → type **Text**.
 
-| Variable | Value now | Value when the new site is live |
-| --- | --- | --- |
-| `COVERS_PATH` | `covers` | `src/covers` |
-| `COVER_BATCH` | `15` | `15` |
+| Variable | Value |
+| --- | --- |
+| `COVERS_PATH` | `src/covers` |
+| `COVER_BATCH` | `15` |
 
-`COVERS_PATH` moves at the same moment `BOOKS_PATH` does, and for the same reason — the old site
-keeps covers at the repo root, the generator keeps them in `src/`. **Change both together or
-neither.**
+`COVERS_PATH` and `BOOKS_PATH` (`src/data/books.json`) moved together when the new site went live.
+Their built-in defaults (`covers`, `books.json`) are the OLD root paths, so if a deploy ever wipes
+these vars the Worker writes to the wrong place — `/health` shows it as `(default)`.
 
 `COVER_BATCH` is optional; leave it off and it defaults to 15. Set it to `50` or more only if
 you're on a paid Workers plan.
@@ -118,19 +124,20 @@ This is worth doing once deliberately, so you trust it later.
 
 | You want to | URL |
 | --- | --- |
-| Push any new covers | `/covers?key=…` |
-| See what it would do first | `/covers?key=…&dry=1` |
-| **Replace** a cover you've swapped in Notion | `/covers?key=…&force=25817264` |
-| Push a big batch (paid plan) | `/covers?key=…&limit=100` |
+| Sync books, push new covers, set their Notion icons | `/all?key=…` — the normal click |
+| See what it would do first | `/all?key=…&dry=1` |
+| **Replace** a cover you've swapped in Notion | `/all?key=…&force=25817264` |
+| Covers and icons only, no books.json | `/covers?key=…` |
+| Push a big batch (paid plan, raise `MAX_SUBREQUESTS` too) | `/all?key=…&limit=100` |
 
 **`force` is the one to remember.** The default run only looks for covers that are *missing* from
 Git — that's what keeps the nightly job from re-downloading 330 images every night. So when you
 replace an image on a book that already has one, tell it which book. If the bytes turn out to be
 identical it still won't commit.
 
-The nightly cron now does books first, then a small cover pass (10). Covers run in their own error
-handler: **a cover problem can never stop `books.json` syncing.** The catalogue matters; a cover
-doesn't.
+The nightly cron runs exactly `/all`: books first, then covers up to `COVER_BATCH`, then icons, all
+on one 45-call budget. Covers and icons run in their own error handler: **a cover or icon problem
+can never stop `books.json` syncing.** The catalogue matters; a cover doesn't.
 
 ---
 

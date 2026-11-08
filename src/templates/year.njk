@@ -1,10 +1,16 @@
 {% extends "_layout.njk" %}
 {% block content %}
-    <div class="page-head">
-      <div class="kicker">{{ year }}</div>
-      <h1>What I read in {{ year }}</h1>
+    {# The year IS the title; "My year in books" sits under it. The <h1> keeps the full
+       phrase for search and screen readers, styled as two lines. #}
+    <div class="page-head year-head">
+      <h1><span class="yh-year">{{ year }}</span><span class="yh-line">My year in books</span></h1>
       <p class="standfirst">{{ books.length }} books, {{ pagesRead | num }} pages{% if months.length %} across {{ months.length }} month{{ "s" if months.length != 1 }}{% endif %}. Most recent read first.</p>
     </div>
+
+    {# This year's Years-in-review card, the same one /timeline shows, rendered by
+       analytics.js. Empty (and invisible) until it loads; the month lists below are the
+       server-rendered content and need no JavaScript. #}
+    <div class="yir-wrap yir-single" id="yearReview" data-year="{{ year }}"></div>
 
     {# Jump strip. Only months with a finish appear, so a thin year shows three chips
        rather than nine empty ones. #}
@@ -39,3 +45,5 @@
 
     <p class="pagesec-intro" style="margin-top:26px"><a href="/timeline">All years</a> &middot; <a href="/library">the full library</a></p>
 {% endblock %}
+{% block scripts %}<script src="{{ asset('/assets/js/analytics.js') }}" defer></script>
+<script defer>window.addEventListener('load',function(){loadBooks().then(function(){renderYearReview('{{ year }}');window.addEventListener('themechange',function(){renderYearReview('{{ year }}');});});});</script>{% endblock %}

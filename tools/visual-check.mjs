@@ -47,7 +47,7 @@ const ROUTES = [
   ['/about/', 'about'], ['/recommendations/', 'recommendations'], ['/up-next/', 'up-next'], ['/404.html', '404'],
 ];
 
-const browser = await chromium.launch({ executablePath: process.env.PW_CHROME || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
+const browser = await chromium.launch(process.env.PW_CHROME ? { executablePath: process.env.PW_CHROME } : {});
 let ok = true;
 
 async function visit(route, label, width, shoot = false) {
@@ -105,6 +105,22 @@ for (const [route, label] of ROUTES) {
 // The interactive layers must actually produce output, not just fail silently.
 console.log('\ninteractive smoke tests');
 {
+  // The year page's own review card (Phase 1) and the timeline's full set.
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const page = await ctx.newPage();
+  await page.goto(base + '/2025/', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(1200);
+  const yr = await page.evaluate(() => ({ cards: document.querySelectorAll('#yearReview .yir-card').length, standouts: document.querySelectorAll('#yearReview .yir-bk').length }));
+  console.log('  /2025 review card:', JSON.stringify(yr));
+  if (yr.cards !== 1) { ok = false; console.log('  \x1b[1m✗ the year page did not render exactly one review card\x1b[0m'); }
+  await page.goto(base + '/timeline/', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(1200);
+  const tl = await page.evaluate(() => ({ cards: document.querySelectorAll('#yearReview .yir-card').length, stack: document.querySelectorAll('#themeStack .stackcol').length }));
+  console.log('  /timeline:', JSON.stringify(tl));
+  if (!tl.cards || !tl.stack) { ok = false; console.log('  \x1b[1m✗ /timeline rendered an empty panel\x1b[0m'); }
+  await ctx.close();
+}
+{
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   const page = await ctx.newPage();
   await page.goto(base + '/analytics/', { waitUntil: 'networkidle' });
@@ -114,8 +130,8 @@ console.log('\ninteractive smoke tests');
     records: document.querySelectorAll('#records .rec').length,
     lag: document.querySelectorAll('#lagBars .mc').length,
     cum: document.querySelectorAll('#cumChart path').length,
-    pace: document.querySelectorAll('#paceChart .dot').length,
-    stack: document.querySelectorAll('#themeStack .stackcol').length,
+    monthTrend: document.querySelectorAll('#mtBars .mt-col').length,
+    compare: document.querySelectorAll('#cmpBody tr').length,
     heat: document.querySelectorAll('#heatGrid .hm-cell').length,
   }));
   console.log('  /analytics panels rendered:', JSON.stringify(filled));
@@ -257,7 +273,10 @@ console.log('\ninteractive smoke tests');
     check(!leaked.length, `no unread book reaches analytics${leaked.length ? ': ' + leaked.join(', ') : ''}`);
   }
 
-  // ---- the year stack: full width, anchored popover, rows that are real links
+  // ---- the year stack: full width, anchored popover, rows that are real links.
+  // It lives on /timeline since Phase 1 (the identical /analytics copy was removed).
+  await page.goto(base + '/timeline/', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(900);
   const seg = async () => {
     await page.evaluate(() => document.querySelector('#themeStack').closest('.panel').scrollIntoView({ block: 'center' }));
     await page.waitForTimeout(300);

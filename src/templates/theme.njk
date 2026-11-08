@@ -1,15 +1,31 @@
 {% extends "_layout.njk" %}
 {% block content %}
     <div class="page-head">
-      <div class="kicker">Theme</div>
       <h1>{{ theme.name }}</h1>
       <p class="standfirst">{{ theme.intro }}</p>
     </div>
-    {# No pagination on theme pages: one complete index is more useful than five
-       fragments, and it makes this page a strong internal-linking hub. #}
+    {# Still one complete index — no pagination — so this stays a strong internal-linking
+       hub. The 12 most recent get full cards; the rest are the compact cover grid the
+       library uses, which cut Politics & Power from ~11,000px to a fraction of that. #}
     <div class="section-head"><h2>{{ books.length }} books</h2><span class="sub">most recent read first</span></div>
-    <div class="cardlist">
-      {% for book in books %}{% include "_partials/book-card.njk" %}{% endfor %}
+    <div class="cardlist theme-feat">
+      {% for book in featured %}{% include "_partials/book-card.njk" %}{% endfor %}
     </div>
+    {% if rest.length %}
+    <div class="section-head theme-rest-head"><h2>The rest of the shelf</h2><span class="sub">{{ rest.length }} more</span></div>
+    <div class="grid theme-rest">
+      {% for b in rest %}
+      <a class="book" href="{{ b.href }}">
+        <div class="covwrap">
+          <div class="cover">
+            {% if b.hasCover %}<img src="/covers/{{ b.id }}.jpg" width="132" height="198" alt="{{ b.title }} by {{ b.author }}" loading="lazy">
+            {% else %}<div class="ph"><div class="t">{{ b.title }}</div><div class="a">{{ b.author }}</div></div>{% endif %}
+          </div>
+        </div>
+        <div class="meta"><div class="t">{{ b.shortTitle }}</div><div class="a">{{ b.author }}</div></div>
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
     <p class="pagesec-intro" style="margin-top:26px"><a href="/themes">All {{ site.themeCount }} themes</a> &middot; <a href="/library">the full library</a></p>
 {% endblock %}

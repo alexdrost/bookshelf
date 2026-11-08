@@ -20,7 +20,7 @@ this."* This happens every few weeks, not on a schedule.
 | Goodreads ID | Yes — correct Notion if they disagree, and rename the cover file to match |
 | Title, Author | Only to match records. Notion's version may be deliberately tidier |
 | **Page count** | **No.** The CSV carries edition artifacts — audiobook durations, `12`, `496` on everything. Keep the publisher page count already in Notion |
-| ISBN | Weakly. It reflects whichever edition Goodreads matched |
+| ISBN | **No, not by default.** It reflects whichever edition Goodreads matched, often audio or Kindle. Notion's ISBN is the US print edition and drives the Amazon link; replace it only with a verified US print ISBN |
 | **Rating** | **Never.** Do not read it, surface it, or factor it into anything |
 
 ## What will be missing from the CSV, by design
@@ -98,7 +98,8 @@ so it is visible without opening anything.
 ### 7. Then remind Alex what has not happened yet
 
 Reconciliation changes Notion. It does not change the site. The site updates when he clicks
-`/sync` (or the nightly cron runs at 08:00 UTC) and Cloudflare Pages rebuilds.
+`/all` (or the nightly cron runs at 08:00 UTC) and Cloudflare Pages rebuilds. A corrected
+Goodreads ID also needs that `/all`: it pushes the cover under the new ID and re-points the icon.
 
 ---
 

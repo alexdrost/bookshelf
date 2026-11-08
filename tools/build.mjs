@@ -57,7 +57,10 @@ function markdown(md) {
     const line = raw.trimEnd();
     if (!line.trim()) { if (list) { out.push(`<ul>${list.join('')}</ul>`); list = null; } continue; }
     const h = /^(#{2,3})\s+(.*)$/.exec(line);
-    if (h) { if (list) { out.push(`<ul>${list.join('')}</ul>`); list = null; } out.push(`<h${h[1].length}>${inline(h[2])}</h${h[1].length}>`); continue; }
+    if (h) { if (list) { out.push(`<ul>${list.join('')}</ul>`); list = null; } // Headings get a stable id from their text, so other pages can link straight to a section
+    // (/connections links to /about#what-a-connection-actually-is).
+    const hid = h[2].toLowerCase().replace(/<[^>]+>|[*_`]/g, '').replace(/&[a-z]+;/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    out.push(`<h${h[1].length} id="${hid}">${inline(h[2])}</h${h[1].length}>`); continue; }
     const li = /^-\s+(.*)$/.exec(line);
     if (li) { (list ??= []).push(`<li>${inline(li[1])}</li>`); continue; }
     if (list) { out.push(`<ul>${list.join('')}</ul>`); list = null; }
@@ -101,8 +104,6 @@ const fmtDate = (d) => {
 // ---------------------------------------------------------------- load
 const data = readJson(path.join(SRC, 'data/books.json'));
 const themesCfg = readJson(path.join(SRC, 'data/themes.json')).themes.slice().sort((a, b) => a.order - b.order);
-const clustersCfg = readJson(path.join(SRC, 'data/clusters.json')).clusters;
-const standoutsCfg = readJson(path.join(SRC, 'data/standouts.json')).standouts;
 const slugFile = readJson(path.join(SRC, 'data/slugs.json'));
 
 const recoveryPath = path.join(SRC, 'data/titles.recovery.txt');
@@ -133,8 +134,9 @@ const books = data.books.map((b) => {
   book.links = sl.links;
   book.storeNotes = sl.notes;
   book.pagesNum = (() => { const n = parseInt(book.pages, 10); return isFinite(n) && n > 0 ? n : null; })();
-  const s = standoutsCfg[book.id];
-  if (s) { book.standout = true; book.cluster = s.cluster; book.standoutNote = s.note; }
+  // Standouts live in Notion (the `Standout` checkbox), arriving as `standout` in
+  // books.json. Only a READ book can be a standout; its year is its Date Read year.
+  book.standout = book.standout === true && book.shelf === 'read';
   return book;
 });
 
@@ -169,27 +171,18 @@ const readBooks = publicBooks.filter((b) => b.shelf === 'read');
 // rename can never produce an empty page.
 const isReading = (b) => b.shelf === 'reading' || b.shelf === 'currently-reading';
 const isTBR = (b) => String(b.shelf || '').toLowerCase() === 'tbr';
+// Newest Notion edit first — the book most recently touched is the one on the desk.
+// `lastEdited` is the page's last_edited_time, synced by the Worker. Title breaks ties
+// and is the whole order for any book synced before the field existed.
 const currentlyReading = publicBooks.filter(isReading)
-  .sort((a, b) => a.title.localeCompare(b.title, 'en'));
+  .sort((a, b) => String(b.lastEdited || '').localeCompare(String(a.lastEdited || ''))
+    || a.title.localeCompare(b.title, 'en'));
 
 /**
- * The two currently-reading books the home page shows, in place of the old standout picks.
- *
- * DETERMINISTIC, not random. The site rebuilds on every Notion sync — several times a day —
- * and a Math.random() pick would reshuffle the home page on each one, for no reader benefit.
- * This seeds off the SET of books on the shelf instead: the same shelf always yields the same
- * two, and starting or finishing a book re-rolls it. So it changes when the reading actually
- * changes, which is the thing worth reflecting.
- *
- * There is no "date added" to sort by — Notion has a Created time but the Worker does not
- * sync it — so a true most-recent-first order would need a Worker change first.
+ * The two currently-reading books the home page shows: the first two in the /up-next
+ * order, so the home page and /up-next never disagree about what is on the desk.
  */
-const readingPicks = (() => {
-  if (currentlyReading.length <= 2) return currentlyReading;
-  const seed = crypto.createHash('sha256').update(currentlyReading.map((b) => b.id).join(',')).digest();
-  const start = seed.readUInt32BE(0) % currentlyReading.length;
-  return [currentlyReading[start], currentlyReading[(start + 1) % currentlyReading.length]];
-})();
+const readingPicks = currentlyReading.slice(0, 2);
 // To-be-read: no page, no connections, no summary — a cover, a title and a year.
 const tbr = publicBooks.filter(isTBR)
   .sort((a, b) => a.title.localeCompare(b.title, 'en'));
@@ -253,13 +246,24 @@ function biasedSample(list, n) {
   return out;
 }
 
-// The site palette, keyed on the Notion theme name (`source`), matching app.js.
+// The site palette, keyed on the Notion theme name (`source`). Re-picked Nov 2026 (Phase 2):
+// ten clearly distinct hues, Politics staying blue as the anchor. KEY ORDER IS LOAD-BEARING —
+// it is the stacking and legend order in every chart, and it was chosen so that every pair of
+// neighbours passes the colour-blind (deutan/protan) and normal-vision separation checks
+// (worst neighbouring pair: CVD ΔE 13.6, normal 18.5, OKLab×100). Validated against the
+// white chart panels. Copies: tools/og/lib.mjs and src/assets/js/app.js — qa.mjs checks both.
 const THEME_COLORS = {
-  'Politics & Power': '#3a6ea5', 'Business & Finance': '#c6913f',
-  'History & Foreign Affairs': '#9c7b57', 'Personal Growth & Leadership': '#88a04a',
-  'Memoir & Biography': '#8268a6', 'Psychology & Mind': '#3a8fb0',
-  'Society & Culture': '#b06a93', 'Religion & Faith': '#b3864c',
-  'Tech & Future': '#5a66ad', 'Crime & Justice': '#b3564c', 'Other': '#9aa0a6',
+  'Politics & Power': '#2f6db3',
+  'Religion & Faith': '#d9582c',
+  'Tech & Future': '#0f8fb8',
+  'History & Foreign Affairs': '#9a5b22',
+  'Psychology & Mind': '#c24f97',
+  'Personal Growth & Leadership': '#7d9a12',
+  'Crime & Justice': '#b92d58',
+  'Business & Finance': '#c38a0e',
+  'Memoir & Biography': '#9254c9',
+  'Society & Culture': '#00927a',
+  'Other': '#9aa0a6',
 };
 
 const THEME_TILES = 6;   // one row of six in a card that sits two-up on the page
@@ -281,26 +285,23 @@ const site = {
   readCount: readBooks.length,
   uniqueConnections: pairs.size,
   themeCount: themeIndex.length,
-  totalPages: cumPages.total,
+  // EVERY read book with a page count — the one page total the site quotes. The
+  // cumulative chart can only plot dated reads, so it carries its own, smaller
+  // figure (cumPages.total) and says so in its caption.
+  totalPages: readBooks.reduce((n, b) => n + (b.pagesNum || 0), 0),
   medianLag: lag.median,
 };
 
 // ---------------------------------------------------------------- picks
-let picksMode = 'fallback', picks = [], clusters = [], picksYears = '';
-if (Object.keys(standoutsCfg).length) {
-  picksMode = 'clusters';
-  clusters = clustersCfg.slice().sort((a, b) => a.order - b.order)
-    .map((c) => ({ ...c, books: publicBooks.filter((b) => b.cluster === c.id) })).filter((c) => c.books.length);
-  picks = clusters.flatMap((c) => c.books);
-} else {
-  const spa = read(path.join(SRC, 'index.html'));
-  const m = /const STANDOUTS=\{([\s\S]*?)\n\};/.exec(spa);
-  const byYear = {};
-  if (m) for (const row of m[1].matchAll(/"(\d{4})":\s*\[([^\]]*)\]/g)) byYear[row[1]] = [...row[2].matchAll(/"(\d+)"/g)].map((x) => x[1]);
-  const years = Object.keys(byYear).sort().reverse().slice(0, 2);
-  picksYears = years.slice().reverse().join(' and ');
-  picks = years.flatMap((y) => byYear[y]).map((id) => byId.get(id)).filter((b) => b && b.public);
-}
+// Standout reads, by the year they were read, newest year first. Source: the Notion
+// `Standout` checkbox. A year with no picks is simply absent — no algorithmic stand-in.
+const standoutYears = [...new Set(readBooks.filter((b) => b.standout).map((b) => b.yearRead || ''))]
+  .sort((a, b) => (b || '0').localeCompare(a || '0'))
+  .map((y) => ({
+    year: y,
+    books: orderedRead.filter((b) => b.standout && (b.yearRead || '') === y),
+  }));
+const picks = standoutYears.flatMap((y) => y.books);
 
 // ---------------------------------------------------------------- schema
 const PERSON = {
@@ -314,7 +315,8 @@ const PERSON = {
 };
 const PERSON_ABOUT = {
   ...PERSON,
-  worksFor: { '@type': 'Organization', name: 'Cascade Partners' },
+  jobTitle: 'VP of Finance & Growth',
+  worksFor: { '@type': 'Organization', name: 'Hall CPA' },
   hasCredential: [{ '@type': 'EducationalOccupationalCredential', credentialCategory: 'license', name: 'Certified Public Accountant (CPA)', recognizedBy: { '@type': 'Organization', name: 'State of Michigan' } }],
   alumniOf: [{ '@type': 'CollegeOrUniversity', name: 'Northwood University' }, { '@type': 'CollegeOrUniversity', name: 'Walsh College' }],
 };
@@ -386,6 +388,9 @@ env.addFilter('date', (s) => fmtDate(s));
 env.addFilter('num', (n) => Number(n).toLocaleString('en-US'));
 env.addFilter('take', (a, n) => (Array.isArray(a) ? a.slice(0, n) : a));
 env.addFilter('startsWith', (s2, p2) => String(s2 ?? '').startsWith(p2));
+// Notion (source) theme name -> the name the site shows. One mapping, from themes.json.
+const THEME_DISPLAY = new Map(themesCfg.map((t) => [t.source, t.name]));
+env.addFilter('themeName', (t) => THEME_DISPLAY.get(t) || t);
 
 // ---------------------------------------------------------------- asset()
 // Content-hashed URLs for the JS and CSS.
@@ -411,16 +416,27 @@ function assetUrl(p2) {
 }
 env.addGlobal('asset', assetUrl);
 
+// Primary nav, in order. The `explore` entry is the Explore menu on desktop and a
+// labelled group on mobile. Items marked `mobileOnly` appear only in the mobile group:
+// Recommendations left the desktop bar and is reached from the home page, the footer,
+// About, Up Next and the 404 instead.
 const NAV = [
   { label: 'Library', path: '/library' },
-  { label: 'Up Next', path: '/up-next' },
-  { label: 'Timeline', path: '/timeline' },
   { label: 'Themes', path: '/themes' },
-  { label: 'Connections', path: '/connections' },
-  { label: 'Analytics', path: '/analytics' },
-  { label: 'Recommendations', path: '/recommendations' },
+  { label: 'Timeline', path: '/timeline' },
+  { label: 'Up Next', path: '/up-next' },
+  { label: 'Explore', explore: true, items: [
+    { label: 'Connections', path: '/connections' },
+    { label: 'Analytics', path: '/analytics' },
+    { label: 'Recommendations', path: '/recommendations', mobileOnly: true },
+  ] },
   { label: 'About', path: '/about' },
 ];
+/** Is `item` (or, for Explore, any of its children) the current page or its parent? */
+// Explore lights up only for the pages it actually lists on desktop (not mobileOnly).
+const navHere = (pagePath, item) => (item.explore ? item.items.filter((x) => !x.mobileOnly) : [item])
+  .some((x) => x.path === pagePath || String(pagePath || '').startsWith(x.path + '/'));
+env.addGlobal('navHere', navHere);
 const GENERATED = (name) => `<!-- GENERATED — DO NOT EDIT. Source: src/templates/${name} -->\n`;
 
 fs.rmSync(DIST, { recursive: true, force: true });
@@ -456,7 +472,7 @@ function copyPage(file) {
   scanMarkers(file, body); scanMarkers(file, JSON.stringify(meta));
   return {
     meta,
-    copy: { kicker: fill(meta.kicker), h1: fill(meta.h1), standfirst: fill(meta.standfirst), portrait: meta.portrait || '', html: markdown(fill(body)) },
+    copy: { kicker: fill(meta.kicker), h1: fill(meta.h1), standfirst: fill(meta.standfirst), portrait: meta.portrait || '', bio: meta.bio ? inline(fill(meta.bio)) : '', html: markdown(fill(body)) },
   };
 }
 
@@ -496,7 +512,9 @@ const OG = buildOgManifest({
   }
   // 24 — three full rows of eight on desktop, and it divides by 2, 3, 4 and 6, so no
   // row is left with orphans at any breakpoint.
-  const recent = orderedRead.slice(0, 24);
+  // Starts at book 2: book 1 is the feature card directly above, and showing it twice
+  // in one screen read as a bug.
+  const recent = orderedRead.slice(1, 25);
   const page = {
     path: '/', crumb: 'Home',
     title: `Alex Drost’s Bookshelf — ${site.readCount} Books, Annotated and Connected`,
@@ -520,7 +538,7 @@ for (const [route, tpl, file, schema, prio] of [
     person: route === '/about' ? PERSON_ABOUT : PERSON,
   };
   if (schema === 'article') page.extraJson = articleSchema(page);
-  emit(route, tpl, { page, copy, picks, picksMode, picksYears, clusters, currentlyReading, tbr }, { priority: prio });
+  emit(route, tpl, { page, copy, picks, standoutYears, currentlyReading, tbr }, { priority: prio });
 }
 
 // ---- /library + pagination ---------------------------------------------
@@ -558,6 +576,7 @@ for (let n = 1; n <= libraryPages; n++) {
   };
   emit('/themes', 'themes-hub.njk', { page, themeIndex }, { priority: 0.8 });
 }
+const THEME_CARDS = 12;
 for (const t of themeIndex) {
   const route = `/themes/${t.slug}`;
   const page = {
@@ -567,8 +586,13 @@ for (const t of themeIndex) {
     h1Plain: t.name,
     trail: [{ name: 'Bookshelf', path: '/' }, { name: 'Themes', path: '/themes' }, { name: t.name, path: route }],
   };
+  page.showCrumbs = true;
   page.extraJson = collectionSchema(page, t.books);
-  emit(route, 'theme.njk', { page, theme: t, books: t.books }, { priority: 0.7 });
+  // The 12 most recent as full cards, the rest as the compact cover grid the library
+  // uses. Politics & Power alone was 130 cards — ~11,000px on desktop, ~29,000px on a phone.
+  emit(route, 'theme.njk', {
+    page, theme: t, books: t.books, featured: t.books.slice(0, THEME_CARDS), rest: t.books.slice(THEME_CARDS),
+  }, { priority: 0.7 });
 }
 
 // ---- /timeline + year pages --------------------------------------------
@@ -590,6 +614,7 @@ for (const y of yearIndex) {
     h1Plain: `What I read in ${y.year}`,
     trail: [{ name: 'Bookshelf', path: '/' }, { name: 'Timeline', path: '/timeline' }, { name: y.year, path: route }],
   };
+  page.showCrumbs = true;
   page.extraJson = collectionSchema(page, y.books);
 
   // Group into months, newest first, skipping months with no finish. The /timeline month
@@ -625,7 +650,9 @@ for (const y of yearIndex) {
   };
   page.extraJson = articleSchema(page);
   emit('/connections', 'connections.njk', {
-    page, matrix, matrixMax, themeNames, themesCfg: matrixThemesCfg, crossPairs: crossPairs.slice(0, 12),
+    page, matrix, matrixMax, themeNames,
+    themesCfg: matrixThemesCfg.map((t) => ({ ...t, color: THEME_COLORS[t.source] || THEME_COLORS.Other })),
+    crossPairs: crossPairs.slice(0, 12),
   }, { priority: 0.8 });
 }
 
@@ -638,7 +665,7 @@ for (const y of yearIndex) {
     trail: [{ name: 'Bookshelf', path: '/' }, { name: 'Analytics', path: '/analytics' }],
   };
   page.extraJson = articleSchema(page);
-  emit('/analytics', 'analytics.njk', { page, lag, streaks, cumPages, crossPairs: crossPairs.slice(0, 10), matrix, themeNames: matrixThemes, themesCfg: matrixThemesCfg }, { priority: 0.8 });
+  emit('/analytics', 'analytics.njk', { page, lag, streaks, cumPages, yearFloor: YEAR_FLOOR }, { priority: 0.8 });
 }
 
 // ---- /book/{slug} × 318 -------------------------------------------------
@@ -658,6 +685,7 @@ for (const b of orderedRead) {
     h1Plain: b.title,
     trail: [{ name: 'Bookshelf', path: '/' }, { name: 'Library', path: '/library' }, { name: b.shortTitle, path: b.href }],
     extraJson: bookSchema(b),
+    showCrumbs: true,
   };
   emit(b.href, 'book.njk', { page, book: b, themeLinks, yearLink, connections: b.connections }, { priority: 0.5 });
 }
@@ -669,7 +697,9 @@ for (const b of orderedRead) {
   // 404 writes its file directly instead of going through emit(), so it has to pick up
   // its og entry by hand. It borrows the home card rather than earning one of its own.
   page.og = OG.get('/404');
-  fs.writeFileSync(path.join(DIST, '404.html'), GENERATED('404.njk') + env.render('404.njk', { site, nav: NAV, page, personJson: J(identityGraph(PERSON)) }));
+  // Eighteen random read books with covers; the page shows six of them at random per visit.
+  const nfCovers = readBooks.filter((b) => b.hasCover).map((b) => [Math.random(), b]).sort((x, y) => x[0] - y[0]).slice(0, 18).map((x) => x[1]);
+  fs.writeFileSync(path.join(DIST, '404.html'), GENERATED('404.njk') + env.render('404.njk', { site, nav: NAV, page, nfCovers, personJson: J(identityGraph(PERSON)) }));
 }
 
 // ---------------------------------------------------------------- assets

@@ -1,7 +1,6 @@
 {% extends "_layout.njk" %}
 {% block content %}
     <div class="page-head wide">
-      <div class="kicker">{{ copy.kicker }}</div>
       <h1>{{ copy.h1 | safe }}</h1>
       <p class="standfirst">{{ copy.standfirst | safe }}</p>
     </div>
@@ -12,6 +11,8 @@
     {# READING — two across, large covers. These are books with something to say already,
        so they get room; the shelf is small by definition. #}
     <section class="pagesec">
+      {# Newest Notion edit first (lastEdited), so the book most recently touched leads.
+       The home page shows the first two of this same order. #}
       <div class="section-head"><h2>Currently reading</h2><span class="sub">{{ currentlyReading.length }}</span></div>
       {% if currentlyReading.length %}
         <div class="nowlist">
@@ -21,7 +22,7 @@
             <div class="now-body">
               <h3 class="now-t">{{ book.shortTitle }}</h3>
               <div class="now-a">{{ book.author }}</div>
-              {% if book.themes.length %}<div class="now-themes">{% for t in book.themes | take(2) %}<span>{{ t }}</span>{% endfor %}</div>{% endif %}
+              {% if book.themes.length %}<div class="now-themes">{% for t in book.themes | take(2) %}<span>{{ t | themeName }}</span>{% endfor %}</div>{% endif %}
               {% if book.teaser %}<p class="now-note">{{ book.teaser }}</p>{% endif %}
               <div class="now-meta">{% if book.yearPub %}{{ book.yearPub }}{% endif %}{% if book.pagesNum %} &middot; {{ book.pagesNum | num }} pages{% endif %}</div>
             </div>
@@ -43,7 +44,7 @@
     <section class="pagesec">
       <div class="section-head"><h2>On deck</h2><span class="sub">{{ tbr.length }} on the to-be-read shelf</span></div>
       <p class="pagesec-intro">Bought, borrowed or queued.</p>
-      <div class="tbrgrid">
+      <div class="tbrgrid" id="tbrGrid">
         {% for book in tbr %}
         <div class="tbrcard">
           <div class="tbr-cov">{% if book.hasCover %}<img src="/covers/{{ book.id }}.jpg" width="132" height="198" alt="{{ book.title }} by {{ book.author }}" loading="lazy">{% else %}<span class="tbr-ph">{{ book.shortTitle }}</span>{% endif %}</div>
@@ -64,8 +65,18 @@
         <div class="ctabox-body">
           <h2>Something that belongs on this list?</h2>
           <p>If you have read something that fits alongside these &mdash; or that argues with them &mdash; send it over. That is how a good chunk of this shelf got here.</p>
+          <p class="cta-also">Or see <a href="/recommendations">the standout reads, year by year</a>.</p>
         </div>
         <button class="ctabtn" type="button" onclick="openRec()">Recommend a book</button>
       </div>
     </section>
+{% endblock %}
+{% block scripts %}
+{# On deck reshuffles on every visit. The built HTML keeps the alphabetical order, so
+   with JavaScript off the shelf still reads sensibly. Fisher-Yates over the nodes. #}
+<script>
+(function(){var g=document.getElementById('tbrGrid');if(!g)return;var n=[].slice.call(g.children);
+for(var i=n.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=n[i];n[i]=n[j];n[j]=t;}
+n.forEach(function(c){g.appendChild(c);});})();
+</script>
 {% endblock %}

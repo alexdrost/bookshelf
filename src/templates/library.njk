@@ -1,13 +1,12 @@
 {% extends "_layout.njk" %}
 {% block content %}
     <div class="page-head">
-      <div class="kicker">Library</div>
       <h1>The full library</h1>
       <p class="standfirst">All {{ total }} books, most recently read first.</p>
     </div>
     {# renderBrowse() writes the active-filter summary here. The extracted body expects
        this element to exist; without it the whole render throws partway through. #}
-    <div class="section-head"><h2 class="visually-hidden">Books</h2><span class="sub" id="browseSub">the full collection</span></div>
+    <div class="section-head"><h2 class="visually-hidden">Books</h2><span class="sub" id="browseSub"></span></div>
 
     <div class="controls">
       <input id="q" type="search" placeholder="Search titles, authors, themes, ideas&hellip;" autocomplete="off">

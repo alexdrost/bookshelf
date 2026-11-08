@@ -18,24 +18,16 @@ What survives is better: **click any number in the theme matrix** and you get th
 behind it — cover, title, author, both linked. Computed, but self-explaining, because the
 number you clicked is the reason they are grouped.
 
-## 2. Recommendations → `src/data/standouts.json`
+## 2. Recommendations → Notion `Standout` checkbox
 
-Same idea, keyed by Goodreads ID:
+Since Nov 2026 a standout is a Notion checkbox, `Standout`, on a **read** book. Its year is the
+Date Read year. Ticked books appear on `/recommendations` (standout reads by year, newest first),
+on that year's review card on `/timeline` and the year page, and get a "Standout read" badge on
+the book page and library card. A year with no ticks shows nothing — no automatic stand-in.
 
-```json
-{ "standouts": { "113576": { "cluster": "business", "note": "The one that made me..." } } }
-```
-
-Anything with an entry gets a star on its library card and appears on `/recommendations`.
-`clusters.json` defines the groupings the page organises them into.
-
-**Why not Notion?** These are editorial notes about *why a book matters to you*, and the one
-discipline the system has is that private prose never goes in an allowlisted property. A note
-here is a note about the book, not part of the book's record.
-
-If you'd rather drive it from Notion, the clean way is a `Recommended` checkbox plus a
-`Recommendation Note` text property, both added to the Worker's allowlist. Say the word and it's
-about twenty lines — but it does mean the note travels through Notion.
+`standouts.json`, `clusters.json` and the hardcoded `STANDOUTS` list are gone. There are no
+per-book recommendation notes: if those are ever wanted, they belong in a new Notion text
+property added to the Worker's allowlist, never in the page body (which never syncs).
 
 ## 3. Shelves → Notion
 
@@ -48,8 +40,8 @@ page.
 | Shelf value | Where it appears |
 | --- | --- |
 | `read` | Everything: library, themes, timeline, connections, its own page |
-| `reading` *(or `currently-reading`)* | `/up-next` → "On the desk right now", large two-across cards |
-| `TBR` | `/up-next` → "On deck", small grid, deliberately not clickable |
+| `reading` *(or `currently-reading`)* | `/up-next` → "Currently reading", newest Notion edit first; the home page shows the first two |
+| `TBR` | `/up-next` → "On deck", small grid, reshuffled on every visit, deliberately not clickable |
 
 Books that aren't `read` get **no book page**, so nothing on those two sections links anywhere.
 That's why the TBR cards don't change colour on hover — the card lifts its border instead, which
@@ -73,8 +65,10 @@ says "this is a thing" without promising a click that doesn't exist.
 | Slug | Notion | Frozen once live — changing it moves a URL |
 | Cover | Notion `Cover Image` | Any filename; lands as `{Goodreads ID}.jpg` |
 | Public on the site | Notion `Public?` | The only visibility gate |
-| Recommendations | `src/data/standouts.json` | Plus `clusters.json` for groupings |
+| Recommendations / standouts | Notion `Standout` | Read books only; year = Date Read year |
 | Theme names, order, intro copy | `src/data/themes.json` | The 11 are locked |
-| Page copy (about, up-next, recommendations) | `src/pages/*.md` | Markdown + front matter |
+| Page copy (about, up-next, recommendations) | `src/pages/*.md` | Markdown + front matter. The About bio is the `bio:` line |
 | Which themes appear on the connection matrix | `tools/build.mjs` → `MATRIX_EXCLUDE` | Theology & Faith is excluded |
-| Books on the home shelf | `tools/build.mjs` → `recent` | Currently 24 |
+| Books on the home shelf | `tools/build.mjs` → `recent` | 24 from book 2 (book 1 is the feature card); 12 on a phone |
+| Nav items and the Explore menu | `tools/build.mjs` → `NAV` | `mobileOnly` keeps an item out of the desktop bar |
+| Theme colours | `tools/build.mjs` → `THEME_COLORS` | Copies in `tools/og/lib.mjs` and `app.js` (+ `THEME_COLORS_DARK`); QA checks all three |

@@ -429,3 +429,311 @@ a.mxp-side:hover .mxp-t{color:var(--blue-d)}
 .matrix-top{grid-template-columns:repeat(auto-fill,minmax(330px,1fr))}
 .matrix-top li{display:flex;gap:10px;align-items:baseline}
 .matrix-top strong{flex:none;min-width:38px;text-align:right}
+
+/* ===================================================================== Phase 1 — Nov 2026
+   Nav (Explore menu + mobile groups), footer link, home link. */
+.tabmenu{position:relative}
+.tabmenu>summary{list-style:none;display:inline-flex;align-items:center;gap:5px}
+.tabmenu>summary::-webkit-details-marker{display:none}
+.tabmenu>summary .caret{transition:transform .2s}
+.tabmenu[open]>summary .caret{transform:rotate(180deg)}
+.tabmenu[open]>summary{color:var(--ink)}
+summary.tab.here{color:var(--blue)}
+summary.tab.here::after{content:"";position:absolute;left:0;right:0;bottom:-14px;height:3px;background:var(--blue);border-radius:3px}
+.tabmenu-pop{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);min-width:180px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 34px rgba(31,37,48,.14);padding:6px;display:flex;flex-direction:column;z-index:40}
+.tabmenu-link{font-family:"Archivo";font-weight:600;font-size:.9rem;color:var(--ink);text-decoration:none;padding:10px 12px;border-radius:8px}
+.tabmenu-link:hover,.tabmenu-link:focus-visible{background:var(--blue-tint);color:var(--blue)}
+.tabmenu-link.here{color:var(--blue)}
+@media(max-width:640px){.nav-in .tabmenu{display:none}}
+
+.navgroup{display:flex;flex-direction:column;margin:6px 0 2px;padding:6px 0 4px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.navgroup-k{font-family:"Archivo";font-weight:600;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:8px 8px 2px}
+.navlink.sub{padding-left:20px;font-weight:500;border-bottom:0}
+.navrec{align-self:stretch;margin:2px 0 8px;border:0;border-radius:999px;padding:13px 20px;background:var(--blue-d);color:#fff;font-family:"Archivo";font-weight:700;font-size:.95rem;cursor:pointer;text-align:center}
+.navrec:hover{background:var(--blue)}
+.navrec:focus-visible{outline:3px solid var(--blue-lt);outline-offset:2px}
+.navsocials{display:flex;flex-direction:column}
+
+footer.ft .ft-internal{display:inline-block;margin-top:6px;color:var(--blue);font-family:"Archivo";font-weight:600;font-size:.82rem;text-decoration:none}
+footer.ft .ft-internal:hover{text-decoration:underline}
+.home-also{text-align:center;margin:14px 0 0;color:var(--muted);font-size:.9rem}
+.home-also a{color:var(--blue);font-weight:600}
+
+/* Theme pages: the compact grid under the 12 feature cards — same metrics as #grid. */
+.theme-rest-head{margin-top:34px}
+.grid.theme-rest{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:26px 20px}
+@media(max-width:640px){.grid.theme-rest{grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:20px 14px}}
+.ctabox-body .cta-also{margin-top:8px;font-size:.9rem}
+.ctabox-body .cta-also a{color:var(--blue);font-weight:600}
+
+/* Year pages: the year is the title, "My year in books" beneath it; then the year's
+   review card. Empty until analytics.js fills it, so it takes no space without JS. */
+.year-head h1{display:flex;flex-direction:column;gap:6px}
+.year-head .yh-year{font-size:clamp(3.4rem,9vw,5.6rem);line-height:.95;letter-spacing:-.03em}
+.year-head .yh-line{font-size:clamp(1.1rem,2.2vw,1.4rem);font-weight:600;color:var(--muted);letter-spacing:0}
+.yir-single{margin:6px 0 30px}
+.yir-single:empty{display:none}
+.yir-single .yir-hero{cursor:default}
+@media(max-width:640px){.page-head.year-head h1{font-size:inherit}}
+
+/* Analytics fixes. The median-pages label sat on top of the theme-coloured bar in dark
+   ink and was unreadable on the darker themes; it now sits on a light chip. */
+.ctcell span{background:rgba(255,255,255,.88);padding:2px 7px;border-radius:6px;color:var(--ink)}
+.cmptable td.pace{color:var(--muted);font-weight:600}
+.yir-single .yir-yr{display:none}   /* the page title already says the year */
+.grid.theme-rest a.book{text-decoration:none}
+
+/* ===================================================================== Phase 2 — Nov 2026
+   Visual pass. Everything below overrides earlier rules on purpose; it is grouped here
+   so the whole visual layer can be read (or reverted) in one place.
+
+   1. Warm paper. The cream stays; the cool blue haze in the top-right corner goes; one
+      accent (the primary-button blue) is deepened so actions read as actions. */
+:root{
+  --paper:#f5f0e6; --paper2:#ebe3d3; --line:#e3dacb;
+  --shelf-band:#ece4d3;            /* the deeper paper behind cover grids */
+  --blue-d:#1f4a78;                /* deepened accent: primary buttons */
+}
+body{background:
+  radial-gradient(120% 80% at -10% 0%, rgba(201,138,40,.07) 0%, transparent 45%),
+  radial-gradient(90% 60% at 110% 0%, rgba(201,138,40,.04) 0%, transparent 50%),
+  var(--paper)}
+nav{background:rgba(245,240,230,.86)}
+.navmenu{background:rgba(245,240,230,.98)}
+
+/* 2. Buttons. One primary (solid, larger, never underlined, lifts on hover with the arrow
+      nudging forward) and one secondary (outline). */
+.browse-all,a.browse-all,.section-head .more,.ctabtn,.navrec{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--blue-d);color:#fff;border:0;border-radius:999px;text-decoration:none;
+  font-family:"Archivo",system-ui,sans-serif;font-weight:700;letter-spacing:.01em;cursor:pointer;
+  box-shadow:0 6px 16px rgba(31,74,120,.22);transition:transform .16s,box-shadow .16s,background .16s}
+.browse-all,a.browse-all,.ctabtn{padding:15px 30px;font-size:1rem}
+.section-head .more{padding:8px 18px;font-size:.8rem}
+.browse-all:hover,.section-head .more:hover,.ctabtn:hover,.navrec:hover{
+  background:#183b61;color:#fff;transform:translateY(-2px);box-shadow:0 10px 22px rgba(31,74,120,.28)}
+.browse-all:focus-visible,.section-head .more:focus-visible,.ctabtn:focus-visible{outline:3px solid var(--blue-lt);outline-offset:3px}
+.arr{display:inline-block;transition:transform .16s}
+a:hover>.arr,button:hover>.arr{transform:translateX(3px)}
+@media(prefers-reduced-motion:reduce){.browse-all:hover,.section-head .more:hover,.ctabtn:hover,.navrec:hover{transform:none}a:hover>.arr,button:hover>.arr{transform:none}}
+
+.yir-seeall,.mapbtn,.graph-tools .lreset,.btn2{
+  display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;
+  border:1.5px solid var(--blue-lt);background:var(--card);color:var(--blue-d);text-decoration:none;
+  font-family:"Archivo",system-ui,sans-serif;font-weight:700;font-size:.84rem;cursor:pointer;white-space:nowrap;
+  transition:background .16s,border-color .16s}
+.yir-seeall:hover,.mapbtn:hover,.graph-tools .lreset:hover,.btn2:hover{background:var(--blue-tint);border-color:var(--blue);color:var(--blue-d)}
+.yir-seeall:focus-visible,.mapbtn:focus-visible,.graph-tools .lreset:focus-visible,.btn2:focus-visible{outline:3px solid var(--blue-lt);outline-offset:2px}
+
+/* Book page retail links: small buttons rather than grey text. */
+.blinks{gap:8px}
+.glink{padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink2);font-size:.8rem;box-shadow:0 1px 2px rgba(31,37,48,.05);transition:border-color .15s,color .15s,background .15s}
+.glink:hover{border-color:var(--blue);color:var(--blue-d);background:var(--blue-tint)}
+.glink svg{opacity:.85}
+
+/* 3. Shelf band: a full-width, slightly deeper paper behind cover grids, so a shelf reads
+      as a shelf. Box-shadow + clip-path paints edge to edge without widening the page. */
+.shelf,.tbrgrid,#grid,.grid.theme-rest{position:relative;background:var(--shelf-band);
+  box-shadow:0 0 0 100vmax var(--shelf-band);clip-path:inset(0 -100vmax);padding:28px 0 30px}
+/* Cover tiles are whole links; the underline under every title read as noise on a shelf. */
+.shelf a.book,#grid a.book,.grid.theme-rest a.book,.nf-covers a{text-decoration:none}
+.shelf a.book:hover .meta .t,#grid a.book:hover .meta .t,.grid.theme-rest a.book:hover .meta .t{color:var(--blue-d);text-decoration:underline}
+
+/* 4. Connections. The essay moved to /about; matrix labels carry their theme colour (as a
+      swatch — text stays ink); the heat ramp is warm; long headers are no longer cut. */
+.conn-lede{margin:-4px 0 4px;color:var(--muted);font-size:.95rem}
+.conn-lede a{color:var(--blue-d);font-weight:600}
+.matrix th .tsw{display:inline-block;width:9px;height:9px;border-radius:3px;background:var(--tc);margin-right:7px;vertical-align:baseline}
+.matrix thead th .tsw{margin:0 0 0 4px}
+.matrix thead th{height:196px}
+.matrix thead th span{width:24px}
+.matrix td[style*="--heat"]{background:rgba(206,112,38,calc(.08 + var(--heat) * .78))}
+.matrix td.deep{color:#2a1503;font-weight:800}
+.matrix tbody tr:hover td{outline-color:rgba(206,112,38,.45)}
+.matrix td.hot:hover,.matrix td.hot:focus-visible{outline:2px solid #9a4a12}
+.matrix td.hot.sel{outline:2px solid #6e3409}
+/* Graph: the legend sits under the canvas, not on it. */
+.glegend{position:static;padding:12px 16px 14px;border-top:1px solid var(--line);background:var(--card)}
+.glegend .it{background:none;padding:2px 4px}
+
+/* 5. 404. */
+.nf{min-height:calc(100vh - 300px);display:flex;flex-direction:column}
+.nf-art{margin:6px 0 4px}
+.nf-art svg{width:min(340px,100%);height:auto;display:block}
+.nf-search{display:flex;gap:10px;margin:18px 0 8px;max-width:520px}
+.nf-search input{flex:1;min-width:0;height:46px;border:1px solid var(--line);border-radius:999px;padding:0 18px;font:inherit;background:var(--card)}
+.nf-search input:focus{outline:3px solid var(--blue-lt);outline-offset:1px;border-color:var(--blue)}
+.nf-search .browse-all{padding:0 22px;height:46px;font-size:.92rem;box-shadow:none}
+.nf-covers{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px;margin-top:10px}
+.nf-covers a{text-decoration:none}
+.nf-covers .cover{aspect-ratio:2/3;border-radius:5px;overflow:hidden;box-shadow:0 8px 18px rgba(31,37,48,.18);transition:transform .16s}
+.nf-covers a:hover .cover{transform:translateY(-3px)}
+.nf-covers img{width:100%;height:100%;object-fit:cover;display:block}
+.nf-covers .t{font-family:"Archivo";font-weight:700;font-size:.78rem;color:var(--ink);margin-top:8px;line-height:1.2}
+.nf-covers a[hidden]{display:none}
+@media(max-width:640px){.nf-covers{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
+
+/* ===================================================================== Phase 3 — Nov 2026
+   Mobile pass at 390px. Desktop is untouched: every rule below is inside the 640px query,
+   except the two that make the hide/collapse hooks harmless on desktop. */
+.ego-more{display:contents}
+.ego-showall{display:none;margin:10px 0 2px}
+@media(max-width:640px){
+  .hide-sm{display:none!important}
+
+  /* Footer: three pills on one line — alexdrost.com is dropped here, kept on desktop. */
+  footer.ft .ft-portfolio{flex-wrap:nowrap;gap:6px}
+  footer.ft .ft-portfolio a:first-child{display:none}
+  footer.ft .ft-portfolio a{padding:6px 11px;font-size:.8rem}
+
+  /* Home feature: cover and title side by side, the summary full width below. The body is
+     dissolved into the card's grid so its parts can be placed independently. */
+  .feature{grid-template-columns:96px 1fr;column-gap:14px;row-gap:0;align-items:start}
+  .feature .ft-cover{grid-row:1 / span 3;width:96px}
+  .feature .ft-body{display:contents}
+  .feature .ft-themes,.feature .ft-title,.feature .ft-author{grid-column:2}
+  .feature .ft-themes{margin-bottom:6px}
+  .feature .ft-sum,.feature .ft-core,.feature .ft-open{grid-column:1 / -1}
+  .feature .ft-sum{margin-top:14px}
+
+  /* Home shelf: 12 books, three across. */
+  .shelf{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 12px}
+  .shelf a.book:nth-child(n+13){display:none}
+
+  /* Home "Currently reading": was desktop-only; now a one-line strip, cover + title. */
+  .feat-panel{display:block;padding:4px 14px 16px;margin-bottom:26px}
+  .feat-panel .section-head{margin:14px 0 10px}
+  .feat-panel .section-head h2{font-size:1.15rem}
+  .feat-panel .cardlist{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px;grid-template-columns:none}
+  .feat-panel .pickcard{flex:0 0 78%;scroll-snap-align:start;padding:10px;gap:10px;align-items:center}
+  .feat-panel .pc-cover{flex:0 0 40px;width:40px;height:60px}
+  .feat-panel .pc-a,.feat-panel .pc-note{display:none}
+  .feat-panel .pc-t{font-size:.9rem;margin:0}
+  .feat-panel .pc-t{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .feat-panel .section-head .more{padding:6px 12px;font-size:.72rem;white-space:nowrap}
+  .feat-panel .section-head h2{white-space:nowrap}
+
+  /* Up Next: cover left, text right; on deck three across. */
+  .nowcard{flex-direction:row;gap:14px;padding:14px}
+  .now-cov,.now-cov img,.now-ph{width:88px}
+  .now-cov img{height:132px}
+  .now-t{font-size:1.05rem}
+  .now-note{font-size:.86rem}
+  .tbrgrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 12px}
+  .tbr-t{font-size:.78rem}
+  .tbr-a{font-size:.72rem}
+
+  /* Timeline: the year chart fits the width (the 2026 bar was clipped) … */
+  .stack-wrap{gap:5px;height:240px}
+  .stackcol{min-width:0}
+  .stackcol .yr{font-size:.66rem;white-space:nowrap}
+  .stackcol .stot{font-size:.72rem}
+  /* … and the review cards are no longer a card inside a card. */
+  .yir-panel{background:none;border:0;box-shadow:none;padding:0}
+  .yir-panel::before{display:none}
+  .yir-panel>h3,.yir-panel>.cap{padding:0 2px}
+
+  /* Year and theme pages: after the review card, a compact list rather than full cards. */
+  .monthsec .pickcard,.theme-feat .pickcard{padding:10px;gap:12px;align-items:center}
+  .monthsec .pc-cover,.theme-feat .pc-cover{flex:0 0 44px;width:44px;height:66px}
+  .monthsec .pc-note,.theme-feat .pc-note{display:none}
+  .monthsec .pc-t,.theme-feat .pc-t{font-size:.92rem}
+  .monthsec .cardlist,.theme-feat{gap:8px}
+  .grid.theme-rest{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px 10px}
+  .grid.theme-rest .meta{display:none}
+
+  /* Connections focus mode: 8 two-hop books, then "Show all". */
+  .ego-two .ego-more{display:none}
+  .ego-two.open .ego-more{display:contents}
+  .ego-showall{display:inline-flex}
+
+  /* Analytics: stat cards two across. */
+  .stat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .stat-grid .stat{padding:14px}
+}
+
+/* ===================================================================== Phase 4 — Nov 2026
+   About: the short bio beside the headshot. */
+.about-intro{display:grid;grid-template-columns:170px 1fr;gap:28px;align-items:center;max-width:820px;margin:4px 0 30px}
+.about-intro .portrait{margin:0}
+.about-bio{margin:0;font-size:1.06rem;line-height:1.6;color:var(--ink2)}
+@media(max-width:640px){
+  /* On a phone the bio wraps around a small headshot instead of running down a thin column. */
+  .about-intro{display:block}
+  .about-intro .portrait{float:left;margin:4px 14px 6px 0}
+  .about-intro .portrait img{width:76px;height:76px}
+  .about-intro::after{content:"";display:block;clear:both}
+  .about-bio{font-size:.95rem}
+}
+
+/* ===================================================================== Dark mode — Nov 2026
+   Follows the system setting; the nav toggle overrides it (stored per browser as
+   localStorage "theme"). Declared twice on purpose: the media query covers the OS setting,
+   and [data-theme="dark"] covers the toggle — the :not() guard lets a "light" choice beat an
+   OS-dark setting. Everything is tokens, so components follow; the rules after the tokens
+   fix the few surfaces that were hardcoded light or used ink as a background.
+   Chart colours switch in app.js (THEME_COLORS_DARK), validated against --card below. */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#15171b; --paper2:#23262d; --card:#1d2027; --shelf-band:#101215;
+    --ink:#ebe8e2; --ink2:#c9c5bc; --muted:#9ca0a8; --faint:#6e737c; --line:#30343c;
+    --blue-d:#9cc2ec; --blue:#7fb0e6; --blue-br:#5d93cf; --blue-lt:#3e5f86; --blue-tint:#1f2b3b;
+    --green-d:#6cc4a8; --amber:#e6a23a; --amber-lt:#f0c066;
+    --line-g:rgba(127,176,230,.18);
+    --shadow:0 1px 2px rgba(0,0,0,.35),0 10px 30px rgba(0,0,0,.35);
+    --btn:#2f6db3; --btn-hover:#3b7fcb; --tip-bg:#2e333c; --graph-edge:200,205,215;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#15171b; --paper2:#23262d; --card:#1d2027; --shelf-band:#101215;
+  --ink:#ebe8e2; --ink2:#c9c5bc; --muted:#9ca0a8; --faint:#6e737c; --line:#30343c;
+  --blue-d:#9cc2ec; --blue:#7fb0e6; --blue-br:#5d93cf; --blue-lt:#3e5f86; --blue-tint:#1f2b3b;
+  --green-d:#6cc4a8; --amber:#e6a23a; --amber-lt:#f0c066;
+  --line-g:rgba(127,176,230,.18);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 10px 30px rgba(0,0,0,.35);
+  --btn:#2f6db3; --btn-hover:#3b7fcb; --tip-bg:#2e333c; --graph-edge:200,205,215;
+}
+:root{--btn:var(--blue-d); --btn-hover:#183b61; --tip-bg:#1f2530; --graph-edge:60,66,80}
+
+/* Primary buttons get their own token: in dark mode --blue-d becomes a light TEXT blue. */
+.browse-all,a.browse-all,.section-head .more,.ctabtn,.navrec{background:var(--btn)}
+.browse-all:hover,.section-head .more:hover,.ctabtn:hover,.navrec:hover{background:var(--btn-hover)}
+/* Surfaces that used ink as a background, or a fixed light fill. */
+#tip,.gnodecard,.mcopy .ctoast{background:var(--tip-bg);color:#f2efe9}
+.mcopy .ctoast::after{border-right-color:var(--tip-bg)}
+
+:root[data-theme="dark"] body{background:radial-gradient(120% 80% at -10% 0%, rgba(201,138,40,.05) 0%, transparent 45%),var(--paper)}
+:root[data-theme="dark"] nav,:root[data-theme="dark"] .navmenu{background:rgba(21,23,27,.9)}
+:root[data-theme="dark"] .lensbar{background:rgba(29,32,39,.92)}
+:root[data-theme="dark"] .ctcell span{background:rgba(21,23,27,.85)}
+:root[data-theme="dark"] .matrix td.deep{color:#fff}
+:root[data-theme="dark"] .standout-badge{background:rgba(216,160,40,.16);border-color:rgba(216,160,40,.4);color:#f0c56a}
+:root[data-theme="dark"] .mcopy{background:rgba(29,32,39,.85)}
+:root[data-theme="dark"] .pc-cover,:root[data-theme="dark"] .now-cov img,:root[data-theme="dark"] .shelf .cover{box-shadow:0 6px 14px rgba(0,0,0,.45)}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) body{background:radial-gradient(120% 80% at -10% 0%, rgba(201,138,40,.05) 0%, transparent 45%),var(--paper)}
+  :root:not([data-theme="light"]) nav,:root:not([data-theme="light"]) .navmenu{background:rgba(21,23,27,.9)}
+  :root:not([data-theme="light"]) .lensbar{background:rgba(29,32,39,.92)}
+  :root:not([data-theme="light"]) .ctcell span{background:rgba(21,23,27,.85)}
+  :root:not([data-theme="light"]) .matrix td.deep{color:#fff}
+  :root:not([data-theme="light"]) .standout-badge{background:rgba(216,160,40,.16);border-color:rgba(216,160,40,.4);color:#f0c56a}
+  :root:not([data-theme="light"]) .mcopy{background:rgba(29,32,39,.85)}
+  :root:not([data-theme="light"]) .pc-cover,:root:not([data-theme="light"]) .now-cov img,:root:not([data-theme="light"]) .shelf .cover{box-shadow:0 6px 14px rgba(0,0,0,.45)}
+}
+
+/* The toggle. In the bar on desktop; inside the menu on a phone, where the bar is full. */
+.themebtn{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink2);cursor:pointer;flex:none}
+.themebtn:hover{border-color:var(--blue);color:var(--blue)}
+.themebtn:focus-visible{outline:3px solid var(--blue-lt);outline-offset:2px}
+.themebtn .i-sun{display:none}
+:root[data-theme="dark"] .themebtn .i-sun{display:block}
+:root[data-theme="dark"] .themebtn .i-moon{display:none}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .themebtn .i-sun{display:block}
+  :root:not([data-theme="light"]) .themebtn .i-moon{display:none}
+}
+.navtheme{display:flex;align-items:center;gap:10px;font-family:"Archivo";font-weight:600;font-size:.95rem;color:var(--ink);background:none;border:0;padding:12px 8px;cursor:pointer;text-align:left}
+.navtheme .themebtn{pointer-events:none}
+@media(max-width:640px){.nav-in .themebtn{display:none}}

@@ -1,6 +1,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f6f5f1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f0e6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15171b" media="(prefers-color-scheme: dark)">
+{# Apply a stored light/dark choice before first paint, so a dark-mode reader never sees a
+   light flash. No stored choice means "follow the system", handled purely in CSS. #}
+<script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 <title>{{ page.title }}</title>
 
 <meta name="description" content="{{ page.description }}">

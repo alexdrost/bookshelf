@@ -3,15 +3,19 @@
     {# The one page that stays a narrow column: it is a person and an essay, and prose
        reads better at ~70 characters than spread across the full width. #}
     <div class="page-head">
-      <div class="kicker">{{ copy.kicker }}</div>
       <h1>{{ copy.h1 | safe }}</h1>
       <p class="standfirst">{{ copy.standfirst | safe }}</p>
     </div>
-    {% if copy.portrait %}
-    <figure class="portrait">
-      <img src="{{ copy.portrait }}" width="280" height="280" alt="Alex Drost" loading="eager" fetchpriority="high">
-    </figure>
-    {% endif %}
+    {# The short bio sits beside the headshot (Phase 4, Nov 2026). It is `bio:` in
+       src/pages/about.md; the long-form page continues below. #}
+    <div class="about-intro">
+      {% if copy.portrait %}
+      <figure class="portrait">
+        <img src="{{ copy.portrait }}" width="280" height="280" alt="Alex Drost" loading="eager" fetchpriority="high">
+      </figure>
+      {% endif %}
+      {% if copy.bio %}<p class="about-bio">{{ copy.bio | safe }}</p>{% endif %}
+    </div>
     <div class="prose">
 {{ copy.html | safe }}
     </div>

@@ -381,6 +381,16 @@ check(!pages.some((p) => /fetch\(['"]\/books\.json/.test(p.html)), 'no page fetc
   const a = litColors(read(path.join(ROOT, 'tools/build.mjs')));
   const b = litColors(read(path.join(ROOT, 'tools/og/lib.mjs')));
   check(a !== '' && a === b, 'THEME_COLORS in tools/og/lib.mjs matches tools/build.mjs');
+  // app.js carries a third copy (JSON-style quotes) and its KEY ORDER is the chart stacking
+  // order, so compare it in order, not sorted.
+  const ordered = (src, re) => { const m = re.exec(src); return m ? [...m[1].matchAll(/["']([^"']+)["']:\s*["'](#[0-9a-f]{6})["']/g)].map((x) => `${x[1]}=${x[2]}`).join(',') : ''; };
+  const aOrd = ordered(read(path.join(ROOT, 'tools/build.mjs')), /const THEME_COLORS = \{([\s\S]*?)\};/);
+  const cOrd = ordered(read(path.join(SRC, 'assets/js/app.js')), /const THEME_COLORS=\{([\s\S]*?)\};/);
+  check(aOrd !== '' && aOrd === cOrd, 'THEME_COLORS in app.js matches tools/build.mjs, in the same order');
+  // The dark-mode steps must cover the same themes in the same (stacking) order.
+  const dOrd = ordered(read(path.join(SRC, 'assets/js/app.js')), /const THEME_COLORS_DARK=\{([\s\S]*?)\};/);
+  check(dOrd !== '' && dOrd.split(',').map((x) => x.split('=')[0]).join() === aOrd.split(',').map((x) => x.split('=')[0]).join(),
+    'THEME_COLORS_DARK in app.js has the same themes in the same order');
 
   // The year floor exists twice — once for the generated pages, once for the
   // client-side charts. They are in different languages and cannot import each
@@ -542,6 +552,64 @@ check(!pages.some((p) => /fetch\(['"]\/books\.json/.test(p.html)), 'no page fetc
     check(dead.length === 0, `every redirect target is a page the build emits (${targets.length} rule(s))`, dead.join(', '));
   }
   check(!/\s301\s*$/m.test(read(path.join(DIST, '_headers'))), 'no redirect rules stranded in _headers, where Pages ignores them');
+}
+
+// ---------------------------------------------------------------- Phase 1 structure (Nov 2026)
+{
+  const byRoute = (r) => pages.find((p2) => p2.route === r);
+  // Theme display names: app.js carries its own copy of the source -> name map for the
+  // client-side charts. It must match themes.json exactly, or a chart legend drifts.
+  const appJs = read(path.join(SRC, 'assets/js/app.js'));
+  const m = /const THEME_DISPLAY=(\{[^}]*\});/.exec(appJs);
+  const want = Object.fromEntries(themesCfg.filter((t) => t.source !== t.name).map((t) => [t.source, t.name]));
+  check(!!m && JSON.stringify(JSON.parse(m[1])) === JSON.stringify(want),
+    'app.js THEME_DISPLAY matches the source→name aliases in themes.json', m ? m[1] : 'THEME_DISPLAY not found');
+  check(!/const STANDOUTS\s*=/.test(appJs), 'no hardcoded STANDOUTS constant — standouts come from Notion');
+
+  // Breadcrumbs only where the hierarchy is real; no eyebrow labels anywhere.
+  const crumbed = (p2) => /class="crumbs"/.test(p2.html);
+  const shouldCrumb = (p2) => p2.route.startsWith('/book/') || /^\/\d{4}$/.test(p2.route) || /^\/themes\/[a-z-]+$/.test(p2.route);
+  const crumbWrong = generated.filter((p2) => crumbed(p2) !== shouldCrumb(p2)).map((p2) => p2.route);
+  check(crumbWrong.length === 0, 'visible breadcrumbs on exactly the book, year and theme pages', crumbWrong.slice(0, 5).join(', '));
+  const kickers = pages.filter((p2) => /class="kicker"/.test(p2.html)).map((p2) => p2.route);
+  check(kickers.length === 0, 'no eyebrow (.kicker) labels on any page', kickers.slice(0, 5).join(', '));
+
+  // Nav: Recommendations is not in the desktop bar, but is in the mobile Explore group.
+  const home = byRoute('/');
+  check(!!home, 'home page found for the Phase 1 checks');
+  if (home) {
+    const bar = /<div class="nav-in">([\s\S]*?)<\/div>\s*<div class="navmenu"/.exec(home.html);
+    check(!!bar && !/href="\/recommendations"/.test(bar[1]), 'Recommendations is out of the desktop nav bar');
+    check(/class="navgroup"[\s\S]*?href="\/recommendations"/.test(home.html), 'Recommendations is in the mobile Explore group');
+    // The home shelf must not repeat the feature card's book.
+    const feat = /<a class="ft-cover" href="([^"]+)"/.exec(home.html);
+    const shelf = /<div class="shelf" id="randomShelf">([\s\S]*?)<\/div>\s*<div class="home-cta">/.exec(home.html);
+    check(!!feat && !!shelf && !shelf[1].includes(`href="${feat[1]}"`), 'home shelf does not repeat the most recent read');
+  }
+  // Recommendations left the desktop nav, so these pages must link to it in their body.
+  for (const r of ['/', '/up-next', '/about', '/404']) {
+    const pg = r === '/404' ? notFound : byRoute(r);
+    const body = pg ? pg.html.replace(/<nav>[\s\S]*?<\/nav>/, '').replace(/<footer[\s\S]*?<\/footer>/, '') : '';
+    check(/href="\/recommendations"/.test(body), `${r} links to /recommendations in the page body`);
+  }
+  // Timeline no longer carries the month trend; analytics does.
+  check(!/id="mtBars"/.test((byRoute('/timeline') || {}).html || ''), '/timeline no longer has Trend by month');
+  check(/id="mtBars"/.test((byRoute('/analytics') || {}).html || ''), '/analytics has Trend by month');
+  for (const id of ['paceChart', 'themeStack']) check(!new RegExp(`id="${id}"`).test((byRoute('/analytics') || {}).html || ''), `/analytics no longer has #${id}`);
+
+  // Standouts: /recommendations lists exactly the Notion-ticked read books, by year.
+  const ticked = readBooks.filter((b) => b.standout === true);
+  const rec = byRoute('/recommendations');
+  const listed = rec ? [...rec.html.matchAll(/<a class="pickcard" href="\/book\/([^"]+)"/g)].map((x) => x[1]) : [];
+  check(listed.length === ticked.length, `/recommendations lists every standout (${ticked.length})`, `listed ${listed.length}`);
+  check(!!rec && !/still being written|grouped by what they are useful/.test(rec.html), '/recommendations carries no placeholder or clustering copy');
+
+  // Theme pages: at most 12 full cards each.
+  const over = themePages.filter((p2) => (p2.html.match(/class="pickcard/g) || []).length > 12).map((p2) => p2.route);
+  check(over.length === 0, 'theme pages show at most 12 full cards', over.join(', '));
+  // Year pages carry their review-card host.
+  const noYir = yearPages.filter((p2) => !/id="yearReview" data-year="\d{4}"/.test(p2.html)).map((p2) => p2.route);
+  check(noYir.length === 0, 'every year page has its Years-in-review card host', noYir.join(', '));
 }
 
 // ---------------------------------------------------------------- OUT

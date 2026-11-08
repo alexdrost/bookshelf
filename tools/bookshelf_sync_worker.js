@@ -1,33 +1,45 @@
 /**
  * bookshelf-notion-sync — Cloudflare Worker
- * Notion (Books DB)  ->  books.json  ->  GitHub  ->  Cloudflare Pages
+ * Notion (Books DB)  ->  books.json + covers  ->  GitHub  ->  Cloudflare Pages
+ *                    ->  Notion page icons (the one write back to Notion)
  *
- * REPLACEMENT for the previous Worker. Written fresh (the original source was not
- * available), so treat this as the new canonical file rather than a patch.
+ * THIS FILE IS THE ONLY CANONICAL COPY. Never rebuild the Worker from an older copy —
+ * on 3 Oct 2026 a change built on a stale base silently removed /all, icon setting and the
+ * shared subrequest meter. After any deploy, /health must list ICON_BASE, ICON_BATCH and
+ * MAX_SUBREQUESTS.
  *
- * What changed versus the version that is live today
- *   1. readProp() dispatches on the Notion property TYPE. The old generic rich_text
- *      accessor returned "" for `Title` — the only title-type property in the schema —
- *      which silently emptied every title in books.json and nothing else.
- *   2. `Slug` joins the allowlist. Notion is now the system of record for URLs.
- *   3. A validation gate runs BEFORE the commit and aborts on a whole-field wipe, so
- *      this class of failure can never publish silently again.
+ * History, newest first
+ *   Nov 2026  Re-implements the lost 13 Sep design: Notion page icons, /all, and ONE shared
+ *             subrequest meter threaded through every outbound fetch. Adds `lastEdited` and
+ *             `standout` to books.json.
+ *   Oct 2026  amazonAsin / audibleAsin synced.
+ *   Aug 2026  readProp() dispatches on property TYPE (the title-wipe fix); Slug in the
+ *             allowlist; the validation gate; /covers.
  *
  * Triggers
- *   GET /sync?key=SYNC_SECRET   manual
- *   cron 0 8 * * *              nightly
- *   GET /health                 config check, no writes
+ *   GET /all?key=SYNC_SECRET[&dry=1]      sync, then covers, then icons — one meter
+ *   GET /sync?key=SYNC_SECRET[&dry=1]     books.json only
+ *   GET /covers?key=SYNC_SECRET[&dry=1]   covers, then icons
+ *       optional on /all and /covers: force=<gid>, limit=<n covers>, iconLimit=<n>, icons=0
+ *   cron 0 8 * * *                        the same as /all
+ *   GET /health                           config check, no key, no writes, no outbound calls
  *
  * Secrets (Worker secret store — never in this file)
  *   NOTION_TOKEN, GITHUB_TOKEN, SYNC_SECRET
- * Vars
- *   DATA_SOURCE_ID, TAGS_DATA_SOURCE_ID, GITHUB_REPO, GITHUB_BRANCH, BOOKS_PATH
+ * Vars (all plain text)
+ *   DATA_SOURCE_ID, TAGS_DATA_SOURCE_ID, GITHUB_REPO, GITHUB_BRANCH, BOOKS_PATH, COVERS_PATH,
+ *   COVER_BATCH (15), ICON_BASE (https://bookshelf.drost.us/covers), ICON_BATCH (30),
+ *   MAX_SUBREQUESTS (45)
+ *
+ * Writes, exhaustively
+ *   GitHub: books.json (one PUT, only when the blob SHA differs) and covers/{gid}.jpg.
+ *   Notion: PATCH /v1/pages/{id} with { icon } — nothing else, ever. No property, no body.
  */
 
 const NOTION_VERSION = '2025-09-03';
 const NOTION = 'https://api.notion.com/v1';
 
-/** Safety floor: refuse to publish a suspiciously small library. ~321 books live today. */
+/** Safety floor: refuse to publish a suspiciously small library. ~341 read books live today. */
 const MIN_PUBLIC_BOOKS = 300;
 
 /** The 11 locked themes. Anything else aborts the commit. */
@@ -38,6 +50,48 @@ const THEMES = new Set([
 ]);
 
 const CORE_DELIM = '|||';
+
+// ---------------------------------------------------------------- config + meter
+const COVER_BATCH_DEFAULT = 15;
+const ICON_BASE_DEFAULT = 'https://bookshelf.drost.us/covers';
+const ICON_BATCH_DEFAULT = 30;
+/** Cloudflare's free-plan hard cap is 50 subrequests per invocation. Budget below it. */
+const MAX_SUBREQUESTS_DEFAULT = 45;
+/** Headroom the cover and icon phases leave untouched. */
+const SPARE = 2;
+
+const posInt = (v, d) => { const n = parseInt(v, 10); return Number.isFinite(n) && n > 0 ? n : d; };
+
+function cfg(env) {
+  return {
+    coverBatch: posInt(env.COVER_BATCH, COVER_BATCH_DEFAULT),
+    iconBase: String(env.ICON_BASE || ICON_BASE_DEFAULT).replace(/\/+$/, ''),
+    iconBatch: posInt(env.ICON_BATCH, ICON_BATCH_DEFAULT),
+    maxSub: posInt(env.MAX_SUBREQUESTS, MAX_SUBREQUESTS_DEFAULT),
+  };
+}
+
+/**
+ * ONE meter per invocation. Every outbound call in this file goes through mfetch(), and
+ * mfetch() refuses to run without a meter, so a call that forgets to thread it fails in
+ * testing instead of quietly spending budget nobody is counting.
+ *
+ * The bug this exists to prevent: sync and covers each believed they had the whole budget,
+ * so a busy night asked for more than the platform allows and the cron died partway with
+ * Cloudflare's own "Too many subrequests". Now the cover and icon phases plan against what
+ * is actually left, and the hard stop below fires before the platform's does.
+ */
+const newMeter = (env) => ({ calls: 0, max: cfg(env).maxSub });
+const room = (meter) => meter.max - meter.calls;
+
+async function mfetch(meter, url, init) {
+  if (!meter || typeof meter.calls !== 'number') throw new Error('internal: outbound fetch without a meter');
+  if (meter.calls >= meter.max) {
+    throw new Error(`subrequest budget spent (${meter.calls}/${meter.max}) — stopped before Cloudflare's hard cap`);
+  }
+  meter.calls++;
+  return fetch(url, init);
+}
 
 // ---------------------------------------------------------------- property reader
 /**
@@ -65,21 +119,26 @@ function readProp(prop) {
   }
 }
 
+/** A checkbox that may not exist yet. Missing property, or any other type, reads as false. */
+const readCheckbox = (prop) => prop?.type === 'checkbox' && prop.checkbox === true;
+
 const yyyymmdd = (iso) => (iso ? iso.slice(0, 10).replace(/-/g, '/') : '');
 
 // ---------------------------------------------------------------- Notion
-async function notionQueryAll(dataSourceId, token, body = {}) {
+const notionHeaders = (token) => ({
+  Authorization: `Bearer ${token}`,
+  'Notion-Version': NOTION_VERSION,
+  'Content-Type': 'application/json',
+});
+
+async function notionQueryAll(dataSourceId, token, body, meter) {
   const rows = [];
   let cursor;
   do {
-    const res = await fetch(`${NOTION}/data_sources/${dataSourceId}/query`, {
+    const res = await mfetch(meter, `${NOTION}/data_sources/${dataSourceId}/query`, {
       method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Notion-Version': NOTION_VERSION,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...body, page_size: 100, ...(cursor ? { start_cursor: cursor } : {}) }),
+      headers: notionHeaders(token),
+      body: JSON.stringify({ ...(body || {}), page_size: 100, ...(cursor ? { start_cursor: cursor } : {}) }),
     });
     if (!res.ok) throw new Error(`Notion ${res.status} on ${dataSourceId}: ${(await res.text()).slice(0, 300)}`);
     const json = await res.json();
@@ -89,18 +148,43 @@ async function notionQueryAll(dataSourceId, token, body = {}) {
   return rows;
 }
 
+/**
+ * Public? is the ONLY visibility gate — filter at the source so nothing unpublished can
+ * reach the file even by accident. /all and the cron call this once and hand the same rows
+ * to sync and to covers, which saves a full re-query (4 subrequests at ~380 books).
+ */
+const fetchPublicPages = (env, meter) => notionQueryAll(env.DATA_SOURCE_ID, env.NOTION_TOKEN, {
+  filter: { property: 'Public?', checkbox: { equals: true } },
+}, meter);
+
+/** The page's current icon URL if it is an external icon; anything else (none, emoji,
+ *  uploaded file) reads as null and so never equals the wanted URL. Zero calls: the query
+ *  result already carries the page object. */
+const externalIconUrl = (page) => (page?.icon?.type === 'external' ? page.icon.external?.url ?? null : null);
+const iconLabel = (page) => (page?.icon ? (externalIconUrl(page) || `(${page.icon.type})`) : '(none)');
+
+/** THE ONLY WRITE TO NOTION IN THIS FILE. Sets the page icon and nothing else. */
+async function setPageIcon(env, pageId, url, meter) {
+  const res = await mfetch(meter, `${NOTION}/pages/${pageId}`, {
+    method: 'PATCH',
+    headers: notionHeaders(env.NOTION_TOKEN),
+    body: JSON.stringify({ icon: { type: 'external', external: { url } } }),
+  });
+  if (!res.ok) {
+    const err = new Error(`Notion ${res.status} on icon PATCH: ${(await res.text()).slice(0, 200)}`);
+    err.status = res.status;
+    throw err;
+  }
+}
+
 // ---------------------------------------------------------------- build books.json
-async function buildBooksJson(env) {
+async function buildBooksJson(env, { meter, pages: given } = {}) {
   const token = env.NOTION_TOKEN;
 
-  // Public? is the ONLY visibility gate — filter at the source so nothing unpublished
-  // can reach the file even by accident.
-  const pages = await notionQueryAll(env.DATA_SOURCE_ID, token, {
-    filter: { property: 'Public?', checkbox: { equals: true } },
-  });
+  const pages = given || await fetchPublicPages(env, meter);
 
   // Tag relation -> tag name.
-  const tagPages = await notionQueryAll(env.TAGS_DATA_SOURCE_ID, token);
+  const tagPages = await notionQueryAll(env.TAGS_DATA_SOURCE_ID, token, {}, meter);
   const tagName = new Map();
   for (const t of tagPages) {
     const nameProp = Object.values(t.properties).find((p) => p.type === 'title');
@@ -126,8 +210,7 @@ async function buildBooksJson(env) {
       // edited out from under it; an ASIN is just data.
       // Amazon ASIN is an OVERRIDE and is usually blank — the Amazon URL normally comes
       // from the ISBN above. Audible ASIN is the only source for an Audible link, so a
-      // blank one simply means no link, which is the intended behaviour while Alex is
-      // still filling them in.
+      // blank one simply means no link.
       amazonAsin: readProp(P['Amazon ASIN']),
       audibleAsin: readProp(P['Audible ASIN']),
       pages: readProp(P['Pages']),
@@ -135,7 +218,13 @@ async function buildBooksJson(env) {
       dateRead,
       yearRead: dateRead ? dateRead.slice(0, 4) : '',
       shelf: readProp(P['Shelf']),
-      slug: readProp(P['Slug']),                   // <- new: Notion owns the URL
+      slug: readProp(P['Slug']),                   // Notion owns the URL
+      // Page metadata, not a property. Drives the currently-reading order on /up-next.
+      // Any edit to the page bumps it — including this Worker's own icon PATCH, so the
+      // sync after an icon is set commits once more. That is expected, not churn.
+      lastEdited: p.last_edited_time || '',
+      // The "Standout" checkbox. False until the property exists in Notion.
+      standout: readCheckbox(P['Standout']),
       themes: readProp(P['Themes']),
       tags: readProp(P['Tags']).map((id) => tagName.get(id)).filter(Boolean).join(', '),
       summary: readProp(P['Summary']),
@@ -266,13 +355,14 @@ const ghHeaders = (env) => ({
   'Content-Type': 'application/json',
 });
 
-async function commitIfChanged(env, content) {
+/** Two calls when it writes (GET + PUT), one when nothing changed. */
+async function commitIfChanged(env, content, meter) {
   const path = env.BOOKS_PATH || 'books.json';
   const branch = env.GITHUB_BRANCH || 'main';
   const api = `https://api.github.com/repos/${env.GITHUB_REPO}/contents/${path}`;
   const headers = ghHeaders(env);
 
-  const cur = await fetch(`${api}?ref=${branch}`, { headers });
+  const cur = await mfetch(meter, `${api}?ref=${branch}`, { headers });
   let sha;
   if (cur.ok) {
     const j = await cur.json();
@@ -284,7 +374,7 @@ async function commitIfChanged(env, content) {
   }
 
   const b64 = toBase64(content);
-  const put = await fetch(api, {
+  const put = await mfetch(meter, api, {
     method: 'PUT',
     headers,
     body: JSON.stringify({
@@ -328,9 +418,10 @@ function readFileRef(prop) {
 }
 
 /** Existing files in a repo directory, as name -> blob sha. Missing directory = empty map. */
-async function listDir(env, dirPath) {
+async function listDir(env, dirPath, meter) {
   const branch = env.GITHUB_BRANCH || 'main';
-  const res = await fetch(
+  const res = await mfetch(
+    meter,
     `https://api.github.com/repos/${env.GITHUB_REPO}/contents/${dirPath}?ref=${branch}`,
     { headers: ghHeaders(env) }
   );
@@ -345,11 +436,11 @@ async function listDir(env, dirPath) {
   };
 }
 
-async function putBinary(env, filePath, bytes, existingSha) {
+async function putBinary(env, filePath, bytes, existingSha, meter) {
   const branch = env.GITHUB_BRANCH || 'main';
   const api = `https://api.github.com/repos/${env.GITHUB_REPO}/contents/${filePath}`;
   if (existingSha && existingSha === await gitBlobShaBytes(bytes)) return { changed: false };
-  const put = await fetch(api, {
+  const put = await mfetch(meter, api, {
     method: 'PUT',
     headers: ghHeaders(env),
     body: JSON.stringify({
@@ -363,102 +454,192 @@ async function putBinary(env, filePath, bytes, existingSha) {
   return { changed: true };
 }
 
+/** Icon failures that will fail identically for every remaining page. Stop, don't burn budget. */
+const ICON_STOP = {
+  401: 'Notion token rejected (401) — icons stopped for this run',
+  403: "Notion refused the icon write (403) — the integration probably lacks the 'Update content' capability",
+  429: 'Notion rate-limited the icon writes (429) — the rest wait for the next run',
+};
+
 /**
- * Free-plan Workers allow 50 subrequests per invocation; each cover costs two (fetch from
- * Notion, PUT to GitHub). Overheads take ~6. Hence a conservative default batch — the steady
- * state is nought to three new covers at a time, so this only bites on a cold backfill, and
- * even then the response reports what's left so you can just click again.
+ * Covers, then icons. Each cover costs two subrequests (image fetch + GitHub PUT); each icon
+ * costs one. Covers go first and take what they need up to the batch; icons take whatever the
+ * meter has left, less SPARE. Run alone (/covers) it brings its own meter; chained (/all, cron)
+ * it is handed the shared one and the rows sync already fetched.
  */
-const COVER_BATCH_DEFAULT = 15;
-
-async function runCoverSync(env, { dryRun = false, force = '', limit = 0 } = {}) {
+async function runCoverSync(env, {
+  dryRun = false, force = '', limit = 0, iconLimit = 0, icons = true, meter: given, pages: givenPages,
+  projectExtra = 0,
+} = {}) {
   const started = Date.now();
+  const c = cfg(env);
+  const meter = given || newMeter(env);
   const dir = env.COVERS_PATH || 'covers';
-  const batch = limit || Number(env.COVER_BATCH) || COVER_BATCH_DEFAULT;
+  const batch = limit || c.coverBatch;
+  const iconCap = iconLimit || c.iconBatch;
 
-  const pages = await notionQueryAll(env.DATA_SOURCE_ID, env.NOTION_TOKEN, {
-    filter: { property: 'Public?', checkbox: { equals: true } },
-  });
-
-  const { files: existing, truncated } = await listDir(env, dir);
+  const pages = givenPages || await fetchPublicPages(env, meter);
+  const { files: existing, truncated } = await listDir(env, dir, meter);
 
   const skipped = [];
   const noCover = [];
   const candidates = [];
+  const iconQueue = [];          // cover already in the repo, icon is not the wanted URL
+  let iconsCorrect = 0;
   for (const p of pages) {
     const id = readProp(p.properties['Goodreads ID']);
     const title = readProp(p.properties['Title']);
-    // No join key means no filename. Never invent one.
-    if (!id) { noCover.push({ id: null, title, why: 'no Goodreads ID' }); continue; }
+    // No join key means no filename and no icon URL. Never invent one.
+    if (!id) { noCover.push({ id: null, title, why: 'no Goodreads ID — skipped for covers and icons' }); continue; }
+
+    const name = `${id}.jpg`;
+    const wantedIcon = `${c.iconBase}/${name}`;
+    const currentIcon = externalIconUrl(p);
+    const iconOk = currentIcon === wantedIcon;
+    if (existing.has(name)) {
+      if (iconOk) iconsCorrect++;
+      else iconQueue.push({ pageId: p.id, id, title, url: wantedIcon, was: iconLabel(p) });
+    }
+
     const ref = readFileRef(p.properties['Cover Image']);
     if (!ref?.url) { noCover.push({ id, title, why: ref ? `attachment has no URL (type ${ref.kind})` : 'no Cover Image attached' }); continue; }
-    const name = `${id}.jpg`;
     const isForced = force && force === id;
     if (existing.has(name) && !isForced) { skipped.push(name); continue; }
-    candidates.push({ id, title, name, url: ref.url, sourceName: ref.name, sha: existing.get(name) || null });
+    candidates.push({
+      id, title, name, url: ref.url, sourceName: ref.name, sha: existing.get(name) || null,
+      pageId: p.id, wantedIcon, iconOk, was: iconLabel(p),
+    });
   }
 
   const todo = candidates.slice(0, batch);
+  // Covers that fit the meter. Two calls each, SPARE untouched. A dry run inside /all adds
+  // back the books.json GET + PUT its own dry sync skipped, so the projection is honest.
+  const base = meter.calls + (dryRun ? projectExtra : 0);
+  const fits = Math.max(0, Math.min(todo.length, Math.floor((meter.max - base - SPARE) / 2)));
+
   const report = {
     ok: true,
     coversInRepo: existing.size,
     publicBooks: pages.length,
     alreadyPresent: skipped.length,
     missing: candidates.length,
-    attempted: todo.length,
-    remaining: candidates.length - todo.length,
+    attempted: 0,
+    remaining: candidates.length,
+    deferredForBudget: todo.length - fits,
     committed: 0,
     unchanged: 0,
     written: [],
+    iconsCorrect,
+    iconsNeeded: 0,
+    iconsSet: 0,
+    iconsFailed: 0,
+    iconsRemaining: 0,
+    iconsSetFor: [],
+    subrequests: 0,
+    subrequestCap: meter.max,
     warnings: [],
     ms: 0,
   };
   if (truncated) report.warnings.push(`${dir}/ listing hit the 1,000-entry API cap — results may be incomplete`);
   for (const n of noCover) report.warnings.push(`${n.id ?? '(no id)'} "${n.title}": ${n.why}`);
-
-  if (dryRun) {
-    report.dryRun = true;
-    report.wouldWrite = todo.map((c) => `${c.name}  <-  ${c.sourceName || '(unnamed)'}`);
-    report.ms = Date.now() - started;
-    return report;
+  if (report.deferredForBudget) {
+    report.warnings.push(`${report.deferredForBudget} cover(s) deferred — subrequest budget (${meter.calls}/${meter.max} used before covers)`);
   }
 
-  for (const c of todo) {
+  const iconRoom = (used) => Math.max(0, Math.min(iconCap, meter.max - used - SPARE));
+  const finish = () => {
+    report.iconsRemaining = report.iconsNeeded - report.iconsSet;
+    report.subrequests = meter.calls;
+    report.ms = Date.now() - started;
+    return report;
+  };
+
+  // ------------------------------------------------------------ dry run: zero writes
+  if (dryRun) {
+    const willWrite = todo.slice(0, fits);
+    // Project exactly what a real run would do: those covers cost 2 each, and each one that
+    // lands queues its icon ahead of the existing backlog.
+    const queued = willWrite.filter((x) => !x.sha && !x.iconOk)
+      .map((x) => ({ id: x.id, url: x.wantedIcon }));
+    const queue = [...queued, ...iconQueue];
+    const projected = base + 2 * willWrite.length;
+    report.dryRun = true;
+    report.attempted = 0;
+    report.wouldWrite = willWrite.map((x) => `${x.name}  <-  ${x.sourceName || '(unnamed)'}`);
+    report.iconsNeeded = queue.length;
+    report.wouldSetIcon = icons ? queue.slice(0, iconRoom(projected)).map((q) => `${q.id} -> ${q.url}`) : [];
+    if (!icons) report.iconsSkipped = true;
+    report.projectedSubrequests = projected + report.wouldSetIcon.length;
+    return finish();
+  }
+
+  // ------------------------------------------------------------ covers
+  const newIcons = [];
+  for (const x of todo.slice(0, fits)) {
+    report.attempted++;
     try {
-      const res = await fetch(c.url);
-      if (!res.ok) { report.warnings.push(`${c.name}: Notion returned ${res.status} for the image`); continue; }
+      const res = await mfetch(meter, x.url);
+      if (!res.ok) { report.warnings.push(`${x.name}: Notion returned ${res.status} for the image`); continue; }
       const bytes = new Uint8Array(await res.arrayBuffer());
 
       const kind = imageKind(bytes);
       if (kind === 'too-small' || bytes.length < 1024) {
-        report.warnings.push(`${c.name}: only ${bytes.length} bytes — not a real image, skipped`);
+        report.warnings.push(`${x.name}: only ${bytes.length} bytes — not a real image, skipped`);
         continue;
       }
       if (bytes.length > 5 * 1024 * 1024) {
-        report.warnings.push(`${c.name}: ${(bytes.length / 1048576).toFixed(1)} MB — too large for a cover, skipped`);
+        report.warnings.push(`${x.name}: ${(bytes.length / 1048576).toFixed(1)} MB — too large for a cover, skipped`);
         continue;
       }
       if (kind !== 'jpeg') {
-        report.warnings.push(`${c.name}: source is ${kind}, not JPEG — written anyway, but re-save it as JPEG when convenient`);
+        report.warnings.push(`${x.name}: source is ${kind}, not JPEG — written anyway, but re-save it as JPEG when convenient`);
       }
 
-      const { changed } = await putBinary(env, `${dir}/${c.name}`, bytes, c.sha);
-      if (changed) { report.committed++; report.written.push(`${c.name} (${(bytes.length / 1024).toFixed(0)} kB, ${kind})`); }
-      else report.unchanged++;
+      const { changed } = await putBinary(env, `${dir}/${x.name}`, bytes, x.sha, meter);
+      if (changed) {
+        report.committed++;
+        report.written.push(`${x.name} (${(bytes.length / 1024).toFixed(0)} kB, ${kind})`);
+        // A new cover queues its icon. A forced replacement keeps the same URL, so its icon
+        // was already counted above from the existing-cover pass.
+        if (!x.sha && !x.iconOk) newIcons.push({ pageId: x.pageId, id: x.id, title: x.title, url: x.wantedIcon, was: x.was });
+      } else report.unchanged++;
     } catch (err) {
       report.ok = false;
-      report.warnings.push(`${c.name}: ${String(err && err.message || err)}`);
+      report.warnings.push(`${x.name}: ${String(err && err.message || err)}`);
     }
   }
+  report.remaining = candidates.length - report.attempted;
 
-  report.ms = Date.now() - started;
-  return report;
+  // ------------------------------------------------------------ icons
+  const queue = [...newIcons, ...iconQueue];
+  report.iconsNeeded = queue.length;
+  if (!icons) {
+    report.iconsSkipped = true;
+    return finish();
+  }
+  const n = Math.min(queue.length, iconRoom(meter.calls));
+  for (const q of queue.slice(0, n)) {
+    try {
+      await setPageIcon(env, q.pageId, q.url, meter);
+      report.iconsSet++;
+      report.iconsSetFor.push(`${q.id} "${q.title}"  ${q.was} -> ${q.url}`);
+    } catch (err) {
+      // An icon failure is a warning. It never fails the run.
+      report.iconsFailed++;
+      report.warnings.push(`icon ${q.id} "${q.title}": ${String(err && err.message || err)}`);
+      if (ICON_STOP[err && err.status]) { report.iconsBlocked = ICON_STOP[err.status]; break; }
+    }
+  }
+  return finish();
 }
 
 // ---------------------------------------------------------------- run
-async function runSync(env, { dryRun = false } = {}) {
+const isReading = (b) => b.shelf === 'reading' || b.shelf === 'currently-reading';
+
+async function runSync(env, { dryRun = false, meter: given, pages } = {}) {
   const started = Date.now();
-  const data = await buildBooksJson(env);
+  const meter = given || newMeter(env);
+  const data = await buildBooksJson(env, { meter, pages });
   const { errors, warnings } = validate(data);
 
   const report = {
@@ -467,38 +648,100 @@ async function runSync(env, { dryRun = false } = {}) {
     edges: data.edges.length,
     withSlug: data.books.filter((b) => b.slug).length,
     read: data.books.filter((b) => b.shelf === 'read').length,
-    currentlyReading: data.books.filter((b) => b.shelf === 'currently-reading').length,
+    currentlyReading: data.books.filter(isReading).length,
+    standouts: data.books.filter((b) => b.standout).length,
     errors,
     warnings: warnings.slice(0, 20),
     warningCount: warnings.length,
     ms: Date.now() - started,
   };
-  if (errors.length) return { ...report, committed: false, aborted: true };
+  const done = (o) => ({ ...report, ...o, subrequests: meter.calls, subrequestCap: meter.max });
+  if (errors.length) return done({ committed: false, aborted: true });
 
   // `_truncated` is a validation-only field — it never ships.
   for (const b of data.books) delete b._truncated;
   const content = JSON.stringify(data, null, 1) + '\n';
-  if (dryRun) return { ...report, committed: false, dryRun: true, bytes: content.length };
+  if (dryRun) return done({ committed: false, dryRun: true, bytes: content.length });
 
-  const { changed } = await commitIfChanged(env, content);
-  return { ...report, committed: changed, bytes: content.length };
+  const { changed } = await commitIfChanged(env, content, meter);
+  return done({ committed: changed, bytes: content.length });
 }
+
+/**
+ * Sync, then covers, then icons — on ONE meter, from ONE Notion query.
+ *
+ * Sync goes first so the catalogue always gets first claim on the budget: covers and icons
+ * are cosmetic and simply take what is left. Each half is caught separately, so a cover or
+ * icon problem can never stop books.json syncing, and a sync abort (422) still lets covers run.
+ */
+async function runAll(env, { dryRun = false, force = '', limit = 0, iconLimit = 0, icons = true } = {}) {
+  const started = Date.now();
+  const meter = newMeter(env);
+  const pages = await fetchPublicPages(env, meter);
+
+  let sync;
+  try { sync = await runSync(env, { dryRun, meter, pages }); }
+  catch (err) { sync = { ok: false, committed: false, error: String(err && err.message || err) }; }
+
+  let covers;
+  // A real sync that commits spends 2 calls (GET + PUT) a dry sync does not; the dry
+  // projection reserves them so wouldSetIcon matches what the real click will do.
+  const projectExtra = dryRun && sync.ok ? 2 : 0;
+  try { covers = await runCoverSync(env, { dryRun, force, limit, iconLimit, icons, meter, pages, projectExtra }); }
+  catch (err) { covers = { ok: false, error: String(err && err.message || err) }; }
+
+  const coversRemaining = covers.remaining ?? 0;
+  const iconsRemaining = covers.iconsRemaining ?? 0;
+  return {
+    ok: !!(sync.ok && covers.ok),
+    ...(dryRun ? { dryRun: true } : {}),
+    committed: !!sync.committed,                 // books.json
+    coversCommitted: covers.committed ?? 0,
+    coversRemaining,
+    iconsSet: covers.iconsSet ?? 0,
+    iconsRemaining,
+    ...(covers.iconsBlocked ? { iconsBlocked: covers.iconsBlocked } : {}),
+    ...(dryRun ? { wouldSetIcon: covers.wouldSetIcon ?? [], projectedSubrequests: covers.projectedSubrequests } : {}),
+    // A dry run writes nothing, so "click again" only means something on a real run. A
+    // blocked icon phase (401/403) will not clear by clicking, so it does not count.
+    clickAgain: !dryRun && !covers.error && (
+      coversRemaining > 0 || (icons && !covers.iconsBlocked && iconsRemaining > 0)
+    ),
+    subrequests: meter.calls,
+    subrequestCap: meter.max,
+    ms: Date.now() - started,
+    sync,
+    covers,
+  };
+}
+
+// ---------------------------------------------------------------- routes
+const coverOpts = (url) => ({
+  dryRun: url.searchParams.get('dry') === '1',
+  force: url.searchParams.get('force') || '',
+  limit: Number(url.searchParams.get('limit')) || 0,
+  iconLimit: Number(url.searchParams.get('iconLimit')) || 0,
+  icons: url.searchParams.get('icons') !== '0',
+});
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const json = (o, status = 200) => new Response(JSON.stringify(o, null, 2), { status, headers: { 'Content-Type': 'application/json' } });
+    const authed = () => url.searchParams.get('key') === env.SYNC_SECRET && !!env.SYNC_SECRET;
 
     if (url.pathname === '/health') {
       return json({
         ok: true,
         notionVersion: NOTION_VERSION,
         minPublicBooks: MIN_PUBLIC_BOOKS,
+        routes: ['/all', '/sync', '/covers', '/health'],
         // Secrets report presence only — never echo a secret, even partially.
         secrets: {
           NOTION_TOKEN: !!env.NOTION_TOKEN, GITHUB_TOKEN: !!env.GITHUB_TOKEN, SYNC_SECRET: !!env.SYNC_SECRET,
         },
         // Vars echo their value: a typo here is the likeliest failure, and none is sensitive.
+        // "(default)" means the var is not set and the built-in default is in force.
         vars: {
           DATA_SOURCE_ID: env.DATA_SOURCE_ID ?? null,
           TAGS_DATA_SOURCE_ID: env.TAGS_DATA_SOURCE_ID ?? null,
@@ -507,12 +750,25 @@ export default {
           BOOKS_PATH: env.BOOKS_PATH ?? 'books.json (default)',
           COVERS_PATH: env.COVERS_PATH ?? 'covers (default)',
           COVER_BATCH: env.COVER_BATCH ?? `${COVER_BATCH_DEFAULT} (default)`,
+          ICON_BASE: env.ICON_BASE ?? `${ICON_BASE_DEFAULT} (default)`,
+          ICON_BATCH: env.ICON_BATCH ?? `${ICON_BATCH_DEFAULT} (default)`,
+          MAX_SUBREQUESTS: env.MAX_SUBREQUESTS ?? `${MAX_SUBREQUESTS_DEFAULT} (default)`,
         },
       });
     }
 
+    if (url.pathname === '/all') {
+      if (!authed()) return json({ error: 'unauthorized' }, 401);
+      try {
+        const result = await runAll(env, coverOpts(url));
+        return json(result, result.ok ? 200 : (result.sync?.aborted ? 422 : 500));
+      } catch (err) {
+        return json({ ok: false, error: String(err && err.message || err) }, 500);
+      }
+    }
+
     if (url.pathname === '/sync') {
-      if (url.searchParams.get('key') !== env.SYNC_SECRET) return json({ error: 'unauthorized' }, 401);
+      if (!authed()) return json({ error: 'unauthorized' }, 401);
       try {
         const result = await runSync(env, { dryRun: url.searchParams.get('dry') === '1' });
         return json(result, result.ok ? 200 : 422);
@@ -522,13 +778,9 @@ export default {
     }
 
     if (url.pathname === '/covers') {
-      if (url.searchParams.get('key') !== env.SYNC_SECRET) return json({ error: 'unauthorized' }, 401);
+      if (!authed()) return json({ error: 'unauthorized' }, 401);
       try {
-        const result = await runCoverSync(env, {
-          dryRun: url.searchParams.get('dry') === '1',
-          force: url.searchParams.get('force') || '',
-          limit: Number(url.searchParams.get('limit')) || 0,
-        });
+        const result = await runCoverSync(env, coverOpts(url));
         return json(result, result.ok ? 200 : 500);
       } catch (err) {
         return json({ ok: false, error: String(err && err.message || err) }, 500);
@@ -537,24 +789,22 @@ export default {
 
     return json({
       error: 'not found',
-      routes: ['/sync?key=…', '/sync?key=…&dry=1', '/covers?key=…', '/covers?key=…&dry=1', '/health'],
+      routes: ['/all?key=…', '/all?key=…&dry=1', '/sync?key=…', '/sync?key=…&dry=1',
+        '/covers?key=…', '/covers?key=…&dry=1', '/health'],
     }, 404);
   },
 
+  // Nightly: exactly /all, on one meter. runAll already isolates sync from covers and icons.
   async scheduled(event, env, ctx) {
-    ctx.waitUntil((async () => {
-      // Books first, and covers in their own try/catch: a cover problem must never be able to
-      // stop books.json syncing. Covers are cosmetic; the catalogue is not.
-      try {
-        console.log('nightly sync', JSON.stringify(await runSync(env)));
-      } catch (e) {
-        console.error('nightly sync failed', e);
-      }
-      try {
-        console.log('nightly covers', JSON.stringify(await runCoverSync(env, { limit: 10 })));
-      } catch (e) {
-        console.error('nightly cover sync failed', e);
-      }
-    })());
+    ctx.waitUntil(
+      runAll(env)
+        .then((r) => {
+          const { sync, covers, ...top } = r;
+          console.log('nightly all', JSON.stringify(top));
+          console.log('nightly sync', JSON.stringify(sync));
+          console.log('nightly covers+icons', JSON.stringify(covers));
+        })
+        .catch((e) => console.error('nightly run failed', e))
+    );
   },
 };
