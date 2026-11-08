@@ -317,13 +317,13 @@
    "isbn": "9780718033323",
    "amazonAsin": "",
    "audibleAsin": "B072PRFBPQ",
-   "pages": "",
+   "pages": "228",
    "yearPub": "2017",
    "dateRead": "2020/02/01",
    "yearRead": "2020",
    "shelf": "read",
    "slug": "building-a-story-brand",
-   "lastEdited": "2026-10-11T16:01:00.000Z",
+   "lastEdited": "2026-11-08T15:52:00.000Z",
    "standout": false,
    "themes": [
     "Business & Finance"
@@ -1381,8 +1381,8 @@
    "yearRead": "2022",
    "shelf": "read",
    "slug": "the-body-keeps-the-score",
-   "lastEdited": "2026-10-04T01:05:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "Psychology & Mind"
    ],
@@ -2044,8 +2044,8 @@
    "yearRead": "2022",
    "shelf": "read",
    "slug": "evil-geniuses",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "History & Foreign Affairs",
     "Society & Culture"
@@ -2082,8 +2082,8 @@
    "yearRead": "2022",
    "shelf": "read",
    "slug": "american-carnage",
-   "lastEdited": "2026-10-04T01:02:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "Politics & Power"
    ],
@@ -2186,8 +2186,8 @@
    "yearRead": "2022",
    "shelf": "read",
    "slug": "the-divider",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -2246,16 +2246,16 @@
    "id": "63029353",
    "title": "The Trump Tapes: Bob Woodward's Twenty Interviews with President Donald Trump",
    "author": "Bob Woodward",
-   "isbn": "9781797124735",
+   "isbn": "9781668028148",
    "amazonAsin": "",
    "audibleAsin": "B0BJH3XL5Y",
-   "pages": "12",
+   "pages": "454",
    "yearPub": "2022",
    "dateRead": "2022/10/27",
    "yearRead": "2022",
    "shelf": "read",
    "slug": "the-trump-tapes",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
+   "lastEdited": "2026-11-08T15:53:00.000Z",
    "standout": false,
    "themes": [
     "History & Foreign Affairs",
@@ -2360,8 +2360,8 @@
    "yearRead": "2022",
    "shelf": "read",
    "slug": "jesus-and-john-wayne",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "History & Foreign Affairs",
     "Religion & Faith"
@@ -2464,8 +2464,8 @@
    "yearRead": "2022",
    "shelf": "read",
    "slug": "losing-the-signal",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "Business & Finance",
     "Tech & Future"
@@ -3014,8 +3014,8 @@
    "yearRead": "2023",
    "shelf": "read",
    "slug": "chip-war",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "History & Foreign Affairs",
     "Tech & Future"
@@ -3793,8 +3793,8 @@
    "yearRead": "2023",
    "shelf": "read",
    "slug": "tracers-in-the-dark",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "Crime & Justice",
     "Tech & Future"
@@ -4360,8 +4360,8 @@
    "yearRead": "2023",
    "shelf": "read",
    "slug": "elon-musk",
-   "lastEdited": "2026-10-04T01:09:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "Memoir & Biography",
     "Tech & Future"
@@ -4424,7 +4424,7 @@
    "id": "32895535",
    "title": "Why Buddhism Is True: The Science and Philosophy of Meditation and Enlightenment",
    "author": "Robert  Wright",
-   "isbn": "9781508235408",
+   "isbn": "9781439195451",
    "amazonAsin": "",
    "audibleAsin": "B073XSBD8Z",
    "pages": "368",
@@ -4433,7 +4433,7 @@
    "yearRead": "2023",
    "shelf": "read",
    "slug": "why-buddhism-is-true",
-   "lastEdited": "2026-10-11T16:31:00.000Z",
+   "lastEdited": "2026-11-08T15:53:00.000Z",
    "standout": false,
    "themes": [
     "Psychology & Mind"
@@ -4578,8 +4578,8 @@
    "yearRead": "2023",
    "shelf": "read",
    "slug": "romney",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "Memoir & Biography"
    ],
@@ -4857,8 +4857,8 @@
    "yearRead": "2023",
    "shelf": "read",
    "slug": "oath-and-honor",
-   "lastEdited": "2026-10-04T01:05:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "Memoir & Biography",
     "Politics & Power"
@@ -4898,8 +4898,8 @@
    "yearRead": "2023",
    "shelf": "read",
    "slug": "the-kingdom-the-power-and-the-glory",
-   "lastEdited": "2026-10-04T00:56:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "Religion & Faith"
    ],
@@ -5412,8 +5412,8 @@
    "yearRead": "2024",
    "shelf": "read",
    "slug": "nuclear-war",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "Business & Finance",
     "History & Foreign Affairs"
@@ -5447,8 +5447,8 @@
    "yearRead": "2024",
    "shelf": "read",
    "slug": "the-pentagon-s-brain",
-   "lastEdited": "2026-10-04T00:56:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "History & Foreign Affairs",
     "Tech & Future"
@@ -5843,8 +5843,8 @@
    "yearRead": "2024",
    "shelf": "read",
    "slug": "empire-of-pain",
-   "lastEdited": "2026-10-04T01:03:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "Crime & Justice",
     "Society & Culture"
@@ -5861,7 +5861,7 @@
     "44643351",
     "216247552",
     "37976541",
-    "38059"
+    "1972"
    ]
   },
   {
@@ -5871,13 +5871,13 @@
    "isbn": "9781633693197",
    "amazonAsin": "",
    "audibleAsin": "1663710651",
-   "pages": "",
+   "pages": "121",
    "yearPub": "2017",
    "dateRead": "2024/06/29",
    "yearRead": "2024",
    "shelf": "read",
    "slug": "mindfulness",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
+   "lastEdited": "2026-11-08T15:52:00.000Z",
    "standout": false,
    "themes": [
     "Personal Growth & Leadership",
@@ -6306,16 +6306,16 @@
    "id": "50487024",
    "title": "How Did We Get Here?: From Theodore Roosevelt to Donald Trump",
    "author": "Robert Dallek",
-   "isbn": "9781094158624",
+   "isbn": "9780062872999",
    "amazonAsin": "",
    "audibleAsin": "0063017466",
-   "pages": "",
+   "pages": "258",
    "yearPub": "2020",
    "dateRead": "2024/08/23",
    "yearRead": "2024",
    "shelf": "read",
    "slug": "how-did-we-get-here",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
+   "lastEdited": "2026-11-08T15:52:00.000Z",
    "standout": false,
    "themes": [
     "History & Foreign Affairs",
@@ -6491,7 +6491,7 @@
    "id": "40226205",
    "title": "Unhinged: An Insider's Account of the Trump White House",
    "author": "Omarosa Manigault Newman",
-   "isbn": "9781508269113",
+   "isbn": "9781982109707",
    "amazonAsin": "",
    "audibleAsin": "B07FKX3K3R",
    "pages": "320",
@@ -6500,7 +6500,7 @@
    "yearRead": "2024",
    "shelf": "read",
    "slug": "unhinged",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
+   "lastEdited": "2026-11-08T15:53:00.000Z",
    "standout": false,
    "themes": [
     "Politics & Power"
@@ -6865,8 +6865,8 @@
    "yearRead": "2024",
    "shelf": "read",
    "slug": "nexus",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "History & Foreign Affairs",
     "Tech & Future"
@@ -6897,16 +6897,16 @@
    "id": "50486810",
    "title": "War for Eternity: Inside Bannon's Far-Right Circle of Global Powerbrokers",
    "author": "Benjamin R. Teitelbaum",
-   "isbn": "9781094149752",
+   "isbn": "9780062978455",
    "amazonAsin": "",
    "audibleAsin": "0141993758",
-   "pages": "1",
+   "pages": "317",
    "yearPub": "2020",
    "dateRead": "2024/10/13",
    "yearRead": "2024",
    "shelf": "read",
    "slug": "war-for-eternity",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
+   "lastEdited": "2026-11-08T15:53:00.000Z",
    "standout": false,
    "themes": [
     "History & Foreign Affairs",
@@ -7185,8 +7185,8 @@
    "yearRead": "2024",
    "shelf": "read",
    "slug": "challenger",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -7567,8 +7567,8 @@
    "yearRead": "2024",
    "shelf": "read",
    "slug": "on-call",
-   "lastEdited": "2026-10-04T00:56:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "Memoir & Biography"
    ],
@@ -7832,8 +7832,8 @@
    "yearRead": "2025",
    "shelf": "read",
    "slug": "a-fever-in-the-heartland",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "History & Foreign Affairs",
     "Politics & Power"
@@ -8297,8 +8297,8 @@
    "yearRead": "2025",
    "shelf": "read",
    "slug": "play-nice",
-   "lastEdited": "2026-10-04T00:56:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "Business & Finance",
     "Tech & Future"
@@ -8710,8 +8710,8 @@
    "yearRead": "2025",
    "shelf": "read",
    "slug": "dawn-of-the-code-war",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -8812,8 +8812,8 @@
    "yearRead": "2025",
    "shelf": "read",
    "slug": "playing-to-the-edge",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "History & Foreign Affairs",
     "Memoir & Biography",
@@ -9163,8 +9163,8 @@
    "yearRead": "2025",
    "shelf": "read",
    "slug": "1929",
-   "lastEdited": "2026-10-11T16:55:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "History & Foreign Affairs"
    ],
@@ -9301,8 +9301,8 @@
    "yearRead": "2025",
    "shelf": "read",
    "slug": "the-thinking-machine",
-   "lastEdited": "2026-10-04T00:55:00.000Z",
-   "standout": false,
+   "lastEdited": "2026-11-08T14:08:00.000Z",
+   "standout": true,
    "themes": [
     "Memoir & Biography",
     "Tech & Future"
@@ -10425,7 +10425,7 @@
     "43868109",
     "123276708",
     "38743564",
-    "38059",
+    "1972",
     "149105520"
    ]
   },
@@ -10536,16 +10536,16 @@
    "id": "44034135",
    "title": "Kochland: The Secret History of Koch Industries and Corporate Power in America",
    "author": "Christopher Leonard",
-   "isbn": "9781508296874",
+   "isbn": "9781476775388",
    "amazonAsin": "",
    "audibleAsin": "1508296871",
-   "pages": "",
+   "pages": "687",
    "yearPub": "2019",
    "dateRead": "2026/04/25",
    "yearRead": "2026",
    "shelf": "read",
    "slug": "kochland",
-   "lastEdited": "2026-10-04T00:39:00.000Z",
+   "lastEdited": "2026-11-08T15:52:00.000Z",
    "standout": false,
    "themes": [
     "Business & Finance"
@@ -10603,16 +10603,16 @@
    "id": "58485511",
    "title": "The Lords of Easy Money: How the Federal Reserve Broke the American Economy",
    "author": "Christopher Leonard",
-   "isbn": "9781797135540",
+   "isbn": "9781982166632",
    "amazonAsin": "",
    "audibleAsin": "1797135546",
-   "pages": "",
+   "pages": "373",
    "yearPub": "2022",
    "dateRead": "2026/05/10",
    "yearRead": "2026",
    "shelf": "read",
    "slug": "the-lords-of-easy-money",
-   "lastEdited": "2026-10-04T00:39:00.000Z",
+   "lastEdited": "2026-11-08T15:53:00.000Z",
    "standout": false,
    "themes": [
     "Business & Finance"
@@ -10940,7 +10940,7 @@
     "7495395",
     "43889703",
     "25817264",
-    "38059",
+    "1972",
     "149105520"
    ]
   },
@@ -11194,13 +11194,13 @@
    "isbn": "9781250408181",
    "amazonAsin": "",
    "audibleAsin": "B0DRPPMWGG",
-   "pages": "0",
+   "pages": "399",
    "yearPub": "2024",
    "dateRead": "2026/08/08",
    "yearRead": "2026",
    "shelf": "read",
    "slug": "the-history-of-money",
-   "lastEdited": "2026-10-04T00:37:00.000Z",
+   "lastEdited": "2026-11-08T15:52:00.000Z",
    "standout": false,
    "themes": [
     "Business & Finance",
@@ -11252,7 +11252,7 @@
     "55994102",
     "57005158",
     "414096",
-    "38059"
+    "1972"
    ]
   },
   {
@@ -11294,13 +11294,13 @@
    "isbn": "9781668066898",
    "amazonAsin": "",
    "audibleAsin": "B0DYWLBRSL",
-   "pages": "0",
+   "pages": "288",
    "yearPub": "2025",
    "dateRead": "2026/08/17",
    "yearRead": "2026",
    "shelf": "read",
    "slug": "separation-of-church-and-hate",
-   "lastEdited": "2026-10-04T00:36:00.000Z",
+   "lastEdited": "2026-11-08T15:52:00.000Z",
    "standout": false,
    "themes": [
     "Religion & Faith",
@@ -11352,7 +11352,7 @@
     "207567968",
     "25817264",
     "25602451",
-    "38059",
+    "1972",
     "44525305",
     "11084145"
    ]
@@ -11395,16 +11395,16 @@
    "id": "222376666",
    "title": "Gemini: Stepping Stone to the Moon, The Untold Story",
    "author": "Jeffrey Kluger",
-   "isbn": "",
+   "isbn": "9781250323002",
    "amazonAsin": "1250323002",
    "audibleAsin": "B0DRPSJ1W5",
-   "pages": "",
+   "pages": "285",
    "yearPub": "2025",
    "dateRead": "2026/09/12",
    "yearRead": "2026",
    "shelf": "read",
    "slug": "gemini",
-   "lastEdited": "2026-10-04T00:36:00.000Z",
+   "lastEdited": "2026-11-08T15:52:00.000Z",
    "standout": false,
    "themes": [
     "History & Foreign Affairs",
@@ -11423,7 +11423,7 @@
    ]
   },
   {
-   "id": "38059",
+   "id": "1972",
    "title": "Den of Thieves",
    "author": "James B. Stewart",
    "isbn": "9780671792275",
@@ -11435,7 +11435,7 @@
    "yearRead": "2026",
    "shelf": "read",
    "slug": "den-of-thieves",
-   "lastEdited": "2026-10-04T00:36:00.000Z",
+   "lastEdited": "2026-11-08T16:27:00.000Z",
    "standout": false,
    "themes": [
     "Business & Finance",
@@ -11463,13 +11463,13 @@
    "isbn": "9781250621160",
    "amazonAsin": "",
    "audibleAsin": "B0D8CK14GJ",
-   "pages": "",
+   "pages": "303",
    "yearPub": "2024",
    "dateRead": "2026/09/15",
    "yearRead": "2026",
    "shelf": "read",
    "slug": "the-longest-con",
-   "lastEdited": "2026-10-04T00:36:00.000Z",
+   "lastEdited": "2026-11-08T15:53:00.000Z",
    "standout": false,
    "themes": [
     "Politics & Power",
@@ -11567,13 +11567,13 @@
    "isbn": "9780374286675",
    "amazonAsin": "",
    "audibleAsin": "1250818737",
-   "pages": "",
+   "pages": "465",
    "yearPub": "2021",
    "dateRead": "2026/09/27",
    "yearRead": "2026",
    "shelf": "read",
    "slug": "wildland",
-   "lastEdited": "2026-10-03T23:57:00.000Z",
+   "lastEdited": "2026-11-08T15:53:00.000Z",
    "standout": false,
    "themes": [
     "Society & Culture",
@@ -11603,13 +11603,13 @@
    "isbn": "9781324123316",
    "amazonAsin": "",
    "audibleAsin": "B0GD8L5JWN",
-   "pages": "",
+   "pages": "406",
    "yearPub": "2026",
    "dateRead": "2026/10/03",
    "yearRead": "2026",
    "shelf": "read",
    "slug": "project-maven",
-   "lastEdited": "2026-10-03T23:57:00.000Z",
+   "lastEdited": "2026-11-08T15:52:00.000Z",
    "standout": false,
    "themes": [
     "Tech & Future",
@@ -11638,13 +11638,13 @@
    "isbn": "9781668226957",
    "amazonAsin": "",
    "audibleAsin": "B0G6XWJ4KT",
-   "pages": "",
+   "pages": "240",
    "yearPub": "2026",
    "dateRead": "2026/10/06",
    "yearRead": "2026",
    "shelf": "read",
    "slug": "into-the-wood-chipper",
-   "lastEdited": "2026-10-06T23:44:00.000Z",
+   "lastEdited": "2026-11-08T15:52:00.000Z",
    "standout": false,
    "themes": [
     "Politics & Power",
@@ -11848,7 +11848,7 @@
    "yearRead": "2026",
    "shelf": "read",
    "slug": "if-anyone-builds-it-everyone-dies",
-   "lastEdited": "2026-10-29T23:41:00.000Z",
+   "lastEdited": "2026-11-08T14:03:00.000Z",
    "standout": false,
    "themes": [
     "Tech & Future"
@@ -11916,7 +11916,7 @@
    "yearRead": "2026",
    "shelf": "read",
    "slug": "the-nerd-reich",
-   "lastEdited": "2026-11-04T11:00:00.000Z",
+   "lastEdited": "2026-11-08T14:03:00.000Z",
    "standout": false,
    "themes": [
     "Politics & Power",
@@ -11936,6 +11936,40 @@
     "27833494",
     "123276708",
     "224003226"
+   ]
+  },
+  {
+   "id": "58950736",
+   "title": "The Chaos Machine: The Inside Story of How Social Media Rewired Our Minds and Our World",
+   "author": "Max Fisher",
+   "isbn": "9780316703321",
+   "amazonAsin": "",
+   "audibleAsin": "B09S3ZFX7K",
+   "pages": "400",
+   "yearPub": "2022",
+   "dateRead": "2026/11/08",
+   "yearRead": "2026",
+   "shelf": "read",
+   "slug": "the-chaos-machine",
+   "lastEdited": "2026-11-08T18:50:00.000Z",
+   "standout": false,
+   "themes": [
+    "Tech & Future",
+    "Society & Culture"
+   ],
+   "tags": "technology, disinformation, investigative journalism, political psychology",
+   "summary": "Social media didn't just host society's worst impulses; Fisher argues it manufactured them. Drawing on internal research and reporting from Myanmar, Sri Lanka, Brazil and Germany through January 6, he shows how engagement-maximizing algorithms rewarded outrage and pushed ordinary users toward extremism and violence.",
+   "core": [
+    "Platforms optimized for engagement learned on their own that moral outrage and identity threat keep people scrolling, so their algorithms systematically amplify the most divisive content.",
+    "Social media does not merely mirror existing extremism; recommendation systems create it by steering users step by step toward more radical material and communities.",
+    "The companies were warned repeatedly about real-world violence, from Myanmar to January 6, and chose growth over intervention, so meaningful change requires turning off engagement-based ranking."
+   ],
+   "conn": [
+    "223436601",
+    "204927599",
+    "57933306",
+    "199461393",
+    "150065063"
    ]
   },
   {
@@ -12971,40 +13005,6 @@
    ]
   },
   {
-   "id": "58950736",
-   "title": "The Chaos Machine: The Inside Story of How Social Media Rewired Our Minds and Our World",
-   "author": "Max Fisher",
-   "isbn": "9780316703321",
-   "amazonAsin": "",
-   "audibleAsin": "B09S3ZFX7K",
-   "pages": "400",
-   "yearPub": "2022",
-   "dateRead": "",
-   "yearRead": "",
-   "shelf": "reading",
-   "slug": "the-chaos-machine",
-   "lastEdited": "2026-11-01T16:18:00.000Z",
-   "standout": false,
-   "themes": [
-    "Tech & Future",
-    "Society & Culture"
-   ],
-   "tags": "technology, disinformation, investigative journalism, political psychology",
-   "summary": "Social media didn't just host society's worst impulses; Fisher argues it manufactured them. Drawing on internal research and reporting from Myanmar, Sri Lanka, Brazil and Germany through January 6, he shows how engagement-maximizing algorithms rewarded outrage and pushed ordinary users toward extremism and violence.",
-   "core": [
-    "Platforms optimized for engagement learned on their own that moral outrage and identity threat keep people scrolling, so their algorithms systematically amplify the most divisive content.",
-    "Social media does not merely mirror existing extremism; recommendation systems create it by steering users step by step toward more radical material and communities.",
-    "The companies were warned repeatedly about real-world violence, from Myanmar to January 6, and chose growth over intervention, so meaningful change requires turning off engagement-based ranking."
-   ],
-   "conn": [
-    "223436601",
-    "204927599",
-    "57933306",
-    "199461393",
-    "150065063"
-   ]
-  },
-  {
    "id": "60018618",
    "title": "Unreasonable Hospitality: The Remarkable Power of Giving People More Than They Expect",
    "author": "Will Guidara",
@@ -13434,7 +13434,7 @@
   ],
   [
    1,
-   341
+   342
   ],
   [
    2,
@@ -13458,7 +13458,7 @@
   ],
   [
    2,
-   349
+   350
   ],
   [
    2,
@@ -13466,7 +13466,7 @@
   ],
   [
    2,
-   367
+   368
   ],
   [
    3,
@@ -13614,7 +13614,7 @@
   ],
   [
    8,
-   349
+   350
   ],
   [
    8,
@@ -13630,7 +13630,7 @@
   ],
   [
    9,
-   349
+   350
   ],
   [
    9,
@@ -13694,15 +13694,15 @@
   ],
   [
    10,
-   355
+   356
   ],
   [
    10,
-   344
+   345
   ],
   [
    10,
-   367
+   368
   ],
   [
    11,
@@ -13758,11 +13758,11 @@
   ],
   [
    11,
-   344
+   345
   ],
   [
    11,
-   367
+   368
   ],
   [
    12,
@@ -13814,7 +13814,7 @@
   ],
   [
    13,
-   341
+   342
   ],
   [
    14,
@@ -13846,7 +13846,7 @@
   ],
   [
    14,
-   350
+   351
   ],
   [
    15,
@@ -13886,11 +13886,11 @@
   ],
   [
    15,
-   352
+   353
   ],
   [
    15,
-   357
+   358
   ],
   [
    16,
@@ -13910,7 +13910,7 @@
   ],
   [
    16,
-   347
+   348
   ],
   [
    16,
@@ -13918,11 +13918,11 @@
   ],
   [
    16,
-   353
+   354
   ],
   [
    16,
-   365
+   366
   ],
   [
    17,
@@ -13982,11 +13982,11 @@
   ],
   [
    17,
-   350
+   351
   ],
   [
    17,
-   341
+   342
   ],
   [
    18,
@@ -14066,7 +14066,7 @@
   ],
   [
    20,
-   349
+   350
   ],
   [
    21,
@@ -14186,7 +14186,7 @@
   ],
   [
    25,
-   356
+   357
   ],
   [
    26,
@@ -14234,11 +14234,11 @@
   ],
   [
    26,
-   363
+   364
   ],
   [
    26,
-   359
+   360
   ],
   [
    27,
@@ -14382,15 +14382,15 @@
   ],
   [
    31,
-   352
+   353
   ],
   [
    31,
-   357
+   358
   ],
   [
    31,
-   343
+   344
   ],
   [
    32,
@@ -14502,7 +14502,7 @@
   ],
   [
    34,
-   352
+   353
   ],
   [
    35,
@@ -14530,7 +14530,7 @@
   ],
   [
    35,
-   349
+   350
   ],
   [
    36,
@@ -14586,7 +14586,7 @@
   ],
   [
    38,
-   359
+   360
   ],
   [
    39,
@@ -14626,11 +14626,11 @@
   ],
   [
    40,
-   349
+   350
   ],
   [
    40,
-   367
+   368
   ],
   [
    41,
@@ -14654,7 +14654,7 @@
   ],
   [
    41,
-   359
+   360
   ],
   [
    42,
@@ -14706,11 +14706,11 @@
   ],
   [
    43,
-   350
+   351
   ],
   [
    43,
-   341
+   342
   ],
   [
    44,
@@ -14766,7 +14766,7 @@
   ],
   [
    46,
-   349
+   350
   ],
   [
    46,
@@ -14886,7 +14886,7 @@
   ],
   [
    51,
-   350
+   351
   ],
   [
    51,
@@ -14902,7 +14902,7 @@
   ],
   [
    52,
-   364
+   365
   ],
   [
    52,
@@ -15062,7 +15062,7 @@
   ],
   [
    57,
-   346
+   347
   ],
   [
    57,
@@ -15126,11 +15126,11 @@
   ],
   [
    59,
-   358
+   359
   ],
   [
    59,
-   365
+   366
   ],
   [
    60,
@@ -15338,7 +15338,7 @@
   ],
   [
    68,
-   361
+   362
   ],
   [
    68,
@@ -15398,7 +15398,7 @@
   ],
   [
    71,
-   355
+   356
   ],
   [
    71,
@@ -15462,7 +15462,7 @@
   ],
   [
    74,
-   349
+   350
   ],
   [
    74,
@@ -15570,7 +15570,7 @@
   ],
   [
    79,
-   349
+   350
   ],
   [
    80,
@@ -15638,7 +15638,7 @@
   ],
   [
    82,
-   346
+   347
   ],
   [
    82,
@@ -15706,11 +15706,11 @@
   ],
   [
    84,
-   344
+   345
   ],
   [
    84,
-   341
+   342
   ],
   [
    85,
@@ -15742,7 +15742,7 @@
   ],
   [
    85,
-   348
+   349
   ],
   [
    85,
@@ -15838,7 +15838,7 @@
   ],
   [
    88,
-   368
+   338
   ],
   [
    89,
@@ -15946,7 +15946,7 @@
   ],
   [
    93,
-   345
+   346
   ],
   [
    94,
@@ -16054,11 +16054,11 @@
   ],
   [
    97,
-   363
+   364
   ],
   [
    97,
-   358
+   359
   ],
   [
    98,
@@ -16186,15 +16186,15 @@
   ],
   [
    101,
-   363
-  ],
-  [
-   101,
-   358
+   364
   ],
   [
    101,
    359
+  ],
+  [
+   101,
+   360
   ],
   [
    102,
@@ -16226,7 +16226,7 @@
   ],
   [
    102,
-   342
+   343
   ],
   [
    102,
@@ -16406,7 +16406,7 @@
   ],
   [
    110,
-   346
+   347
   ],
   [
    110,
@@ -16490,11 +16490,11 @@
   ],
   [
    113,
-   347
+   348
   ],
   [
    113,
-   353
+   354
   ],
   [
    113,
@@ -16562,7 +16562,7 @@
   ],
   [
    115,
-   345
+   346
   ],
   [
    115,
@@ -16594,11 +16594,11 @@
   ],
   [
    116,
-   339
+   340
   ],
   [
    116,
-   354
+   355
   ],
   [
    117,
@@ -16790,27 +16790,27 @@
   ],
   [
    123,
-   366
+   367
   ],
   [
    123,
-   339
+   340
   ],
   [
    123,
-   348
+   349
   ],
   [
    123,
-   343
+   344
   ],
   [
    123,
-   354
+   355
   ],
   [
    123,
-   351
+   352
   ],
   [
    123,
@@ -16866,15 +16866,15 @@
   ],
   [
    125,
-   358
-  ],
-  [
-   125,
    359
   ],
   [
    125,
-   344
+   360
+  ],
+  [
+   125,
+   345
   ],
   [
    126,
@@ -16974,7 +16974,7 @@
   ],
   [
    129,
-   346
+   347
   ],
   [
    129,
@@ -17474,7 +17474,7 @@
   ],
   [
    144,
-   363
+   364
   ],
   [
    145,
@@ -17538,11 +17538,11 @@
   ],
   [
    146,
-   345
+   346
   ],
   [
    146,
-   338
+   339
   ],
   [
    147,
@@ -17574,7 +17574,7 @@
   ],
   [
    147,
-   362
+   363
   ],
   [
    147,
@@ -17622,7 +17622,7 @@
   ],
   [
    148,
-   349
+   350
   ],
   [
    148,
@@ -17630,7 +17630,7 @@
   ],
   [
    148,
-   355
+   356
   ],
   [
    148,
@@ -17678,7 +17678,7 @@
   ],
   [
    150,
-   352
+   353
   ],
   [
    151,
@@ -17806,7 +17806,7 @@
   ],
   [
    155,
-   344
+   345
   ],
   [
    156,
@@ -17838,7 +17838,7 @@
   ],
   [
    156,
-   342
+   343
   ],
   [
    157,
@@ -17894,15 +17894,15 @@
   ],
   [
    158,
-   342
+   343
+  ],
+  [
+   158,
+   341
   ],
   [
    158,
    340
-  ],
-  [
-   158,
-   339
   ],
   [
    159,
@@ -18006,19 +18006,19 @@
   ],
   [
    162,
-   352
+   353
   ],
   [
    162,
-   350
+   351
   ],
   [
    162,
-   339
+   340
   ],
   [
    162,
-   354
+   355
   ],
   [
    162,
@@ -18230,7 +18230,7 @@
   ],
   [
    169,
-   346
+   347
   ],
   [
    169,
@@ -18370,7 +18370,7 @@
   ],
   [
    174,
-   362
+   363
   ],
   [
    174,
@@ -18634,7 +18634,7 @@
   ],
   [
    184,
-   364
+   365
   ],
   [
    184,
@@ -18658,7 +18658,7 @@
   ],
   [
    184,
-   368
+   338
   ],
   [
    185,
@@ -18934,7 +18934,7 @@
   ],
   [
    192,
-   365
+   366
   ],
   [
    192,
@@ -18946,7 +18946,7 @@
   ],
   [
    192,
-   368
+   338
   ],
   [
    193,
@@ -18978,7 +18978,7 @@
   ],
   [
    193,
-   362
+   363
   ],
   [
    193,
@@ -19042,11 +19042,11 @@
   ],
   [
    195,
-   347
+   348
   ],
   [
    195,
-   353
+   354
   ],
   [
    196,
@@ -19346,7 +19346,7 @@
   ],
   [
    209,
-   364
+   365
   ],
   [
    209,
@@ -19386,7 +19386,7 @@
   ],
   [
    209,
-   368
+   338
   ],
   [
    210,
@@ -19442,11 +19442,11 @@
   ],
   [
    213,
-   353
+   354
   ],
   [
    213,
-   367
+   368
   ],
   [
    213,
@@ -19498,7 +19498,7 @@
   ],
   [
    216,
-   346
+   347
   ],
   [
    217,
@@ -19546,7 +19546,7 @@
   ],
   [
    218,
-   361
+   362
   ],
   [
    218,
@@ -19674,7 +19674,7 @@
   ],
   [
    223,
-   355
+   356
   ],
   [
    224,
@@ -19758,11 +19758,11 @@
   ],
   [
    227,
-   345
+   346
   ],
   [
    227,
-   338
+   339
   ],
   [
    227,
@@ -19802,7 +19802,7 @@
   ],
   [
    228,
-   356
+   357
   ],
   [
    229,
@@ -20194,11 +20194,11 @@
   ],
   [
    243,
-   365
+   366
   ],
   [
    243,
-   348
+   349
   ],
   [
    243,
@@ -20274,7 +20274,7 @@
   ],
   [
    246,
-   366
+   367
   ],
   [
    247,
@@ -20338,7 +20338,7 @@
   ],
   [
    248,
-   342
+   343
   ],
   [
    249,
@@ -20358,7 +20358,7 @@
   ],
   [
    249,
-   365
+   366
   ],
   [
    250,
@@ -20414,11 +20414,11 @@
   ],
   [
    251,
-   356
+   357
   ],
   [
    251,
-   340
+   341
   ],
   [
    251,
@@ -20446,15 +20446,15 @@
   ],
   [
    252,
-   347
+   348
   ],
   [
    252,
-   356
+   357
   ],
   [
    252,
-   340
+   341
   ],
   [
    252,
@@ -20706,19 +20706,19 @@
   ],
   [
    262,
-   366
+   367
   ],
   [
    262,
-   348
+   349
   ],
   [
    262,
-   343
+   344
   ],
   [
    262,
-   354
+   355
   ],
   [
    263,
@@ -20814,7 +20814,7 @@
   ],
   [
    266,
-   340
+   341
   ],
   [
    267,
@@ -20866,7 +20866,7 @@
   ],
   [
    268,
-   342
+   343
   ],
   [
    269,
@@ -20894,7 +20894,7 @@
   ],
   [
    269,
-   364
+   365
   ],
   [
    269,
@@ -20906,7 +20906,7 @@
   ],
   [
    269,
-   362
+   363
   ],
   [
    269,
@@ -21114,7 +21114,7 @@
   ],
   [
    277,
-   353
+   354
   ],
   [
    277,
@@ -21146,11 +21146,11 @@
   ],
   [
    278,
-   345
+   346
   ],
   [
    278,
-   338
+   339
   ],
   [
    279,
@@ -21206,7 +21206,7 @@
   ],
   [
    280,
-   362
+   363
   ],
   [
    280,
@@ -21286,7 +21286,7 @@
   ],
   [
    283,
-   360
+   361
   ],
   [
    283,
@@ -21354,7 +21354,7 @@
   ],
   [
    285,
-   368
+   338
   ],
   [
    286,
@@ -21370,7 +21370,7 @@
   ],
   [
    286,
-   360
+   361
   ],
   [
    287,
@@ -21506,7 +21506,7 @@
   ],
   [
    290,
-   364
+   365
   ],
   [
    290,
@@ -21626,7 +21626,7 @@
   ],
   [
    295,
-   364
+   365
   ],
   [
    295,
@@ -21702,11 +21702,11 @@
   ],
   [
    298,
-   363
+   364
   ],
   [
    298,
-   358
+   359
   ],
   [
    299,
@@ -21990,7 +21990,7 @@
   ],
   [
    310,
-   338
+   339
   ],
   [
    311,
@@ -22022,7 +22022,7 @@
   ],
   [
    312,
-   361
+   362
   ],
   [
    312,
@@ -22062,7 +22062,7 @@
   ],
   [
    313,
-   356
+   357
   ],
   [
    313,
@@ -22138,7 +22138,7 @@
   ],
   [
    317,
-   366
+   367
   ],
   [
    317,
@@ -22202,11 +22202,11 @@
   ],
   [
    320,
-   357
+   358
   ],
   [
    320,
-   343
+   344
   ],
   [
    321,
@@ -22218,11 +22218,11 @@
   ],
   [
    321,
-   342
+   343
   ],
   [
    321,
-   340
+   341
   ],
   [
    321,
@@ -22270,7 +22270,7 @@
   ],
   [
    324,
-   364
+   365
   ],
   [
    324,
@@ -22306,7 +22306,7 @@
   ],
   [
    326,
-   364
+   365
   ],
   [
    326,
@@ -22570,679 +22570,679 @@
   ],
   [
    338,
-   278
-  ],
-  [
-   338,
-   310
-  ],
-  [
-   338,
-   146
-  ],
-  [
-   338,
-   345
-  ],
-  [
-   338,
-   227
-  ],
-  [
-   339,
-   365
-  ],
-  [
-   339,
-   116
-  ],
-  [
-   339,
-   158
-  ],
-  [
-   339,
-   123
-  ],
-  [
-   339,
-   162
-  ],
-  [
-   340,
-   252
-  ],
-  [
-   340,
-   251
-  ],
-  [
-   340,
-   266
-  ],
-  [
-   340,
-   342
-  ],
-  [
-   340,
-   158
-  ],
-  [
-   340,
-   321
-  ],
-  [
-   341,
-   1
-  ],
-  [
-   341,
-   43
-  ],
-  [
-   341,
-   13
-  ],
-  [
-   341,
-   17
-  ],
-  [
-   341,
-   84
-  ],
-  [
-   342,
-   268
-  ],
-  [
-   342,
-   156
-  ],
-  [
-   342,
-   248
-  ],
-  [
-   342,
-   102
-  ],
-  [
-   342,
-   158
-  ],
-  [
-   342,
-   340
-  ],
-  [
-   342,
-   321
-  ],
-  [
-   343,
-   123
-  ],
-  [
-   343,
-   320
-  ],
-  [
-   343,
-   262
-  ],
-  [
-   343,
-   366
-  ],
-  [
-   343,
-   31
-  ],
-  [
-   343,
-   351
-  ],
-  [
-   344,
-   10
-  ],
-  [
-   344,
-   11
-  ],
-  [
-   344,
-   84
-  ],
-  [
-   344,
-   155
-  ],
-  [
-   344,
-   125
-  ],
-  [
-   345,
-   227
-  ],
-  [
-   345,
-   115
-  ],
-  [
-   345,
-   146
-  ],
-  [
-   345,
-   278
-  ],
-  [
-   345,
-   93
-  ],
-  [
-   345,
-   338
-  ],
-  [
-   346,
-   82
-  ],
-  [
-   346,
-   216
-  ],
-  [
-   346,
-   57
-  ],
-  [
-   346,
-   129
-  ],
-  [
-   346,
-   110
-  ],
-  [
-   346,
-   169
-  ],
-  [
-   347,
-   16
-  ],
-  [
-   347,
-   113
-  ],
-  [
-   347,
-   195
-  ],
-  [
-   347,
-   252
-  ],
-  [
-   348,
-   85
-  ],
-  [
-   348,
-   243
-  ],
-  [
-   348,
-   262
-  ],
-  [
-   348,
-   378
-  ],
-  [
-   348,
-   123
-  ],
-  [
-   349,
-   9
-  ],
-  [
-   349,
-   8
-  ],
-  [
-   349,
-   79
-  ],
-  [
-   349,
-   46
-  ],
-  [
-   349,
-   2
-  ],
-  [
-   349,
-   74
-  ],
-  [
-   349,
-   148
-  ],
-  [
-   349,
-   20
-  ],
-  [
-   349,
-   35
-  ],
-  [
-   349,
-   40
-  ],
-  [
-   350,
-   17
-  ],
-  [
-   350,
-   43
-  ],
-  [
-   350,
-   14
-  ],
-  [
-   350,
-   162
-  ],
-  [
-   350,
-   51
-  ],
-  [
-   351,
-   357
-  ],
-  [
-   351,
-   366
-  ],
-  [
-   351,
-   369
-  ],
-  [
-   351,
-   343
-  ],
-  [
-   351,
-   123
-  ],
-  [
-   352,
-   15
-  ],
-  [
-   352,
-   34
-  ],
-  [
-   352,
-   31
-  ],
-  [
-   352,
-   162
-  ],
-  [
-   352,
-   150
-  ],
-  [
-   353,
-   16
-  ],
-  [
-   353,
-   195
-  ],
-  [
-   353,
-   113
-  ],
-  [
-   353,
-   213
-  ],
-  [
-   353,
-   277
-  ],
-  [
-   354,
-   123
-  ],
-  [
-   354,
-   162
-  ],
-  [
-   354,
-   116
-  ],
-  [
-   354,
-   365
-  ],
-  [
-   354,
-   262
-  ],
-  [
-   355,
-   10
-  ],
-  [
-   355,
-   71
-  ],
-  [
-   355,
-   148
-  ],
-  [
-   355,
-   223
-  ],
-  [
-   356,
-   251
-  ],
-  [
-   356,
-   252
-  ],
-  [
-   356,
-   313
-  ],
-  [
-   356,
-   228
-  ],
-  [
-   356,
-   25
-  ],
-  [
-   357,
-   320
-  ],
-  [
-   357,
-   366
-  ],
-  [
-   357,
-   15
-  ],
-  [
-   357,
-   31
-  ],
-  [
-   357,
-   369
-  ],
-  [
-   357,
-   351
-  ],
-  [
-   358,
-   101
-  ],
-  [
-   358,
-   298
-  ],
-  [
-   358,
-   125
-  ],
-  [
-   358,
-   59
-  ],
-  [
-   358,
-   97
-  ],
-  [
-   359,
-   38
-  ],
-  [
-   359,
-   41
-  ],
-  [
-   359,
-   125
-  ],
-  [
-   359,
-   26
-  ],
-  [
-   359,
-   101
-  ],
-  [
-   360,
-   286
-  ],
-  [
-   360,
-   283
-  ],
-  [
-   360,
-   364
-  ],
-  [
-   361,
-   218
-  ],
-  [
-   361,
-   68
-  ],
-  [
-   361,
-   312
-  ],
-  [
-   362,
-   269
-  ],
-  [
-   362,
-   193
-  ],
-  [
-   362,
-   280
-  ],
-  [
-   362,
-   174
-  ],
-  [
-   362,
-   147
-  ],
-  [
-   363,
-   101
-  ],
-  [
-   363,
-   298
-  ],
-  [
-   363,
-   144
-  ],
-  [
-   363,
-   26
-  ],
-  [
-   363,
-   97
-  ],
-  [
-   364,
-   52
-  ],
-  [
-   364,
-   184
-  ],
-  [
-   364,
-   209
-  ],
-  [
-   364,
-   269
-  ],
-  [
-   364,
-   290
-  ],
-  [
-   364,
-   295
-  ],
-  [
-   364,
-   360
-  ],
-  [
-   364,
-   324
-  ],
-  [
-   364,
-   326
-  ],
-  [
-   365,
-   16
-  ],
-  [
-   365,
-   59
-  ],
-  [
-   365,
-   192
-  ],
-  [
-   365,
-   249
-  ],
-  [
-   365,
-   243
-  ],
-  [
-   365,
-   339
-  ],
-  [
-   365,
-   354
-  ],
-  [
-   366,
-   317
-  ],
-  [
-   366,
-   246
-  ],
-  [
-   366,
-   262
-  ],
-  [
-   366,
-   123
-  ],
-  [
-   366,
-   357
-  ],
-  [
-   366,
-   343
-  ],
-  [
-   366,
-   351
-  ],
-  [
-   367,
-   213
-  ],
-  [
-   367,
-   11
-  ],
-  [
-   367,
-   10
-  ],
-  [
-   367,
-   40
-  ],
-  [
-   367,
-   2
-  ],
-  [
-   368,
    285
   ],
   [
-   368,
+   338,
    192
   ],
   [
-   368,
+   338,
    88
   ],
   [
-   368,
+   338,
    209
   ],
   [
-   368,
+   338,
    184
+  ],
+  [
+   339,
+   278
+  ],
+  [
+   339,
+   310
+  ],
+  [
+   339,
+   146
+  ],
+  [
+   339,
+   346
+  ],
+  [
+   339,
+   227
+  ],
+  [
+   340,
+   366
+  ],
+  [
+   340,
+   116
+  ],
+  [
+   340,
+   158
+  ],
+  [
+   340,
+   123
+  ],
+  [
+   340,
+   162
+  ],
+  [
+   341,
+   252
+  ],
+  [
+   341,
+   251
+  ],
+  [
+   341,
+   266
+  ],
+  [
+   341,
+   343
+  ],
+  [
+   341,
+   158
+  ],
+  [
+   341,
+   321
+  ],
+  [
+   342,
+   1
+  ],
+  [
+   342,
+   43
+  ],
+  [
+   342,
+   13
+  ],
+  [
+   342,
+   17
+  ],
+  [
+   342,
+   84
+  ],
+  [
+   343,
+   268
+  ],
+  [
+   343,
+   156
+  ],
+  [
+   343,
+   248
+  ],
+  [
+   343,
+   102
+  ],
+  [
+   343,
+   158
+  ],
+  [
+   343,
+   341
+  ],
+  [
+   343,
+   321
+  ],
+  [
+   344,
+   123
+  ],
+  [
+   344,
+   320
+  ],
+  [
+   344,
+   262
+  ],
+  [
+   344,
+   367
+  ],
+  [
+   344,
+   31
+  ],
+  [
+   344,
+   352
+  ],
+  [
+   345,
+   10
+  ],
+  [
+   345,
+   11
+  ],
+  [
+   345,
+   84
+  ],
+  [
+   345,
+   155
+  ],
+  [
+   345,
+   125
+  ],
+  [
+   346,
+   227
+  ],
+  [
+   346,
+   115
+  ],
+  [
+   346,
+   146
+  ],
+  [
+   346,
+   278
+  ],
+  [
+   346,
+   93
+  ],
+  [
+   346,
+   339
+  ],
+  [
+   347,
+   82
+  ],
+  [
+   347,
+   216
+  ],
+  [
+   347,
+   57
+  ],
+  [
+   347,
+   129
+  ],
+  [
+   347,
+   110
+  ],
+  [
+   347,
+   169
+  ],
+  [
+   348,
+   16
+  ],
+  [
+   348,
+   113
+  ],
+  [
+   348,
+   195
+  ],
+  [
+   348,
+   252
+  ],
+  [
+   349,
+   85
+  ],
+  [
+   349,
+   243
+  ],
+  [
+   349,
+   262
+  ],
+  [
+   349,
+   378
+  ],
+  [
+   349,
+   123
+  ],
+  [
+   350,
+   9
+  ],
+  [
+   350,
+   8
+  ],
+  [
+   350,
+   79
+  ],
+  [
+   350,
+   46
+  ],
+  [
+   350,
+   2
+  ],
+  [
+   350,
+   74
+  ],
+  [
+   350,
+   148
+  ],
+  [
+   350,
+   20
+  ],
+  [
+   350,
+   35
+  ],
+  [
+   350,
+   40
+  ],
+  [
+   351,
+   17
+  ],
+  [
+   351,
+   43
+  ],
+  [
+   351,
+   14
+  ],
+  [
+   351,
+   162
+  ],
+  [
+   351,
+   51
+  ],
+  [
+   352,
+   358
+  ],
+  [
+   352,
+   367
+  ],
+  [
+   352,
+   369
+  ],
+  [
+   352,
+   344
+  ],
+  [
+   352,
+   123
+  ],
+  [
+   353,
+   15
+  ],
+  [
+   353,
+   34
+  ],
+  [
+   353,
+   31
+  ],
+  [
+   353,
+   162
+  ],
+  [
+   353,
+   150
+  ],
+  [
+   354,
+   16
+  ],
+  [
+   354,
+   195
+  ],
+  [
+   354,
+   113
+  ],
+  [
+   354,
+   213
+  ],
+  [
+   354,
+   277
+  ],
+  [
+   355,
+   123
+  ],
+  [
+   355,
+   162
+  ],
+  [
+   355,
+   116
+  ],
+  [
+   355,
+   366
+  ],
+  [
+   355,
+   262
+  ],
+  [
+   356,
+   10
+  ],
+  [
+   356,
+   71
+  ],
+  [
+   356,
+   148
+  ],
+  [
+   356,
+   223
+  ],
+  [
+   357,
+   251
+  ],
+  [
+   357,
+   252
+  ],
+  [
+   357,
+   313
+  ],
+  [
+   357,
+   228
+  ],
+  [
+   357,
+   25
+  ],
+  [
+   358,
+   320
+  ],
+  [
+   358,
+   367
+  ],
+  [
+   358,
+   15
+  ],
+  [
+   358,
+   31
+  ],
+  [
+   358,
+   369
+  ],
+  [
+   358,
+   352
+  ],
+  [
+   359,
+   101
+  ],
+  [
+   359,
+   298
+  ],
+  [
+   359,
+   125
+  ],
+  [
+   359,
+   59
+  ],
+  [
+   359,
+   97
+  ],
+  [
+   360,
+   38
+  ],
+  [
+   360,
+   41
+  ],
+  [
+   360,
+   125
+  ],
+  [
+   360,
+   26
+  ],
+  [
+   360,
+   101
+  ],
+  [
+   361,
+   286
+  ],
+  [
+   361,
+   283
+  ],
+  [
+   361,
+   365
+  ],
+  [
+   362,
+   218
+  ],
+  [
+   362,
+   68
+  ],
+  [
+   362,
+   312
+  ],
+  [
+   363,
+   269
+  ],
+  [
+   363,
+   193
+  ],
+  [
+   363,
+   280
+  ],
+  [
+   363,
+   174
+  ],
+  [
+   363,
+   147
+  ],
+  [
+   364,
+   101
+  ],
+  [
+   364,
+   298
+  ],
+  [
+   364,
+   144
+  ],
+  [
+   364,
+   26
+  ],
+  [
+   364,
+   97
+  ],
+  [
+   365,
+   52
+  ],
+  [
+   365,
+   184
+  ],
+  [
+   365,
+   209
+  ],
+  [
+   365,
+   269
+  ],
+  [
+   365,
+   290
+  ],
+  [
+   365,
+   295
+  ],
+  [
+   365,
+   361
+  ],
+  [
+   365,
+   324
+  ],
+  [
+   365,
+   326
+  ],
+  [
+   366,
+   16
+  ],
+  [
+   366,
+   59
+  ],
+  [
+   366,
+   192
+  ],
+  [
+   366,
+   249
+  ],
+  [
+   366,
+   243
+  ],
+  [
+   366,
+   340
+  ],
+  [
+   366,
+   355
+  ],
+  [
+   367,
+   317
+  ],
+  [
+   367,
+   246
+  ],
+  [
+   367,
+   262
+  ],
+  [
+   367,
+   123
+  ],
+  [
+   367,
+   358
+  ],
+  [
+   367,
+   344
+  ],
+  [
+   367,
+   352
+  ],
+  [
+   368,
+   213
+  ],
+  [
+   368,
+   11
+  ],
+  [
+   368,
+   10
+  ],
+  [
+   368,
+   40
+  ],
+  [
+   368,
+   2
   ],
   [
    369,
@@ -23266,11 +23266,11 @@
   ],
   [
    369,
-   357
+   358
   ],
   [
    369,
-   351
+   352
   ],
   [
    370,
@@ -23442,7 +23442,7 @@
   ],
   [
    378,
-   348
+   349
   ],
   [
    379,
