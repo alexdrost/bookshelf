@@ -211,7 +211,8 @@
     "216857785",
     "41721428",
     "213034913",
-    "247255488"
+    "247255488",
+    "242713751"
    ]
   },
   {
@@ -2172,7 +2173,8 @@
     "1633",
     "25744928",
     "197773418",
-    "39901314"
+    "39901314",
+    "242713751"
    ]
   },
   {
@@ -3146,7 +3148,8 @@
     "25744928",
     "55723020",
     "223436601",
-    "58950736"
+    "58950736",
+    "237134698"
    ]
   },
   {
@@ -3348,7 +3351,8 @@
     "580305",
     "197773418",
     "25744928",
-    "18144590"
+    "18144590",
+    "242713751"
    ]
   },
   {
@@ -4420,7 +4424,8 @@
    ],
    "conn": [
     "407999",
-    "13586928"
+    "13586928",
+    "240144743"
    ]
   },
   {
@@ -4530,7 +4535,8 @@
     "12158480",
     "58433804",
     "223736214",
-    "22716469"
+    "22716469",
+    "240144743"
    ]
   },
   {
@@ -5149,7 +5155,8 @@
     "12609433",
     "171681821",
     "218726721",
-    "52300107"
+    "52300107",
+    "237134698"
    ]
   },
   {
@@ -5799,7 +5806,8 @@
     "25066556",
     "10884",
     "34684622",
-    "75665850"
+    "75665850",
+    "242713751"
    ]
   },
   {
@@ -7205,7 +7213,8 @@
     "55994102",
     "23258873",
     "37976541",
-    "222376666"
+    "222376666",
+    "240144743"
    ]
   },
   {
@@ -7235,7 +7244,8 @@
    ],
    "conn": [
     "182733784",
-    "228646231"
+    "228646231",
+    "240144743"
    ]
   },
   {
@@ -7341,7 +7351,8 @@
     "207567968",
     "216247552",
     "218671853",
-    "25817264"
+    "25817264",
+    "240144743"
    ]
   },
   {
@@ -8874,7 +8885,8 @@
     "32714199",
     "157095669",
     "241471051",
-    "53398908"
+    "53398908",
+    "237134698"
    ]
   },
   {
@@ -12424,7 +12436,8 @@
     "25744928",
     "38644312",
     "368593",
-    "18325440"
+    "18325440",
+    "242713751"
    ]
   },
   {
@@ -13054,9 +13067,9 @@
    "yearPub": "2022",
    "dateRead": "",
    "yearRead": "",
-   "shelf": "TBR",
+   "shelf": "reading",
    "slug": "unreasonable-hospitality",
-   "lastEdited": "2026-10-04T01:09:00.000Z",
+   "lastEdited": "2026-11-22T14:11:00.000Z",
    "standout": false,
    "themes": [
     "Business & Finance",
@@ -13350,6 +13363,71 @@
    ]
   },
   {
+   "id": "237134698",
+   "title": "The Stimulated Mind: Future-Proof Your Brain from Dementia and Stay Sharp at Any Age",
+   "author": "Tommy Wood",
+   "isbn": "9780593797815",
+   "amazonAsin": "",
+   "audibleAsin": "B0FGK1HPW8",
+   "pages": "464",
+   "yearPub": "2026",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "the-stimulated-mind",
+   "lastEdited": "2026-11-22T14:09:00.000Z",
+   "standout": false,
+   "themes": [
+    "Psychology & Mind"
+   ],
+   "tags": "neuroscience, attention",
+   "summary": "Neuroscientist, physician, and Formula 1 performance coach Tommy Wood rejects the idea that cognitive decline is inevitable. He argues the brain builds headroom, a reserve capacity, through use, and that most dementia risk sits in modifiable daily factors, organized in his 3-S model of Stimulation, Sleep, and nutrient Supply rather than in pills or biohacks.",
+   "core": [
+    "Cognitive decline is not destiny: the brain adapts to the demands placed on it and can keep strengthening with age.",
+    "Building cognitive headroom through stimulation, sleep, and nutrient supply is the main lever against dementia risk.",
+    "Brain health deserves the same everyday attention as heart health, including today's focus problems and not just late-life disease."
+   ],
+   "conn": [
+    "157981712",
+    "57933306",
+    "55723020"
+   ]
+  },
+  {
+   "id": "240144743",
+   "title": "Crisis Engineering: Time-Tested Tools for Turning Chaos into Clarity",
+   "author": "Marina Nitze, Matthew Weaver, Mikey Dickerson",
+   "isbn": "9780306836862",
+   "amazonAsin": "",
+   "audibleAsin": "B0FMHLXCGJ",
+   "pages": "336",
+   "yearPub": "2026",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "crisis-engineering",
+   "lastEdited": "2026-11-22T14:09:00.000Z",
+   "standout": false,
+   "themes": [
+    "Business & Finance",
+    "Personal Growth & Leadership"
+   ],
+   "tags": "leadership, technology, consulting",
+   "summary": "Three veterans of the HealthCare.gov rescue, Google site reliability engineering, and the U.S. and Defense Digital Services, now partners at the firm Layer Aleph, turn decades of firefighting into a method. They argue a real crisis is not just something to survive but a rare window when an organization can be changed fast, and they give tools to recognize one, stand up a response, and rebuild a shared picture of a failing system.",
+   "core": [
+    "A crisis is a high-leverage moment: urgency suspends the normal resistance to change, so it can be used to fix what ordinary times cannot.",
+    "Leaders' instincts under pressure, more planning, more experts, bolder strategy, often make a failing complex system worse.",
+    "Recovery starts with sensemaking: getting everyone to see the same map of the system before anyone tries to fix it."
+   ],
+   "conn": [
+    "61796680",
+    "113934",
+    "199798785",
+    "40538681",
+    "55994102"
+   ]
+  },
+  {
    "id": "241434373",
    "title": "The Infinity Machine: Demis Hassabis, DeepMind, and the Quest for Superintelligence",
    "author": "Sebastian Mallaby",
@@ -13381,6 +13459,40 @@
     "204927599",
     "56620811",
     "21856367"
+   ]
+  },
+  {
+   "id": "242713751",
+   "title": "How Great Ideas Happen: The Hidden Steps Behind Breakthrough Success",
+   "author": "George Newman",
+   "isbn": "9781668026007",
+   "amazonAsin": "",
+   "audibleAsin": "B0FCVQ7CKF",
+   "pages": "304",
+   "yearPub": "2026",
+   "dateRead": "",
+   "yearRead": "",
+   "shelf": "TBR",
+   "slug": "how-great-ideas-happen",
+   "lastEdited": "2026-11-22T14:09:00.000Z",
+   "standout": false,
+   "themes": [
+    "Psychology & Mind",
+    "Personal Growth & Leadership"
+   ],
+   "tags": "applied psychology, knowledge work, self-help",
+   "summary": "Rotman cognitive scientist George Newman argues that great ideas are found rather than conjured: breakthroughs come from systematically exploring what already exists, not from flashes of inspiration. He lays out a four-stage method (survey where to look, grid the search, dig widely, sift for the winners) illustrated with cases from Jackson Pollock to Paul Simon's Graceland.",
+   "core": [
+    "Creativity is a search process, not a gift: breakthroughs are discovered by exploring and recombining material that already exists.",
+    "Great ideas usually sit only slightly apart from many near-misses, so small adjustments to existing ideas matter more than radical novelty.",
+    "A repeatable method of surveying, gridding, digging, and sifting turns idea generation into a disciplined practice anyone can run."
+   ],
+   "conn": [
+    "60965426",
+    "157095669",
+    "3228917",
+    "22571554",
+    "59616977"
    ]
   },
   {
@@ -13618,6 +13730,10 @@
   [
    5,
    331
+  ],
+  [
+   5,
+   382
   ],
   [
    6,
@@ -14153,7 +14269,7 @@
   ],
   [
    22,
-   381
+   384
   ],
   [
    23,
@@ -14317,7 +14433,7 @@
   ],
   [
    27,
-   381
+   384
   ],
   [
    28,
@@ -15196,6 +15312,10 @@
    21
   ],
   [
+   60,
+   382
+  ],
+  [
    61,
    168
   ],
@@ -15888,6 +16008,10 @@
    338
   ],
   [
+   88,
+   379
+  ],
+  [
    89,
    112
   ],
@@ -16010,6 +16134,10 @@
   [
    94,
    6
+  ],
+  [
+   94,
+   382
   ],
   [
    95,
@@ -16549,7 +16677,7 @@
   ],
   [
    113,
-   380
+   383
   ],
   [
    114,
@@ -16880,6 +17008,10 @@
    150
   ],
   [
+   124,
+   380
+  ],
+  [
    125,
    3
   ],
@@ -16978,6 +17110,10 @@
   [
    127,
    318
+  ],
+  [
+   127,
+   380
   ],
   [
    128,
@@ -17532,6 +17668,10 @@
    365
   ],
   [
+   144,
+   379
+  ],
+  [
    145,
    109
   ],
@@ -18078,6 +18218,10 @@
   [
    162,
    371
+  ],
+  [
+   162,
+   382
   ],
   [
    163,
@@ -18985,7 +19129,7 @@
   ],
   [
    192,
-   379
+   381
   ],
   [
    192,
@@ -19216,12 +19360,20 @@
    322
   ],
   [
+   201,
+   380
+  ],
+  [
    202,
    152
   ],
   [
    202,
    335
+  ],
+  [
+   202,
+   380
   ],
   [
    203,
@@ -19306,6 +19458,10 @@
   [
    205,
    317
+  ],
+  [
+   205,
+   380
   ],
   [
    206,
@@ -20041,7 +20197,7 @@
   ],
   [
    234,
-   379
+   381
   ],
   [
    234,
@@ -20161,7 +20317,7 @@
   ],
   [
    239,
-   380
+   383
   ],
   [
    240,
@@ -20249,7 +20405,7 @@
   ],
   [
    243,
-   379
+   381
   ],
   [
    243,
@@ -20418,6 +20574,10 @@
   [
    249,
    367
+  ],
+  [
+   249,
+   379
   ],
   [
    250,
@@ -20761,7 +20921,7 @@
   ],
   [
    262,
-   379
+   381
   ],
   [
    262,
@@ -20817,7 +20977,7 @@
   ],
   [
    263,
-   380
+   383
   ],
   [
    264,
@@ -21545,7 +21705,7 @@
   ],
   [
    289,
-   380
+   383
   ],
   [
    290,
@@ -21881,7 +22041,7 @@
   ],
   [
    303,
-   381
+   384
   ],
   [
    304,
@@ -22025,7 +22185,7 @@
   ],
   [
    309,
-   380
+   383
   ],
   [
    310,
@@ -22477,7 +22637,7 @@
   ],
   [
    330,
-   380
+   383
   ],
   [
    331,
@@ -22901,7 +23061,7 @@
   ],
   [
    350,
-   379
+   381
   ],
   [
    350,
@@ -22946,6 +23106,10 @@
   [
    351,
    40
+  ],
+  [
+   351,
+   382
   ],
   [
    352,
@@ -23505,58 +23669,110 @@
   ],
   [
    379,
+   249
+  ],
+  [
+   379,
+   88
+  ],
+  [
+   379,
+   144
+  ],
+  [
+   380,
+   127
+  ],
+  [
+   380,
+   124
+  ],
+  [
+   380,
+   201
+  ],
+  [
+   380,
+   202
+  ],
+  [
+   380,
+   205
+  ],
+  [
+   381,
    262
   ],
   [
-   379,
+   381,
    243
   ],
   [
-   379,
+   381,
    192
   ],
   [
-   379,
+   381,
    234
   ],
   [
-   379,
+   381,
    350
   ],
   [
-   380,
+   382,
+   94
+  ],
+  [
+   382,
+   162
+  ],
+  [
+   382,
+   5
+  ],
+  [
+   382,
+   351
+  ],
+  [
+   382,
+   60
+  ],
+  [
+   383,
    263
   ],
   [
-   380,
+   383,
    289
   ],
   [
-   380,
+   383,
    239
   ],
   [
-   380,
+   383,
    309
   ],
   [
-   380,
+   383,
    113
   ],
   [
-   380,
+   383,
    330
   ],
   [
-   381,
+   384,
    27
   ],
   [
-   381,
+   384,
    303
   ],
   [
-   381,
+   384,
    22
   ]
  ]
